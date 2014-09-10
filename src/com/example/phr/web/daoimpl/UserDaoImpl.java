@@ -6,21 +6,19 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
-
 import com.example.phr.exceptions.IPBlockedException;
 import com.example.phr.exceptions.UserAlreadyExistsException;
 import com.example.phr.exceptions.WebServerException;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.model.AccessToken;
 import com.example.phr.model.User;
-import com.example.phr.web.dao.UserDao;
 import com.example.phr.tools.EncryptionHandler;
 import com.example.phr.tools.GSONConverter;
 import com.example.phr.tools.Hasher;
 import com.example.phr.tools.JSONRequestCreator;
+import com.example.phr.web.dao.UserDao;
 
-public class UserDaoImpl extends HTTPSDaoImpl implements UserDao {
+public class UserDaoImpl extends BasicDaoImpl implements UserDao {
 
 	private JSONRequestCreator jsonRequestCreator;
 
@@ -79,20 +77,14 @@ public class UserDaoImpl extends HTTPSDaoImpl implements UserDao {
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("username", username);
 
-			String hashedPassword = Hasher.hash(password);
-			map.put("hashedPassword", hashedPassword);
+			map.put("hashedPassword", password);
 
 			String jsonToSend = jsonRequestCreator.createJSONRequest(map, null);
 			System.out.println("JSON Request Sent: " + jsonToSend);
 			JSONObject response = performHttpRequest_JSON(command, jsonToSend);
 			System.out.println("JSON Response Received: " + response);
-			if (response.get("status").equals("fail")
-					&& response.getJSONObject("data").has("isBlocked")
-					&& response.getJSONObject("data").getString("isBlocked")
-							.equals("true"))
-				throw new IPBlockedException(
-						"Due to multiple logins, IP is currently blocked");
-			else if (response.get("status").equals("fail")) {
+			if (response.get("status").equals("fail")) {
+				System.out.println("Failed From Status");
 				throw new WebServerException(
 						"An error has occurred while communicating"
 								+ "with the web server.");
@@ -111,6 +103,7 @@ public class UserDaoImpl extends HTTPSDaoImpl implements UserDao {
 					.equals("false")) {
 				return false;
 			}
+			System.out.println("Failed Last If");
 			throw new WebServerException(
 					"An error has occurred while communicating"
 							+ "with the web server.");

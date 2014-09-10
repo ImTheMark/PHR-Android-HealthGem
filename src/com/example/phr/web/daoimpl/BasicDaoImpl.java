@@ -9,9 +9,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,8 +34,12 @@ public abstract class BasicDaoImpl {
 			out.close();
 			response.getEntity().writeTo(out);
 			return out.toString();
-			
+
 		} catch (IOException e) {
+			for(StackTraceElement s : e.getStackTrace()){
+				System.out.println(s.toString());
+			}
+			System.out.println(e.getMessage());
 			throw new WebServerException("Error in HTTP", e);
 		}
 	}
@@ -46,6 +47,7 @@ public abstract class BasicDaoImpl {
 	protected JSONObject performHttpRequest_JSON(String command,
 			String jsonStringParams) throws WebServerException {
 		try {
+			System.out.println("Umabot hanggang sa perform Http Request");
 			JSONObject response = new JSONObject(performHttpRequest_String(
 					command, jsonStringParams));
 			return response;

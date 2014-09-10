@@ -24,7 +24,7 @@ public abstract class HTTPSDaoImpl {
 
 	protected String performHttpRequest_String(String command,
 			String jsonStringParams) throws WebServerException {
-		String address = "https://10.0.2.2:8080/PHR-WebServer/" + command;
+		String address = "http://10.0.2.2:8080/PHR-WebServer/" + command;
 		try {
 			// Create the HTTP request
 			HttpParams httpParameters = new BasicHttpParams();
