@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/container_dropshadow"
+    android:padding="5dp">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" 
+        android:weightSum="5" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="horizontal" 
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp" >
+
+            <TextView 
+                android:id="@+id/txtFBDate"
+                android:layout_width="match_parent" 
+                android:layout_height="fill_parent"
+                android:text="06-20-2014" 
+                android:maxLines="1"
+                android:layout_weight="3" />
+
+            <TextView 
+                android:id="@+id/txtFBTime"
+                android:layout_width="match_parent" 
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="10dp" 
+                android:text="11:20 am" 
+                android:maxLines="1"
+                android:layout_weight="2"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="3dp" 
+            android:layout_marginLeft="10dp" >
+
+            <TextView
+                android:id="@+id/fbStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My breakfast scramble egg yum yum! :) " 
+                android:textColor="#050505"/>
+
+        </LinearLayout>
+         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="3dp" 
+            android:layout_marginLeft="10dp" >
+
+            <TextView
+                android:id="@+id/guess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Guess u ate : " />
+
+            <EditText
+                android:id="@+id/what"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="8" 
+                android:textColor="#050505"
+                android:text="scramble egg ">
+
+                <requestFocus />
+            </EditText>
+
+            <EditText
+                android:id="@+id/quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="5" 
+                android:textColor="#050505"
+                android:text="1 g"/>
+
+        </LinearLayout>
+
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:weightSum="6"
+             android:layout_marginTop="7dp" >
+
+             <ImageView
+                 android:id="@+id/imageView1"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:src="@drawable/activityretrievepost_icon_check" 
+                 android:layout_weight="1"/>
+
+             <TextView
+                 android:id="@+id/textView2"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="Yes"
+                 android:textColor="#050505"
+                 android:layout_weight="1"
+                 android:textAppearance="?android:attr/textAppearanceMedium" />
+             <ImageView
+                 android:id="@+id/imageView1"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:src="@drawable/activityretrievepost_icon_edit" 
+                 android:layout_weight="1"/>
+
+             <TextView
+                 android:id="@+id/textView2"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="Edit"
+                 android:textColor="#050505"
+                 android:layout_weight="1"
+                 android:textAppearance="?android:attr/textAppearanceMedium" />
+             <ImageView
+                 android:id="@+id/imageView1"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:src="@drawable/activityretrievepost_icon_delete" 
+                 android:layout_weight="1"/>
+
+             <TextView
+                 android:id="@+id/textView2"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="No"
+                 android:textColor="#050505"
+                 android:layout_weight="1"
+                 android:textAppearance="?android:attr/textAppearanceMedium" />
+
+         </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

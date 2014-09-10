@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    android:orientation="horizontal"
+    android:background="@drawable/container_dropshadow"
+    android:weightSum="4.5" 
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/icon_note" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical" 
+        android:layout_weight="4"
+        android:weightSum="5" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="horizontal" 
+            android:weightSum="5"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp" >
+
+            <com.example.phr.AutoResizeTextView 
+                android:id="@+id/txtNoteDate"
+                android:layout_width="match_parent" 
+                android:layout_height="fill_parent"
+                android:text="06-20-2014" 
+                android:maxLines="1"
+                android:textSize="16sp" 
+                android:layout_weight="3" />
+
+            <com.example.phr.AutoResizeTextView 
+                android:id="@+id/txtNoteTime"
+                android:layout_width="match_parent" 
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="10dp" 
+                android:text="11:20 am" 
+                android:maxLines="1"
+                android:textSize="16sp" 
+                android:layout_weight="2"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="3"
+            android:layout_marginTop="3dp" 
+            android:layout_marginLeft="10dp" >
+
+            <com.example.phr.AutoResizeTextView 
+                android:id="@+id/txtNoteTitle"
+                android:layout_width="match_parent" 
+                android:layout_height="fill_parent"
+                android:text="What a busy day!" 
+                android:maxLines="1"
+                android:textSize="20sp" 
+                android:textColor="#050505"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical" 
+        android:layout_weight="0.5"
+        android:layout_marginRight="10dp">
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:src="@drawable/icon_next_blue" 
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+</LinearLayout>

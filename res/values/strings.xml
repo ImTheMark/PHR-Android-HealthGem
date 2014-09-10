@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HealthGem</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="status_post_button">POST</string>
+    
+    <!-- Daily Journal Feed -->
+    <string name="journal_weight">Weight:&#160;</string>
+    <string name="journal_weight_metric">&#160;lbs</string>
+    <string name="journal_calories">Calories:&#160;</string>
+    <string name="journal_activities">Activities:&#160;</string>
+    
+    <string name="lorem_ipsum"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel mattis nunc, ut sollicitudin eros. Donec volutpat enim et augue tristique, at facilisis felis lobortis. Cras porttitor elementum libero sed scelerisque. Nam suscipit ante eget lectus pellentesque placerat. Duis mollis, risus vel faucibus blandit, lacus nisl feugiat risus, sit amet blandit purus neque ac mi. Curabitur aliquet turpis elit, eu porta tortor gravida nec. Nulla convallis aliquam odio, congue blandit nibh pretium sit amet. Nam posuere ultrices odio molestie dignissim. In adipiscing nibh sit amet nulla imperdiet aliquet. Aliquam posuere risus ut ipsum viverra, eget iaculis risus consequat. Cras feugiat consequat tincidunt. Fusce iaculis mi sapien, tincidunt adipiscing nibh tincidunt id.
+
+Ut euismod elit in nisi euismod faucibus. Vestibulum euismod urna quis tellus ultricies, sed consectetur ipsum lacinia. Donec porta molestie nisl, a vehicula urna luctus euismod. Quisque ullamcorper tincidunt eros, egestas ullamcorper purus rutrum quis. Nunc dapibus sem non metus molestie, ut sollicitudin nisi fermentum. Vivamus elementum, purus condimentum hendrerit vulputate, dolor ipsum posuere lorem, nec mattis augue metus eget sem. Sed urna massa, ultricies et lacus et, sagittis euismod mi. Duis hendrerit, urna quis vehicula dictum, dui lectus sagittis sapien, at cursus risus ante auctor ante. Morbi eu porta nisi. Curabitur consectetur massa ut lorem dignissim pellentesque. Ut ornare quam nibh, vitae posuere enim posuere non. Sed molestie enim tempus justo posuere, a mattis ante faucibus. Vestibulum fermentum nisi magna.
+
+Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus ut nunc ligula. Aenean aliquam ipsum ac erat eleifend, nec facilisis erat ultricies. Nullam eu est tellus. Maecenas et viverra risus. Etiam lacinia accumsan risus ut pharetra. Curabitur aliquet semper nunc vel convallis. Maecenas sagittis vehicula pharetra.
+
+Nullam ut congue nulla. Nulla urna dolor, egestas eu justo et, tincidunt congue tortor. Nullam venenatis mauris in laoreet luctus. Suspendisse sem velit, mollis et ante eu, volutpat malesuada nibh. Donec fermentum nunc in nunc iaculis, id faucibus purus pulvinar. Morbi sed sagittis lorem. Vestibulum id vulputate risus, in malesuada mauris. Aenean id ligula a metus volutpat dapibus in a leo.
+
+Proin fringilla nulla id vulputate varius. Nam tristique sodales erat. Nunc ullamcorper elit sed turpis porttitor, et iaculis nulla porttitor. Cras id ante eu purus congue gravida. Curabitur id placerat nunc. In hendrerit ipsum consequat, hendrerit arcu pretium, placerat nisl. Suspendisse tempus interdum turpis quis facilisis.
+
+Vivamus consequat elit lacus, quis accumsan leo consequat ultricies. Sed cursus ullamcorper auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla blandit felis quis purus convallis lacinia. Donec odio ipsum, blandit vel sagittis id, congue posuere purus. Integer vehicula, nibh sed dignissim aliquam, metus purus semper nulla, sit amet iaculis erat nunc id eros. Aliquam bibendum adipiscing dolor quis blandit. Nunc commodo blandit nisi. In tincidunt lacus gravida tortor tempor commodo. Curabitur adipiscing, ipsum nec laoreet congue, ipsum nisl viverra quam, sit amet bibendum sapien sapien a lorem. Phasellus rutrum ultrices sapien eget auctor. Quisque sagittis ipsum a luctus molestie. Morbi vulputate commodo ligula, nec ultricies justo rhoncus id. </string>
+
+    
+    
+
+</resources>

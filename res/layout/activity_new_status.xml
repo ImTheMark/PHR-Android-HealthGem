@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <ScrollView
+	    android:id="@+id/ScrollView_status"
+        android:layout_alignParentTop="true"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:scrollbars="vertical"
+	    android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            
+	
+	        <EditText
+		        android:id="@+id/txtStatus"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1.0"
+		        android:background="#00000000"
+	            android:ems="1"
+	            android:hint=" " 
+	            android:padding="10dp"
+	            android:inputType="textMultiLine">
+	              <requestFocus />
+	        </EditText>
+	
+	        <TextView
+	            android:id="@+id/textView1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="- Eating " />
+	        
+	        <TextView
+	            android:id="@+id/textView1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textStyle="bold"
+	            android:text=" Chocolate Cake" 
+	            />
+	        
+	        <TextView
+	            android:id="@+id/textView1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text=" of " />
+	        
+	        <TextView
+	            android:id="@+id/textView1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textStyle="bold"
+	            android:text="1 slice" 
+	            />
+            
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/statusTabsPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@id/ScrollView_status"
+        android:gravity="center"
+        android:background="#E8E8E8" >
+        <ImageButton 
+            android:id="@+id/btnAddActions" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:background="@null" 
+            android:padding="10dp" 
+            android:src="@drawable/activitynewstatus_icon_add" />
+        
+        <ImageButton
+            android:id="@+id/btnAddPhoto"
+            android:layout_width="wrap_content"
+            android:background="@null"
+            android:padding="10dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/activitynewstatus_icon_small_photo" />
+
+        
+
+        <ImageButton
+            android:id="@+id/btnDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="10dp"
+            android:src="@drawable/activitynewstatus_icon_timedate" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_above="@id/statusTabsPlaceholder"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total calorie: " />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="478 kcal"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </LinearLayout>
+
+</RelativeLayout>

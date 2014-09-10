@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:background="@drawable/container_dropshadow" >
+    
+    <LinearLayout
+        android:id="@+id/statusInformationHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+	    <ImageView
+	        android:id="@+id/imageViewStatusAction"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:padding="10dp"
+	        android:src="@drawable/icon_food" />
+
+	    <LinearLayout
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+        	android:layout_gravity="center"
+	        android:orientation="vertical" >
+
+	        <RelativeLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content" >
+
+			    <TextView
+			        android:id="@+id/textViewStatusActionHolder"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textColor="@android:color/black"
+			        android:text="eating" />
+
+			    <TextView
+			        android:id="@+id/textViewStatusAction"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textColor="@android:color/black"
+			        android:paddingLeft="5dp"
+			        android:layout_toRightOf="@id/textViewStatusActionHolder"
+			        android:textStyle="bold"
+			        android:text="sinigang" />
+
+			    <TextView
+			        android:id="@+id/textViewDateTime"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_below="@id/textViewStatusActionHolder"
+			        android:text="June 28, 2014 12:34AM"
+			        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+			    <ImageView
+			        android:id="@+id/imageViewViaPosted"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_below="@id/textViewStatusActionHolder"
+			        android:padding="3dp"
+			        android:layout_toRightOf="@id/textViewDateTime"
+			        android:src="@drawable/icon_small_facebook" />
+			    
+	        </RelativeLayout>
+	        
+	    </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+		android:textColor="@android:color/black"
+        android:layout_centerVertical="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:layout_below="@+id/statusInformationHolder"
+        android:text="I am sooooooooooooooooooooo excited!" />
+
+    <ImageView
+        android:id="@+id/statusPhotoHolder"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewStatus"
+		android:padding="10dp"
+		android:visibility="gone"
+        android:src="@drawable/sample_image" />
+
+</RelativeLayout>

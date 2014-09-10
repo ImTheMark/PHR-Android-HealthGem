@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+   
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" 
+            android:weightSum ="4">
+
+            <LinearLayout
+        		android:id="@+id/firstRowHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:layout_weight="1" >
+
+                <LinearLayout
+        			android:id="@+id/btnFoodTracker"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+    				android:background="@drawable/container_dropshadow" 
+    				>
+
+                    <ImageView
+                        android:id="@+id/imageViewFoodTracker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:src="@drawable/icon_food" 
+                        android:padding="5dp"/>
+
+                    <TextView
+                        android:id="@+id/textViewFoodTracker"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+    					android:gravity="center"
+                        android:text="Food"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+        			android:id="@+id/btnBloodPressureTracker"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+    				android:background="@drawable/container_dropshadow" >
+
+                    <ImageView
+                        android:id="@+id/imageViewBloodPressureTracker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:src="@drawable/icon_blood_pressure" 
+                        android:padding="5dp"/>
+
+                    <TextView
+                        android:id="@+id/textViewBloodPressureTracker"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+    					android:gravity="center"
+                        android:text="Blood Pressure" />
+
+                </LinearLayout>
+                
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/secondRowHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2" 
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:id="@+id/btnActivitiesTracker"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/container_dropshadow" >
+
+                    <ImageView
+                        android:id="@+id/ImageViewActivitiesTracker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:src="@drawable/icon_activity"
+                        android:padding="5dp" />
+
+                    <TextView
+                        android:id="@+id/TextViewActivitiesTracker"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Activities" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnBloodSugarTracker"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/container_dropshadow" >
+
+                    <ImageView
+                        android:id="@+id/ImageViewBloodSugar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:src="@drawable/icon_blood_sugar" 
+                        android:padding="5dp"/>
+
+                    <TextView
+                        android:id="@+id/TextViewBloodSugar"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Blood Sugar" />
+                </LinearLayout>
+                
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/thirdRowHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2" 
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:id="@+id/btnCalorieTracker"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/container_dropshadow" >
+
+                    <ImageView
+                        android:id="@+id/ImageViewCalorieTracker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:src="@drawable/icon_calorie" 
+                        android:padding="5dp"/>
+
+                    <TextView
+                        android:id="@+id/TextViewCalorieTracker"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Calorie" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnCheckupTracker"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/container_dropshadow"
+                    android:clickable="true" >
+
+                    <ImageView
+                        android:id="@+id/ImageViewCheckupTracker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:src="@drawable/icon_checkup" />
+
+                    <TextView
+                        android:id="@+id/TextViewCheckupTracker"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Checkup" />
+                </LinearLayout>
+                
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fourthRowHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2" 
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:id="@+id/btnWeightTracker"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/container_dropshadow" >
+
+                    <ImageView
+                        android:id="@+id/ImageViewWeightTracker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:src="@drawable/icon_weight" 
+                        android:padding="5dp"/>
+
+                    <TextView
+                        android:id="@+id/TextViewWeightTracker"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Weight" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnNotesTracker"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/container_dropshadow" >
+
+                    <ImageView
+                        android:id="@+id/ImageViewNotesTracker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:src="@drawable/icon_note" />
+
+                    <TextView
+                        android:id="@+id/TextViewNotesTracker"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Notes" />
+                </LinearLayout>
+                
+            </LinearLayout>
+            
+        </LinearLayout>
+        
+
+</LinearLayout>

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/WeightPhotoHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/textViewSettingWeightTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_style"
+                android:text="Weight Metric" />
+
+            <View
+                android:id="@+id/SettingWeightDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/textViewSettingWeightTitle"
+                android:background="#000000" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/SettingWeightDivider"
+                android:background="@drawable/underline_background"
+                android:orientation="vertical"
+                android:padding="5dp" >
+
+                <RadioGroup
+                    android:id="@+id/radioGroupSettingWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp" >
+
+                    <RadioButton
+                        android:id="@+id/radioGroupSettingWeightButtonLBS"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="pounds (lbs)" />
+
+                    <RadioButton
+                        android:id="@+id/radioGroupSettingWeightButtonKGS"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="kilograms (kgs)" />
+                </RadioGroup>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/HeightPhotoHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/textViewSettingHeightTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_style"
+                android:text="Height Metric" />
+
+            <View
+                android:id="@+id/SettingHeightDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/textViewSettingHeightTitle"
+                android:background="#000000" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/SettingHeightDivider"
+                android:background="@drawable/underline_background"
+                android:orientation="vertical"
+                android:padding="5dp" >
+
+                <RadioGroup
+                    android:id="@+id/radioGroupSettingHeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp" >
+
+                    <RadioButton
+                        android:id="@+id/radioGroupSettingHeightButtonFT"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="Feet Inches (ft in)" />
+
+                    <RadioButton
+                        android:id="@+id/radioGroupSettingHeightButtonM"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Meters (m)" />
+                </RadioGroup>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayout01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_style"
+                android:text="Social Media Accounts" />
+
+            <View
+                android:id="@+id/View01"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/TextView01"
+                android:background="#000000" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/View01"
+                android:background="@drawable/underline_background"
+                android:orientation="horizontal"
+                android:padding="5dp" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/icon_small_facebook"
+                    android:drawablePadding="5dp"
+                    android:text="juanalejandrololo@gmail.com" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayout02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/TextView03"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_style"
+                android:text="Notifications" />
+
+            <View
+                android:id="@+id/View02"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/TextView03"
+                android:background="#000000" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/View02"
+                android:background="@drawable/underline_background"
+                android:orientation="vertical"
+                android:padding="5dp" >
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" >
+
+                    <TextView
+                        android:id="@+id/TextView02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Blood Pressure"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                    <ToggleButton
+                        android:id="@+id/ToggleButton01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:onClick="onToggleClicked"
+                        android:textOff="OFF"
+                        android:textOn="ON" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/textViewActivitySharing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Blood Sugar"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                    <ToggleButton
+                        android:id="@+id/togglebuttonActivitySharing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:onClick="onToggleClicked"
+                        android:textOff="OFF"
+                        android:textOn="ON" />
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Update Profile" />
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Log Out" />
+    </LinearLayout>
+
+</ScrollView>

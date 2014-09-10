@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/textViewNoteReadTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Medicine Checklist"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textViewNoteReadLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Posted on " />
+
+            <TextView
+                android:id="@+id/textViewNoteReadDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="July 12, 2014"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/textViewNoteReadTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7:45AM"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewNoteReadFullNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="25dp"
+            android:text="NOTES" />
+
+        <View
+            android:id="@+id/NoteDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000000" />
+
+        <TextView
+            android:id="@+id/textViewNoteReadFullNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/lorem_ipsum" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            
+            
+
+	        <TextView
+	            android:id="@+id/textViewNoteReadImages"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:paddingTop="25dp"
+	            android:text="IMAGES" />
+	
+	        <View
+	            android:id="@+id/NoteImageDivider"
+	            android:layout_width="match_parent"
+	            android:layout_height="1dp"
+	            android:background="#000000" />
+
+            <ImageView
+                android:id="@+id/imageViewNoteReadHolder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/sample_image_pills" />
+
+        </LinearLayout>
+        
+    </LinearLayout>
+
+</ScrollView>

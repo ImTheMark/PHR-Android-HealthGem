@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" 
+    android:background="@drawable/container_dropshadow"
+    android:weightSum="5" 
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginBottom="3dp" 
+        android:background="@drawable/container_date">
+
+        <TextView
+            android:id="@+id/txtMonth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="June" 
+            android:textSize="15sp"
+            android:textStyle="bold" 
+            android:gravity="center"
+            android:background="#6BAFD1"
+            android:textColor="#0A090A"/>
+
+        <TextView
+            android:id="@+id/txtDay"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="20"
+            android:layout_marginTop="3dp"
+            android:textSize="20sp"
+            android:textStyle="bold"  
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3.5"
+        android:orientation="vertical"
+        android:layout_marginLeft="5dp" 
+        android:layout_marginTop="5dp">
+
+       <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <ProgressBar
+                    android:id="@+id/progressBar2"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="10dp"
+                    android:progress="80"
+                    android:progressDrawable="@drawable/customprogressbar" 
+                    />
+
+                <TextView
+                    android:id="@+id/txtProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1100/1565" 
+                    android:background="#00000000"
+			        android:layout_alignLeft="@id/progressBar2"
+			        android:layout_alignTop="@id/progressBar2"
+			        android:layout_alignRight="@id/progressBar2"
+			        android:layout_alignBottom="@id/progressBar2"
+			        android:textSize="12sp"
+		            android:gravity="center"
+		            android:textColor="#FCFBFA"/>
+
+            </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/foodPlaceholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_marginTop="2dp">
+
+            <TextView
+                android:id="@+id/lblFood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Food : "
+                android:textStyle="bold" 
+                android:textColor="#0A090A"/>
+            
+            <TextView
+                android:id="@+id/txtPosSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/lblFood"
+                android:text=" + " />
+
+            <TextView
+                android:id="@+id/txtFood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/txtPosSign"
+                android:text="+1500" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/txtFood"
+                android:text=" cal" />
+
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/actPlaceholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/lblAct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Activity : "
+                android:textStyle="bold" 
+                android:textColor="#0A090A"/>
+            
+            <TextView
+                android:id="@+id/txtSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/lblAct"
+                android:text=" - " />
+
+            <TextView
+                android:id="@+id/txtAct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/txtSign"
+                android:text="80" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/txtAct"
+                android:text=" cal" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="0.5" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:src="@drawable/icon_next_blue" 
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+</LinearLayout>

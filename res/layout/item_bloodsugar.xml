@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" 
+    android:padding="10dp"
+    android:weightSum="5" 
+    android:background="@drawable/container_dropshadow">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginBottom="3dp" >
+
+        <ImageView
+            android:id="@+id/glucoseimage"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:src="@drawable/activitybloodsugar_smileygood" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3.5"
+        android:orientation="vertical"
+        android:layout_marginLeft="5dp" 
+        android:layout_marginTop="5dp">
+
+       <LinearLayout
+           		android:id="@+id/glucosedateholder"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"  
+                android:weightSum="5">
+
+                <com.example.phr.AutoResizeTextView 
+                    android:id="@+id/txtglucosedate"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="06 20 2014" 
+                    android:textSize="15sp"
+                    android:textColor="#9e9898"
+                    android:layout_weight="3"
+                    android:maxLines="1"/>
+
+                <com.example.phr.AutoResizeTextView
+                    android:id="@+id/txtglucosetime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="2:40 pm" 
+                    android:layout_toRightOf="@id/txtglucosedate"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="#9e9898"
+                    android:layout_weight="2"
+                    android:maxLines="1"/>
+
+            </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/glucoseholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" >
+
+            <TextView
+                android:id="@+id/lblGlucose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Glucose Level : "
+                android:textStyle="bold" 
+                android:textColor="#0A090A"/>
+
+            <TextView
+                android:id="@+id/txtGlucose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/lblGlucose"
+                android:text="4.5" />
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/typePlaceholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/lblType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type : "
+                android:textStyle="bold" 
+                android:textColor="#0A090A"/>
+
+            <TextView
+                android:id="@+id/txtType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/lblType"
+                android:text="Before Meal" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

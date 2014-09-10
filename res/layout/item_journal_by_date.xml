@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" 
+    android:background="@drawable/container_dropshadow"
+    android:weightSum="5" 
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginBottom="3dp" 
+        android:background="@drawable/container_date">
+
+        <TextView
+            android:id="@+id/txtMonth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="June" 
+            android:textSize="15sp"
+            android:textStyle="bold" 
+            android:gravity="center"
+            android:background="#EC7703"
+            android:textColor="#0A090A"/>
+
+        <TextView
+            android:id="@+id/txtDay"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="20"
+            android:layout_marginTop="3dp"
+            android:textSize="20sp"
+            android:textStyle="bold"  
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3.5"
+        android:orientation="vertical"
+        android:layout_marginLeft="5dp" 
+        android:layout_marginTop="5dp">
+
+        <RelativeLayout
+            android:id="@+id/weightPlaceholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/lblWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/journal_weight"
+                android:textStyle="bold" 
+                android:textColor="#0A090A"/>
+
+            <TextView
+                android:id="@+id/txtWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/lblWeight"
+                android:text="100" />
+
+            <TextView
+                android:id="@+id/lblWeightMetric"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/txtWeight"
+                android:text="@string/journal_weight_metric" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/caloriesPlaceholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/lblCalories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/journal_calories"
+                android:textStyle="bold" 
+                android:textColor="#0A090A"/>
+
+            <TextView
+                android:id="@+id/txtCalories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/lblCalories"
+                android:text="100" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/activitiesPlaceholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/lblActivities"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/journal_activities"
+                android:textStyle="bold" 
+                android:textColor="#0A090A"/>
+
+            <TextView
+                android:id="@+id/txtActivities"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/lblActivities"
+                android:text="Jogging, Bicycling" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="0.5" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:src="@drawable/icon_next_orange" 
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+</LinearLayout>

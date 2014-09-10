@@ -1,0 +1,643 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#E8E8E8" >
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:background="#E8E8E8"
+    >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Food Posts from Facebook"
+        android:layout_marginTop="7dp"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/container_dropshadow"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="5" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/TextView06"
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="3"
+                        android:maxLines="1"
+                        android:text="06-20-2014" />
+
+                    <TextView
+                        android:id="@+id/TextView07"
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="2"
+                        android:maxLines="1"
+                        android:text="11:20 am" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_weight="2"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/TextView10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="My breakfast scramble egg yum yum! :) "
+                        android:textColor="#050505" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/TextView08"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Did you eat? " />
+
+                    <EditText
+                        android:id="@+id/EditText04"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="8"
+                        android:text="scramble egg "
+                        android:textColor="#050505" />
+
+                    <EditText
+                        android:id="@+id/EditText03"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="5"
+                        android:text="1 g"
+                        android:textColor="#050505" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_weight="2"
+                    android:weightSum="6" >
+
+                    <ImageView
+                        android:id="@+id/ImageView02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/activityretrievepost_icon_check" />
+
+                    <TextView
+                        android:id="@+id/TextView09"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Confirm"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#050505" />
+
+                    <ImageView
+                        android:id="@+id/ImageView02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/activityretrievepost_icon_edit" />
+
+                    <TextView
+                        android:id="@+id/TextView09"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Edit"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#050505" />
+
+                    <ImageView
+                        android:id="@+id/ImageView02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/activityretrievepost_icon_delete" />
+
+                    <TextView
+                        android:id="@+id/TextView09"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ignore"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#050505" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/container_dropshadow"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="5" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/TextView01"
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="3"
+                        android:maxLines="1"
+                        android:text="06-20-2014" />
+
+                    <TextView
+                        android:id="@+id/TextView02"
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="2"
+                        android:maxLines="1"
+                        android:text="11:20 am" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_weight="2"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/TextView05"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="It so delicious here! - at Mang Inasal"
+                        android:textColor="#050505" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/TextView03"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Did you eat at? " />
+
+                    <EditText
+                        android:id="@+id/EditText02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="8"
+                        android:text="Mang Inasal"
+                        android:textColor="#050505" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_weight="2"
+                    android:weightSum="6" >
+
+                    <ImageView
+                        android:id="@+id/ImageView01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/activityretrievepost_icon_check" />
+
+                    <TextView
+                        android:id="@+id/TextView04"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Confirm"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#050505" />
+
+                    <ImageView
+                        android:id="@+id/ImageView01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/activityretrievepost_icon_edit" />
+
+                    <TextView
+                        android:id="@+id/TextView04"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Add Food"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#050505" />
+
+                    <ImageView
+                        android:id="@+id/ImageView01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/activityretrievepost_icon_delete" />
+
+                    <TextView
+                        android:id="@+id/TextView04"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ignore"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#050505" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        
+		<LinearLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal"
+		    android:background="@drawable/container_dropshadow"
+		    android:padding="5dp">
+		    <LinearLayout
+		        android:layout_width="fill_parent"
+		        android:layout_height="match_parent"
+		        android:orientation="vertical" 
+		        android:weightSum="5" >
+		
+		        <LinearLayout
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="2"
+		            android:orientation="horizontal" 
+		            android:layout_marginLeft="10dp"
+		            android:layout_marginTop="10dp" >
+		
+		            <TextView 
+		                android:id="@+id/txtFBDate"
+		                android:layout_width="match_parent" 
+		                android:layout_height="fill_parent"
+		                android:text="06-20-2014" 
+		                android:maxLines="1"
+		                android:layout_weight="3" />
+		
+		            <TextView 
+		                android:id="@+id/txtFBTime"
+		                android:layout_width="match_parent" 
+		                android:layout_height="fill_parent"
+		                android:layout_marginLeft="10dp" 
+		                android:text="11:20 am" 
+		                android:maxLines="1"
+		                android:layout_weight="2"/>
+		
+		        </LinearLayout>
+		
+		        <LinearLayout
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:orientation="vertical"
+		            android:layout_marginTop="3dp" 
+		            android:layout_marginLeft="10dp" >
+		
+		            <TextView
+		                android:id="@+id/fbStatus"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:text="Chocolate cake is sooo yummy! nom nom " 
+		                android:textColor="#050505"/>
+		
+		        </LinearLayout>
+		         <LinearLayout
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:orientation="horizontal"
+		            android:layout_marginTop="3dp" 
+		            android:layout_marginLeft="10dp" >
+		
+		            <TextView
+		                android:id="@+id/guess"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:text="Did you eat? " />
+		
+		            <EditText
+		                android:id="@+id/what"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:layout_weight="1"
+		                android:ems="8" 
+		                android:textColor="#050505"
+		                android:text="Chocolate cake">
+		
+		                <requestFocus />
+		            </EditText>
+		
+		            <EditText
+		                android:id="@+id/quantity"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:layout_weight="1"
+		                android:ems="5" 
+		                android:textColor="#050505"
+		                android:text="1 slice"/>
+		
+		        </LinearLayout>
+		
+		         <LinearLayout
+		             android:layout_width="match_parent"
+		             android:layout_height="wrap_content"
+		             android:weightSum="6"
+		             android:layout_marginTop="7dp" >
+		
+		             <ImageView
+		                 android:id="@+id/imageView1"
+		                 android:layout_width="wrap_content"
+		                 android:layout_height="wrap_content"
+		                 android:src="@drawable/activityretrievepost_icon_check" 
+		                 android:layout_weight="1"/>
+		
+		             <TextView
+		                 android:id="@+id/textView2"
+		                 android:layout_width="wrap_content"
+		                 android:layout_height="wrap_content"
+		                 android:text="Confirm"
+		                 android:textColor="#050505"
+		                 android:layout_weight="1"
+		                 android:textAppearance="?android:attr/textAppearanceMedium" />
+		             <ImageView
+		                 android:id="@+id/imageView1"
+		                 android:layout_width="wrap_content"
+		                 android:layout_height="wrap_content"
+		                 android:src="@drawable/activityretrievepost_icon_edit" 
+		                 android:layout_weight="1"/>
+		
+		             <TextView
+		                 android:id="@+id/textView2"
+		                 android:layout_width="wrap_content"
+		                 android:layout_height="wrap_content"
+		                 android:text="Edit"
+		                 android:textColor="#050505"
+		                 android:layout_weight="1"
+		                 android:textAppearance="?android:attr/textAppearanceMedium" />
+		             <ImageView
+		                 android:id="@+id/imageView1"
+		                 android:layout_width="wrap_content"
+		                 android:layout_height="wrap_content"
+		                 android:src="@drawable/activityretrievepost_icon_delete" 
+		                 android:layout_weight="1"/>
+		
+		             <TextView
+		                 android:id="@+id/textView2"
+		                 android:layout_width="wrap_content"
+		                 android:layout_height="wrap_content"
+		                 android:text="Ignore"
+		                 android:textColor="#050505"
+		                 android:layout_weight="1"
+		                 android:textAppearance="?android:attr/textAppearanceMedium" />
+		
+		         </LinearLayout>
+		
+		    </LinearLayout>
+		
+		</LinearLayout>
+		        
+        
+        
+        
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listViewFood"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content" >
+    </ListView>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Activity Posts from Facebook"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ListView
+        android:id="@+id/listViewActivity"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content" >
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/container_dropshadow"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="5" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/TextView11"
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="3"
+                        android:maxLines="1"
+                        android:text="06-20-2014" />
+
+                    <TextView
+                        android:id="@+id/TextView12"
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="2"
+                        android:maxLines="1"
+                        android:text="11:20 am" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_weight="2"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/TextView15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Running at Rizal Park! Yay :)"
+                        android:textColor="#050505" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/TextView13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Did you perform? " />
+
+                    <EditText
+                        android:id="@+id/EditText06"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="8"
+                        android:text="running"
+                        android:textColor="#050505" />
+
+                    <EditText
+                        android:id="@+id/EditText05"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="5"
+                        android:text="1 hr"
+                        android:textColor="#050505" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_weight="2"
+                    android:weightSum="6" >
+
+                    <ImageView
+                        android:id="@+id/ImageView03"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/activityretrievepost_icon_check" />
+
+                    <TextView
+                        android:id="@+id/TextView14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Confirm"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#050505" />
+
+                    <ImageView
+                        android:id="@+id/ImageView03"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/activityretrievepost_icon_edit" />
+
+                    <TextView
+                        android:id="@+id/TextView14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Edit"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#050505" />
+
+                    <ImageView
+                        android:id="@+id/ImageView03"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/activityretrievepost_icon_delete" />
+
+                    <TextView
+                        android:id="@+id/TextView14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ignore"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#050505" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+    
+</ScrollView>

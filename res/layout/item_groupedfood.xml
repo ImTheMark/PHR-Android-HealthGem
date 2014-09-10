@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" 
+    android:background="@drawable/container_dropshadow"
+    android:weightSum="5" 
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginBottom="3dp" 
+        android:background="@drawable/container_date">
+
+        <TextView
+            android:id="@+id/txtMonth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="June" 
+            android:textSize="15sp"
+            android:textStyle="bold" 
+            android:gravity="center"
+            android:background="#26B594"
+            android:textColor="#0A090A"/>
+
+        <TextView
+            android:id="@+id/txtDay"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="20"
+            android:layout_marginTop="3dp"
+            android:textSize="20sp"
+            android:textStyle="bold"  
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3.5"
+        android:orientation="horizontal"
+        android:weightSum="4" 
+        android:layout_marginLeft="5dp" 
+        android:layout_marginTop="5dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical" 
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/foodCal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="1230"
+                android:gravity="center"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="3dp"
+                android:text="cal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical" 
+            android:layout_weight="1">
+            
+            
+            <TextView
+                android:id="@+id/foodProtein"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="1230"
+                android:gravity="center"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="3dp"
+                android:text="protein" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical" 
+            android:layout_weight="1">
+            
+            
+            <TextView
+                android:id="@+id/foodFat"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="789"
+                android:gravity="center"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="3dp"
+                android:text="fat" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1" >
+            
+            
+            <TextView
+                android:id="@+id/foodCarbs"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="678"
+                android:gravity="center"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="3dp"
+                android:text="carbs" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="0.5" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:src="@drawable/icon_next_blue" 
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+</LinearLayout>
