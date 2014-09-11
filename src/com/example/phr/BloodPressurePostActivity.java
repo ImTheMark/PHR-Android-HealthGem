@@ -9,7 +9,6 @@ import java.util.Calendar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -53,10 +52,11 @@ public class BloodPressurePostActivity extends Activity {
 		textViewbloodpressureStatus = (TextView) findViewById(R.id.textViewbloodpressureStatus);
 		textViewBloodPressureCalendar = (TextView) findViewById(R.id.textViewBloodPressureCalendar);
 		textViewBloodPressureClock = (TextView) findViewById(R.id.textViewBloodPressureClock);
-		
+
 		DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
 		Calendar calobj = Calendar.getInstance();
-		textViewBloodPressureCalendar.setText(dateFormat.format(calobj.getTime()));
+		textViewBloodPressureCalendar.setText(dateFormat.format(calobj
+				.getTime()));
 		dateFormat = new SimpleDateFormat("HH:mm:ss");
 		textViewBloodPressureClock.setText(dateFormat.format(calobj.getTime()));
 	}
@@ -93,9 +93,15 @@ public class BloodPressurePostActivity extends Activity {
 
 		try {
 			SimpleDateFormat fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss");
-			Date dateAdded = (Date) fmt.parse(textViewBloodPressureCalendar.getText().toString()+" "+textViewBloodPressureClock.getText().toString());	
-			
-			BloodPressure bp = new BloodPressure(dateAdded, textViewbloodpressureStatus.getText().toString(), "test-image", systolicPicker.getCurrent(), diastolicPicker.getCurrent());
+			Date dateAdded = new Date(fmt.parse(
+					textViewBloodPressureCalendar.getText().toString() + " "
+							+ textViewBloodPressureClock.getText().toString())
+					.getTime());
+
+			BloodPressure bp = new BloodPressure(dateAdded,
+					textViewbloodpressureStatus.getText().toString(),
+					"test-image", systolicPicker.getCurrent(),
+					diastolicPicker.getCurrent());
 
 			BloodPressureService bpService = new BloodPressureServiceImpl();
 			bpService.addBloodPressure(bp);
