@@ -1,7 +1,6 @@
 package com.example.phr.model;
 
 import java.sql.Date;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public abstract class TrackerEntry {
@@ -38,7 +37,8 @@ public abstract class TrackerEntry {
 	private void parseDateTime() {
 		SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
 		date = formatter.format(dateAdded);
-		time = String.valueOf(dateAdded.getTime());
+		formatter = new SimpleDateFormat("HH:mm:ss");
+		time = formatter.format(dateAdded);
 	}
 
 	public Integer getEntryID() {

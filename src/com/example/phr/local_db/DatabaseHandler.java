@@ -152,7 +152,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 						"MMM dd, yyyy HH:mm:ss");
 				Date dateAdded;
 				try {
-					dateAdded = (Date) fmt.parse(date + " " + time);
+					dateAdded = new Date(fmt.parse(date + " " + time).getTime());
 					BloodPressure bp = new BloodPressure(dateAdded, status,
 							"test-image", systolic, diastolic);
 					// Adding contact to list
