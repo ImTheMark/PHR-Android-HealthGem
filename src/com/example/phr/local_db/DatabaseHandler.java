@@ -37,16 +37,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	private static final String KEY_USERNAME = "username";
 	private static final String KEY_CLIENTID = "clientID";
 	private static final String KEY_CLIENTPASSWORD = "clientPassword";
-    
-    private static final DatabaseHandler dbHandler = new DatabaseHandler(HealthGem.getContext());;
+
+	private static final DatabaseHandler dbHandler = new DatabaseHandler(
+			HealthGem.getContext());;
 
 	public DatabaseHandler(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
-    
-    public static DatabaseHandler getDBHandler(){
-    	return dbHandler;
-    }
+
+	public static DatabaseHandler getDBHandler() {
+		return dbHandler;
+	}
 
 	// Creating Tables
 	@Override
@@ -146,12 +147,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				int systolic = Integer.parseInt(cursor.getString(3));
 				int diastolic = Integer.parseInt(cursor.getString(4));
 				String status = cursor.getString(5);
-				
-				SimpleDateFormat fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss");
+
+				SimpleDateFormat fmt = new SimpleDateFormat(
+						"MMM dd, yyyy HH:mm:ss");
 				Date dateAdded;
 				try {
-					dateAdded = (Date) fmt.parse(date+" "+time);
-					BloodPressure bp = new BloodPressure(dateAdded, status, "test-image", systolic, diastolic);
+					dateAdded = (Date) fmt.parse(date + " " + time);
+					BloodPressure bp = new BloodPressure(dateAdded, status,
+							"test-image", systolic, diastolic);
 					// Adding contact to list
 					bpList.add(bp);
 				} catch (ParseException e) {
@@ -205,6 +208,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				EncryptionHandler.encrypt(c.getClientPassword()));
 		System.out.println("Have set client id and password");
 		db.insert(TABLE_CLIENT, null, values);
-		//db.close();
+		// db.close();
 	}
 }
