@@ -67,7 +67,7 @@ public class NewStatusActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activitynewstatus_menu_status_post, menu);
+		getMenuInflater().inflate(R.menu.menu_status_post, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 

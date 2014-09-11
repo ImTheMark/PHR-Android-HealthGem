@@ -29,6 +29,7 @@
         <activity android:name="com.example.phr.ActivitiesTrackerActivity" />
         <activity android:name="com.example.phr.AddActionActivity" />
         <activity android:name="com.example.phr.BloodPressureTrackerActivity" />
+        <activity android:name="com.example.phr.BloodPressureTrackerPostActivity" />
         <activity android:name="com.example.phr.BloodSugarTrackerActivity" />
         <activity android:name="com.example.phr.CalorieBreakdownTrackerActivity" />
         <activity android:name="com.example.phr.CalorieTrackerActivity" />

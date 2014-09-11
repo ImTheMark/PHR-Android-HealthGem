@@ -1,6 +1,8 @@
-package com.example.model;
+package com.example.phr.model;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public abstract class TrackerEntry {
 
@@ -10,6 +12,8 @@ public abstract class TrackerEntry {
 	Date dateAdded;
 	String status;
 	String encodedImage;
+	String date;
+	String time;
 
 	public TrackerEntry(Integer entryID, Integer userID, Integer fbPostID,
 			Date dateAdded, String status, String encodedImage) {
@@ -20,6 +24,7 @@ public abstract class TrackerEntry {
 		this.dateAdded = dateAdded;
 		this.status = status;
 		this.encodedImage = encodedImage;
+		parseDateTime();
 	}
 
 	public TrackerEntry(Date dateAdded, String status, String encodedImage) {
@@ -27,6 +32,13 @@ public abstract class TrackerEntry {
 		this.dateAdded = dateAdded;
 		this.status = status;
 		this.encodedImage = encodedImage;
+		parseDateTime();
+	}
+
+	private void parseDateTime() {
+		SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
+		date = formatter.format(dateAdded);
+		time = String.valueOf(dateAdded.getTime());
 	}
 
 	public Integer getEntryID() {
@@ -75,6 +87,14 @@ public abstract class TrackerEntry {
 
 	public void setEncodedImage(String encodedImage) {
 		this.encodedImage = encodedImage;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public String getTime() {
+		return time;
 	}
 
 }

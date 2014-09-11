@@ -1,5 +1,8 @@
 package com.example.phr.local_db;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,15 +141,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		// looping through all rows and adding to list
 		if (cursor.moveToFirst()) {
 			do {
-				BloodPressure bp = new BloodPressure();
-				// bp.setId(Integer.parseInt(cursor.getString(0)));
-				bp.setDate(cursor.getString(1));
-				bp.setTime(cursor.getString(2));
-				bp.setSystolic(Integer.parseInt(cursor.getString(3)));
-				bp.setDiastolic(Integer.parseInt(cursor.getString(4)));
-				bp.setStatus(cursor.getString(5));
-				// Adding contact to list
-				bpList.add(bp);
+				String date = cursor.getString(1);
+				String time = cursor.getString(2);
+				int systolic = Integer.parseInt(cursor.getString(3));
+				int diastolic = Integer.parseInt(cursor.getString(4));
+				String status = cursor.getString(5);
+				
+				SimpleDateFormat fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss");
+				Date dateAdded;
+				try {
+					dateAdded = (Date) fmt.parse(date+" "+time);
+					BloodPressure bp = new BloodPressure(dateAdded, status, "test-image", systolic, diastolic);
+					// Adding contact to list
+					bpList.add(bp);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} while (cursor.moveToNext());
 		}
 

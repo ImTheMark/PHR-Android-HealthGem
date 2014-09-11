@@ -91,10 +91,10 @@ public class BloodPressureTrackerActivity extends Activity{
 		mBtnBloodPressurePost = (LinearLayout) findViewById(R.id.bloodpressurePost);
 		mBtnBloodPressurePost.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {/*
+			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(),
 						BloodPressurePostActivity.class);
-				startActivity(intent);*/
+				startActivity(intent);
 			}
 		});
 		
