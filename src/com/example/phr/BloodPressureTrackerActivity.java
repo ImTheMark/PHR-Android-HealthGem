@@ -1,5 +1,6 @@
 package com.example.phr;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,9 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.example.phr.adapter.BloodPressureAdapter;
 import com.example.phr.local_db.DatabaseHandler;
-import com.example.phr.model.BloodPressure;
+import com.example.phr.mobile.daoimpl.BloodPressureDaoImpl;
+import com.example.phr.mobile.models.MobileBloodPressure;
+import com.example.phr.tools.DateTimeParser;
 
 public class BloodPressureTrackerActivity extends Activity{
 
@@ -37,7 +40,7 @@ public class BloodPressureTrackerActivity extends Activity{
 	ListView mBloodPressureList;
 	BloodPressureAdapter bloodPressureAdapter;
 	LinearLayout mBtnBloodPressurePost;
-	List<BloodPressure> list;
+	List<MobileBloodPressure> list;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -49,7 +52,7 @@ public class BloodPressureTrackerActivity extends Activity{
 		mBloodPressureList = (ListView) findViewById(R.id.listView_bloodpressure);
 				
 		// FAKE DATA
-		list = new ArrayList<BloodPressure>();
+		list = new ArrayList<MobileBloodPressure>();
 /*		BloodPressure data7 = new BloodPressure(1,140,90,"May 31, 2014","3:40pm",null,getResources().getDrawable(R.drawable.bloodpressure_warning));
 		
 		BloodPressure data6 = new BloodPressure(2,134,90,"Jun 07, 2014","1:40pm",null,getResources().getDrawable(R.drawable.bloodpressure_warning));
@@ -71,9 +74,14 @@ public class BloodPressureTrackerActivity extends Activity{
 		list.add(data6);
 		list.add(data7);*/
 
-		DatabaseHandler db = new DatabaseHandler(this);
-		list = db.getAllBloodPressure();
-		for(BloodPressure bp:list){
+		BloodPressureDaoImpl bpDaoImpl = new BloodPressureDaoImpl();
+		try {
+			list = bpDaoImpl.getAllBloodPressure();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(MobileBloodPressure bp:list){
 			//bp.setImage(getResources().getDrawable(R.drawable.bloodpressure_warning));
 		}
 		
@@ -107,8 +115,8 @@ public class BloodPressureTrackerActivity extends Activity{
 		
 		ArrayList<String> bloodPressureMonth = new ArrayList<String>();
 		
-		for(BloodPressure bp:list){
-			bloodPressureMonth.add(bp.getDate().toString());
+		for(MobileBloodPressure bp:list){
+			bloodPressureMonth.add(DateTimeParser.getMonth(bp.getDateAdded()));
 		}
 		
 		//int[] bloodPressurex = { 1, 2, 3, 4, 5, 6, 7};
@@ -220,8 +228,17 @@ public class BloodPressureTrackerActivity extends Activity{
 		super.onResume();
 		DatabaseHandler db = new DatabaseHandler(this);
 		Log.e("bp: ", "resume ..");
-		list = db.getAllBloodPressure();
-		for(BloodPressure bp:list){
+		
+		BloodPressureDaoImpl bpDaoImpl = new BloodPressureDaoImpl();
+		try {
+			list = bpDaoImpl.getAllBloodPressure();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		for(MobileBloodPressure bp:list){
 			//bp.setImage(getResources().getDrawable(R.drawable.bloodpressure_warning));
 		}
 		bloodPressureAdapter = new BloodPressureAdapter(getApplicationContext(), list);
@@ -236,8 +253,8 @@ public class BloodPressureTrackerActivity extends Activity{
 			
 			ArrayList<String> bloodPressureMonth = new ArrayList<String>();
 			
-			for(BloodPressure bp:list){
-				bloodPressureMonth.add(bp.getDate().toString());
+			for(MobileBloodPressure bp:list){
+				bloodPressureMonth.add(DateTimeParser.getMonth(bp.getDateAdded()));
 			}
 			
 			//int[] bloodPressurex = { 1, 2, 3, 4, 5, 6, 7};

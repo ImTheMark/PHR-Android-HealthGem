@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.WebServerException;
-import com.example.phr.model.BloodPressure;
+import com.example.phr.mobile.models.MobileBloodPressure;
 import com.example.phr.tools.GSONConverter;
 import com.example.phr.tools.JSONRequestCreator;
 import com.example.phr.web.dao.BloodPressureDao;
@@ -23,7 +23,7 @@ public class BloodPressureDaoImpl extends BasicDaoImpl implements
 	}
 
 	@Override
-	public void addBloodPressure(BloodPressure bloodPressure)
+	public void addBloodPressure(MobileBloodPressure bloodPressure)
 			throws WebServerException, OutdatedAccessTokenException {
 		String command = "tracker/addBloodPressure";
 

@@ -2,11 +2,11 @@ package com.example.phr.web.dao;
 
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.WebServerException;
-import com.example.phr.model.BloodPressure;
+import com.example.phr.mobile.models.MobileBloodPressure;
 
 public interface BloodPressureDao {
 
-	void addBloodPressure(BloodPressure bloodPressure)
+	void addBloodPressure(MobileBloodPressure bloodPressure)
 			throws WebServerException, OutdatedAccessTokenException;
 
 }

@@ -9,7 +9,6 @@ import java.util.Calendar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,8 +18,8 @@ import android.widget.TextView;
 
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
-import com.example.phr.local_db.DatabaseHandler;
-import com.example.phr.model.BloodPressure;
+import com.example.phr.mobile.daoimpl.BloodPressureDaoImpl;
+import com.example.phr.mobile.models.MobileBloodPressure;
 import com.example.phr.service.BloodPressureService;
 import com.example.phr.serviceimpl.BloodPressureServiceImpl;
 
@@ -92,21 +91,26 @@ public class BloodPressurePostActivity extends Activity {
 			OutdatedAccessTokenException {
 
 		try {
-			SimpleDateFormat fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss");
+			SimpleDateFormat fmt = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
 			Date dateAdded = new Date(fmt.parse(
 					textViewBloodPressureCalendar.getText().toString() + " "
 							+ textViewBloodPressureClock.getText().toString())
 					.getTime());
 
-			BloodPressure bp = new BloodPressure(dateAdded,
+			MobileBloodPressure bp = new MobileBloodPressure(dateAdded,
 					textViewbloodpressureStatus.getText().toString(),
 					"test-image", systolicPicker.getCurrent(),
 					diastolicPicker.getCurrent());
 
+			// WEB SERVER INSERT
 			BloodPressureService bpService = new BloodPressureServiceImpl();
 			bpService.addBloodPressure(bp);
-			Log.e("Insert: ", "Inserting ..");
-			DatabaseHandler.getDBHandler().addBloodPressure(bp);
+			
+			
+			// LOCAL DB INSERT
+			bp.setEntryID(12345);
+			BloodPressureDaoImpl bpDaoImpl = new BloodPressureDaoImpl();
+			bpDaoImpl.add(bp);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

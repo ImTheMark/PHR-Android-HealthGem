@@ -3,7 +3,7 @@ package com.example.phr.model;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
-public abstract class TrackerEntry {
+public abstract class old_TrackerEntry {
 
 	Integer entryID;
 	Integer userID;
@@ -14,7 +14,7 @@ public abstract class TrackerEntry {
 	String date;
 	String time;
 
-	public TrackerEntry(Integer entryID, Integer userID, Integer fbPostID,
+	public old_TrackerEntry(Integer entryID, Integer userID, Integer fbPostID,
 			Date dateAdded, String status, String encodedImage) {
 		super();
 		this.entryID = entryID;
@@ -26,7 +26,7 @@ public abstract class TrackerEntry {
 		parseDateTime();
 	}
 
-	public TrackerEntry(Date dateAdded, String status, String encodedImage) {
+	public old_TrackerEntry(Date dateAdded, String status, String encodedImage) {
 		super();
 		this.dateAdded = dateAdded;
 		this.status = status;

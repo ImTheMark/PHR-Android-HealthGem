@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.example.phr.BloodPressureTrackerActivity;
 import com.example.phr.BloodSugarTrackerActivity;
 import com.example.phr.R;
-import com.example.phr.model.BloodPressure;
 import com.example.phr.model.BloodSugar;
 
 public class BloodSugarAdapter extends BaseAdapter{

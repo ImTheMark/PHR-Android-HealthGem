@@ -2,12 +2,12 @@ package com.example.phr.model;
 
 import java.sql.Date;
 
-public class BloodPressure extends TrackerEntry {
+public class old_BloodPressure extends old_TrackerEntry {
 
 	int systolic;
 	int diastolic;
 
-	public BloodPressure(Integer entryID, Integer userID, Integer fbPostID,
+	public old_BloodPressure(Integer entryID, Integer userID, Integer fbPostID,
 			Date dateAdded, String status, String encodedImage, int systolic,
 			int diastolic) {
 		super(entryID, userID, fbPostID, dateAdded, status, encodedImage);
@@ -15,7 +15,7 @@ public class BloodPressure extends TrackerEntry {
 		this.diastolic = diastolic;
 	}
 
-	public BloodPressure(Date dateAdded, String status, String encodedImage,
+	public old_BloodPressure(Date dateAdded, String status, String encodedImage,
 			int systolic, int diastolic) {
 		super(dateAdded, status, encodedImage);
 		this.systolic = systolic;

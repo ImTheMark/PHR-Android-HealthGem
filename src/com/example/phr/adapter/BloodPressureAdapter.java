@@ -14,14 +14,15 @@ import android.widget.TextView;
 
 import com.example.phr.BloodPressureTrackerActivity;
 import com.example.phr.R;
-import com.example.phr.model.BloodPressure;
+import com.example.phr.mobile.models.MobileBloodPressure;
+import com.example.phr.tools.DateTimeParser;
 
 public class BloodPressureAdapter extends BaseAdapter{
 
 	
 
 	private Context mContext;
-	private List<BloodPressure> mListOfBloodPressure;
+	private List<MobileBloodPressure> mListOfBloodPressure;
 
 	private static class ViewHolder {
 		TextView sys;
@@ -32,7 +33,7 @@ public class BloodPressureAdapter extends BaseAdapter{
 	}
 	
 	
-	public BloodPressureAdapter(Context aContext, List<BloodPressure> aListOfBloodPressures) {
+	public BloodPressureAdapter(Context aContext, List<MobileBloodPressure> aListOfBloodPressures) {
 		mListOfBloodPressure = aListOfBloodPressures;
 		mContext = aContext;
 	}
@@ -77,11 +78,11 @@ public class BloodPressureAdapter extends BaseAdapter{
 		viewHolder = (ViewHolder) convertView.getTag();
 		viewHolder.sys.setText(String.valueOf(mListOfBloodPressure.get(position).getSystolic()));
 		viewHolder.dia.setText(String.valueOf(mListOfBloodPressure.get(position).getDiastolic()));
-		viewHolder.date.setText(String.valueOf(mListOfBloodPressure.get(
-				position).getDate()));
+		viewHolder.date.setText(String.valueOf(DateTimeParser.getDate(mListOfBloodPressure.get(
+				position).getDateAdded())));
 
-		viewHolder.time.setText(String.valueOf(mListOfBloodPressure.get(
-				position).getTime()));
+		viewHolder.time.setText(String.valueOf(DateTimeParser.getTime(mListOfBloodPressure.get(
+				position).getDateAdded())));
 		
 		/*viewHolder.image.setImageDrawable(mListOfBloodPressure.get(position)
 				.getImage());*/

@@ -13,30 +13,32 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.phr.application.HealthGem;
+import com.example.phr.mobile.models.MobileBloodPressure;
 import com.example.phr.model.AccessToken;
-import com.example.phr.model.BloodPressure;
 import com.example.phr.model.Client;
 import com.example.phr.tools.EncryptionHandler;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-	private static final int DATABASE_VERSION = 1;
-	private static final String DATABASE_NAME = "HealthGem";
-	private static final String TABLE_BLOODPRESSURE = "bloodpressure";
-	private static final String TABLE_ACCESSTOKEN = "accesstoken";
-	private static final String TABLE_CLIENT = "client";
+	public static final int DATABASE_VERSION = 1;
+	public static final String DATABASE_NAME = "HealthGem";
+	public static final String TABLE_ACCESSTOKEN = "accesstoken";
+	public static final String TABLE_CLIENT = "client";
+	
+	public static final String KEY_USERNAME = "username";
+	public static final String KEY_ACCESSTOKEN = "token";
+	public static final String KEY_CLIENTID = "clientID";
+	public static final String KEY_CLIENTPASSWORD = "clientPassword";
 
-	// Contacts Table Columns names
-	private static final String KEY_ID = "id";
-	private static final String KEY_DATE = "date";
-	private static final String KEY_TIME = "time";
-	private static final String KEY_SYSTOLIC = "systolic";
-	private static final String KEY_DIASTOLIC = "diastolic";
-	private static final String KEY_STATUS = "status";
-	private static final String KEY_ACCESSTOKEN = "token";
-	private static final String KEY_USERNAME = "username";
-	private static final String KEY_CLIENTID = "clientID";
-	private static final String KEY_CLIENTPASSWORD = "clientPassword";
+	// BP DATABASE
+	public static final String TABLE_BLOODPRESSURE = "bloodpressuretracker";
+	public static final String BP_ID = "id";
+	public static final String BP_DATEADDED = "dateAdded";
+	public static final String BP_SYSTOLIC = "systolic";
+	public static final String BP_DIASTOLIC = "diastolic";
+	public static final String BP_STATUS = "status";
+	public static final String BP_PHOTO = "photo";
+	public static final String BP_FBPOSTID = "fbPostID";
 
 	private static final DatabaseHandler dbHandler = new DatabaseHandler(
 			HealthGem.getContext());;
@@ -53,10 +55,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		String CREATE_BLOODPRESSURE_TABLE = "CREATE TABLE "
-				+ TABLE_BLOODPRESSURE + "(" + KEY_ID
-				+ " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DATE + " TEXT,"
-				+ KEY_TIME + " TEXT," + KEY_SYSTOLIC + " TEXT," + KEY_DIASTOLIC
-				+ " TEXT," + KEY_STATUS + " TEXT" + ")";
+				+ TABLE_BLOODPRESSURE + "(" 
+				+ BP_ID + " INTEGER PRIMARY KEY ," 
+				+ BP_DATEADDED + " TEXT,"
+				+ BP_SYSTOLIC + " INTEGER," 
+				+ BP_DIASTOLIC + " INTEGER," 
+				+ BP_STATUS + " TEXT,"
+				+ BP_PHOTO + " TEXT,"  
+				+ BP_FBPOSTID + " INTEGER"  
+				+ ")";
 		String CREATE_ACCESSTOKEN_TABLE = "CREATE TABLE " + TABLE_ACCESSTOKEN
 				+ "(" + KEY_ACCESSTOKEN + " TEXT, " + KEY_USERNAME + " TEXT"
 				+ ")";
@@ -112,61 +119,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		}
 		db.close();
 		return c;
-	}
-
-	// Adding new bp
-	public void addBloodPressure(BloodPressure bp) {
-		SQLiteDatabase db = dbHandler.getWritableDatabase();
-
-		ContentValues values = new ContentValues();
-		values.put(KEY_DATE, bp.getDate());
-		values.put(KEY_TIME, bp.getTime());
-		values.put(KEY_SYSTOLIC, bp.getSystolic());
-		values.put(KEY_DIASTOLIC, bp.getDiastolic());
-		values.put(KEY_STATUS, bp.getStatus());
-
-		// Inserting Row
-		db.insert(TABLE_BLOODPRESSURE, null, values);
-		db.close(); // Closing database connection
-	}
-
-	// Getting All Contacts
-	public List<BloodPressure> getAllBloodPressure() {
-		List<BloodPressure> bpList = new ArrayList<BloodPressure>();
-		// Select All Query
-		String selectQuery = "SELECT  * FROM " + TABLE_BLOODPRESSURE;
-
-		SQLiteDatabase db = dbHandler.getWritableDatabase();
-		Cursor cursor = db.rawQuery(selectQuery, null);
-
-		// looping through all rows and adding to list
-		if (cursor.moveToFirst()) {
-			do {
-				String date = cursor.getString(1);
-				String time = cursor.getString(2);
-				int systolic = Integer.parseInt(cursor.getString(3));
-				int diastolic = Integer.parseInt(cursor.getString(4));
-				String status = cursor.getString(5);
-
-				SimpleDateFormat fmt = new SimpleDateFormat(
-						"MMM dd, yyyy HH:mm:ss");
-				Date dateAdded;
-				try {
-					dateAdded = new Date(fmt.parse(date + " " + time).getTime());
-					BloodPressure bp = new BloodPressure(dateAdded, status,
-							"test-image", systolic, diastolic);
-					// Adding contact to list
-					bpList.add(bp);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} while (cursor.moveToNext());
-		}
-
-		// return contact list
-		db.close();
-		return bpList;
 	}
 
 	public void setAccessToken(AccessToken accessToken) {
