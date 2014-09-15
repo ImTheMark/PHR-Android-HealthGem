@@ -1,26 +1,28 @@
 package com.example.phr.tools;
 
 import android.annotation.SuppressLint;
+
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class DateTimeParser {
 
 	@SuppressLint("SimpleDateFormat")
 	public static String getDate(Date date){
-		SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
+		SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
 		return formatter.format(date);
 	}
 	
 	@SuppressLint("SimpleDateFormat")
 	public static String getTime(Date date){
-		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
 		return formatter.format(date);
 	}
 	
 	@SuppressLint("SimpleDateFormat")
 	public static String getMonth(Date date){
-		SimpleDateFormat formatter = new SimpleDateFormat("MMM");
+		SimpleDateFormat formatter = new SimpleDateFormat("MMM", Locale.ENGLISH);
 		return formatter.format(date);
 	}
 	

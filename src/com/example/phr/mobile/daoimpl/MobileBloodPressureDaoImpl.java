@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -21,7 +22,7 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 	public void add(MobileBloodPressure bp) {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler().getWritableDatabase();
 		
-		SimpleDateFormat fmt = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
 
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHandler.BP_ID, bp.getEntryID());
@@ -48,7 +49,7 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 		// looping through all rows and adding to list
 		if (cursor.moveToFirst()) {
 			do {
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
 				Date dateAdded = (Date) dateFormat.parse(cursor.getString(2));
 				
 				MobileBloodPressure bp = new MobileBloodPressure(cursor.getInt(1), dateAdded, cursor.getString(5),

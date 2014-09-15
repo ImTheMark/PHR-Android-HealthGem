@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -53,11 +54,11 @@ public class BloodPressurePostActivity extends Activity {
 		textViewBloodPressureCalendar = (TextView) findViewById(R.id.textViewBloodPressureCalendar);
 		textViewBloodPressureClock = (TextView) findViewById(R.id.textViewBloodPressureClock);
 
-		DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
+		DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
 		Calendar calobj = Calendar.getInstance();
 		textViewBloodPressureCalendar.setText(dateFormat.format(calobj
 				.getTime()));
-		dateFormat = new SimpleDateFormat("HH:mm:ss");
+		dateFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
 		textViewBloodPressureClock.setText(dateFormat.format(calobj.getTime()));
 	}
 
@@ -92,8 +93,8 @@ public class BloodPressurePostActivity extends Activity {
 			OutdatedAccessTokenException {
 
 		try {
-			DateFormat fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss");
-			Date dateAdded = (Date) fmt.parse(textViewBloodPressureCalendar.getText().toString() + " " + textViewBloodPressureClock.getText().toString());
+			DateFormat fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss", Locale.ENGLISH);
+			java.util.Date dateAdded = (java.util.Date) fmt.parse(textViewBloodPressureCalendar.getText().toString() + " " + textViewBloodPressureClock.getText().toString());
 
 			MobileBloodPressure bp = new MobileBloodPressure(DateTimeParser.getSQLDate(dateAdded),
 					textViewbloodpressureStatus.getText().toString(),
