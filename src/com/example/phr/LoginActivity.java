@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.phr.exceptions.IPBlockedException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.model.Client;
@@ -79,9 +78,6 @@ public class LoginActivity extends Activity {
 						}
 					} catch (ServiceException e) {
 						mTextValid.setText("Error in Internet Connection");
-					} catch (IPBlockedException e) {
-						mTextValid
-								.setText("IP is currently blocked, try again after 5 minutes");
 					}
 
 				}

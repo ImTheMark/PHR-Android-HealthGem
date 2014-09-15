@@ -6,7 +6,6 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.phr.exceptions.IPBlockedException;
 import com.example.phr.exceptions.UserAlreadyExistsException;
 import com.example.phr.exceptions.WebServerException;
 import com.example.phr.local_db.DatabaseHandler;
@@ -14,7 +13,6 @@ import com.example.phr.model.AccessToken;
 import com.example.phr.model.User;
 import com.example.phr.tools.EncryptionHandler;
 import com.example.phr.tools.GSONConverter;
-import com.example.phr.tools.Hasher;
 import com.example.phr.tools.JSONRequestCreator;
 import com.example.phr.web.dao.UserDao;
 
@@ -69,7 +67,7 @@ public class UserDaoImpl extends BasicDaoImpl implements UserDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean validateUser(String username, String password)
-			throws WebServerException, IPBlockedException {
+			throws WebServerException {
 
 		try {
 			String command = "user/validateLogin";
