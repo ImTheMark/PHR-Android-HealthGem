@@ -22,6 +22,7 @@ import com.example.phr.mobile.daoimpl.MobileBloodPressureDaoImpl;
 import com.example.phr.mobile.models.MobileBloodPressure;
 import com.example.phr.service.BloodPressureService;
 import com.example.phr.serviceimpl.BloodPressureServiceImpl;
+import com.example.phr.tools.DateTimeParser;
 
 public class BloodPressurePostActivity extends Activity {
 
@@ -91,13 +92,10 @@ public class BloodPressurePostActivity extends Activity {
 			OutdatedAccessTokenException {
 
 		try {
-			SimpleDateFormat fmt = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
-			Date dateAdded = new Date(fmt.parse(
-					textViewBloodPressureCalendar.getText().toString() + " "
-							+ textViewBloodPressureClock.getText().toString())
-					.getTime());
+			DateFormat fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss");
+			Date dateAdded = (Date) fmt.parse(textViewBloodPressureCalendar.getText().toString() + " " + textViewBloodPressureClock.getText().toString());
 
-			MobileBloodPressure bp = new MobileBloodPressure(dateAdded,
+			MobileBloodPressure bp = new MobileBloodPressure(DateTimeParser.getSQLDate(dateAdded),
 					textViewbloodpressureStatus.getText().toString(),
 					"test-image", systolicPicker.getCurrent(),
 					diastolicPicker.getCurrent());
@@ -108,7 +106,6 @@ public class BloodPressurePostActivity extends Activity {
 			
 			
 			// LOCAL DB INSERT
-			bp.setEntryID(12345);
 			MobileBloodPressureDaoImpl bpDaoImpl = new MobileBloodPressureDaoImpl();
 			bpDaoImpl.add(bp);
 

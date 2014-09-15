@@ -23,5 +23,10 @@ public class DateTimeParser {
 		SimpleDateFormat formatter = new SimpleDateFormat("MMM");
 		return formatter.format(date);
 	}
+	
+	@SuppressLint("SimpleDateFormat")
+	public static java.sql.Date getSQLDate(java.util.Date date){
+		return new java.sql.Date(date.getTime());
+	}
 
 }

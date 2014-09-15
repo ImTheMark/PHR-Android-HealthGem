@@ -20,10 +20,12 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 	@Override
 	public void add(MobileBloodPressure bp) {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler().getWritableDatabase();
+		
+		SimpleDateFormat fmt = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
 
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHandler.BP_ID, bp.getEntryID());
-		values.put(DatabaseHandler.BP_DATEADDED, bp.getDateAdded().toGMTString());
+		values.put(DatabaseHandler.BP_DATEADDED, fmt.format(bp.getDateAdded()));
 		values.put(DatabaseHandler.BP_SYSTOLIC, bp.getSystolic());
 		values.put(DatabaseHandler.BP_DIASTOLIC, bp.getDiastolic());
 		values.put(DatabaseHandler.BP_STATUS, bp.getStatus());
