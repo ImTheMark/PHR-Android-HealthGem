@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileBloodPressureDao;
 import com.example.phr.mobile.models.MobileBloodPressure;
+import com.example.phr.tools.DateTimeParser;
 import com.example.phr.web.models.FBPost;
 
 public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
@@ -50,9 +51,9 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 		if (cursor.moveToFirst()) {
 			do {
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-				Date dateAdded = (Date) dateFormat.parse(cursor.getString(2));
+				java.util.Date date = dateFormat.parse(cursor.getString(2));
 				
-				MobileBloodPressure bp = new MobileBloodPressure(cursor.getInt(1), dateAdded, cursor.getString(5),
+				MobileBloodPressure bp = new MobileBloodPressure(cursor.getInt(1), DateTimeParser.getSQLDate(date), cursor.getString(5),
 						cursor.getString(6), cursor.getInt(3), cursor.getInt(4));
 				
 				bpList.add(bp);
