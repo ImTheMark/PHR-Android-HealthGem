@@ -1,8 +1,5 @@
 package com.example.phr.serviceimpl;
 
-import android.content.Context;
-
-import com.example.phr.exceptions.IPBlockedException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.exceptions.UserAlreadyExistsException;
 import com.example.phr.exceptions.WebServerException;
@@ -31,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean validateUser(String username, String password)
-			throws ServiceException, IPBlockedException {
+			throws ServiceException {
 		try {
 			return userDao.validateUser(username, password);
 		} catch (WebServerException e) {

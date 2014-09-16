@@ -1,6 +1,5 @@
 package com.example.phr;
 
-import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,6 +32,7 @@ public class BloodPressurePostActivity extends Activity {
 	private NumberPicker systolicPicker;
 	private NumberPicker diastolicPicker;
 
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_bloodpressure_post);
@@ -93,9 +93,15 @@ public class BloodPressurePostActivity extends Activity {
 
 		try {
 			DateFormat fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss");
-			Date dateAdded = (Date) fmt.parse(textViewBloodPressureCalendar.getText().toString() + " " + textViewBloodPressureClock.getText().toString());
+			System.out.println(textViewBloodPressureCalendar.getText());
+			System.out.println(textViewBloodPressureClock.getText());
+			java.util.Date dateAdded = fmt.parse(textViewBloodPressureCalendar
+					.getText().toString()
+					+ " "
+					+ textViewBloodPressureClock.getText().toString());
 
-			MobileBloodPressure bp = new MobileBloodPressure(DateTimeParser.getSQLDate(dateAdded),
+			MobileBloodPressure bp = new MobileBloodPressure(
+					DateTimeParser.getSQLDate(dateAdded),
 					textViewbloodpressureStatus.getText().toString(),
 					"test-image", systolicPicker.getCurrent(),
 					diastolicPicker.getCurrent());
@@ -103,8 +109,7 @@ public class BloodPressurePostActivity extends Activity {
 			// WEB SERVER INSERT
 			BloodPressureService bpService = new BloodPressureServiceImpl();
 			bpService.addBloodPressure(bp);
-			
-			
+
 			// LOCAL DB INSERT
 			MobileBloodPressureDaoImpl bpDaoImpl = new MobileBloodPressureDaoImpl();
 			bpDaoImpl.add(bp);
