@@ -58,7 +58,6 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 				SimpleDateFormat dateFormat = new SimpleDateFormat(
 						"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
 				String temp = cursor.getString(1);
-				System.out.println(temp);
 				java.util.Date date = dateFormat.parse(temp);
 
 				MobileBloodPressure bp = new MobileBloodPressure(
