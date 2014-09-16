@@ -1,5 +1,6 @@
 package com.example.phr;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -54,6 +55,8 @@ public class BloodPressurePostActivity extends Activity {
 		textViewBloodPressureCalendar = (TextView) findViewById(R.id.textViewBloodPressureCalendar);
 		textViewBloodPressureClock = (TextView) findViewById(R.id.textViewBloodPressureClock);
 
+		systolicPicker.setCurrent(100);
+		diastolicPicker.setCurrent(150);
 		DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy",
 				Locale.ENGLISH);
 		Calendar calobj = Calendar.getInstance();
@@ -82,7 +85,10 @@ public class BloodPressurePostActivity extends Activity {
 				// Message - > Log user out
 				e.printStackTrace();
 			}
-			onBackPressed();
+			//onBackPressed();
+			Intent intent = new Intent(getApplicationContext(),
+					BloodPressureTrackerActivity.class);
+			startActivity(intent);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

@@ -41,6 +41,9 @@ public class BloodPressureTrackerActivity extends Activity{
 	BloodPressureAdapter bloodPressureAdapter;
 	LinearLayout mBtnBloodPressurePost;
 	List<BloodPressure> list;
+	XYMultipleSeriesDataset bloodPressureDataset;
+	View bloodPressureChart;
+	LinearLayout bloodPressureContainer;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -107,184 +110,98 @@ public class BloodPressureTrackerActivity extends Activity{
 		});
 		
 		
-		//Graph	
-	//------------------------------
-		View bloodPressureChart;
-
-		//String[] bloodPressureMonth = new String[] { "May 31", "Jun 7", "Jun 14", "Jun 21", "Jun 28","Jul 5", "Jul 12"};
-		
-		ArrayList<String> bloodPressureMonth = new ArrayList<String>();
-		
-		for(BloodPressure bp:list){
-			bloodPressureMonth.add(DateTimeParser.getMonth(bp.getDateAdded()));
-		}
-		
-		//int[] bloodPressurex = { 1, 2, 3, 4, 5, 6, 7};
-		//int[] systolic = { 140,134, 110, 114, 118, 114, 110};
-		//int[] diastolic = { 90, 90, 80, 80, 85, 80, 80 };
-		ArrayList<Integer> bloodPressurex = new ArrayList<Integer>();
-		ArrayList<Integer> systolic = new ArrayList<Integer>();
-		ArrayList<Integer> diastolic = new ArrayList<Integer>();
-		for(int i=0;i<list.size();i++)
-		{
-			bloodPressurex.add(i+1);
-			systolic.add(list.get(i).getSystolic());
-			diastolic.add(list.get(i).getDiastolic());
-		}
-		
-
-		XYSeries systolicSeries = new XYSeries("Systolic");
-		XYSeries diastolicSeries = new XYSeries("Diastolic");
-
-		for (int i = 0; i < bloodPressurex.size(); i++) {
-			//systolicSeries.add(bloodPressurex[i], systolic[i]);
-			//diastolicSeries.add(bloodPressurex[i], diastolic[i]);
-			systolicSeries.add(bloodPressurex.get(i), systolic.get(i));
-			diastolicSeries.add(bloodPressurex.get(i), diastolic.get(i));
-		}
-
-		XYMultipleSeriesDataset systolicDataset = new XYMultipleSeriesDataset();
-		
-		systolicDataset.addSeries(systolicSeries);
-		systolicDataset.addSeries(diastolicSeries);
-		
-		XYSeriesRenderer systolicRenderer = new XYSeriesRenderer();
-		systolicRenderer.setColor(Color.parseColor("#B559BA"));
-		systolicRenderer.setPointStyle(PointStyle.CIRCLE);
-		systolicRenderer.setFillPoints(true);
-		systolicRenderer.setLineWidth(10);
-		systolicRenderer.setDisplayChartValues(true);
-		systolicRenderer.setChartValuesTextSize(25);
-		systolicRenderer.setChartValuesSpacing(20);
-
-		
-		XYSeriesRenderer diastolicRenderer = new XYSeriesRenderer();
-		diastolicRenderer.setColor(Color.parseColor("#5C77D1"));
-		diastolicRenderer.setPointStyle(PointStyle.CIRCLE);
-		diastolicRenderer.setFillPoints(true);
-		diastolicRenderer.setLineWidth(10);
-		diastolicRenderer.setDisplayChartValues(true);
-		diastolicRenderer.setChartValuesTextSize(25);
-		diastolicRenderer.setChartValuesSpacing(20);
-
-		XYMultipleSeriesRenderer bloodPressureMultiRenderer = new 
-
-		XYMultipleSeriesRenderer();
-		bloodPressureMultiRenderer.setXLabels(0);
-		bloodPressureMultiRenderer.setChartTitle("Blood Pressure Graph");
-		bloodPressureMultiRenderer.setXTitle("Year 2014");
-		bloodPressureMultiRenderer.setYTitle("Systolic/Diastolic Pressure (mm hg)");
-		bloodPressureMultiRenderer.setZoomButtonsVisible(false);
-		bloodPressureMultiRenderer.setAxisTitleTextSize(30);
-		bloodPressureMultiRenderer.setChartTitleTextSize(30);
-		bloodPressureMultiRenderer.setLegendTextSize(30);
-		bloodPressureMultiRenderer.setPointSize(10);
-		bloodPressureMultiRenderer.setXAxisMin(0);
-		bloodPressureMultiRenderer.setXAxisMax(7);
-		
-		// margin --- top, left, bottom, right
-		bloodPressureMultiRenderer.setMargins(new int[] { 90, 100, 120, 50 });
-		bloodPressureMultiRenderer.setLegendHeight(60);
-
-		for (int i = 0; i < bloodPressurex.size(); i++) {
-			//bloodPressureMultiRenderer.addXTextLabel(i + 1, bloodPressureMonth[i]);
-			bloodPressureMultiRenderer.addXTextLabel(i + 1, bloodPressureMonth.get(i));
-		}
-
-		bloodPressureMultiRenderer.setApplyBackgroundColor(true);
-		bloodPressureMultiRenderer.setBackgroundColor(Color.argb(0x00, 0x01, 0x01, 0x01));
-		bloodPressureMultiRenderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
-		bloodPressureMultiRenderer.setAxesColor(Color.BLACK);
-		bloodPressureMultiRenderer.setLabelsColor(Color.BLACK);
-		bloodPressureMultiRenderer.setXLabelsColor(Color.BLACK);
-		bloodPressureMultiRenderer.setYLabelsColor(0, Color.BLACK);
-		bloodPressureMultiRenderer.setAxisTitleTextSize(30);
-		bloodPressureMultiRenderer.setLabelsTextSize(30);
-
-		bloodPressureMultiRenderer.addSeriesRenderer(systolicRenderer);
-		bloodPressureMultiRenderer.addSeriesRenderer(diastolicRenderer);
-
-		LinearLayout bloodPressureContainer = (LinearLayout) findViewById(R.id.bloopressureGraph);
-
-		bloodPressureChart = ChartFactory.getLineChartView(getBaseContext(),
-				systolicDataset, bloodPressureMultiRenderer);
-
-		bloodPressureContainer.addView(bloodPressureChart);
-		
+		createGraph();
 		
 	}
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-	    // Inflate the menu items for use in the action bar
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.menu_tracker_help, menu);
-		Log.e("bp: ", "start ..");
-	    return super.onCreateOptionsMenu(menu);
-	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		DatabaseHandler db = new DatabaseHandler(this);
-		Log.e("bp: ", "resume ..");
+	public ArrayList<String> getLastSevenDateTime()
+	{
+		ArrayList<String> bloodPressureDate = new ArrayList<String>();
 		
-		MobileBloodPressureDaoImpl bpDaoImpl = new MobileBloodPressureDaoImpl();
-		try {
-			list = bpDaoImpl.getAllBloodPressure();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		for(BloodPressure bp:list){
-			//bp.setImage(getResources().getDrawable(R.drawable.bloodpressure_warning));
-		}
-		bloodPressureAdapter = new BloodPressureAdapter(getApplicationContext(), list);
-		mBloodPressureList.setAdapter(bloodPressureAdapter);
-		
-		
-		//Graph	
-		//------------------------------
-			View bloodPressureChart;
-
-			//String[] bloodPressureMonth = new String[] { "May 31", "Jun 7", "Jun 14", "Jun 21", "Jun 28","Jul 5", "Jul 12"};
-			
-			ArrayList<String> bloodPressureMonth = new ArrayList<String>();
-			
-			for(BloodPressure bp:list){
-				bloodPressureMonth.add(DateTimeParser.getMonth(bp.getDateAdded()));
-			}
-			
-			//int[] bloodPressurex = { 1, 2, 3, 4, 5, 6, 7};
-			//int[] systolic = { 140,134, 110, 114, 118, 114, 110};
-			//int[] diastolic = { 90, 90, 80, 80, 85, 80, 80 };
-			ArrayList<Integer> bloodPressurex = new ArrayList<Integer>();
-			ArrayList<Integer> systolic = new ArrayList<Integer>();
-			ArrayList<Integer> diastolic = new ArrayList<Integer>();
+		if(list.size()>=7)
+			for(int i=list.size()-7;i<list.size();i++)
+				bloodPressureDate.add(DateTimeParser.getDate(list.get(i).getDateAdded()));
+		else
 			for(int i=0;i<list.size();i++)
-			{
-				bloodPressurex.add(i+1);
+				bloodPressureDate.add(DateTimeParser.getDate(list.get(i).getDateAdded()));
+		
+		return bloodPressureDate;
+		
+	}
+	
+	
+	public ArrayList<Integer> getLastSevenSystolic()
+	{
+		ArrayList<Integer> systolic = new ArrayList<Integer>();
+		
+		if(list.size()>=7)
+			for(int i=list.size()-7;i<list.size();i++)
 				systolic.add(list.get(i).getSystolic());
+		else
+			for(int i=0;i<list.size();i++)
+					systolic.add(list.get(i).getSystolic());
+		
+		return systolic;
+	}
+	
+	public ArrayList<Integer> getLastSevenDiastolic()
+	{
+		ArrayList<Integer> diastolic = new ArrayList<Integer>();
+		
+		if(list.size()>=7)
+			for(int i=list.size()-7;i<list.size();i++)
 				diastolic.add(list.get(i).getDiastolic());
-			}
+		else
+			for(int i=0;i<list.size();i++)
+				diastolic.add(list.get(i).getDiastolic());
+		
+		return diastolic;
+	}
+	
+	public ArrayList<Integer> getGraphElement()
+	{
+		ArrayList<Integer> number = new ArrayList<Integer>();
+		
+		if(list.size()>=7)
+			for(int i=0;i<7;i++)
+				number.add(i+1);
+		else
+			for(int i=0;i<list.size();i++)
+				number.add(i+1);
+		
+		return number;
+	}
+	
+	public void createGraph()
+	{
 			
-
+			//bloodPressureDataset.clear();
+//			String[] bloodPressureMonth = new String[] { "","","May 31", "Jun 7", "Jun 14", "Jun 21", "Jun 28",};
+//			int[] bloodPressurex = { 1, 2, 3, 4, 5,6,7};
+//			int[] systolic = { 0,0,140,134, 110, 114, 118};
+//			int[] diastolic = { 0,0,90, 90, 80, 80, 85};
+			
+		
+				
+		
+			ArrayList<String> bloodPressureMonth = getLastSevenDateTime();
+			ArrayList<Integer> bloodPressurex = getGraphElement();
+			ArrayList<Integer> systolic = getLastSevenSystolic();
+			ArrayList<Integer> diastolic = getLastSevenDiastolic();
+	
 			XYSeries systolicSeries = new XYSeries("Systolic");
 			XYSeries diastolicSeries = new XYSeries("Diastolic");
 
 			for (int i = 0; i < bloodPressurex.size(); i++) {
-				//systolicSeries.add(bloodPressurex[i], systolic[i]);
-				//diastolicSeries.add(bloodPressurex[i], diastolic[i]);
 				systolicSeries.add(bloodPressurex.get(i), systolic.get(i));
 				diastolicSeries.add(bloodPressurex.get(i), diastolic.get(i));
 			}
 
-			XYMultipleSeriesDataset systolicDataset = new XYMultipleSeriesDataset();
 			
-			systolicDataset.addSeries(systolicSeries);
-			systolicDataset.addSeries(diastolicSeries);
+			XYMultipleSeriesDataset bloodPressureDataset = new XYMultipleSeriesDataset();
+		
+			bloodPressureDataset.addSeries(systolicSeries);
+			bloodPressureDataset.addSeries(diastolicSeries);
 			
 			XYSeriesRenderer systolicRenderer = new XYSeriesRenderer();
 			systolicRenderer.setColor(Color.parseColor("#B559BA"));
@@ -324,7 +241,8 @@ public class BloodPressureTrackerActivity extends Activity{
 			bloodPressureMultiRenderer.setMargins(new int[] { 90, 100, 120, 50 });
 			bloodPressureMultiRenderer.setLegendHeight(60);
 
-			for (int i = 0; i < bloodPressurex.size(); i++) {
+			//for (int i = 0; i < bloodPressurex.size(); i++) {
+			for (int i = 0; i < bloodPressureMonth.size(); i++) {
 				//bloodPressureMultiRenderer.addXTextLabel(i + 1, bloodPressureMonth[i]);
 				bloodPressureMultiRenderer.addXTextLabel(i + 1, bloodPressureMonth.get(i));
 			}
@@ -345,9 +263,45 @@ public class BloodPressureTrackerActivity extends Activity{
 			LinearLayout bloodPressureContainer = (LinearLayout) findViewById(R.id.bloopressureGraph);
 
 			bloodPressureChart = ChartFactory.getLineChartView(getBaseContext(),
-					systolicDataset, bloodPressureMultiRenderer);
+					bloodPressureDataset, bloodPressureMultiRenderer);
 
 			bloodPressureContainer.addView(bloodPressureChart);
+			
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    // Inflate the menu items for use in the action bar
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.menu_tracker_help, menu);
+		Log.e("bp: ", "start ..");
+	    return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		DatabaseHandler db = new DatabaseHandler(this);
+		Log.e("bp: ", "resume ..");
+		
+		MobileBloodPressureDaoImpl bpDaoImpl = new MobileBloodPressureDaoImpl();
+		try {
+			list = bpDaoImpl.getAllBloodPressure();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		for(BloodPressure bp:list){
+			//bp.setImage(getResources().getDrawable(R.drawable.bloodpressure_warning));
+		}
+		bloodPressureAdapter = new BloodPressureAdapter(getApplicationContext(), list);
+		mBloodPressureList.setAdapter(bloodPressureAdapter);
+		if(bloodPressureContainer != null)
+			bloodPressureContainer.removeAllViews();
+		createGraph();
+		
 	}
 	
 	@Override

@@ -66,19 +66,19 @@ public class LoginActivity extends Activity {
 				// sp.savePreferences("id", username);
 
 				if (password.length() > 0 && username.length() > 0) {
-					try {
-						boolean isValid = userService.validateUser(username,
-								password);
-						if (isValid) {
+//					try {
+//						boolean isValid = userService.validateUser(username,
+//								password);
+//						if (isValid) {
 							Intent intent = new Intent(getApplicationContext(),
 									MainActivity.class);
 							startActivity(intent);
-						} else {
-							mTextValid.setText("Invalid Username/Password");
-						}
-					} catch (ServiceException e) {
-						mTextValid.setText("Error in Internet Connection");
-					}
+//						} else {
+//							mTextValid.setText("Invalid Username/Password");
+//						}
+//					} catch (ServiceException e) {
+//						mTextValid.setText("Error in Internet Connection");
+//					}
 
 				}
 
