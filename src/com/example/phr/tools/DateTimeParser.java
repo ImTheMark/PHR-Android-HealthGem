@@ -25,9 +25,8 @@ public class DateTimeParser {
 		SimpleDateFormat formatter = new SimpleDateFormat("MMM", Locale.ENGLISH);
 		return formatter.format(date);
 	}
-	
-	@SuppressLint("SimpleDateFormat")
-	public static java.sql.Date getSQLDate(java.util.Date date){
+
+	public static Date getSQLDate(java.util.Date date) {
 		return new java.sql.Date(date.getTime());
 	}
 

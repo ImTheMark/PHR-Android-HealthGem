@@ -1,6 +1,5 @@
 package com.example.phr.mobile.daoimpl;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,6 +13,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileBloodPressureDao;
 import com.example.phr.mobile.models.MobileBloodPressure;
+import com.example.phr.tools.DateTimeParser;
 
 public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 
@@ -27,6 +27,7 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHandler.BP_ID, bp.getEntryID());
+		System.out.println(fmt.format(bp.getDateAdded()));
 		values.put(DatabaseHandler.BP_DATEADDED, fmt.format(bp.getDateAdded()));
 		values.put(DatabaseHandler.BP_SYSTOLIC, bp.getSystolic());
 		values.put(DatabaseHandler.BP_DIASTOLIC, bp.getDiastolic());
@@ -57,11 +58,14 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 			do {
 				SimpleDateFormat dateFormat = new SimpleDateFormat(
 						"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-				Date dateAdded = (Date) dateFormat.parse(cursor.getString(2));
+				String temp = cursor.getString(2);
+				System.out.println(temp);
+				java.util.Date date = dateFormat.parse(temp);
 
 				MobileBloodPressure bp = new MobileBloodPressure(
-						cursor.getInt(1), dateAdded, cursor.getString(5),
-						cursor.getString(6), cursor.getInt(3), cursor.getInt(4));
+						cursor.getInt(1), DateTimeParser.getSQLDate(date),
+						cursor.getString(5), cursor.getString(6),
+						cursor.getInt(3), cursor.getInt(4));
 
 				bpList.add(bp);
 			} while (cursor.moveToNext());
@@ -71,5 +75,4 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 		db.close();
 		return bpList;
 	}
-
 }
