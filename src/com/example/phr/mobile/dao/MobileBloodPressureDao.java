@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.example.phr.mobile.models.MobileBloodPressure;
 
-public interface BloodPressureDao {
+public interface MobileBloodPressureDao {
 
 	void add(MobileBloodPressure bloodPressure);
 

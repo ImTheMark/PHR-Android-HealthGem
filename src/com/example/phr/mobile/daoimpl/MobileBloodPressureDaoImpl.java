@@ -11,11 +11,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.phr.local_db.DatabaseHandler;
-import com.example.phr.mobile.dao.BloodPressureDao;
+import com.example.phr.mobile.dao.MobileBloodPressureDao;
 import com.example.phr.mobile.models.MobileBloodPressure;
 import com.example.phr.web.models.FBPost;
 
-public class BloodPressureDaoImpl implements BloodPressureDao {
+public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 
 	@Override
 	public void add(MobileBloodPressure bp) {

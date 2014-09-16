@@ -1,31 +1,30 @@
 package com.example.phr.serviceimpl;
 
-import android.content.Context;
-
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
-import com.example.phr.exceptions.WebServerException;
+import com.example.phr.mobile.dao.MobileBloodPressureDao;
+import com.example.phr.mobile.daoimpl.MobileBloodPressureDaoImpl;
 import com.example.phr.mobile.models.MobileBloodPressure;
 import com.example.phr.service.BloodPressureService;
-import com.example.phr.web.dao.BloodPressureDao;
-import com.example.phr.web.daoimpl.BloodPressureDaoImpl;
+import com.example.phr.web.dao.WebBloodPressureDao;
+import com.example.phr.web.daoimpl.WebBloodPressureDaoImpl;
 
 public class BloodPressureServiceImpl implements BloodPressureService {
 
-	BloodPressureDao bloodPressureDao;
+	WebBloodPressureDao webBloodPressureDao;
+	MobileBloodPressureDao mobileBloodPressureDao;
 
 	public BloodPressureServiceImpl() {
-		bloodPressureDao = new BloodPressureDaoImpl();
+		webBloodPressureDao = new WebBloodPressureDaoImpl();
+		mobileBloodPressureDao = new MobileBloodPressureDaoImpl();
 	}
 
 	@Override
 	public void addBloodPressure(MobileBloodPressure bloodPressure)
 			throws ServiceException, OutdatedAccessTokenException {
-		try {
-			bloodPressureDao.addBloodPressure(bloodPressure);
-		} catch (WebServerException e) {
-			throw new ServiceException("Error in adding blood pressure", e);
-		}
+
+		mobileBloodPressureDao.add(bloodPressure);
+
 	}
 
 }

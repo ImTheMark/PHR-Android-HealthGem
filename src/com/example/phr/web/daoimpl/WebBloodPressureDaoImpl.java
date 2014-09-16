@@ -8,16 +8,16 @@ import com.example.phr.exceptions.WebServerException;
 import com.example.phr.mobile.models.MobileBloodPressure;
 import com.example.phr.tools.GSONConverter;
 import com.example.phr.tools.JSONRequestCreator;
-import com.example.phr.web.dao.BloodPressureDao;
+import com.example.phr.web.dao.WebBloodPressureDao;
 import com.example.phr.web.dao.UserDao;
 
-public class BloodPressureDaoImpl extends BasicDaoImpl implements
-		BloodPressureDao {
+public class WebBloodPressureDaoImpl extends BasicDaoImpl implements
+		WebBloodPressureDao {
 
 	UserDao userDao;
 	JSONRequestCreator jsonRequestCreator;
 
-	public BloodPressureDaoImpl() {
+	public WebBloodPressureDaoImpl() {
 		userDao = new UserDaoImpl();
 		jsonRequestCreator = new JSONRequestCreator();
 	}

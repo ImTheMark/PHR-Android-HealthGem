@@ -30,7 +30,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.example.phr.adapter.BloodPressureAdapter;
 import com.example.phr.local_db.DatabaseHandler;
-import com.example.phr.mobile.daoimpl.BloodPressureDaoImpl;
+import com.example.phr.mobile.daoimpl.MobileBloodPressureDaoImpl;
 import com.example.phr.mobile.models.MobileBloodPressure;
 import com.example.phr.tools.DateTimeParser;
 
@@ -74,7 +74,7 @@ public class BloodPressureTrackerActivity extends Activity{
 		list.add(data6);
 		list.add(data7);*/
 
-		BloodPressureDaoImpl bpDaoImpl = new BloodPressureDaoImpl();
+		MobileBloodPressureDaoImpl bpDaoImpl = new MobileBloodPressureDaoImpl();
 		try {
 			list = bpDaoImpl.getAllBloodPressure();
 		} catch (ParseException e) {
@@ -229,7 +229,7 @@ public class BloodPressureTrackerActivity extends Activity{
 		DatabaseHandler db = new DatabaseHandler(this);
 		Log.e("bp: ", "resume ..");
 		
-		BloodPressureDaoImpl bpDaoImpl = new BloodPressureDaoImpl();
+		MobileBloodPressureDaoImpl bpDaoImpl = new MobileBloodPressureDaoImpl();
 		try {
 			list = bpDaoImpl.getAllBloodPressure();
 		} catch (ParseException e) {
