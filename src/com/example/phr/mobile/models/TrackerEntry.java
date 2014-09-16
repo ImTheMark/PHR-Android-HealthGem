@@ -4,7 +4,7 @@ import java.sql.Date;
 
 import com.example.phr.web.models.FBPost;
 
-public abstract class MobileTrackerEntry {
+public abstract class TrackerEntry {
 
 	Integer entryID;
 	FBPost fbPost;
@@ -12,7 +12,7 @@ public abstract class MobileTrackerEntry {
 	String status;
 	String encodedImage;
 
-	public MobileTrackerEntry(Integer entryID, FBPost fbPost, Date dateAdded,
+	public TrackerEntry(Integer entryID, FBPost fbPost, Date dateAdded,
 			String status, String encodedImage) {
 		super();
 		this.entryID = entryID;
@@ -22,7 +22,7 @@ public abstract class MobileTrackerEntry {
 		this.encodedImage = encodedImage;
 	}
 
-	public MobileTrackerEntry(FBPost fbPost, Date dateAdded, String status,
+	public TrackerEntry(FBPost fbPost, Date dateAdded, String status,
 			String encodedImage) {
 		super();
 		this.fbPost = fbPost;
@@ -31,7 +31,7 @@ public abstract class MobileTrackerEntry {
 		this.encodedImage = encodedImage;
 	}
 
-	public MobileTrackerEntry(Integer entryID, Date dateAdded, String status,
+	public TrackerEntry(Integer entryID, Date dateAdded, String status,
 			String encodedImage) {
 		super();
 		this.entryID = entryID;
@@ -40,7 +40,7 @@ public abstract class MobileTrackerEntry {
 		this.encodedImage = encodedImage;
 	}
 
-	public MobileTrackerEntry(Date dateAdded, String status, String encodedImage) {
+	public TrackerEntry(Date dateAdded, String status, String encodedImage) {
 		super();
 		this.dateAdded = dateAdded;
 		this.status = status;

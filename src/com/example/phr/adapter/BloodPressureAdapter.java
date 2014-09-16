@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.example.phr.BloodPressureTrackerActivity;
 import com.example.phr.R;
-import com.example.phr.mobile.models.MobileBloodPressure;
+import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.tools.DateTimeParser;
 
 public class BloodPressureAdapter extends BaseAdapter{
@@ -22,7 +22,7 @@ public class BloodPressureAdapter extends BaseAdapter{
 	
 
 	private Context mContext;
-	private List<MobileBloodPressure> mListOfBloodPressure;
+	private List<BloodPressure> mListOfBloodPressure;
 
 	private static class ViewHolder {
 		TextView sys;
@@ -33,7 +33,7 @@ public class BloodPressureAdapter extends BaseAdapter{
 	}
 	
 	
-	public BloodPressureAdapter(Context aContext, List<MobileBloodPressure> aListOfBloodPressures) {
+	public BloodPressureAdapter(Context aContext, List<BloodPressure> aListOfBloodPressures) {
 		mListOfBloodPressure = aListOfBloodPressures;
 		mContext = aContext;
 	}

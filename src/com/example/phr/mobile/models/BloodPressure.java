@@ -4,33 +4,33 @@ import java.sql.Date;
 
 import com.example.phr.web.models.FBPost;
 
-public class MobileBloodPressure extends MobileTrackerEntry {
+public class BloodPressure extends TrackerEntry {
 
 	int systolic;
 	int diastolic;
 
-	public MobileBloodPressure(Integer entryID, FBPost fbPost, Date dateAdded,
+	public BloodPressure(Integer entryID, FBPost fbPost, Date dateAdded,
 			String status, String encodedImage, int systolic, int diastolic) {
 		super(entryID, fbPost, dateAdded, status, encodedImage);
 		this.systolic = systolic;
 		this.diastolic = diastolic;
 	}
 
-	public MobileBloodPressure(FBPost fbPost, Date dateAdded, String status,
+	public BloodPressure(FBPost fbPost, Date dateAdded, String status,
 			String encodedImage, int systolic, int diastolic) {
 		super(fbPost, dateAdded, status, encodedImage);
 		this.systolic = systolic;
 		this.diastolic = diastolic;
 	}
 
-	public MobileBloodPressure(Integer entryID, Date dateAdded, String status,
+	public BloodPressure(Integer entryID, Date dateAdded, String status,
 			String encodedImage, int systolic, int diastolic) {
 		super(entryID, dateAdded, status, encodedImage);
 		this.systolic = systolic;
 		this.diastolic = diastolic;
 	}
 
-	public MobileBloodPressure(Date dateAdded, String status,
+	public BloodPressure(Date dateAdded, String status,
 			String encodedImage, int systolic, int diastolic) {
 		super(dateAdded, status, encodedImage);
 		this.systolic = systolic;

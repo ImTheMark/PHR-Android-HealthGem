@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.phr.application.HealthGem;
-import com.example.phr.mobile.models.MobileBloodPressure;
+import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.model.AccessToken;
 import com.example.phr.model.Client;
 import com.example.phr.tools.EncryptionHandler;

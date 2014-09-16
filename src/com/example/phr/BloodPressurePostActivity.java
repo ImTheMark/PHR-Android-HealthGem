@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.daoimpl.MobileBloodPressureDaoImpl;
-import com.example.phr.mobile.models.MobileBloodPressure;
+import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.service.BloodPressureService;
 import com.example.phr.serviceimpl.BloodPressureServiceImpl;
 import com.example.phr.tools.DateTimeParser;
@@ -54,7 +54,8 @@ public class BloodPressurePostActivity extends Activity {
 		textViewBloodPressureCalendar = (TextView) findViewById(R.id.textViewBloodPressureCalendar);
 		textViewBloodPressureClock = (TextView) findViewById(R.id.textViewBloodPressureClock);
 
-		DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
+		DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy",
+				Locale.ENGLISH);
 		Calendar calobj = Calendar.getInstance();
 		textViewBloodPressureCalendar.setText(dateFormat.format(calobj
 				.getTime()));
@@ -93,11 +94,16 @@ public class BloodPressurePostActivity extends Activity {
 			OutdatedAccessTokenException {
 
 		try {
-			DateFormat fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss", Locale.ENGLISH);
-			java.util.Date dateAdded = fmt.parse(textViewBloodPressureCalendar.getText().toString() + " " + textViewBloodPressureClock.getText().toString());
-
-			MobileBloodPressure bp = new MobileBloodPressure(
-					DateTimeParser.getSQLDate(dateAdded), textViewbloodpressureStatus.getText().toString(),
+			DateFormat fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss",
+					Locale.ENGLISH);
+			java.util.Date dateAdded = fmt.parse(textViewBloodPressureCalendar
+					.getText().toString()
+					+ " "
+					+ textViewBloodPressureClock.getText().toString());
+			Timestamp timestamp = new Timestamp(dateAdded.getTime());
+			BloodPressure bp = new BloodPressure(
+					DateTimeParser.getSQLDate(dateAdded),
+					textViewbloodpressureStatus.getText().toString(),
 					"test-image", systolicPicker.getCurrent(),
 					diastolicPicker.getCurrent());
 

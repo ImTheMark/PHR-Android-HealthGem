@@ -31,7 +31,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.example.phr.adapter.BloodPressureAdapter;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.daoimpl.MobileBloodPressureDaoImpl;
-import com.example.phr.mobile.models.MobileBloodPressure;
+import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.tools.DateTimeParser;
 
 public class BloodPressureTrackerActivity extends Activity{
@@ -40,7 +40,7 @@ public class BloodPressureTrackerActivity extends Activity{
 	ListView mBloodPressureList;
 	BloodPressureAdapter bloodPressureAdapter;
 	LinearLayout mBtnBloodPressurePost;
-	List<MobileBloodPressure> list;
+	List<BloodPressure> list;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -52,7 +52,7 @@ public class BloodPressureTrackerActivity extends Activity{
 		mBloodPressureList = (ListView) findViewById(R.id.listView_bloodpressure);
 				
 		// FAKE DATA
-		list = new ArrayList<MobileBloodPressure>();
+		list = new ArrayList<BloodPressure>();
 /*		BloodPressure data7 = new BloodPressure(1,140,90,"May 31, 2014","3:40pm",null,getResources().getDrawable(R.drawable.bloodpressure_warning));
 		
 		BloodPressure data6 = new BloodPressure(2,134,90,"Jun 07, 2014","1:40pm",null,getResources().getDrawable(R.drawable.bloodpressure_warning));
@@ -81,7 +81,7 @@ public class BloodPressureTrackerActivity extends Activity{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for(MobileBloodPressure bp:list){
+		for(BloodPressure bp:list){
 			//bp.setImage(getResources().getDrawable(R.drawable.bloodpressure_warning));
 		}
 		
@@ -115,7 +115,7 @@ public class BloodPressureTrackerActivity extends Activity{
 		
 		ArrayList<String> bloodPressureMonth = new ArrayList<String>();
 		
-		for(MobileBloodPressure bp:list){
+		for(BloodPressure bp:list){
 			bloodPressureMonth.add(DateTimeParser.getMonth(bp.getDateAdded()));
 		}
 		
@@ -238,7 +238,7 @@ public class BloodPressureTrackerActivity extends Activity{
 		}
 		
 		
-		for(MobileBloodPressure bp:list){
+		for(BloodPressure bp:list){
 			//bp.setImage(getResources().getDrawable(R.drawable.bloodpressure_warning));
 		}
 		bloodPressureAdapter = new BloodPressureAdapter(getApplicationContext(), list);
@@ -253,7 +253,7 @@ public class BloodPressureTrackerActivity extends Activity{
 			
 			ArrayList<String> bloodPressureMonth = new ArrayList<String>();
 			
-			for(MobileBloodPressure bp:list){
+			for(BloodPressure bp:list){
 				bloodPressureMonth.add(DateTimeParser.getMonth(bp.getDateAdded()));
 			}
 			

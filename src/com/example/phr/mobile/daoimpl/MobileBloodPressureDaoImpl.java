@@ -12,13 +12,13 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileBloodPressureDao;
-import com.example.phr.mobile.models.MobileBloodPressure;
+import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.tools.DateTimeParser;
 
 public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 
 	@Override
-	public void add(MobileBloodPressure bp) {
+	public void add(BloodPressure bp) {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
 
@@ -42,9 +42,9 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 	}
 
 	@Override
-	public List<MobileBloodPressure> getAllBloodPressure()
+	public List<BloodPressure> getAllBloodPressure()
 			throws ParseException {
-		List<MobileBloodPressure> bpList = new ArrayList<MobileBloodPressure>();
+		List<BloodPressure> bpList = new ArrayList<BloodPressure>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_BLOODPRESSURE;
 
@@ -60,7 +60,7 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 				String temp = cursor.getString(1);
 				java.util.Date date = dateFormat.parse(temp);
 
-				MobileBloodPressure bp = new MobileBloodPressure(
+				BloodPressure bp = new BloodPressure(
 						cursor.getInt(0), DateTimeParser.getSQLDate(date),
 						cursor.getString(4), cursor.getString(5),
 						cursor.getInt(2), cursor.getInt(3));
