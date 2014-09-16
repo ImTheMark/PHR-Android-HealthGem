@@ -26,6 +26,12 @@ public class DateTimeParser {
 		return formatter.format(date);
 	}
 
+	@SuppressLint("SimpleDateFormat")
+	public static String getMonthDay(Date date){
+		SimpleDateFormat formatter = new SimpleDateFormat("MMM dd", Locale.ENGLISH);
+		return formatter.format(date);
+	}
+	
 	public static Date getSQLDate(java.util.Date date) {
 		return new java.sql.Date(date.getTime());
 	}

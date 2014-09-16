@@ -120,10 +120,10 @@ public class BloodPressureTrackerActivity extends Activity{
 		
 		if(list.size()>=7)
 			for(int i=list.size()-7;i<list.size();i++)
-				bloodPressureDate.add(DateTimeParser.getDate(list.get(i).getDateAdded()));
+				bloodPressureDate.add(DateTimeParser.getMonthDay(list.get(i).getDateAdded()));
 		else
 			for(int i=0;i<list.size();i++)
-				bloodPressureDate.add(DateTimeParser.getDate(list.get(i).getDateAdded()));
+				bloodPressureDate.add(DateTimeParser.getMonthDay(list.get(i).getDateAdded()));
 		
 		return bloodPressureDate;
 		
