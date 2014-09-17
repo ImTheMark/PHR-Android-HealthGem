@@ -1,6 +1,8 @@
-package com.example.phr.web.models;
+package com.example.phr.mobile.models;
 
 import java.util.Date;
+
+
 
 public class FBPost {
 

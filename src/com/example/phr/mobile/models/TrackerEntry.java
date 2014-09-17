@@ -1,48 +1,46 @@
 package com.example.phr.mobile.models;
 
-import java.sql.Date;
-
-import com.example.phr.web.models.FBPost;
+import java.sql.Timestamp;
 
 public abstract class TrackerEntry {
 
 	Integer entryID;
 	FBPost fbPost;
-	Date dateAdded;
+	Timestamp timestamp;
 	String status;
 	String encodedImage;
 
-	public TrackerEntry(Integer entryID, FBPost fbPost, Date dateAdded,
+	public TrackerEntry(Integer entryID, FBPost fbPost, Timestamp timestamp,
 			String status, String encodedImage) {
 		super();
 		this.entryID = entryID;
 		this.fbPost = fbPost;
-		this.dateAdded = dateAdded;
+		this.timestamp = timestamp;
 		this.status = status;
 		this.encodedImage = encodedImage;
 	}
 
-	public TrackerEntry(FBPost fbPost, Date dateAdded, String status,
+	public TrackerEntry(FBPost fbPost, Timestamp timestamp, String status,
 			String encodedImage) {
 		super();
 		this.fbPost = fbPost;
-		this.dateAdded = dateAdded;
+		this.timestamp = timestamp;
 		this.status = status;
 		this.encodedImage = encodedImage;
 	}
 
-	public TrackerEntry(Integer entryID, Date dateAdded, String status,
+	public TrackerEntry(Integer entryID, Timestamp timestamp, String status,
 			String encodedImage) {
 		super();
 		this.entryID = entryID;
-		this.dateAdded = dateAdded;
+		this.timestamp = timestamp;
 		this.status = status;
 		this.encodedImage = encodedImage;
 	}
 
-	public TrackerEntry(Date dateAdded, String status, String encodedImage) {
+	public TrackerEntry(Timestamp timestamp, String status, String encodedImage) {
 		super();
-		this.dateAdded = dateAdded;
+		this.timestamp = timestamp;
 		this.status = status;
 		this.encodedImage = encodedImage;
 	}
@@ -63,12 +61,12 @@ public abstract class TrackerEntry {
 		this.fbPost = fbPost;
 	}
 
-	public Date getDateAdded() {
-		return dateAdded;
+	public Timestamp getTimestamp() {
+		return timestamp;
 	}
 
-	public void setDateAdded(Date dateAdded) {
-		this.dateAdded = dateAdded;
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	public String getStatus() {

@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import android.app.Activity;
@@ -23,7 +24,6 @@ import com.example.phr.mobile.daoimpl.MobileBloodPressureDaoImpl;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.service.BloodPressureService;
 import com.example.phr.serviceimpl.BloodPressureServiceImpl;
-import com.example.phr.tools.DateTimeParser;
 
 public class BloodPressurePostActivity extends Activity {
 
@@ -85,7 +85,7 @@ public class BloodPressurePostActivity extends Activity {
 				// Message - > Log user out
 				e.printStackTrace();
 			}
-			//onBackPressed();
+			// onBackPressed();
 			Intent intent = new Intent(getApplicationContext(),
 					BloodPressureTrackerActivity.class);
 			startActivity(intent);
@@ -102,13 +102,12 @@ public class BloodPressurePostActivity extends Activity {
 		try {
 			DateFormat fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss",
 					Locale.ENGLISH);
-			java.util.Date dateAdded = fmt.parse(textViewBloodPressureCalendar
-					.getText().toString()
+			Date date = fmt.parse(textViewBloodPressureCalendar.getText()
+					.toString()
 					+ " "
 					+ textViewBloodPressureClock.getText().toString());
-			Timestamp timestamp = new Timestamp(dateAdded.getTime());
-			BloodPressure bp = new BloodPressure(
-					DateTimeParser.getSQLDate(dateAdded),
+			Timestamp timestamp = new Timestamp(date.getTime());
+			BloodPressure bp = new BloodPressure(timestamp,
 					textViewbloodpressureStatus.getText().toString(),
 					"test-image", systolicPicker.getCurrent(),
 					diastolicPicker.getCurrent());

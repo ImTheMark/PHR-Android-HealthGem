@@ -1,38 +1,36 @@
 package com.example.phr.mobile.models;
 
-import java.sql.Date;
-
-import com.example.phr.web.models.FBPost;
+import java.sql.Timestamp;
 
 public class BloodPressure extends TrackerEntry {
 
 	int systolic;
 	int diastolic;
 
-	public BloodPressure(Integer entryID, FBPost fbPost, Date dateAdded,
+	public BloodPressure(Integer entryID, FBPost fbPost, Timestamp timestamp,
 			String status, String encodedImage, int systolic, int diastolic) {
-		super(entryID, fbPost, dateAdded, status, encodedImage);
+		super(entryID, fbPost, timestamp, status, encodedImage);
 		this.systolic = systolic;
 		this.diastolic = diastolic;
 	}
 
-	public BloodPressure(FBPost fbPost, Date dateAdded, String status,
+	public BloodPressure(FBPost fbPost, Timestamp timestamp, String status,
 			String encodedImage, int systolic, int diastolic) {
-		super(fbPost, dateAdded, status, encodedImage);
+		super(fbPost, timestamp, status, encodedImage);
 		this.systolic = systolic;
 		this.diastolic = diastolic;
 	}
 
-	public BloodPressure(Integer entryID, Date dateAdded, String status,
+	public BloodPressure(Integer entryID, Timestamp timestamp, String status,
 			String encodedImage, int systolic, int diastolic) {
-		super(entryID, dateAdded, status, encodedImage);
+		super(entryID, timestamp, status, encodedImage);
 		this.systolic = systolic;
 		this.diastolic = diastolic;
 	}
 
-	public BloodPressure(Date dateAdded, String status,
+	public BloodPressure(Timestamp timestamp, String status,
 			String encodedImage, int systolic, int diastolic) {
-		super(dateAdded, status, encodedImage);
+		super(timestamp, status, encodedImage);
 		this.systolic = systolic;
 		this.diastolic = diastolic;
 	}
