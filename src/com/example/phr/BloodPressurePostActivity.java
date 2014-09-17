@@ -107,6 +107,7 @@ public class BloodPressurePostActivity extends Activity {
 					+ " "
 					+ textViewBloodPressureClock.getText().toString());
 			Timestamp timestamp = new Timestamp(date.getTime());
+			System.out.println(timestamp);
 			BloodPressure bp = new BloodPressure(timestamp,
 					textViewbloodpressureStatus.getText().toString(),
 					"test-image", systolicPicker.getCurrent(),

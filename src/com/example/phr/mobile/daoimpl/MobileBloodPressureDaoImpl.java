@@ -1,5 +1,6 @@
 package com.example.phr.mobile.daoimpl;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHandler.BP_ID, bp.getEntryID());
-		values.put(DatabaseHandler.BP_DATEADDED, fmt.format(bp.getDateAdded()));
+		values.put(DatabaseHandler.BP_DATEADDED, fmt.format(bp.getTimestamp()));
 		values.put(DatabaseHandler.BP_SYSTOLIC, bp.getSystolic());
 		values.put(DatabaseHandler.BP_DIASTOLIC, bp.getDiastolic());
 		values.put(DatabaseHandler.BP_STATUS, bp.getStatus());
@@ -42,8 +43,7 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 	}
 
 	@Override
-	public List<BloodPressure> getAllBloodPressure()
-			throws ParseException {
+	public List<BloodPressure> getAllBloodPressure() throws ParseException {
 		List<BloodPressure> bpList = new ArrayList<BloodPressure>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_BLOODPRESSURE;
@@ -55,14 +55,11 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 		// looping through all rows and adding to list
 		if (cursor.moveToFirst()) {
 			do {
-				SimpleDateFormat dateFormat = new SimpleDateFormat(
-						"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-				String temp = cursor.getString(1);
-				java.util.Date date = dateFormat.parse(temp);
+				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+						.getString(1));
 
-				BloodPressure bp = new BloodPressure(
-						cursor.getInt(0), DateTimeParser.getSQLDate(date),
-						cursor.getString(4), cursor.getString(5),
+				BloodPressure bp = new BloodPressure(cursor.getInt(0),
+						timestamp, cursor.getString(4), cursor.getString(5),
 						cursor.getInt(2), cursor.getInt(3));
 
 				bpList.add(bp);

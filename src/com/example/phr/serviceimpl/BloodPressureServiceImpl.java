@@ -28,16 +28,15 @@ public class BloodPressureServiceImpl implements BloodPressureService {
 		java.util.Date date = new java.util.Date();
 		Timestamp timestamp = new Timestamp(date.getTime());
 		System.out.println(timestamp);
-		//try {
-//			int entryID = webBloodPressureDao
-//					.add_ReturnEntryIdInWeb(bloodPressure);
-//			System.out.println(bloodPressure.getDateAdded());
-//			bloodPressure.setEntryID(entryID);
+		try {
+			int entryID = webBloodPressureDao
+					.add_ReturnEntryIdInWeb(bloodPressure);
+			bloodPressure.setEntryID(entryID);
 			mobileBloodPressureDao.add(bloodPressure);
-	//	} catch (WebServerException e) {
-	//		throw new ServiceException(
-	//				"An error occured while trying to add bp to web", e);
-		//}
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to add bp to web", e);
+		}
 
 	}
 
