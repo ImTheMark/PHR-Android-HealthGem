@@ -2,14 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal" >
+    android:orientation="horizontal" 
+    android:focusableInTouchMode="false"
+    android:focusable="false">
 
     <ImageView
         android:id="@+id/imageViewAction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:src="@drawable/icon_activity" />
+        android:src="@drawable/icon_activity" 
+        android:focusableInTouchMode="false"
+        android:focusable="false"/>
 
     <TextView
         android:id="@+id/txtStatusAction"
@@ -18,6 +22,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/black"
-        android:text="Activity" />
+        android:text="Activity"
+        android:focusableInTouchMode="false" 
+        android:focusable="false"/>
 
 </LinearLayout>

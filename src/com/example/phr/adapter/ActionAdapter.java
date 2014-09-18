@@ -68,13 +68,6 @@ public class ActionAdapter extends BaseAdapter {
 		viewHolder.img.setImageDrawable(mListOfStatusAction.get(position)
 				.getImgUrl());
 
-		convertView.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-			}
-		});
 		return convertView;
 	}
 

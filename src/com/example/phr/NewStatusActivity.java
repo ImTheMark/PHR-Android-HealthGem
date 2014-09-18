@@ -5,6 +5,7 @@ import com.example.phr.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,13 +59,28 @@ public class NewStatusActivity extends Activity {
 		mBtnAddActions.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(),
-						AddActionActivity.class);
-				startActivity(intent);
+
+				 Intent intent=new Intent(NewStatusActivity.this,AddActionActivity.class);  
+	                startActivityForResult(intent, 2);
 			}
 		});
 	}
 
+	 @Override  
+     protected void onActivityResult(int requestCode, int resultCode, Intent data)  
+     {  
+               super.onActivityResult(requestCode, resultCode, data);  
+                   
+                // check if the request code is same as what is passed  here it is 2  
+                 if(requestCode==2)  
+                       {  
+                          String message=data.getStringExtra("itemValue");                       
+                          Log.e("itemValue = ", message);
+               
+                       }  
+   
+     }  
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_status_post, menu);
