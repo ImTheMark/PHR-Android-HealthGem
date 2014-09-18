@@ -1,4 +1,4 @@
-package phr.tools;
+package com.example.phr.tools;
 
 import java.util.UUID;
 
