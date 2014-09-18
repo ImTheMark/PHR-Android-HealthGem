@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.phr.R;
 import com.example.phr.adapter.ActionAdapter;
+import com.example.phr.enums.TrackerInputType;
 import com.example.phr.model.StatusAction;
 
 import android.app.Activity;
@@ -50,7 +51,7 @@ public class AddActionActivity extends Activity {
 		
 		
 		StatusAction eat = new StatusAction();
-		eat.setActionName("Eating a Food");
+		eat.setActionName(TrackerInputType.FOOD);
 		eat.setImgUrl(getResources().getDrawable(R.drawable.icon_food));
 		list.add(eat);
 		
@@ -60,7 +61,7 @@ public class AddActionActivity extends Activity {
 		list.add(doing);
 		
 		StatusAction bloodpressure = new StatusAction();
-		bloodpressure.setActionName("Measuring Blood Pressure");
+		bloodpressure.setActionName(TrackerInputType.BLOOD_PRESSURE);
 		bloodpressure.setImgUrl(getResources().getDrawable(R.drawable.icon_blood_pressure));
 		list.add(bloodpressure);
 		
