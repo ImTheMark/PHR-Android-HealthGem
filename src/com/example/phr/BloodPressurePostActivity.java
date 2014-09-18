@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
-import com.example.phr.mobile.daoimpl.MobileBloodPressureDaoImpl;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.service.BloodPressureService;
 import com.example.phr.serviceimpl.BloodPressureServiceImpl;
@@ -116,10 +115,6 @@ public class BloodPressurePostActivity extends Activity {
 			// WEB SERVER INSERT
 			BloodPressureService bpService = new BloodPressureServiceImpl();
 			bpService.addBloodPressure(bp);
-
-			// LOCAL DB INSERT
-			MobileBloodPressureDaoImpl bpDaoImpl = new MobileBloodPressureDaoImpl();
-			bpDaoImpl.add(bp);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

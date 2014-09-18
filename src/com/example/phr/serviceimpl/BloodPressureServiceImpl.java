@@ -27,7 +27,6 @@ public class BloodPressureServiceImpl implements BloodPressureService {
 			throws ServiceException, OutdatedAccessTokenException {
 		java.util.Date date = new java.util.Date();
 		Timestamp timestamp = new Timestamp(date.getTime());
-		System.out.println(timestamp);
 		try {
 			int entryID = webBloodPressureDao
 					.add_ReturnEntryIdInWeb(bloodPressure);
