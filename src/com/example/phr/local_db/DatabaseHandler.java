@@ -16,7 +16,6 @@ import com.example.phr.application.HealthGem;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.model.AccessToken;
 import com.example.phr.model.Client;
-import com.example.phr.tools.EncryptionHandler;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
@@ -73,7 +72,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.execSQL(CREATE_ACCESSTOKEN_TABLE);
 		db.execSQL(CREATE_CLIENT_TABLE);
 
-		initClient(db);
+		//initClient(db);
 	}
 
 	// Upgrading database
@@ -104,7 +103,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		return token;
 	}
 
-	public Client getClient() {
+/*	public Client getClient() {
 		Client c = new Client();
 		String selectQuery = "SELECT  * FROM " + TABLE_CLIENT;
 
@@ -119,7 +118,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		}
 		db.close();
 		return c;
-	}
+	}*/
 
 	public void setAccessToken(AccessToken accessToken) {
 		SQLiteDatabase db = dbHandler.getWritableDatabase();
@@ -135,7 +134,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();
 	}
 
-	public void setClient(Client c) {
+/*	public void setClient(Client c) {
 		SQLiteDatabase db = dbHandler.getWritableDatabase();
 
 		db.delete(TABLE_CLIENT, null, null);
@@ -148,9 +147,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		System.out.println("Have set client id and password");
 		db.insert(TABLE_CLIENT, null, values);
 		db.close();
-	}
+	}*/
 
-	public void initClient(SQLiteDatabase db) {
+/*	public void initClient(SQLiteDatabase db) {
 		ContentValues values = new ContentValues();
 		Client c = new Client();
 		c.setClientID("9543ED1349084DA816F103234217FED7A8627621");
@@ -161,5 +160,5 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		System.out.println("Have set client id and password");
 		db.insert(TABLE_CLIENT, null, values);
 		// db.close();
-	}
+	}*/
 }

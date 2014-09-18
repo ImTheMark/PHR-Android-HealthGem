@@ -99,11 +99,11 @@ public class LoginActivity extends Activity {
 						RegisterActivity.class);
 				startActivity(intent);
 			}
-		});
+		});/*
 		Client c = new Client();
 		c.setClientID("9543ED1349084DA816F103234217FED7A8627621");
 		c.setClientPassword("Y9xSazM4fHrkNd8tMKPkbjeqKAl4YE8QXGiJ");
-		DatabaseHandler.getDBHandler().setClient(c);
+		DatabaseHandler.getDBHandler().setClient(c);*/
 	}
 
 	/**

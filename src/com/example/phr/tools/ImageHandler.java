@@ -5,29 +5,38 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+
+import org.apache.commons.codec.binary.Base64;
+
 import com.example.phr.application.HealthGem;
+
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 public class ImageHandler {
+
 	
-	public String saveImage(Bitmap bitmapImage, String filename){
+	public String saveImage(Bitmap bitmapImage){
         ContextWrapper cw = new ContextWrapper(HealthGem.getContext());
         
-        // path to /data/data/yourapp/app_data/imagesDirectory
-        File directory = cw.getDir("imagesDirectory", Context.MODE_PRIVATE);
+        // path to /data/data/yourapp/app_data/images
+        File directory = cw.getDir("images", Context.MODE_PRIVATE);
         
-        // Create imagesDirectory
-        // file name with .jpg
+        directory.mkdirs();
+        
+        long time = TimestampHandler.getCurrentTimestamp().getTime(); 
+        String filename = UUIDGenerator.generateUniqueString();
+        
+        // Create images
         File mypath = new File(directory, filename+".jpg");
 
         FileOutputStream fos = null;
         try {           
 
             fos = new FileOutputStream(mypath);
-            // Use the compress method on the BitMap object to write image to the OutputStream
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.close();
             
@@ -35,15 +44,15 @@ public class ImageHandler {
             e.printStackTrace();
         }
         
-        // return image path
-        return directory.getAbsolutePath();
+        return filename;
     }
 	
-	public Bitmap loadImage(String path)
+	public Bitmap loadImage(String filename)
 	{
 	    try {
-	    	
-	        File f = new File(path);
+	        ContextWrapper cw = new ContextWrapper(HealthGem.getContext());
+	        File directory = cw.getDir("images", Context.MODE_PRIVATE);
+	        File f = new File(directory, filename);
 	        Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
 	        return b;
 	    } 
@@ -55,31 +64,14 @@ public class ImageHandler {
 		return null;
 	}
 
-/*	public String encodeImageToBase64(Bitmap imageFromPost){
-		Bitmap image = toBufferedImage(imageFromPost);
-		String encodedImage = encodeImageToBase64(image);
-		return encodedImage;
-	}
 
-	public Bitmap decodeImage(String encodedImage){
-		Base64 base64 = new Base64();
-		byte[] imageInByte = base64.decode(encodedImage);
-		Bitmap decodedByte = BitmapFactory.decodeByteArray(imageInByte, 0, imageInByte.length);
-		return decodedByte;
-	}*/
-
-/*	
- * CORRECT VERSION
- * bitmap object needs fix
- * 
  	public static String encodeImageToBase64(Bitmap image)
 	{
 	    Bitmap immagex=image;
 	    ByteArrayOutputStream baos = new ByteArrayOutputStream();  
 	    immagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-	    byte[] b = baos.toByteArray();
 		Base64 base64 = new Base64();
-	    String imageEncoded = base64.encode(b);
+	    String imageEncoded = new String(base64.encode(baos.toByteArray()));
 	    return imageEncoded;
 	}
 	
@@ -88,7 +80,5 @@ public class ImageHandler {
 		Base64 base64 = new Base64();
 		byte[] imageInByte = base64.decode(encodedImage);
 	    return BitmapFactory.decodeByteArray(imageInByte, 0, imageInByte.length); 
-	}*/
-
-
+	}
 }
