@@ -31,6 +31,7 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class NewStatusActivity extends Activity {
@@ -42,9 +43,18 @@ public class NewStatusActivity extends Activity {
 	ImageButton mBtnFb;
 	NumberPicker systolicPicker;
 	NumberPicker diastolicPicker;
+	NumberPicker sugarPicker;
+	Spinner sugarTypeSpinner;
 	TextView txtSystolic;
 	TextView txtDiastolic;
+	TextView txtSugar;
+	TextView sugarType;
 	EditText bpStatus;
+	EditText bsStatus;
+	ScrollView bpTemplate;
+	ScrollView bsTemplate;
+	ScrollView notesTemplate;
+	ScrollView weightTemplate;
 	String currentTracker;
 	final Context context = this;
 
@@ -74,10 +84,22 @@ public class NewStatusActivity extends Activity {
 			}
 		});
 		*/
-		currentTracker ="";
+		currentTracker =TrackerInputType.NOTES;
+		
+		bsTemplate= (ScrollView) findViewById(R.id.bloodsugar_template);
+		bpTemplate= (ScrollView) findViewById(R.id.bloodpressure_template);
+		notesTemplate= (ScrollView) findViewById(R.id.notes_template);
+		weightTemplate= (ScrollView) findViewById(R.id.weight_template);
+		
 		txtSystolic= (TextView) findViewById(R.id.systolic);
 		txtDiastolic= (TextView) findViewById(R.id.diastolic);
 		bpStatus= (EditText) findViewById(R.id.txtBPStatus);
+		
+		txtSugar= (TextView) findViewById(R.id.sugar);
+		bsStatus= (EditText) findViewById(R.id.txtBSStatus);
+		sugarType= (TextView) findViewById(R.id.txtSugarType);
+		
+		
 		mBtnAddPhoto = (ImageButton)findViewById(R.id.btnAddPhoto);
 		mBtnAddPhoto.setOnClickListener(new OnClickListener() {
 			@Override
@@ -127,14 +149,69 @@ public class NewStatusActivity extends Activity {
                         	  currentTracker = TrackerInputType.BLOOD_PRESSURE;
                         	  callBloodPressureInput();
                           }
-                        
-         
+                          else if(item.equals(TrackerInputType.BLOOD_SUGAR)){
+                        	  currentTracker = TrackerInputType.BLOOD_SUGAR;
+                        	  callBloodSugarInput();
+                          }
+                          else if(item.equals(TrackerInputType.NOTES)){
+                        	  currentTracker = TrackerInputType.NOTES;
+                        	  callNotesInput();
+                          }
                        }  
    
      }
 	 
 	 
 	
+	private void callNotesInput() {
+		// TODO Auto-generated method stub
+		setAllTemplateGone();
+		notesTemplate.setVisibility(View.VISIBLE);
+	}
+
+	private void callWeightInput() {
+		// TODO Auto-generated method stub
+		setAllTemplateGone();
+		weightTemplate.setVisibility(View.VISIBLE);
+	}
+	
+	private void callBloodSugarInput() {
+		// TODO Auto-generated method stub
+		LayoutInflater layoutInflater = LayoutInflater.from(context);
+
+		View bsView = layoutInflater.inflate(R.layout.item_bloodsugar_input, null);
+
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+		alertDialogBuilder.setView(bsView);
+		sugarPicker = (NumberPicker) bsView.findViewById(R.id.sugarPicker);
+		sugarTypeSpinner= (Spinner) bsView.findViewById(R.id.sugarTypeSpinner);
+		sugarPicker.setCurrent(120);
+		alertDialogBuilder
+				.setCancelable(false)
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+	
+								setAllTemplateGone();
+								bsTemplate.setVisibility(View.VISIBLE);
+								Log.e("sugar",Integer.toString(sugarPicker.getCurrent()));
+								txtSugar.setText(Integer.toString(sugarPicker.getCurrent()));
+								sugarType.setText(String.valueOf(sugarTypeSpinner.getSelectedItem()));
+							}
+						})
+				.setNegativeButton("Cancel",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,	int id) {
+								dialog.cancel();
+							}
+						});
+
+		// create an alert dialog
+		AlertDialog alertD = alertDialogBuilder.create();
+		alertD.show();
+		
+		
+	}
+
 	private void callBloodPressureInput() {
 		// TODO Auto-generated method stub
 		
@@ -146,14 +223,14 @@ public class NewStatusActivity extends Activity {
 		alertDialogBuilder.setView(bpView);
 		systolicPicker = (NumberPicker) bpView.findViewById(R.id.systolicPicker);
 		diastolicPicker = (NumberPicker) bpView.findViewById(R.id.diastolicPicker);
-		systolicPicker.setCurrent(100);
-		diastolicPicker.setCurrent(150);
+		systolicPicker.setCurrent(120);
+		diastolicPicker.setCurrent(80);
 		alertDialogBuilder
 				.setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 	
-								ScrollView bpTemplate= (ScrollView) findViewById(R.id.bloodpressure_template);
+								setAllTemplateGone();
 								bpTemplate.setVisibility(View.VISIBLE);
 								Log.e("in","kkdks");
 								Log.e("systolic",Integer.toString(systolicPicker.getCurrent()));
@@ -209,6 +286,39 @@ public class NewStatusActivity extends Activity {
 
 	}
 
+	private void addBloodSugarToDatabase() throws ServiceException,
+			OutdatedAccessTokenException {
+
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy",
+					Locale.ENGLISH);
+			DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+			DateFormat fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss",
+					Locale.ENGLISH);
+			Calendar calobj = Calendar.getInstance();
+			Date date = fmt.parse(dateFormat.format(calobj
+					.getTime())
+					+ " "
+					+ timeFormat.format(calobj.getTime()));
+			Timestamp timestamp = new Timestamp(date.getTime());
+			System.out.println(timestamp);
+		
+		
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+}
+	
+	private void setAllTemplateGone()
+	{
+		bsTemplate.setVisibility(View.GONE);
+		bpTemplate.setVisibility(View.GONE);
+		notesTemplate.setVisibility(View.GONE);
+		weightTemplate.setVisibility(View.GONE);
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_status_post, menu);
@@ -219,7 +329,7 @@ public class NewStatusActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_item_status_post:
-			
+			 if(currentTracker.equals(TrackerInputType.BLOOD_PRESSURE)){
 				try {
 					addBloodPressureToDatabase();
 				} catch (ServiceException e) {
@@ -233,7 +343,23 @@ public class NewStatusActivity extends Activity {
 				Intent intent = new Intent(getApplicationContext(),
 						BloodPressureTrackerActivity.class);
 				startActivity(intent);
-			
+			 }
+			 
+			 else if(currentTracker.equals(TrackerInputType.BLOOD_SUGAR)){
+					try {
+						addBloodSugarToDatabase();
+					} catch (ServiceException e) {
+						// output error message or something
+						System.out.println(e.getMessage());
+					} catch (OutdatedAccessTokenException e) {
+						// Message - > Log user out
+						e.printStackTrace();
+					}
+					// onBackPressed();
+					Intent intent = new Intent(getApplicationContext(),
+							BloodSugarTrackerActivity.class);
+					startActivity(intent);
+				 }
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

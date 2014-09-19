@@ -95,7 +95,7 @@
 	            android:id="@+id/textView1"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:text="- Measuring bloodpressure  " />
+	            android:text="- Measuring blood pressure  " />
 	        
 	        <TextView
 	            android:id="@+id/systolic"
@@ -124,6 +124,142 @@
         </LinearLayout>
     </ScrollView>
     
+     <ScrollView
+        android:id="@+id/bloodsugar_template"
+        android:layout_alignParentTop="true"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:scrollbars="vertical"
+	    android:fillViewport="true"
+	    android:visibility="gone"
+	    >
+           <LinearLayout
+            android:id="@+id/bloodsugar_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" 
+            android:gravity="right"
+            >
+            
+	        <EditText
+		        android:id="@+id/txtBSStatus"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:background="#00000000"
+	            android:hint=" enter status " 
+	            android:padding="10dp"
+	            android:inputType="text">
+	              <requestFocus />
+	        </EditText>
+	
+	        <TextView
+	            android:id="@+id/textView1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="- Measuring blood sugar  " />
+	        
+	        <TextView
+	            android:id="@+id/sugar"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textStyle="bold"
+	            android:text="100" 
+	            android:textColor="#E05C5C" 
+	            />
+	        
+	        <TextView
+	            android:id="@+id/textView1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text=" mg/dL " />
+	        
+	        <TextView
+	            android:id="@+id/txtSugarType"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="after meal"
+	            android:textColor="#E05C5C"  />
+        </LinearLayout>
+    </ScrollView>
+     
+     <ScrollView
+        android:id="@+id/weight_template"
+        android:layout_alignParentTop="true"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:scrollbars="vertical"
+	    android:fillViewport="true"
+	    android:visibility="gone"
+	    >
+           <LinearLayout
+            android:id="@+id/weight_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" 
+            android:gravity="right"
+            >
+            
+	        <EditText
+		        android:id="@+id/txtWeightStatus"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:background="#00000000"
+	            android:hint=" enter status " 
+	            android:padding="10dp"
+	            android:inputType="text">
+	              <requestFocus />
+	        </EditText>
+	
+	        <TextView
+	            android:id="@+id/textView1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="- Measuring weight  " />
+	        
+	        <TextView
+	            android:id="@+id/weight"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textStyle="bold"
+	            android:text="50" 
+	            android:textColor="#E05C5C" 
+	            />
+	        
+	        <TextView
+	            android:id="@+id/weightUnit"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text=" kg " />
+        </LinearLayout>
+    </ScrollView>
+     
+     <ScrollView
+        android:id="@+id/notes_template"
+        android:layout_alignParentTop="true"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:scrollbars="vertical"
+	    android:fillViewport="true"
+	    android:visibility="visible"
+	    >
+           <LinearLayout
+            android:id="@+id/bloodsugar_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" 
+            android:gravity="left"
+            >
+            
+	        <EditText
+		        android:id="@+id/txtNotesStatus"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:background="#00000000"
+	            android:hint=" enter status " 
+	            android:padding="10dp"
+	            android:inputType="text">
+	              <requestFocus />
+	        </EditText>
+	
+        </LinearLayout>
+    </ScrollView>
      
     <LinearLayout
         android:id="@+id/statusTabsPlaceholder"

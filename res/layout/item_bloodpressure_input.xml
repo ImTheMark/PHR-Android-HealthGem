@@ -15,7 +15,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:background="@drawable/textview_style"
-            android:text="Blood Pressure" />
+            android:text="Set Blood Pressure" 
+            android:gravity="center" />
 
         <View
             android:id="@+id/bloodpressureQuantityDivider"
