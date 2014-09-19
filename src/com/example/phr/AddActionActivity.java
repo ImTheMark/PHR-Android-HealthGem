@@ -56,7 +56,7 @@ public class AddActionActivity extends Activity {
 		list.add(eat);
 		
 		StatusAction doing = new StatusAction();
-		doing.setActionName("Doing an Activity");
+		doing.setActionName(TrackerInputType.ACTIVITY);
 		doing.setImgUrl(getResources().getDrawable(R.drawable.icon_activity));
 		list.add(doing);
 		
@@ -66,19 +66,24 @@ public class AddActionActivity extends Activity {
 		list.add(bloodpressure);
 		
 		StatusAction bloodsugar = new StatusAction();
-		bloodsugar.setActionName("Measuring Blood Sugar");
+		bloodsugar.setActionName(TrackerInputType.BLOOD_SUGAR);
 		bloodsugar.setImgUrl(getResources().getDrawable(R.drawable.icon_blood_sugar));
 		list.add(bloodsugar);
 		
 		StatusAction weight = new StatusAction();
-		weight.setActionName("Measuring Weight");
+		weight.setActionName(TrackerInputType.WEIGHT);
 		weight.setImgUrl(getResources().getDrawable(R.drawable.icon_weight));
 		list.add(weight);
 		
 		StatusAction checkup = new StatusAction();
-		checkup.setActionName("Record a Checkup");
+		checkup.setActionName(TrackerInputType.CHECKUP);
 		checkup.setImgUrl(getResources().getDrawable(R.drawable.icon_checkup));
 		list.add(checkup);
+		
+		StatusAction notes = new StatusAction();
+		notes.setActionName(TrackerInputType.NOTES);
+		notes.setImgUrl(getResources().getDrawable(R.drawable.icon_note));
+		list.add(notes);
 		
 		return list;
 	}

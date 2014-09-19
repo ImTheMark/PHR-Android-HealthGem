@@ -1,8 +1,20 @@
 package com.example.phr;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import com.example.phr.R;
 import com.example.phr.enums.TrackerInputType;
+import com.example.phr.exceptions.OutdatedAccessTokenException;
+import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.BloodPressure;
+import com.example.phr.service.BloodPressureService;
+import com.example.phr.serviceimpl.BloodPressureServiceImpl;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,11 +39,13 @@ public class NewStatusActivity extends Activity {
 	ImageButton mBtnCheckinLocation;
 	ImageButton mBtnAddPhoto;
 	ImageButton mBtnAddActions;
+	ImageButton mBtnFb;
 	NumberPicker systolicPicker;
 	NumberPicker diastolicPicker;
 	TextView txtSystolic;
 	TextView txtDiastolic;
 	EditText bpStatus;
+	String currentTracker;
 	final Context context = this;
 
 	@Override
@@ -60,6 +74,7 @@ public class NewStatusActivity extends Activity {
 			}
 		});
 		*/
+		currentTracker ="";
 		txtSystolic= (TextView) findViewById(R.id.systolic);
 		txtDiastolic= (TextView) findViewById(R.id.diastolic);
 		bpStatus= (EditText) findViewById(R.id.txtBPStatus);
@@ -69,6 +84,21 @@ public class NewStatusActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
 				startActivity(intent);
+			}
+		});
+		mBtnFb = (ImageButton)findViewById(R.id.btnFb);
+		mBtnFb.setTag(new Boolean(false)); // wasn't clicked
+		mBtnFb.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if( ((Boolean)mBtnFb.getTag())==false ){
+						mBtnFb.setImageResource(R.drawable.activitynewstatus_fb_click);
+						mBtnFb.setTag(new Boolean(true));
+		          }
+				else{
+						mBtnFb.setImageResource(R.drawable.activitynewstatus_fb);
+						mBtnFb.setTag(new Boolean(false));
+				}
 			}
 		});
 		
@@ -91,17 +121,23 @@ public class NewStatusActivity extends Activity {
                 // check if the request code is same as what is passed  here it is 2  
                  if(requestCode==2)  
                        {  
-                          String message=data.getStringExtra("itemValue");                       
-                          Log.e("itemValue = ", message);
-                          if(message.equals(TrackerInputType.BLOOD_PRESSURE))
+                          String item = data.getStringExtra("itemValue");                       
+                          Log.e("itemValue = ", item);
+                          if(item.equals(TrackerInputType.BLOOD_PRESSURE)){
+                        	  currentTracker = TrackerInputType.BLOOD_PRESSURE;
                         	  callBloodPressureInput();
+                          }
+                        
+         
                        }  
    
-     }  
+     }
+	 
+	 
 	
 	private void callBloodPressureInput() {
 		// TODO Auto-generated method stub
-		//BloodPressure newEntry = new BloodPressure();
+		
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
 
 		View bpView = layoutInflater.inflate(R.layout.item_bloodpressure_input, null);
@@ -116,7 +152,7 @@ public class NewStatusActivity extends Activity {
 				.setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
-								// get user input and set it to result
+	
 								ScrollView bpTemplate= (ScrollView) findViewById(R.id.bloodpressure_template);
 								bpTemplate.setVisibility(View.VISIBLE);
 								Log.e("in","kkdks");
@@ -135,8 +171,42 @@ public class NewStatusActivity extends Activity {
 
 		// create an alert dialog
 		AlertDialog alertD = alertDialogBuilder.create();
-
 		alertD.show();
+	}
+	
+	
+
+	private void addBloodPressureToDatabase() throws ServiceException,
+			OutdatedAccessTokenException {
+
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy",
+					Locale.ENGLISH);
+			DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+			DateFormat fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss",
+					Locale.ENGLISH);
+			Calendar calobj = Calendar.getInstance();
+			Date date = fmt.parse(dateFormat.format(calobj
+					.getTime())
+					+ " "
+					+ timeFormat.format(calobj.getTime()));
+			Timestamp timestamp = new Timestamp(date.getTime());
+			System.out.println(timestamp);
+			Log.e(bpStatus.getText().toString(),Integer.toString(systolicPicker.getCurrent()));
+			BloodPressure bp = new BloodPressure(timestamp,
+					bpStatus.getText().toString(),
+					"test-image", systolicPicker.getCurrent(),
+					diastolicPicker.getCurrent());
+			Log.e("added","pp");
+			// WEB SERVER INSERT
+			//BloodPressureService bpService = new BloodPressureServiceImpl();
+			//bpService.add(bp);
+
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	@Override
@@ -149,12 +219,28 @@ public class NewStatusActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_item_status_post:
-			onBackPressed();
+			
+				try {
+					addBloodPressureToDatabase();
+				} catch (ServiceException e) {
+					// output error message or something
+					System.out.println(e.getMessage());
+				} catch (OutdatedAccessTokenException e) {
+					// Message - > Log user out
+					e.printStackTrace();
+				}
+				// onBackPressed();
+				Intent intent = new Intent(getApplicationContext(),
+						BloodPressureTrackerActivity.class);
+				startActivity(intent);
+			
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 
 	}
+	
+	
 
 }

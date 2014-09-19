@@ -75,17 +75,16 @@
 	    >
            <LinearLayout
             android:id="@+id/bloodpressure_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content" 
+            android:gravity="right"
             >
             
 	        <EditText
 		        android:id="@+id/txtBPStatus"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_weight="1.0"
 		        android:background="#00000000"
-	            android:ems="1"
 	            android:hint=" enter status " 
 	            android:padding="10dp"
 	            android:inputType="text">
@@ -159,6 +158,14 @@
             android:background="@null"
             android:padding="10dp"
             android:src="@drawable/activitynewstatus_icon_timedate" />
+        
+        <ImageButton
+            android:id="@+id/btnFb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="10dp"
+            android:src="@drawable/activitynewstatus_fb" />
 
     </LinearLayout>
 
