@@ -66,19 +66,19 @@ public class LoginActivity extends Activity {
 				// sp.savePreferences("id", username);
 
 				if (password.length() > 0 && username.length() > 0) {
-					try {
+					/*try {
 						boolean isValid = userService.validateUser(username,
 								password);
-						if (isValid) {
+						if (isValid) {*/
 							Intent intent = new Intent(getApplicationContext(),
 									MainActivity.class);
 							startActivity(intent);
-						} else {
+						/*} else {
 							mTextValid.setText("Invalid Username/Password");
 						}
 					} catch (ServiceException e) {
 						mTextValid.setText("Error in Internet Connection");
-					}
+					}*/
 
 				}
 
@@ -99,11 +99,11 @@ public class LoginActivity extends Activity {
 						RegisterActivity.class);
 				startActivity(intent);
 			}
-		});
+		});/*
 		Client c = new Client();
 		c.setClientID("9543ED1349084DA816F103234217FED7A8627621");
 		c.setClientPassword("Y9xSazM4fHrkNd8tMKPkbjeqKAl4YE8QXGiJ");
-		DatabaseHandler.getDBHandler().setClient(c);
+		DatabaseHandler.getDBHandler().setClient(c);*/
 	}
 
 	/**
