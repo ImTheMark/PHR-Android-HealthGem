@@ -28,16 +28,31 @@
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content" 
-            android:layout_below="@+id/weightQuantityDivider">
+            android:layout_below="@+id/weightQuantityDivider"
+            android:weightSum="5" >
+
+             <EditText
+		        android:id="@+id/txtWeight"
+		        android:layout_width="0dp"
+		        android:layout_height="wrap_content"
+		        android:background="#00000000"
+	            android:hint=" enter weight" 
+	            android:padding="10dp"
+	            android:inputType="numberDecimal"
+	            android:layout_weight="4">
+	              <requestFocus />
+	        </EditText>
+            
 
             <Spinner
-                android:id="@+id/sugarTypeSpinner"
-                android:layout_width="fill_parent"
+                android:id="@+id/weightUnitSpinner"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
-        		android:entries="@array/weightUnit"/>
+        		android:entries="@array/weightUnit"
+        		android:layout_weight="1"/>
 
         </LinearLayout>
 

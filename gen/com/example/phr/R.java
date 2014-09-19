@@ -145,7 +145,6 @@ public final class R {
         public static final int RelativeLayout01=0x7f090094;
         public static final int RelativeLayout02=0x7f090096;
         public static final int ScrollView1=0x7f09002f;
-        public static final int ScrollView_status=0x7f090045;
         public static final int SettingHeightDivider=0x7f090090;
         public static final int SettingWeightDivider=0x7f09008a;
         public static final int TextView01=0x7f090037;
@@ -178,9 +177,9 @@ public final class R {
         public static final int actionImage=0x7f090108;
         public static final int actionList=0x7f090002;
         public static final int actionName=0x7f090109;
-        public static final int action_help=0x7f090141;
-        public static final int action_notifications=0x7f090143;
-        public static final int action_settings=0x7f090142;
+        public static final int action_help=0x7f090142;
+        public static final int action_notifications=0x7f090144;
+        public static final int action_settings=0x7f090143;
         public static final int activitiesPlaceholder=0x7f090125;
         public static final int bloodpressureBanner=0x7f090023;
         public static final int bloodpressureLocationDivider=0x7f090017;
@@ -233,7 +232,7 @@ public final class R {
         public static final int confirmPasswordReg=0x7f09006b;
         public static final int container=0x7f09003e;
         public static final int dateholder=0x7f0900e6;
-        public static final int decrement=0x7f09013f;
+        public static final int decrement=0x7f090140;
         public static final int diaPlaceholder=0x7f0900ec;
         public static final int diastolic=0x7f09004b;
         public static final int diastolicPicker=0x7f090010;
@@ -249,6 +248,7 @@ public final class R {
         public static final int foodGraph=0x7f09003b;
         public static final int foodPlaceholder=0x7f090100;
         public static final int foodProtein=0x7f090117;
+        public static final int food_template=0x7f090045;
         public static final int fourthRowHolder=0x7f0900bd;
         public static final int glucosedateholder=0x7f0900f0;
         public static final int glucoseholder=0x7f0900f3;
@@ -269,7 +269,7 @@ public final class R {
         public static final int imageViewNoteReadHolder=0x7f090065;
         public static final int imageViewStatusAction=0x7f09012f;
         public static final int imageViewViaPosted=0x7f090133;
-        public static final int increment=0x7f09013d;
+        public static final int increment=0x7f09013e;
         public static final int journalTabsPlaceholder=0x7f0900c4;
         public static final int lblAct=0x7f090105;
         public static final int lblActivities=0x7f090126;
@@ -298,13 +298,13 @@ public final class R {
         public static final int listView_groupedfood=0x7f09003d;
         public static final int listView_notes=0x7f090067;
         public static final int listview_calorie=0x7f09002a;
-        public static final int menu_item_status_post=0x7f090144;
+        public static final int menu_item_status_post=0x7f090145;
         public static final int noteBanner=0x7f090066;
         public static final int notes_template=0x7f090056;
         public static final int pager=0x7f090044;
         public static final int piegraph=0x7f0900d6;
         public static final int placePlaceholder=0x7f090112;
-        public static final int pref_num_picker=0x7f090140;
+        public static final int pref_num_picker=0x7f090141;
         public static final int progressBar2=0x7f0900cc;
         public static final int quantity=0x7f09007c;
         public static final int radioGroupSettingHeight=0x7f090091;
@@ -373,7 +373,7 @@ public final class R {
         public static final int textViewbloodpressureStatus=0x7f090014;
         public static final int thirdRowHolder=0x7f0900b6;
         public static final int time=0x7f09011a;
-        public static final int timepicker_input=0x7f09013e;
+        public static final int timepicker_input=0x7f09013f;
         public static final int titleHolder=0x7f0900d7;
         public static final int togglebuttonActivitySharing=0x7f09009a;
         public static final int togglebuttonBloodPressureSharing=0x7f090021;
@@ -425,6 +425,7 @@ public final class R {
         public static final int txtUsernameReg=0x7f090068;
         public static final int txtWeight=0x7f090120;
         public static final int txtWeightStatus=0x7f090053;
+        public static final int txtWeightUnit=0x7f090055;
         public static final int txtdate=0x7f0900e7;
         public static final int txtglucosedate=0x7f0900f1;
         public static final int txtglucosetime=0x7f0900f2;
@@ -437,7 +438,7 @@ public final class R {
         public static final int weightPlaceholder=0x7f09011e;
         public static final int weightPost=0x7f09009d;
         public static final int weightQuantityDivider=0x7f09013c;
-        public static final int weightUnit=0x7f090055;
+        public static final int weightUnitSpinner=0x7f09013d;
         public static final int weight_layout=0x7f090052;
         public static final int weight_template=0x7f090051;
         public static final int what=0x7f09007b;

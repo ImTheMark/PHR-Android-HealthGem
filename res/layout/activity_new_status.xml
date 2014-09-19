@@ -4,7 +4,7 @@
     android:layout_height="match_parent" >
     
     <ScrollView
-	    android:id="@+id/ScrollView_status"
+	    android:id="@+id/food_template"
         android:layout_alignParentTop="true"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
 		        android:layout_weight="1.0"
 		        android:background="#00000000"
 	            android:ems="1"
-	            android:hint=" " 
+	            android:hint=" enter status..." 
 	            android:padding="10dp"
 	            android:inputType="text"
 	            >
@@ -85,7 +85,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:background="#00000000"
-	            android:hint=" enter status " 
+	            android:hint=" enter status..." 
 	            android:padding="10dp"
 	            android:inputType="text">
 	              <requestFocus />
@@ -145,7 +145,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:background="#00000000"
-	            android:hint=" enter status " 
+	            android:hint=" enter status... " 
 	            android:padding="10dp"
 	            android:inputType="text">
 	              <requestFocus />
@@ -194,7 +194,7 @@
             android:id="@+id/weight_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" 
-            android:gravity="right"
+            android:gravity="left"
             >
             
 	        <EditText
@@ -202,7 +202,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:background="#00000000"
-	            android:hint=" enter status " 
+	            android:hint=" enter status... " 
 	            android:padding="10dp"
 	            android:inputType="text">
 	              <requestFocus />
@@ -224,10 +224,10 @@
 	            />
 	        
 	        <TextView
-	            android:id="@+id/weightUnit"
+	            android:id="@+id/txtWeightUnit"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:text=" kg " />
+	            android:text="  kg " />
         </LinearLayout>
     </ScrollView>
      
@@ -252,7 +252,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:background="#00000000"
-	            android:hint=" enter status " 
+	            android:hint=" enter status... " 
 	            android:padding="10dp"
 	            android:inputType="text">
 	              <requestFocus />
@@ -266,7 +266,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignBottom="@id/ScrollView_status"
+        android:layout_alignBottom="@id/note_template"
         android:gravity="center"
         android:background="#E8E8E8" >
         <ImageButton 
@@ -320,7 +320,7 @@
             android:text="Total calorie: " />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/txtCal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="478 kcal"

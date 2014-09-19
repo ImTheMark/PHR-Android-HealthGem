@@ -45,12 +45,17 @@ public class NewStatusActivity extends Activity {
 	NumberPicker diastolicPicker;
 	NumberPicker sugarPicker;
 	Spinner sugarTypeSpinner;
+	Spinner weightUnitSpinner;
 	TextView txtSystolic;
 	TextView txtDiastolic;
 	TextView txtSugar;
-	TextView sugarType;
+	TextView txtSugarType;
+	TextView txtWeight;
+	TextView txtWeightUnit;
 	EditText bpStatus;
 	EditText bsStatus;
+	EditText weight;
+	EditText weightStatus;
 	ScrollView bpTemplate;
 	ScrollView bsTemplate;
 	ScrollView notesTemplate;
@@ -97,8 +102,12 @@ public class NewStatusActivity extends Activity {
 		
 		txtSugar= (TextView) findViewById(R.id.sugar);
 		bsStatus= (EditText) findViewById(R.id.txtBSStatus);
-		sugarType= (TextView) findViewById(R.id.txtSugarType);
+		txtSugarType= (TextView) findViewById(R.id.txtSugarType);
 		
+		
+		txtWeight= (TextView) findViewById(R.id.weight);
+		weightStatus= (EditText) findViewById(R.id.txtWeightStatus);
+		txtWeightUnit= (TextView) findViewById(R.id.txtWeightUnit);
 		
 		mBtnAddPhoto = (ImageButton)findViewById(R.id.btnAddPhoto);
 		mBtnAddPhoto.setOnClickListener(new OnClickListener() {
@@ -157,6 +166,11 @@ public class NewStatusActivity extends Activity {
                         	  currentTracker = TrackerInputType.NOTES;
                         	  callNotesInput();
                           }
+                          
+                          else if(item.equals(TrackerInputType.WEIGHT)){
+                        	  currentTracker = TrackerInputType.WEIGHT;
+                        	  callWeightInput();
+                          }
                        }  
    
      }
@@ -172,7 +186,36 @@ public class NewStatusActivity extends Activity {
 	private void callWeightInput() {
 		// TODO Auto-generated method stub
 		setAllTemplateGone();
-		weightTemplate.setVisibility(View.VISIBLE);
+		LayoutInflater layoutInflater = LayoutInflater.from(context);
+
+		View weightView = layoutInflater.inflate(R.layout.item_weight_input, null);
+
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+		alertDialogBuilder.setView(weightView);
+		weight = (EditText) weightView.findViewById(R.id.txtWeight);
+		weightUnitSpinner= (Spinner) weightView.findViewById(R.id.weightUnitSpinner);
+		alertDialogBuilder
+				.setCancelable(false)
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+	
+								setAllTemplateGone();
+								weightTemplate.setVisibility(View.VISIBLE);
+							
+								txtWeight.setText(weight.getText());
+								txtWeightUnit.setText(String.valueOf(weightUnitSpinner.getSelectedItem()));
+							}
+						})
+				.setNegativeButton("Cancel",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,	int id) {
+								dialog.cancel();
+							}
+						});
+
+		// create an alert dialog
+		AlertDialog alertD = alertDialogBuilder.create();
+		alertD.show();
 	}
 	
 	private void callBloodSugarInput() {
@@ -195,7 +238,7 @@ public class NewStatusActivity extends Activity {
 								bsTemplate.setVisibility(View.VISIBLE);
 								Log.e("sugar",Integer.toString(sugarPicker.getCurrent()));
 								txtSugar.setText(Integer.toString(sugarPicker.getCurrent()));
-								sugarType.setText(String.valueOf(sugarTypeSpinner.getSelectedItem()));
+								txtSugarType.setText(String.valueOf(sugarTypeSpinner.getSelectedItem()));
 							}
 						})
 				.setNegativeButton("Cancel",
