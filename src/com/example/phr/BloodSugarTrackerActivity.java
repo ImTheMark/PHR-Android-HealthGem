@@ -28,6 +28,7 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.example.phr.adapter.BloodSugarAdapter;
+import com.example.phr.enums.TrackerInputType;
 import com.example.phr.model.BloodSugar;
 
 public class BloodSugarTrackerActivity extends Activity{
@@ -157,10 +158,10 @@ public class BloodSugarTrackerActivity extends Activity{
 		mBtnBloodsugarPost = (ImageView) findViewById(R.id.bloodsugarBanner);
 		mBtnBloodsugarPost.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {/*
-				Intent intent = new Intent(getApplicationContext(),
-						BloodsugarPostActivity.class);
-				startActivity(intent);*/
+			public void onClick(View v) {
+				Intent i = new Intent(getApplicationContext(), NewStatusActivity.class);
+				i.putExtra("tracker",TrackerInputType.BLOOD_SUGAR);
+				startActivity(i);
 			}
 		});
 	}

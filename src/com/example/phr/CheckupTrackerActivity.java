@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.phr.adapter.CheckupAdapter;
+import com.example.phr.enums.TrackerInputType;
 import com.example.phr.model.Checkup;
 
 import android.annotation.SuppressLint;
@@ -68,10 +69,10 @@ public class CheckupTrackerActivity extends Activity {
 		mBtnCheckupPost = (LinearLayout) findViewById(R.id.btnAddCheckupDate);
 		mBtnCheckupPost.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {/*
-				Intent intent = new Intent(getApplicationContext(),
-						CheckupPostActivity.class);
-				startActivity(intent);*/
+			public void onClick(View v) {
+				Intent i = new Intent(getApplicationContext(), NewStatusActivity.class);
+				i.putExtra("tracker",TrackerInputType.CHECKUP);
+				startActivity(i);
 			}
 		});
 		

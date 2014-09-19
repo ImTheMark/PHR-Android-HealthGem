@@ -54,6 +54,7 @@ public class NewStatusActivity extends Activity {
 	TextView txtWeightUnit;
 	EditText bpStatus;
 	EditText bsStatus;
+	EditText notesStatus;
 	EditText weight;
 	EditText weightStatus;
 	ScrollView bpTemplate;
@@ -90,24 +91,25 @@ public class NewStatusActivity extends Activity {
 		});
 		*/
 		currentTracker =TrackerInputType.NOTES;
-		
+		//templates
 		bsTemplate= (ScrollView) findViewById(R.id.bloodsugar_template);
 		bpTemplate= (ScrollView) findViewById(R.id.bloodpressure_template);
 		notesTemplate= (ScrollView) findViewById(R.id.notes_template);
 		weightTemplate= (ScrollView) findViewById(R.id.weight_template);
-		
+		//blood pressure post
 		txtSystolic= (TextView) findViewById(R.id.systolic);
 		txtDiastolic= (TextView) findViewById(R.id.diastolic);
 		bpStatus= (EditText) findViewById(R.id.txtBPStatus);
-		
+		//blood sugar post
 		txtSugar= (TextView) findViewById(R.id.sugar);
 		bsStatus= (EditText) findViewById(R.id.txtBSStatus);
 		txtSugarType= (TextView) findViewById(R.id.txtSugarType);
-		
-		
+		//weight post
 		txtWeight= (TextView) findViewById(R.id.weight);
 		weightStatus= (EditText) findViewById(R.id.txtWeightStatus);
 		txtWeightUnit= (TextView) findViewById(R.id.txtWeightUnit);
+		//note post
+		notesStatus= (EditText) findViewById(R.id.txtNotesStatus);
 		
 		mBtnAddPhoto = (ImageButton)findViewById(R.id.btnAddPhoto);
 		mBtnAddPhoto.setOnClickListener(new OnClickListener() {
@@ -142,6 +144,41 @@ public class NewStatusActivity extends Activity {
 	                startActivityForResult(intent, 2);
 			}
 		});
+		
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+		    String tracker = extras.getString("tracker");
+		    
+		    if(tracker.equals(TrackerInputType.BLOOD_PRESSURE)){
+          	  currentTracker = TrackerInputType.BLOOD_PRESSURE;
+          	  callBloodPressureInput();
+            }
+            else if(tracker.equals(TrackerInputType.BLOOD_SUGAR)){
+          	  currentTracker = TrackerInputType.BLOOD_SUGAR;
+          	  callBloodSugarInput();
+            }
+            else if(tracker.equals(TrackerInputType.NOTES)){
+          	  currentTracker = TrackerInputType.NOTES;
+          	  callNotesInput();
+            }
+            
+            else if(tracker.equals(TrackerInputType.WEIGHT)){
+          	  currentTracker = TrackerInputType.WEIGHT;
+          	  callWeightInput();
+            }
+            else if(tracker.equals(TrackerInputType.FOOD)){
+          	  currentTracker = TrackerInputType.FOOD;
+          	  callFoodInput();
+            }
+            else if(tracker.equals(TrackerInputType.CHECKUP)){
+          	  currentTracker = TrackerInputType.CHECKUP;
+          	  callCheckUpInput();
+            }
+            else if(tracker.equals(TrackerInputType.ACTIVITY)){
+          	  currentTracker = TrackerInputType.ACTIVITY;
+          	  callActivityInput();
+            }
+		}
 	}
 
 	 @Override  
@@ -171,12 +208,37 @@ public class NewStatusActivity extends Activity {
                         	  currentTracker = TrackerInputType.WEIGHT;
                         	  callWeightInput();
                           }
+                          else if(item.equals(TrackerInputType.FOOD)){
+                        	  currentTracker = TrackerInputType.FOOD;
+                        	  callFoodInput();
+                          }
+                          else if(item.equals(TrackerInputType.CHECKUP)){
+                        	  currentTracker = TrackerInputType.CHECKUP;
+                        	  callCheckUpInput();
+                          }
+                          else if(item.equals(TrackerInputType.ACTIVITY)){
+                        	  currentTracker = TrackerInputType.ACTIVITY;
+                        	  callActivityInput();
+                          }
                        }  
-   
      }
 	 
 	 
-	
+	private void callActivityInput() {
+		// TODO Auto-generated method stub
+		setAllTemplateGone();
+	}
+
+	private void callCheckUpInput() {
+		// TODO Auto-generated method stub
+		setAllTemplateGone();
+	}
+
+	private void callFoodInput() {
+		// TODO Auto-generated method stub
+		setAllTemplateGone();
+	}
+
 	private void callNotesInput() {
 		// TODO Auto-generated method stub
 		setAllTemplateGone();

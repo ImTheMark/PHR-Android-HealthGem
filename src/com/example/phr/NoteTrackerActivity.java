@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.phr.adapter.NoteAdapter;
+import com.example.phr.enums.TrackerInputType;
 import com.example.phr.model.Note;
 
 import android.annotation.SuppressLint;
@@ -73,10 +74,10 @@ public class NoteTrackerActivity extends Activity{
 		mBtnNotePost = (ImageView) findViewById(R.id.noteBanner);
 		mBtnNotePost.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {/*
-				Intent intent = new Intent(getApplicationContext(),
-						NotePostActivity.class);
-				startActivity(intent);*/
+			public void onClick(View v) {
+				Intent i = new Intent(getApplicationContext(), NewStatusActivity.class);
+				i.putExtra("tracker",TrackerInputType.NOTES);
+				startActivity(i);
 			}
 		});
 	}

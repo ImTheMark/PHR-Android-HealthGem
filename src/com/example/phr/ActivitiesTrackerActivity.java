@@ -18,6 +18,7 @@ import android.widget.ListView;
 
 import com.example.phr.adapter.ActivityAdapter;
 import com.example.phr.adapter.StatusAdapter;
+import com.example.phr.enums.TrackerInputType;
 import com.example.phr.model.Status;
 
 public class ActivitiesTrackerActivity extends Activity {
@@ -41,10 +42,10 @@ public class ActivitiesTrackerActivity extends Activity {
 		mBtnAddActivity.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onClick(View arg0) {/*
-				Intent intent = new Intent(getApplicationContext(),
-						ActivitiesTrackerPostActivity.class);
-				startActivity(intent);*/
+			public void onClick(View arg0) {
+				Intent i = new Intent(getApplicationContext(), NewStatusActivity.class);
+				i.putExtra("tracker",TrackerInputType.ACTIVITY);
+				startActivity(i);
 			}
 		});
 	}

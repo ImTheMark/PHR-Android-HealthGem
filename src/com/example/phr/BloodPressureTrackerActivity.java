@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.example.phr.adapter.BloodPressureAdapter;
+import com.example.phr.enums.TrackerInputType;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.daoimpl.MobileBloodPressureDaoImpl;
 import com.example.phr.mobile.models.BloodPressure;
@@ -116,9 +117,14 @@ public class BloodPressureTrackerActivity extends Activity {
 		mBtnBloodPressurePost.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(),
+				/*Intent intent = new Intent(getApplicationContext(),
 						BloodPressurePostActivity.class);
-				startActivity(intent);
+				startActivity(intent);*/
+				
+				Intent i = new Intent(getApplicationContext(), NewStatusActivity.class);
+				i.putExtra("tracker",TrackerInputType.BLOOD_PRESSURE);
+				startActivity(i);
+				
 			}
 		});
 

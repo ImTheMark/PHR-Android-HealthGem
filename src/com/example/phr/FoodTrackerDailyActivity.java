@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import com.example.phr.adapter.SingleFoodAdapter;
+import com.example.phr.enums.TrackerInputType;
 import com.example.phr.model.FoodSingle;
 
 public class FoodTrackerDailyActivity extends Activity{
@@ -73,10 +74,10 @@ public class FoodTrackerDailyActivity extends Activity{
 		mBtnFoodSinglePost = (ImageView) findViewById(R.id.foodBanner);
 		mBtnFoodSinglePost.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {/*
-				Intent intent = new Intent(getApplicationContext(),
-						FoodTrackerPostActivity.class);
-				startActivity(intent);*/
+			public void onClick(View v) {
+				Intent i = new Intent(getApplicationContext(), NewStatusActivity.class);
+				i.putExtra("tracker",TrackerInputType.FOOD);
+				startActivity(i);
 			}
 		});
 	

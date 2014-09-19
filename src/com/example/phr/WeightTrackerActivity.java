@@ -11,6 +11,7 @@ import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
 import com.example.phr.adapter.GroupedStatusAdapter;
+import com.example.phr.enums.TrackerInputType;
 import com.example.phr.model.GroupedStatus;
 import com.example.phr.model.Status;
 
@@ -52,10 +53,10 @@ public class WeightTrackerActivity extends Activity {
 		mBtnAddWeight.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onClick(View arg0) {/*
-				Intent intent = new Intent(getApplicationContext(),
-						WeightTrackerPostActivity.class);
-				startActivity(intent);*/
+			public void onClick(View arg0) {
+				Intent i = new Intent(getApplicationContext(), NewStatusActivity.class);
+				i.putExtra("tracker",TrackerInputType.WEIGHT);
+				startActivity(i);
 			}
 		});
 		
