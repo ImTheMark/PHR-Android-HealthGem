@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+        <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/textViewQuantityTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/textview_style"
+            android:text="Set Weight" 
+            android:gravity="center" />
+
+        <View
+            android:id="@+id/weightQuantityDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textViewQuantityTitle"
+            android:background="#000000" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_below="@+id/weightQuantityDivider">
+
+            <Spinner
+                android:id="@+id/sugarTypeSpinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+        		android:entries="@array/weightUnit"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+    
+
+</LinearLayout>
