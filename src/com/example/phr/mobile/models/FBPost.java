@@ -9,11 +9,11 @@ public class FBPost {
 	public Integer id;
 	public String status;
 	public Date datetime;
-	public PostType postType;
+	public FBPostType postType;
 	public String imageFilePath;
 	public String[] extractedWords;
 
-	public FBPost(Integer id, String status, Date datetime, PostType postType,
+	public FBPost(Integer id, String status, Date datetime, FBPostType postType,
 			String imageFilePath, String[] extractedWords) {
 		super();
 		this.id = id;
@@ -24,7 +24,7 @@ public class FBPost {
 		this.extractedWords = extractedWords;
 	}
 
-	public FBPost(String status, Date datetime, PostType postType,
+	public FBPost(String status, Date datetime, FBPostType postType,
 			String imageFilePath, String[] extractedWords) {
 		super();
 		this.status = status;
@@ -58,11 +58,11 @@ public class FBPost {
 		this.datetime = datetime;
 	}
 
-	public PostType getPostType() {
+	public FBPostType getPostType() {
 		return postType;
 	}
 
-	public void setPostType(PostType postType) {
+	public void setPostType(FBPostType postType) {
 		this.postType = postType;
 	}
 
