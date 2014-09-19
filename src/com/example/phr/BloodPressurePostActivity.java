@@ -114,7 +114,7 @@ public class BloodPressurePostActivity extends Activity {
 
 			// WEB SERVER INSERT
 			BloodPressureService bpService = new BloodPressureServiceImpl();
-			bpService.addBloodPressure(bp);
+			bpService.add(bp);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
