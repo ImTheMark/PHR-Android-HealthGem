@@ -17,7 +17,7 @@ import com.example.phr.application.HealthGem;
 
 public class ImageHandler {
 
-	public String saveImage(Bitmap bitmapImage) {
+	public static String saveImage(Bitmap bitmapImage) {
 		ContextWrapper cw = new ContextWrapper(HealthGem.getContext());
 
 		// path to /data/data/yourapp/app_data/images
@@ -45,7 +45,7 @@ public class ImageHandler {
 		return filename;
 	}
 
-	public Bitmap loadImage(String filename) {
+	public static Bitmap loadImage(String filename) {
 		try {
 			ContextWrapper cw = new ContextWrapper(HealthGem.getContext());
 			File directory = cw.getDir("images", Context.MODE_PRIVATE);
@@ -75,8 +75,13 @@ public class ImageHandler {
 				.decodeByteArray(imageInByte, 0, imageInByte.length);
 	}
 
-	public String getEncodedImageFromFile(String fileName) {
+	public static String getEncodedImageFromFile(String fileName) {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String saveImageReturnFileName(String encodedImage) {
+
 		return null;
 	}
 }

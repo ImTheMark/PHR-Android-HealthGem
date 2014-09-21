@@ -18,11 +18,13 @@ public class PHRImage {
 			this.fileName = s;
 	}
 
+	public PHRImage() {
+	}
+
 	public String getEncodedImage() throws FileNotFoundException,
 			ImageHandlerException {
 		if (encodedImage == null && fileName != null) {
-			ImageHandler imageHandler = new ImageHandler();
-			encodedImage = imageHandler.getEncodedImageFromFile(fileName);
+			encodedImage = ImageHandler.getEncodedImageFromFile(fileName);
 		}
 		return encodedImage;
 	}

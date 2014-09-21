@@ -8,29 +8,29 @@ public class BloodSugar extends TrackerEntry {
 	int diastolic;
 
 	public BloodSugar(Integer entryID, FBPost fbPost, Timestamp timestamp,
-			String status, String encodedImage, int systolic, int diastolic) {
-		super(entryID, fbPost, timestamp, status, encodedImage);
+			String status, PHRImage image, int systolic, int diastolic) {
+		super(entryID, fbPost, timestamp, status, image);
 		this.systolic = systolic;
 		this.diastolic = diastolic;
 	}
 
 	public BloodSugar(FBPost fbPost, Timestamp timestamp, String status,
-			String encodedImage, int systolic, int diastolic) {
-		super(fbPost, timestamp, status, encodedImage);
+			PHRImage image, int systolic, int diastolic) {
+		super(fbPost, timestamp, status, image);
 		this.systolic = systolic;
 		this.diastolic = diastolic;
 	}
 
 	public BloodSugar(Integer entryID, Timestamp timestamp, String status,
-			String encodedImage, int systolic, int diastolic) {
-		super(entryID, timestamp, status, encodedImage);
+			PHRImage image, int systolic, int diastolic) {
+		super(entryID, timestamp, status, image);
 		this.systolic = systolic;
 		this.diastolic = diastolic;
 	}
 
-	public BloodSugar(Timestamp timestamp, String status, String encodedImage,
+	public BloodSugar(Timestamp timestamp, String status, PHRImage image,
 			int systolic, int diastolic) {
-		super(timestamp, status, encodedImage);
+		super(timestamp, status, image);
 		this.systolic = systolic;
 		this.diastolic = diastolic;
 	}

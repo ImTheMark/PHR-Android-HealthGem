@@ -8,41 +8,41 @@ public abstract class TrackerEntry {
 	FBPost fbPost;
 	Timestamp timestamp;
 	String status;
-	String encodedImage;
+	PHRImage image;
 
 	public TrackerEntry(Integer entryID, FBPost fbPost, Timestamp timestamp,
-			String status, String encodedImage) {
+			String status, PHRImage image) {
 		super();
 		this.entryID = entryID;
 		this.fbPost = fbPost;
 		this.timestamp = timestamp;
 		this.status = status;
-		this.encodedImage = encodedImage;
+		this.image = image;
 	}
 
 	public TrackerEntry(FBPost fbPost, Timestamp timestamp, String status,
-			String encodedImage) {
+			PHRImage image) {
 		super();
 		this.fbPost = fbPost;
 		this.timestamp = timestamp;
 		this.status = status;
-		this.encodedImage = encodedImage;
+		this.image = image;
 	}
 
 	public TrackerEntry(Integer entryID, Timestamp timestamp, String status,
-			String encodedImage) {
+			PHRImage image) {
 		super();
 		this.entryID = entryID;
 		this.timestamp = timestamp;
 		this.status = status;
-		this.encodedImage = encodedImage;
+		this.image = image;
 	}
 
-	public TrackerEntry(Timestamp timestamp, String status, String encodedImage) {
+	public TrackerEntry(Timestamp timestamp, String status, PHRImage image) {
 		super();
 		this.timestamp = timestamp;
 		this.status = status;
-		this.encodedImage = encodedImage;
+		this.image = image;
 	}
 
 	public Integer getEntryID() {
@@ -77,11 +77,11 @@ public abstract class TrackerEntry {
 		this.status = status;
 	}
 
-	public String getEncodedImage() {
-		return encodedImage;
+	public PHRImage getImage() {
+		return image;
 	}
 
-	public void setEncodedImage(String encodedImage) {
-		this.encodedImage = encodedImage;
+	public void setImage(PHRImage image) {
+		this.image = image;
 	}
 }

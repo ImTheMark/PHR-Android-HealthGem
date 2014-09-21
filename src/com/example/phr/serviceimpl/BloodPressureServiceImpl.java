@@ -3,6 +3,7 @@ package com.example.phr.serviceimpl;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.exceptions.WebServerException;
@@ -34,6 +35,9 @@ public class BloodPressureServiceImpl implements BloodPressureService {
 			bloodPressure.setEntryID(entryID);
 			mobileBloodPressureDao.add(bloodPressure);
 		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to add bp to web", e);
+		} catch (DataAccessException e) {
 			throw new ServiceException(
 					"An error occured while trying to add bp to web", e);
 		}

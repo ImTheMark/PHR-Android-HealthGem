@@ -8,14 +8,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import com.example.phr.R;
-import com.example.phr.enums.TrackerInputType;
-import com.example.phr.exceptions.OutdatedAccessTokenException;
-import com.example.phr.exceptions.ServiceException;
-import com.example.phr.mobile.models.BloodPressure;
-import com.example.phr.service.BloodPressureService;
-import com.example.phr.serviceimpl.BloodPressureServiceImpl;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -34,8 +26,17 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.phr.enums.TrackerInputType;
+import com.example.phr.exceptions.OutdatedAccessTokenException;
+import com.example.phr.exceptions.ServiceException;
+import com.example.phr.mobile.models.BloodPressure;
+import com.example.phr.mobile.models.PHRImage;
+import com.example.phr.mobile.models.PHRImageType;
+import com.example.phr.service.BloodPressureService;
+import com.example.phr.serviceimpl.BloodPressureServiceImpl;
+
 public class NewStatusActivity extends Activity {
-	
+
 	ImageButton mBtnTagFriend;
 	ImageButton mBtnCheckinLocation;
 	ImageButton mBtnAddPhoto;
@@ -70,48 +71,43 @@ public class NewStatusActivity extends Activity {
 		setTitle("Post a Status");
 		setContentView(R.layout.activity_new_status);
 		/*
-		mBtnTagFriend = (ImageButton)findViewById(R.id.btnTagFriend);
-		mBtnTagFriend.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(),
-						TagFriendActivity.class);
-				startActivity(intent);
-			}
-		});
-		
-		mBtnCheckinLocation = (ImageButton)findViewById(R.id.btnCheckinLocation);
-		mBtnCheckinLocation.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(),
-						CheckinLocationActivity.class);
-				startActivity(intent);
-			}
-		});
-		*/
-		currentTracker =TrackerInputType.NOTES;
-		//templates
-		bsTemplate= (ScrollView) findViewById(R.id.bloodsugar_template);
-		bpTemplate= (ScrollView) findViewById(R.id.bloodpressure_template);
-		notesTemplate= (ScrollView) findViewById(R.id.notes_template);
-		weightTemplate= (ScrollView) findViewById(R.id.weight_template);
-		//blood pressure post
-		txtSystolic= (TextView) findViewById(R.id.systolic);
-		txtDiastolic= (TextView) findViewById(R.id.diastolic);
-		bpStatus= (EditText) findViewById(R.id.txtBPStatus);
-		//blood sugar post
-		txtSugar= (TextView) findViewById(R.id.sugar);
-		bsStatus= (EditText) findViewById(R.id.txtBSStatus);
-		txtSugarType= (TextView) findViewById(R.id.txtSugarType);
-		//weight post
-		txtWeight= (TextView) findViewById(R.id.weight);
-		weightStatus= (EditText) findViewById(R.id.txtWeightStatus);
-		txtWeightUnit= (TextView) findViewById(R.id.txtWeightUnit);
-		//note post
-		notesStatus= (EditText) findViewById(R.id.txtNotesStatus);
-		
-		mBtnAddPhoto = (ImageButton)findViewById(R.id.btnAddPhoto);
+		 * mBtnTagFriend = (ImageButton)findViewById(R.id.btnTagFriend);
+		 * mBtnTagFriend.setOnClickListener(new OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) { Intent intent = new
+		 * Intent(getApplicationContext(), TagFriendActivity.class);
+		 * startActivity(intent); } });
+		 * 
+		 * mBtnCheckinLocation =
+		 * (ImageButton)findViewById(R.id.btnCheckinLocation);
+		 * mBtnCheckinLocation.setOnClickListener(new OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) { Intent intent = new
+		 * Intent(getApplicationContext(), CheckinLocationActivity.class);
+		 * startActivity(intent); } });
+		 */
+		currentTracker = TrackerInputType.NOTES;
+		// templates
+		bsTemplate = (ScrollView) findViewById(R.id.bloodsugar_template);
+		bpTemplate = (ScrollView) findViewById(R.id.bloodpressure_template);
+		notesTemplate = (ScrollView) findViewById(R.id.notes_template);
+		weightTemplate = (ScrollView) findViewById(R.id.weight_template);
+		// blood pressure post
+		txtSystolic = (TextView) findViewById(R.id.systolic);
+		txtDiastolic = (TextView) findViewById(R.id.diastolic);
+		bpStatus = (EditText) findViewById(R.id.txtBPStatus);
+		// blood sugar post
+		txtSugar = (TextView) findViewById(R.id.sugar);
+		bsStatus = (EditText) findViewById(R.id.txtBSStatus);
+		txtSugarType = (TextView) findViewById(R.id.txtSugarType);
+		// weight post
+		txtWeight = (TextView) findViewById(R.id.weight);
+		weightStatus = (EditText) findViewById(R.id.txtWeightStatus);
+		txtWeightUnit = (TextView) findViewById(R.id.txtWeightUnit);
+		// note post
+		notesStatus = (EditText) findViewById(R.id.txtNotesStatus);
+
+		mBtnAddPhoto = (ImageButton) findViewById(R.id.btnAddPhoto);
 		mBtnAddPhoto.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -119,111 +115,98 @@ public class NewStatusActivity extends Activity {
 				startActivity(intent);
 			}
 		});
-		mBtnFb = (ImageButton)findViewById(R.id.btnFb);
+		mBtnFb = (ImageButton) findViewById(R.id.btnFb);
 		mBtnFb.setTag(new Boolean(false)); // wasn't clicked
 		mBtnFb.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if( ((Boolean)mBtnFb.getTag())==false ){
-						mBtnFb.setImageResource(R.drawable.activitynewstatus_fb_click);
-						mBtnFb.setTag(new Boolean(true));
-		          }
-				else{
-						mBtnFb.setImageResource(R.drawable.activitynewstatus_fb);
-						mBtnFb.setTag(new Boolean(false));
+				if (((Boolean) mBtnFb.getTag()) == false) {
+					mBtnFb.setImageResource(R.drawable.activitynewstatus_fb_click);
+					mBtnFb.setTag(new Boolean(true));
+				} else {
+					mBtnFb.setImageResource(R.drawable.activitynewstatus_fb);
+					mBtnFb.setTag(new Boolean(false));
 				}
 			}
 		});
-		
-		mBtnAddActions = (ImageButton)findViewById(R.id.btnAddActions);
+
+		mBtnAddActions = (ImageButton) findViewById(R.id.btnAddActions);
 		mBtnAddActions.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
-				 Intent intent=new Intent(NewStatusActivity.this,AddActionActivity.class);  
-	                startActivityForResult(intent, 2);
+				Intent intent = new Intent(NewStatusActivity.this,
+						AddActionActivity.class);
+				startActivityForResult(intent, 2);
 			}
 		});
-		
+
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-		    String tracker = extras.getString("tracker");
-		    
-		    if(tracker.equals(TrackerInputType.BLOOD_PRESSURE)){
-          	  currentTracker = TrackerInputType.BLOOD_PRESSURE;
-          	  callBloodPressureInput();
-            }
-            else if(tracker.equals(TrackerInputType.BLOOD_SUGAR)){
-          	  currentTracker = TrackerInputType.BLOOD_SUGAR;
-          	  callBloodSugarInput();
-            }
-            else if(tracker.equals(TrackerInputType.NOTES)){
-          	  currentTracker = TrackerInputType.NOTES;
-          	  callNotesInput();
-            }
-            
-            else if(tracker.equals(TrackerInputType.WEIGHT)){
-          	  currentTracker = TrackerInputType.WEIGHT;
-          	  callWeightInput();
-            }
-            else if(tracker.equals(TrackerInputType.FOOD)){
-          	  currentTracker = TrackerInputType.FOOD;
-          	  callFoodInput();
-            }
-            else if(tracker.equals(TrackerInputType.CHECKUP)){
-          	  currentTracker = TrackerInputType.CHECKUP;
-          	  callCheckUpInput();
-            }
-            else if(tracker.equals(TrackerInputType.ACTIVITY)){
-          	  currentTracker = TrackerInputType.ACTIVITY;
-          	  callActivityInput();
-            }
+			String tracker = extras.getString("tracker");
+
+			if (tracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
+				currentTracker = TrackerInputType.BLOOD_PRESSURE;
+				callBloodPressureInput();
+			} else if (tracker.equals(TrackerInputType.BLOOD_SUGAR)) {
+				currentTracker = TrackerInputType.BLOOD_SUGAR;
+				callBloodSugarInput();
+			} else if (tracker.equals(TrackerInputType.NOTES)) {
+				currentTracker = TrackerInputType.NOTES;
+				callNotesInput();
+			}
+
+			else if (tracker.equals(TrackerInputType.WEIGHT)) {
+				currentTracker = TrackerInputType.WEIGHT;
+				callWeightInput();
+			} else if (tracker.equals(TrackerInputType.FOOD)) {
+				currentTracker = TrackerInputType.FOOD;
+				callFoodInput();
+			} else if (tracker.equals(TrackerInputType.CHECKUP)) {
+				currentTracker = TrackerInputType.CHECKUP;
+				callCheckUpInput();
+			} else if (tracker.equals(TrackerInputType.ACTIVITY)) {
+				currentTracker = TrackerInputType.ACTIVITY;
+				callActivityInput();
+			}
 		}
 	}
 
-	 @Override  
-     protected void onActivityResult(int requestCode, int resultCode, Intent data)  
-     {  
-               super.onActivityResult(requestCode, resultCode, data);  
-                   
-                // check if the request code is same as what is passed  here it is 2  
-                 if(requestCode==2)  
-                       {  
-                          String item = data.getStringExtra("itemValue");                       
-                          Log.e("itemValue = ", item);
-                          if(item.equals(TrackerInputType.BLOOD_PRESSURE)){
-                        	  currentTracker = TrackerInputType.BLOOD_PRESSURE;
-                        	  callBloodPressureInput();
-                          }
-                          else if(item.equals(TrackerInputType.BLOOD_SUGAR)){
-                        	  currentTracker = TrackerInputType.BLOOD_SUGAR;
-                        	  callBloodSugarInput();
-                          }
-                          else if(item.equals(TrackerInputType.NOTES)){
-                        	  currentTracker = TrackerInputType.NOTES;
-                        	  callNotesInput();
-                          }
-                          
-                          else if(item.equals(TrackerInputType.WEIGHT)){
-                        	  currentTracker = TrackerInputType.WEIGHT;
-                        	  callWeightInput();
-                          }
-                          else if(item.equals(TrackerInputType.FOOD)){
-                        	  currentTracker = TrackerInputType.FOOD;
-                        	  callFoodInput();
-                          }
-                          else if(item.equals(TrackerInputType.CHECKUP)){
-                        	  currentTracker = TrackerInputType.CHECKUP;
-                        	  callCheckUpInput();
-                          }
-                          else if(item.equals(TrackerInputType.ACTIVITY)){
-                        	  currentTracker = TrackerInputType.ACTIVITY;
-                        	  callActivityInput();
-                          }
-                       }  
-     }
-	 
-	 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		// check if the request code is same as what is passed here it is 2
+		if (requestCode == 2) {
+			String item = data.getStringExtra("itemValue");
+			Log.e("itemValue = ", item);
+			if (item.equals(TrackerInputType.BLOOD_PRESSURE)) {
+				currentTracker = TrackerInputType.BLOOD_PRESSURE;
+				callBloodPressureInput();
+			} else if (item.equals(TrackerInputType.BLOOD_SUGAR)) {
+				currentTracker = TrackerInputType.BLOOD_SUGAR;
+				callBloodSugarInput();
+			} else if (item.equals(TrackerInputType.NOTES)) {
+				currentTracker = TrackerInputType.NOTES;
+				callNotesInput();
+			}
+
+			else if (item.equals(TrackerInputType.WEIGHT)) {
+				currentTracker = TrackerInputType.WEIGHT;
+				callWeightInput();
+			} else if (item.equals(TrackerInputType.FOOD)) {
+				currentTracker = TrackerInputType.FOOD;
+				callFoodInput();
+			} else if (item.equals(TrackerInputType.CHECKUP)) {
+				currentTracker = TrackerInputType.CHECKUP;
+				callCheckUpInput();
+			} else if (item.equals(TrackerInputType.ACTIVITY)) {
+				currentTracker = TrackerInputType.ACTIVITY;
+				callActivityInput();
+			}
+		}
+	}
+
 	private void callActivityInput() {
 		// TODO Auto-generated method stub
 		setAllTemplateGone();
@@ -250,27 +233,33 @@ public class NewStatusActivity extends Activity {
 		setAllTemplateGone();
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
 
-		View weightView = layoutInflater.inflate(R.layout.item_weight_input, null);
+		View weightView = layoutInflater.inflate(R.layout.item_weight_input,
+				null);
 
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				context);
 		alertDialogBuilder.setView(weightView);
 		weight = (EditText) weightView.findViewById(R.id.txtWeight);
-		weightUnitSpinner= (Spinner) weightView.findViewById(R.id.weightUnitSpinner);
+		weightUnitSpinner = (Spinner) weightView
+				.findViewById(R.id.weightUnitSpinner);
 		alertDialogBuilder
 				.setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-	
-								setAllTemplateGone();
-								weightTemplate.setVisibility(View.VISIBLE);
-							
-								txtWeight.setText(weight.getText());
-								txtWeightUnit.setText(String.valueOf(weightUnitSpinner.getSelectedItem()));
-							}
-						})
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+
+						setAllTemplateGone();
+						weightTemplate.setVisibility(View.VISIBLE);
+
+						txtWeight.setText(weight.getText());
+						txtWeightUnit.setText(String.valueOf(weightUnitSpinner
+								.getSelectedItem()));
+					}
+				})
 				.setNegativeButton("Cancel",
 						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,	int id) {
+							@Override
+							public void onClick(DialogInterface dialog, int id) {
 								dialog.cancel();
 							}
 						});
@@ -279,33 +268,40 @@ public class NewStatusActivity extends Activity {
 		AlertDialog alertD = alertDialogBuilder.create();
 		alertD.show();
 	}
-	
+
 	private void callBloodSugarInput() {
 		// TODO Auto-generated method stub
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
 
-		View bsView = layoutInflater.inflate(R.layout.item_bloodsugar_input, null);
+		View bsView = layoutInflater.inflate(R.layout.item_bloodsugar_input,
+				null);
 
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				context);
 		alertDialogBuilder.setView(bsView);
 		sugarPicker = (NumberPicker) bsView.findViewById(R.id.sugarPicker);
-		sugarTypeSpinner= (Spinner) bsView.findViewById(R.id.sugarTypeSpinner);
+		sugarTypeSpinner = (Spinner) bsView.findViewById(R.id.sugarTypeSpinner);
 		sugarPicker.setCurrent(120);
 		alertDialogBuilder
 				.setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-	
-								setAllTemplateGone();
-								bsTemplate.setVisibility(View.VISIBLE);
-								Log.e("sugar",Integer.toString(sugarPicker.getCurrent()));
-								txtSugar.setText(Integer.toString(sugarPicker.getCurrent()));
-								txtSugarType.setText(String.valueOf(sugarTypeSpinner.getSelectedItem()));
-							}
-						})
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+
+						setAllTemplateGone();
+						bsTemplate.setVisibility(View.VISIBLE);
+						Log.e("sugar",
+								Integer.toString(sugarPicker.getCurrent()));
+						txtSugar.setText(Integer.toString(sugarPicker
+								.getCurrent()));
+						txtSugarType.setText(String.valueOf(sugarTypeSpinner
+								.getSelectedItem()));
+					}
+				})
 				.setNegativeButton("Cancel",
 						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,	int id) {
+							@Override
+							public void onClick(DialogInterface dialog, int id) {
 								dialog.cancel();
 							}
 						});
@@ -313,40 +309,48 @@ public class NewStatusActivity extends Activity {
 		// create an alert dialog
 		AlertDialog alertD = alertDialogBuilder.create();
 		alertD.show();
-		
-		
+
 	}
 
 	private void callBloodPressureInput() {
 		// TODO Auto-generated method stub
-		
+
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
 
-		View bpView = layoutInflater.inflate(R.layout.item_bloodpressure_input, null);
+		View bpView = layoutInflater.inflate(R.layout.item_bloodpressure_input,
+				null);
 
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				context);
 		alertDialogBuilder.setView(bpView);
-		systolicPicker = (NumberPicker) bpView.findViewById(R.id.systolicPicker);
-		diastolicPicker = (NumberPicker) bpView.findViewById(R.id.diastolicPicker);
+		systolicPicker = (NumberPicker) bpView
+				.findViewById(R.id.systolicPicker);
+		diastolicPicker = (NumberPicker) bpView
+				.findViewById(R.id.diastolicPicker);
 		systolicPicker.setCurrent(120);
 		diastolicPicker.setCurrent(80);
 		alertDialogBuilder
 				.setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-	
-								setAllTemplateGone();
-								bpTemplate.setVisibility(View.VISIBLE);
-								Log.e("in","kkdks");
-								Log.e("systolic",Integer.toString(systolicPicker.getCurrent()));
-								txtSystolic.setText(Integer.toString(systolicPicker.getCurrent()));
-								txtDiastolic.setText(Integer.toString(diastolicPicker.getCurrent()));
-								
-							}
-						})
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+
+						setAllTemplateGone();
+						bpTemplate.setVisibility(View.VISIBLE);
+						Log.e("in", "kkdks");
+						Log.e("systolic",
+								Integer.toString(systolicPicker.getCurrent()));
+						txtSystolic.setText(Integer.toString(systolicPicker
+								.getCurrent()));
+						txtDiastolic.setText(Integer.toString(diastolicPicker
+								.getCurrent()));
+
+					}
+				})
 				.setNegativeButton("Cancel",
 						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,	int id) {
+							@Override
+							public void onClick(DialogInterface dialog, int id) {
 								dialog.cancel();
 							}
 						});
@@ -355,8 +359,6 @@ public class NewStatusActivity extends Activity {
 		AlertDialog alertD = alertDialogBuilder.create();
 		alertD.show();
 	}
-	
-	
 
 	private void addBloodPressureToDatabase() throws ServiceException,
 			OutdatedAccessTokenException {
@@ -364,25 +366,25 @@ public class NewStatusActivity extends Activity {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy",
 					Locale.ENGLISH);
-			DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+			DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss",
+					Locale.ENGLISH);
 			DateFormat fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss",
 					Locale.ENGLISH);
 			Calendar calobj = Calendar.getInstance();
-			Date date = fmt.parse(dateFormat.format(calobj
-					.getTime())
-					+ " "
+			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
 			System.out.println(timestamp);
-			Log.e(bpStatus.getText().toString(),Integer.toString(systolicPicker.getCurrent()));
-			BloodPressure bp = new BloodPressure(timestamp,
-					bpStatus.getText().toString(),
-					"test-image", systolicPicker.getCurrent(),
+			Log.e(bpStatus.getText().toString(),
+					Integer.toString(systolicPicker.getCurrent()));
+			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
+			BloodPressure bp = new BloodPressure(timestamp, bpStatus.getText()
+					.toString(), image, systolicPicker.getCurrent(),
 					diastolicPicker.getCurrent());
-			Log.e("added","pp");
-			// WEB SERVER INSERT
-			//BloodPressureService bpService = new BloodPressureServiceImpl();
-			//bpService.add(bp);
+			Log.e("added", "pp");
+
+			BloodPressureService bpService = new BloodPressureServiceImpl();
+			bpService.add(bp);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -397,33 +399,30 @@ public class NewStatusActivity extends Activity {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy",
 					Locale.ENGLISH);
-			DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+			DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss",
+					Locale.ENGLISH);
 			DateFormat fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss",
 					Locale.ENGLISH);
 			Calendar calobj = Calendar.getInstance();
-			Date date = fmt.parse(dateFormat.format(calobj
-					.getTime())
-					+ " "
+			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
 			System.out.println(timestamp);
-		
-		
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-}
-	
-	private void setAllTemplateGone()
-	{
+	}
+
+	private void setAllTemplateGone() {
 		bsTemplate.setVisibility(View.GONE);
 		bpTemplate.setVisibility(View.GONE);
 		notesTemplate.setVisibility(View.GONE);
 		weightTemplate.setVisibility(View.GONE);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_status_post, menu);
@@ -434,7 +433,7 @@ public class NewStatusActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_item_status_post:
-			 if(currentTracker.equals(TrackerInputType.BLOOD_PRESSURE)){
+			if (currentTracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
 				try {
 					addBloodPressureToDatabase();
 				} catch (ServiceException e) {
@@ -448,30 +447,28 @@ public class NewStatusActivity extends Activity {
 				Intent intent = new Intent(getApplicationContext(),
 						BloodPressureTrackerActivity.class);
 				startActivity(intent);
-			 }
-			 
-			 else if(currentTracker.equals(TrackerInputType.BLOOD_SUGAR)){
-					try {
-						addBloodSugarToDatabase();
-					} catch (ServiceException e) {
-						// output error message or something
-						System.out.println(e.getMessage());
-					} catch (OutdatedAccessTokenException e) {
-						// Message - > Log user out
-						e.printStackTrace();
-					}
-					// onBackPressed();
-					Intent intent = new Intent(getApplicationContext(),
-							BloodSugarTrackerActivity.class);
-					startActivity(intent);
-				 }
+			}
+
+			else if (currentTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
+				try {
+					addBloodSugarToDatabase();
+				} catch (ServiceException e) {
+					// output error message or something
+					System.out.println(e.getMessage());
+				} catch (OutdatedAccessTokenException e) {
+					// Message - > Log user out
+					e.printStackTrace();
+				}
+				// onBackPressed();
+				Intent intent = new Intent(getApplicationContext(),
+						BloodSugarTrackerActivity.class);
+				startActivity(intent);
+			}
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 
 	}
-	
-	
 
 }
