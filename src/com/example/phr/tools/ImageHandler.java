@@ -8,77 +8,75 @@ import java.io.FileOutputStream;
 
 import org.apache.commons.codec.binary.Base64;
 
-import com.example.phr.application.HealthGem;
-
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
+
+import com.example.phr.application.HealthGem;
 
 public class ImageHandler {
 
-	
-	public String saveImage(Bitmap bitmapImage){
-        ContextWrapper cw = new ContextWrapper(HealthGem.getContext());
-        
-        // path to /data/data/yourapp/app_data/images
-        File directory = cw.getDir("images", Context.MODE_PRIVATE);
-        
-        directory.mkdirs();
-        
-        long time = TimestampHandler.getCurrentTimestamp().getTime(); 
-        String filename = UUIDGenerator.generateUniqueString();
-        
-        // Create images
-        File mypath = new File(directory, filename+".jpg");
+	public String saveImage(Bitmap bitmapImage) {
+		ContextWrapper cw = new ContextWrapper(HealthGem.getContext());
 
-        FileOutputStream fos = null;
-        try {           
+		// path to /data/data/yourapp/app_data/images
+		File directory = cw.getDir("images", Context.MODE_PRIVATE);
 
-            fos = new FileOutputStream(mypath);
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            fos.close();
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        return filename;
-    }
-	
-	public Bitmap loadImage(String filename)
-	{
-	    try {
-	        ContextWrapper cw = new ContextWrapper(HealthGem.getContext());
-	        File directory = cw.getDir("images", Context.MODE_PRIVATE);
-	        File f = new File(directory, filename);
-	        Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-	        return b;
-	    } 
-	    catch (FileNotFoundException e) 
-	    {
-	        e.printStackTrace();
-	    }
-	    
+		directory.mkdirs();
+
+		long time = TimestampHandler.getCurrentTimestamp().getTime();
+		String filename = UUIDGenerator.generateUniqueString();
+
+		// Create images
+		File mypath = new File(directory, filename + ".jpg");
+
+		FileOutputStream fos = null;
+		try {
+
+			fos = new FileOutputStream(mypath);
+			bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+			fos.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return filename;
+	}
+
+	public Bitmap loadImage(String filename) {
+		try {
+			ContextWrapper cw = new ContextWrapper(HealthGem.getContext());
+			File directory = cw.getDir("images", Context.MODE_PRIVATE);
+			File f = new File(directory, filename);
+			Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+			return b;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 
-
- 	public static String encodeImageToBase64(Bitmap image)
-	{
-	    Bitmap immagex=image;
-	    ByteArrayOutputStream baos = new ByteArrayOutputStream();  
-	    immagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+	public static String encodeImageToBase64(Bitmap image) {
+		Bitmap immagex = image;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		immagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
 		Base64 base64 = new Base64();
-	    String imageEncoded = new String(base64.encode(baos.toByteArray()));
-	    return imageEncoded;
+		String imageEncoded = new String(base64.encode(baos.toByteArray()));
+		return imageEncoded;
 	}
-	
-	public static Bitmap decodeImage(String encodedImage) 
-	{
+
+	public static Bitmap decodeImage(String encodedImage) {
 		Base64 base64 = new Base64();
 		byte[] imageInByte = base64.decode(encodedImage);
-	    return BitmapFactory.decodeByteArray(imageInByte, 0, imageInByte.length); 
+		return BitmapFactory
+				.decodeByteArray(imageInByte, 0, imageInByte.length);
+	}
+
+	public String getEncodedImageFromFile(String fileName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

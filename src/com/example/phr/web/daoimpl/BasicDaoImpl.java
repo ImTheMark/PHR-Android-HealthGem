@@ -13,11 +13,22 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.WebServerException;
+import com.example.phr.tools.GSONConverter;
+import com.example.phr.tools.JSONRequestCreator;
+import com.example.phr.web.dao.UserDao;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
-public abstract class BasicDaoImpl {
+public abstract class BasicDaoImpl<T> {
+	UserDao userDao;
+	JSONRequestCreator jsonRequestCreator;
+
+	public BasicDaoImpl() {
+		userDao = new UserDaoImpl();
+		jsonRequestCreator = new JSONRequestCreator();
+	}
 
 	protected String performHttpRequest_String(String command,
 			String jsonStringParams) throws WebServerException {
@@ -36,7 +47,7 @@ public abstract class BasicDaoImpl {
 			return out.toString();
 
 		} catch (IOException e) {
-			for(StackTraceElement s : e.getStackTrace()){
+			for (StackTraceElement s : e.getStackTrace()) {
 				System.out.println(s.toString());
 			}
 			System.out.println(e.getMessage());
@@ -66,4 +77,37 @@ public abstract class BasicDaoImpl {
 		}
 	}
 
+	public int add_ReturnIDToWebUsingHttp(String command, String fieldName,
+			T object) throws WebServerException, OutdatedAccessTokenException {
+		try {
+			JSONObject data = new JSONObject();
+			data.put("accessToken", userDao.getAccessToken().getAccessToken());
+			data.put("username", userDao.getAccessToken().getUserName());
+			data.put(fieldName, GSONConverter.convertObjectToJSON(object));
+			String jsonToSend = jsonRequestCreator
+					.createJSONRequest(data, null);
+			System.out.println("JSON Request Sent: " + jsonToSend);
+			JSONObject response = performHttpRequest_JSON(command, jsonToSend);
+			System.out.println("JSON Response Received: " + response);
+
+			if (response.getJSONObject("data").has("isValidAccessToken")
+					&& response.getJSONObject("data")
+							.getString("isValidAccessToken").equals("false")) {
+				throw new OutdatedAccessTokenException(
+						"The access token used in the request is outdated, please ask the user to log in again.");
+			} else if (response.get("status").equals("success")) {
+				int entryID = response.getJSONObject("data").getInt("entryID");
+				return entryID;
+			} else {
+				throw new WebServerException(
+						"An error has occurred while communicating"
+								+ "with the web server.");
+			}
+
+		} catch (JSONException e) {
+			throw new WebServerException(
+					"An error has occurred while communicating"
+							+ "with the web server.");
+		}
+	}
 }
