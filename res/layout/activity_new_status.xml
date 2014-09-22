@@ -19,7 +19,7 @@
             
 	
 	        <EditText
-		        android:id="@+id/txtStatus"
+		        android:id="@+id/txtFoodStatus"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1.0"
@@ -39,11 +39,12 @@
 	            android:text="- Eating " />
 	        
 	        <TextView
-	            android:id="@+id/textView1"
+	            android:id="@+id/food"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:textStyle="bold"
 	            android:text=" Chocolate Cake" 
+	            android:textColor="#E05C5C" 
 	            />
 	        
 	        <TextView
@@ -53,13 +54,22 @@
 	            android:text=" of " />
 	        
 	        <TextView
-	            android:id="@+id/textView1"
+	            android:id="@+id/foodQuantity"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:textStyle="bold"
-	            android:text="1 slice" 
+	            android:text="1" 
+	            android:textColor="#E05C5C" 
 	            />
-            
+            <TextView
+	            android:id="@+id/foodQuantityUnit"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textStyle="bold"
+	            android:text="slice" 
+	            android:textColor="#E05C5C" 
+	            />
+	        
         </LinearLayout>
 
     </ScrollView>
@@ -258,6 +268,75 @@
 	              <requestFocus />
 	        </EditText>
 	
+        </LinearLayout>
+    </ScrollView>
+     
+     <ScrollView
+        android:id="@+id/activity_template"
+        android:layout_alignParentTop="true"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:scrollbars="vertical"
+	    android:fillViewport="true"
+	    android:visibility="gone"
+	    >
+           <LinearLayout
+            android:id="@+id/activity_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" 
+            android:gravity="right"
+            >
+            
+	        <EditText
+		        android:id="@+id/txtActivityStatus"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:background="#00000000"
+	            android:hint=" enter status..." 
+	            android:padding="10dp"
+	            android:inputType="text">
+	              <requestFocus />
+	        </EditText>
+	
+	        <TextView
+	            android:id="@+id/textView1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="- Doing " />
+	        
+	        <TextView
+	            android:id="@+id/activity"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textStyle="bold"
+	            android:text="jogging" 
+	            android:textColor="#E05C5C" 
+	            />
+	        
+	        <TextView
+	            android:id="@+id/textView1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text=" for" />
+	        
+	        <TextView
+	            android:id="@+id/activityDuration"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textStyle="bold"
+	            android:text="10" 
+	            android:textColor="#E05C5C" 
+	            />
+	        
+	        <TextView
+	            android:id="@+id/activityDurationUnit"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textStyle="bold"
+	            android:text="min" 
+	            android:textColor="#E05C5C" 
+	            />
+            
         </LinearLayout>
     </ScrollView>
      

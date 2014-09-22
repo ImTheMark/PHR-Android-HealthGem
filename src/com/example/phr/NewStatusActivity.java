@@ -55,12 +55,20 @@ public class NewStatusActivity extends Activity {
 	TextView txtWeightUnit;
 	TextView txtPurpose;
 	TextView txtDoctor;
+	TextView txtActivity;
+	TextView txtActivityDuration;
+	TextView txtActivityDurationUnit;
+	TextView txtFood;
+	TextView txtFoodQuantity;
+	TextView txtFoodQuantityUnit;
 	EditText bpStatus;
 	EditText bsStatus;
+	EditText foodStatus;
 	EditText notesStatus;
 	EditText weight;
 	EditText weightStatus;
 	EditText checkupStatus;
+	EditText activityStatus;
 	EditText purpose;
 	EditText doctor;
 	ScrollView bpTemplate;
@@ -68,6 +76,8 @@ public class NewStatusActivity extends Activity {
 	ScrollView notesTemplate;
 	ScrollView weightTemplate;
 	ScrollView checkupTemplate;
+	ScrollView foodTemplate;
+	ScrollView activityTemplate;
 	String currentTracker;
 	final Context context = this;
 
@@ -98,6 +108,9 @@ public class NewStatusActivity extends Activity {
 		bpTemplate = (ScrollView) findViewById(R.id.bloodpressure_template);
 		notesTemplate = (ScrollView) findViewById(R.id.notes_template);
 		weightTemplate = (ScrollView) findViewById(R.id.weight_template);
+		checkupTemplate = (ScrollView) findViewById(R.id.checkup_template);
+		foodTemplate = (ScrollView) findViewById(R.id.food_template);
+		activityTemplate = (ScrollView) findViewById(R.id.activity_template);
 		// blood pressure post
 		txtSystolic = (TextView) findViewById(R.id.systolic);
 		txtDiastolic = (TextView) findViewById(R.id.diastolic);
@@ -116,6 +129,16 @@ public class NewStatusActivity extends Activity {
 		txtDoctor = (TextView) findViewById(R.id.doctor);
 		checkupStatus = (EditText) findViewById(R.id.txtBSStatus);
 		txtPurpose = (TextView) findViewById(R.id.purpose);
+		//activity post
+		txtActivity = (TextView) findViewById(R.id.activity);
+		activityStatus = (EditText) findViewById(R.id.txtActivityStatus);
+		txtActivityDurationUnit = (TextView) findViewById(R.id.activityDurationUnit);
+		txtActivityDuration = (TextView) findViewById(R.id.activityDuration);
+		//food post
+		txtFood = (TextView) findViewById(R.id.food);
+		foodStatus = (EditText) findViewById(R.id.txtFoodStatus);
+		txtFoodQuantityUnit = (TextView) findViewById(R.id.foodQuantityUnit);
+		txtFoodQuantity = (TextView) findViewById(R.id.foodQuantity);
 		
 
 		mBtnAddPhoto = (ImageButton) findViewById(R.id.btnAddPhoto);
@@ -217,6 +240,7 @@ public class NewStatusActivity extends Activity {
 	private void callActivityInput() {
 		// TODO Auto-generated method stub
 		setAllTemplateGone();
+		activityTemplate.setVisibility(View.VISIBLE);
 	}
 
 	private void callCheckUpInput() {
@@ -262,6 +286,7 @@ public class NewStatusActivity extends Activity {
 	private void callFoodInput() {
 		// TODO Auto-generated method stub
 		setAllTemplateGone();
+		foodTemplate.setVisibility(View.VISIBLE);
 	}
 
 	private void callNotesInput() {
@@ -461,6 +486,8 @@ public class NewStatusActivity extends Activity {
 		notesTemplate.setVisibility(View.GONE);
 		weightTemplate.setVisibility(View.GONE);
 		checkupTemplate.setVisibility(View.GONE);
+		activityTemplate.setVisibility(View.GONE);
+		foodTemplate.setVisibility(View.GONE);
 	}
 
 	@Override
