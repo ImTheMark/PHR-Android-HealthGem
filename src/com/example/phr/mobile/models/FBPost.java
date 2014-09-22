@@ -16,6 +16,11 @@ public class FBPost {
 		this.id = id;
 	}
 
+	public FBPost(int id) {
+		super();
+		this.id = new Integer(id);
+	}
+
 	public FBPost(Integer id, String status, Date datetime,
 			FBPostType postType, PHRImage image, String[] extractedWords) {
 		super();
