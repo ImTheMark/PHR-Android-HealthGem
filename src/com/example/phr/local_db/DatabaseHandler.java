@@ -51,6 +51,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public static final String BS_ID = "id";
 	public static final String BS_DATEADDED = "dateAdded";
 	public static final String BS_BLOODSUGAR = "bloodSugar";
+	public static final String BS_TYPE = "type";
 	public static final String BS_STATUS = "status";
 	public static final String BS_PHOTO = "photo";
 	public static final String BS_FBPOSTID = "fbPostID";
@@ -145,6 +146,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ BS_ID + " INTEGER PRIMARY KEY ," 
 				+ BS_DATEADDED + " TEXT,"
 				+ BS_BLOODSUGAR + " REAL," 
+				+ BS_TYPE + " TEXT," 
 				+ BS_STATUS + " TEXT,"
 				+ BS_PHOTO + " TEXT,"  
 				+ BS_FBPOSTID + " INTEGER"  

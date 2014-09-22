@@ -4,51 +4,51 @@ import java.sql.Timestamp;
 
 public class BloodSugar extends TrackerEntry {
 
-	int systolic;
-	int diastolic;
+	double bloodSugar;
+	String type;
 
 	public BloodSugar(Integer entryID, FBPost fbPost, Timestamp timestamp,
-			String status, PHRImage image, int systolic, int diastolic) {
+			String status, PHRImage image, double bloodSugar, String type) {
 		super(entryID, fbPost, timestamp, status, image);
-		this.systolic = systolic;
-		this.diastolic = diastolic;
+		this.bloodSugar = bloodSugar;
+		this.type = type;
+	}
+
+	public BloodSugar(Integer entryID, Timestamp timestamp,
+			String status, PHRImage image, double bloodSugar, String type) {
+		super(entryID, timestamp, status, image);
+		this.bloodSugar = bloodSugar;
+		this.type = type;
 	}
 
 	public BloodSugar(FBPost fbPost, Timestamp timestamp, String status,
-			PHRImage image, int systolic, int diastolic) {
+			PHRImage image, double bloodSugar, String type) {
 		super(fbPost, timestamp, status, image);
-		this.systolic = systolic;
-		this.diastolic = diastolic;
-	}
-
-	public BloodSugar(Integer entryID, Timestamp timestamp, String status,
-			PHRImage image, int systolic, int diastolic) {
-		super(entryID, timestamp, status, image);
-		this.systolic = systolic;
-		this.diastolic = diastolic;
+		this.bloodSugar = bloodSugar;
+		this.type = type;
 	}
 
 	public BloodSugar(Timestamp timestamp, String status, PHRImage image,
-			int systolic, int diastolic) {
+			double bloodSugar, String type) {
 		super(timestamp, status, image);
-		this.systolic = systolic;
-		this.diastolic = diastolic;
+		this.bloodSugar = bloodSugar;
+		this.type = type;
 	}
 
-	public int getSystolic() {
-		return systolic;
+	public double getBloodSugar() {
+		return bloodSugar;
 	}
 
-	public void setSystolic(int systolic) {
-		this.systolic = systolic;
+	public void setBloodSugar(double bloodSugar) {
+		this.bloodSugar = bloodSugar;
 	}
 
-	public int getDiastolic() {
-		return diastolic;
+	public String getType() {
+		return type;
 	}
 
-	public void setDiastolic(int diastolic) {
-		this.diastolic = diastolic;
+	public void setType(String type) {
+		this.type = type;
 	}
-
+	
 }
