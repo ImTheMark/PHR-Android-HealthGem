@@ -53,15 +53,21 @@ public class NewStatusActivity extends Activity {
 	TextView txtSugarType;
 	TextView txtWeight;
 	TextView txtWeightUnit;
+	TextView txtPurpose;
+	TextView txtDoctor;
 	EditText bpStatus;
 	EditText bsStatus;
 	EditText notesStatus;
 	EditText weight;
 	EditText weightStatus;
+	EditText checkupStatus;
+	EditText purpose;
+	EditText doctor;
 	ScrollView bpTemplate;
 	ScrollView bsTemplate;
 	ScrollView notesTemplate;
 	ScrollView weightTemplate;
+	ScrollView checkupTemplate;
 	String currentTracker;
 	final Context context = this;
 
@@ -106,6 +112,11 @@ public class NewStatusActivity extends Activity {
 		txtWeightUnit = (TextView) findViewById(R.id.txtWeightUnit);
 		// note post
 		notesStatus = (EditText) findViewById(R.id.txtNotesStatus);
+		// checkup post
+		txtDoctor = (TextView) findViewById(R.id.doctor);
+		checkupStatus = (EditText) findViewById(R.id.txtBSStatus);
+		txtPurpose = (TextView) findViewById(R.id.purpose);
+		
 
 		mBtnAddPhoto = (ImageButton) findViewById(R.id.btnAddPhoto);
 		mBtnAddPhoto.setOnClickListener(new OnClickListener() {
@@ -154,9 +165,7 @@ public class NewStatusActivity extends Activity {
 			} else if (tracker.equals(TrackerInputType.NOTES)) {
 				currentTracker = TrackerInputType.NOTES;
 				callNotesInput();
-			}
-
-			else if (tracker.equals(TrackerInputType.WEIGHT)) {
+			}else if (tracker.equals(TrackerInputType.WEIGHT)) {
 				currentTracker = TrackerInputType.WEIGHT;
 				callWeightInput();
 			} else if (tracker.equals(TrackerInputType.FOOD)) {
@@ -189,9 +198,7 @@ public class NewStatusActivity extends Activity {
 			} else if (item.equals(TrackerInputType.NOTES)) {
 				currentTracker = TrackerInputType.NOTES;
 				callNotesInput();
-			}
-
-			else if (item.equals(TrackerInputType.WEIGHT)) {
+			}else if (item.equals(TrackerInputType.WEIGHT)) {
 				currentTracker = TrackerInputType.WEIGHT;
 				callWeightInput();
 			} else if (item.equals(TrackerInputType.FOOD)) {
@@ -215,6 +222,41 @@ public class NewStatusActivity extends Activity {
 	private void callCheckUpInput() {
 		// TODO Auto-generated method stub
 		setAllTemplateGone();
+		
+		LayoutInflater layoutInflater = LayoutInflater.from(context);
+
+		View checkupView = layoutInflater.inflate(R.layout.item_checkup_input,
+				null);
+
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				context);
+		alertDialogBuilder.setView(checkupView);
+		doctor = (EditText) checkupView.findViewById(R.id.txtDoctor);
+		purpose = (EditText) checkupView.findViewById(R.id.txtPurpose);
+		alertDialogBuilder
+				.setCancelable(false)
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+
+						setAllTemplateGone();
+						checkupTemplate.setVisibility(View.VISIBLE);
+
+						txtDoctor.setText(doctor.getText());
+						txtPurpose.setText(purpose.getText());
+					}
+				})
+				.setNegativeButton("Cancel",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.cancel();
+							}
+						});
+
+		// create an alert dialog
+		AlertDialog alertD = alertDialogBuilder.create();
+		alertD.show();
 	}
 
 	private void callFoodInput() {
@@ -375,14 +417,10 @@ public class NewStatusActivity extends Activity {
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
 
-			System.out.println(timestamp);
-			Log.e(bpStatus.getText().toString(),
-					Integer.toString(systolicPicker.getCurrent()));
 			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
 			BloodPressure bp = new BloodPressure(timestamp, bpStatus.getText()
 					.toString(), image, systolicPicker.getCurrent(),
 					diastolicPicker.getCurrent());
-			Log.e("added", "pp");
 
 			BloodPressureService bpService = new BloodPressureServiceImpl();
 			bpService.add(bp);
@@ -422,6 +460,7 @@ public class NewStatusActivity extends Activity {
 		bpTemplate.setVisibility(View.GONE);
 		notesTemplate.setVisibility(View.GONE);
 		weightTemplate.setVisibility(View.GONE);
+		checkupTemplate.setVisibility(View.GONE);
 	}
 
 	@Override
