@@ -81,7 +81,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public static final String TABLE_NOTES = "notestracker";
 	public static final String NOTES_ID = "id";
 	public static final String NOTES_DATEADDED = "dateAdded";
-	public static final String NOTES_TITLE = "title";
 	public static final String NOTES_NOTE = "note";
 	public static final String NOTES_STATUS = "status";
 	public static final String NOTES_PHOTO = "photo";
@@ -181,7 +180,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ TABLE_NOTES + "(" 
 				+ NOTES_ID + " INTEGER PRIMARY KEY ," 
 				+ NOTES_DATEADDED + " TEXT,"
-				+ NOTES_TITLE + " TEXT," 
 				+ NOTES_NOTE + " TEXT," 
 				+ NOTES_STATUS + " TEXT,"
 				+ NOTES_PHOTO + " TEXT,"  
