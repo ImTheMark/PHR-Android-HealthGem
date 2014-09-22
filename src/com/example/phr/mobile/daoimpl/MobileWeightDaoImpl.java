@@ -7,24 +7,28 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+
 import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.ImageHandlerException;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileNoteDao;
+import com.example.phr.mobile.dao.MobileWeightDao;
 import com.example.phr.mobile.models.FBPost;
 import com.example.phr.mobile.models.Note;
 import com.example.phr.mobile.models.PHRImage;
+import com.example.phr.mobile.models.Weight;
 import com.example.phr.tools.DateTimeParser;
 import com.example.phr.tools.ImageHandler;
 
-public class MobileNoteDaoImpl implements MobileNoteDao {
+public class MobileWeightDaoImpl implements MobileWeightDao {
 
 	@Override
-	public void add(Note note) throws DataAccessException {
+	public void add(Weight weight) throws DataAccessException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
 
@@ -32,17 +36,17 @@ public class MobileNoteDaoImpl implements MobileNoteDao {
 				Locale.ENGLISH);
 
 		ContentValues values = new ContentValues();
-		values.put(DatabaseHandler.NOTES_ID, note.getEntryID());
-		values.put(DatabaseHandler.NOTES_DATEADDED, fmt.format(note.getTimestamp()));
-		values.put(DatabaseHandler.NOTES_NOTE, note.getNote());
-		values.put(DatabaseHandler.NOTES_STATUS, note.getStatus());
+		values.put(DatabaseHandler.WEIGHT_ID, weight.getEntryID());
+		values.put(DatabaseHandler.WEIGHT_DATEADDED, fmt.format(weight.getTimestamp()));
+		values.put(DatabaseHandler.WEIGHT_POUNDS, weight.getWeightInPounds());
+		values.put(DatabaseHandler.WEIGHT_STATUS, weight.getStatus());
 
 		try {
-			if (note.getImage().getFileName() == null
-					&& note.getImage().getEncodedImage() != null) {
-				String encoded = note.getImage().getEncodedImage();
+			if (weight.getImage().getFileName() == null
+					&& weight.getImage().getEncodedImage() != null) {
+				String encoded = weight.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
-				note.getImage().setFileName(fileName);
+				weight.getImage().setFileName(fileName);
 			}
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
@@ -51,21 +55,20 @@ public class MobileNoteDaoImpl implements MobileNoteDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (note.getImage().getFileName() != null)
-			values.put(DatabaseHandler.NOTES_PHOTO, note.getImage().getFileName());
-		if (note.getFbPost() != null)
-			values.put(DatabaseHandler.NOTES_FBPOSTID, note.getFbPost().getId());
+		if (weight.getImage().getFileName() != null)
+			values.put(DatabaseHandler.WEIGHT_PHOTO, weight.getImage().getFileName());
+		if (weight.getFbPost() != null)
+			values.put(DatabaseHandler.WEIGHT_FBPOSTID, weight.getFbPost().getId());
 
-		db.insert(DatabaseHandler.TABLE_NOTES, null, values);
+		db.insert(DatabaseHandler.TABLE_WEIGHT, null, values);
 		db.close();
-		
 	}
 
 	@Override
-	public List<Note> getAllNote() throws ParseException {
-		List<Note> noteList = new ArrayList<Note>();
+	public List<Weight> getAllWeight() throws ParseException {
+		List<Weight> weightList = new ArrayList<Weight>();
 		String selectQuery = "SELECT  * FROM "
-				+ DatabaseHandler.TABLE_NOTES;
+				+ DatabaseHandler.TABLE_WEIGHT;
 
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
@@ -81,18 +84,18 @@ public class MobileNoteDaoImpl implements MobileNoteDao {
 				String encoded = ImageHandler.encodeImageToBase64(bitmap);
 				image.setEncodedImage(encoded);
 				
-				Note note = new Note(cursor.getInt(0),
+				Weight weight = new Weight(cursor.getInt(0),
 						new FBPost(cursor.getInt(5)),
 						timestamp, 
 						cursor.getString(3), 
 						image,
-						cursor.getString(2));
+						cursor.getDouble(2));
 
-				noteList.add(note);
+				weightList.add(weight);
 			} while (cursor.moveToNext());
 		}
 
 		db.close();
-		return noteList;
+		return weightList;
 	}
 }
