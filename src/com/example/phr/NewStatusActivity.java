@@ -373,7 +373,6 @@ public class NewStatusActivity extends Activity {
 					+ " "
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
-			System.out.println(timestamp);
 			Log.e(bpStatus.getText().toString(),Integer.toString(systolicPicker.getCurrent()));
 			BloodPressure bp = new BloodPressure(timestamp,
 					bpStatus.getText().toString(),
@@ -381,8 +380,8 @@ public class NewStatusActivity extends Activity {
 					diastolicPicker.getCurrent());
 			Log.e("added","pp");
 			// WEB SERVER INSERT
-			//BloodPressureService bpService = new BloodPressureServiceImpl();
-			//bpService.add(bp);
+			BloodPressureService bpService = new BloodPressureServiceImpl();
+			bpService.add(bp);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
