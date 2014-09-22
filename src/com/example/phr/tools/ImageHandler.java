@@ -76,12 +76,10 @@ public class ImageHandler {
 	}
 
 	public static String getEncodedImageFromFile(String fileName) {
-		// TODO Auto-generated method stub
-		return null;
+		return encodeImageToBase64(loadImage(fileName));
 	}
 
 	public static String saveImageReturnFileName(String encodedImage) {
-
-		return null;
+		return saveImage(decodeImage(encodedImage));
 	}
 }
