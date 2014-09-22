@@ -8,29 +8,29 @@ public class BloodPressure extends TrackerEntry {
 	int diastolic;
 
 	public BloodPressure(Integer entryID, FBPost fbPost, Timestamp timestamp,
-			String status, String encodedImage, int systolic, int diastolic) {
-		super(entryID, fbPost, timestamp, status, encodedImage);
+			String status, PHRImage image, int systolic, int diastolic) {
+		super(entryID, fbPost, timestamp, status, image);
 		this.systolic = systolic;
 		this.diastolic = diastolic;
 	}
 
 	public BloodPressure(FBPost fbPost, Timestamp timestamp, String status,
-			String encodedImage, int systolic, int diastolic) {
-		super(fbPost, timestamp, status, encodedImage);
+			PHRImage image, int systolic, int diastolic) {
+		super(fbPost, timestamp, status, image);
 		this.systolic = systolic;
 		this.diastolic = diastolic;
 	}
 
 	public BloodPressure(Integer entryID, Timestamp timestamp, String status,
-			String encodedImage, int systolic, int diastolic) {
-		super(entryID, timestamp, status, encodedImage);
+			PHRImage image, int systolic, int diastolic) {
+		super(entryID, timestamp, status, image);
 		this.systolic = systolic;
 		this.diastolic = diastolic;
 	}
 
-	public BloodPressure(Timestamp timestamp, String status,
-			String encodedImage, int systolic, int diastolic) {
-		super(timestamp, status, encodedImage);
+	public BloodPressure(Timestamp timestamp, String status, PHRImage image,
+			int systolic, int diastolic) {
+		super(timestamp, status, image);
 		this.systolic = systolic;
 		this.diastolic = diastolic;
 	}

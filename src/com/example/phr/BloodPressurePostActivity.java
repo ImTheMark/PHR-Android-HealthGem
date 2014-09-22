@@ -21,6 +21,8 @@ import android.widget.TextView;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.BloodPressure;
+import com.example.phr.mobile.models.PHRImage;
+import com.example.phr.mobile.models.PHRImageType;
 import com.example.phr.service.BloodPressureService;
 import com.example.phr.serviceimpl.BloodPressureServiceImpl;
 
@@ -107,9 +109,10 @@ public class BloodPressurePostActivity extends Activity {
 					+ textViewBloodPressureClock.getText().toString());
 			Timestamp timestamp = new Timestamp(date.getTime());
 			System.out.println(timestamp);
+			PHRImage testImage = new PHRImage("testImage", PHRImageType.IMAGE);
 			BloodPressure bp = new BloodPressure(timestamp,
 					textViewbloodpressureStatus.getText().toString(),
-					"test-image", systolicPicker.getCurrent(),
+					testImage, systolicPicker.getCurrent(),
 					diastolicPicker.getCurrent());
 
 			// WEB SERVER INSERT
