@@ -7,15 +7,15 @@ import com.example.phr.exceptions.WebServerException;
 import com.example.phr.model.BloodSugar;
 import com.example.phr.web.dao.WebBloodSugarDao;
 
-public class WebBloodSugarDaoImpl extends BasicDaoImpl<BloodSugar> implements
-		WebBloodSugarDao {
+public class WebBloodSugarDaoImpl extends GenericWebTrackerDaoImpl<BloodSugar>
+		implements WebBloodSugarDao {
 
 	@Override
 	public int add_ReturnEntryIdInWeb(BloodSugar bloodSugar)
 			throws WebServerException, OutdatedAccessTokenException {
 		String command = "tracker/addBloodSugar";
 		String fieldName = "bloodSugar";
-		return add_ReturnIDToWebUsingHttp(command, fieldName, bloodSugar);
+		return add_ReturnEntryIDToWebUsingHttp(command, bloodSugar);
 	}
 
 	@Override
@@ -31,15 +31,10 @@ public class WebBloodSugarDaoImpl extends BasicDaoImpl<BloodSugar> implements
 	}
 
 	@Override
-	public BloodSugar get(int entryID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BloodSugar> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<BloodSugar> getAll() throws WebServerException,
+			OutdatedAccessTokenException {
+		String command = "/tracker/getAllBloodSugar";
+		return getAllUsingHttp(command, BloodSugar.class);
 	}
 
 }

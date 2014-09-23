@@ -7,15 +7,15 @@ import com.example.phr.exceptions.WebServerException;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.web.dao.WebBloodPressureDao;
 
-public class WebBloodPressureDaoImpl extends BasicDaoImpl<BloodPressure>
-		implements WebBloodPressureDao {
+public class WebBloodPressureDaoImpl extends
+		GenericWebTrackerDaoImpl<BloodPressure> implements WebBloodPressureDao {
+
 	@Override
 	public int add_ReturnEntryIdInWeb(BloodPressure bloodPressure)
 			throws WebServerException, OutdatedAccessTokenException {
 
 		String command = "tracker/addBloodPressure";
-		String fieldName = "bloodPressure";
-		return add_ReturnIDToWebUsingHttp(command, fieldName, bloodPressure);
+		return add_ReturnEntryIDToWebUsingHttp(command, bloodPressure);
 
 	}
 
@@ -32,14 +32,9 @@ public class WebBloodPressureDaoImpl extends BasicDaoImpl<BloodPressure>
 	}
 
 	@Override
-	public BloodPressure get(int entryID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BloodPressure> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<BloodPressure> getAll() throws WebServerException,
+			OutdatedAccessTokenException {
+		String command = "/tracker/getAllBloodPressure";
+		return getAllUsingHttp(command, BloodPressure.class);
 	}
 }

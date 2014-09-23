@@ -7,15 +7,15 @@ import com.example.phr.exceptions.WebServerException;
 import com.example.phr.mobile.models.Weight;
 import com.example.phr.web.dao.WebWeightDao;
 
-public class WebWeightDaoImpl extends BasicDaoImpl<Weight> implements
-		WebWeightDao {
+public class WebWeightDaoImpl extends GenericWebTrackerDaoImpl<Weight>
+		implements WebWeightDao {
 
 	@Override
 	public int add_ReturnEntryIdInWeb(Weight weight) throws WebServerException,
 			OutdatedAccessTokenException {
 		String command = "tracker/addWeight";
 		String fieldName = "weight";
-		return add_ReturnIDToWebUsingHttp(command, fieldName, weight);
+		return add_ReturnEntryIDToWebUsingHttp(command, weight);
 	}
 
 	@Override
@@ -31,15 +31,10 @@ public class WebWeightDaoImpl extends BasicDaoImpl<Weight> implements
 	}
 
 	@Override
-	public Weight get(int entryID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Weight> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Weight> getAll() throws WebServerException,
+			OutdatedAccessTokenException {
+		String command = "/tracker/getAllWeight";
+		return getAllUsingHttp(command, Weight.class);
 	}
 
 }
