@@ -7,17 +7,21 @@ import org.json.JSONObject;
 
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.WebServerException;
+import com.example.phr.mobile.dao.AccessDao;
+import com.example.phr.mobile.daoimpl.AccessDaoImpl;
 import com.example.phr.tools.GSONConverter;
 
 public abstract class GenericWebTrackerDaoImpl<TrackerEntry> extends
 		BasicDaoImpl {
+
+	AccessDao accessDao = new AccessDaoImpl();
 
 	public int add_ReturnEntryIDToWebUsingHttp(String command,
 			TrackerEntry object) throws WebServerException,
 			OutdatedAccessTokenException {
 		try {
 			JSONObject data = new JSONObject();
-			data.put("accessToken", userDao.getAccessToken().getAccessToken());
+			data.put("accessToken", accessDao.getAccessToken());
 			data.put("objectToAdd", GSONConverter.convertObjectToJSON(object));
 			String jsonToSend = jsonRequestCreator
 					.createJSONRequest(data, null);
@@ -50,7 +54,7 @@ public abstract class GenericWebTrackerDaoImpl<TrackerEntry> extends
 			throws WebServerException, OutdatedAccessTokenException {
 		try {
 			JSONObject data = new JSONObject();
-			data.put("accessToken", userDao.getAccessToken().getAccessToken());
+			data.put("accessToken", accessDao.getAccessToken().getAccessToken());
 			data.put("objectToEdit", GSONConverter.convertObjectToJSON(object));
 			String jsonToSend = jsonRequestCreator
 					.createJSONRequest(data, null);
@@ -83,7 +87,7 @@ public abstract class GenericWebTrackerDaoImpl<TrackerEntry> extends
 			throws WebServerException, OutdatedAccessTokenException {
 		try {
 			JSONObject data = new JSONObject();
-			data.put("accessToken", userDao.getAccessToken().getAccessToken());
+			data.put("accessToken", accessDao.getAccessToken().getAccessToken());
 			data.put("objectToDelete",
 					GSONConverter.convertObjectToJSON(object));
 			String jsonToSend = jsonRequestCreator
@@ -117,7 +121,7 @@ public abstract class GenericWebTrackerDaoImpl<TrackerEntry> extends
 			OutdatedAccessTokenException {
 		try {
 			JSONObject data = new JSONObject();
-			data.put("accessToken", userDao.getAccessToken().getAccessToken());
+			data.put("accessToken", accessDao.getAccessToken().getAccessToken());
 			String jsonToSend = jsonRequestCreator
 					.createJSONRequest(data, null);
 			System.out.println("JSON Request Sent: " + jsonToSend);

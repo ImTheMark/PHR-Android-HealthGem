@@ -15,19 +15,12 @@ import org.json.JSONObject;
 
 import com.example.phr.exceptions.WebServerException;
 import com.example.phr.tools.JSONRequestCreator;
-import com.example.phr.web.dao.UserDao;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 public abstract class BasicDaoImpl {
 
-	UserDao userDao;
-	JSONRequestCreator jsonRequestCreator;
-
-	public BasicDaoImpl() {
-		userDao = new UserDaoImpl();
-		jsonRequestCreator = new JSONRequestCreator();
-	}
+	JSONRequestCreator jsonRequestCreator = new JSONRequestCreator();
 
 	protected String performHttpRequest_String(String command,
 			String jsonStringParams) throws WebServerException {

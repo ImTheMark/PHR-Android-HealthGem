@@ -8,7 +8,8 @@ import org.json.JSONObject;
 
 import com.example.phr.exceptions.UserAlreadyExistsException;
 import com.example.phr.exceptions.WebServerException;
-import com.example.phr.local_db.DatabaseHandler;
+import com.example.phr.mobile.dao.AccessDao;
+import com.example.phr.mobile.daoimpl.AccessDaoImpl;
 import com.example.phr.model.AccessToken;
 import com.example.phr.model.User;
 import com.example.phr.tools.GSONConverter;
@@ -18,9 +19,11 @@ import com.example.phr.web.dao.UserDao;
 public class UserDaoImpl extends BasicDaoImpl implements UserDao {
 
 	private JSONRequestCreator jsonRequestCreator;
+	private AccessDao accessDao;
 
 	public UserDaoImpl() {
 		jsonRequestCreator = new JSONRequestCreator();
+		accessDao = new AccessDaoImpl();
 	}
 
 	@Override
@@ -52,11 +55,12 @@ public class UserDaoImpl extends BasicDaoImpl implements UserDao {
 						.getString("userAccessToken");
 				System.out.println("User Access Token Received "
 						+ userAccessToken);
-				setAccessToken(new AccessToken(userAccessToken,
-						user.getUsername()));
+				accessDao.setAccessToken(new AccessToken(userAccessToken, user
+						.getUsername()));
 				System.out.println("Stored Access Token: "
-						+ getAccessToken().getAccessToken() + " and Username: "
-						+ getAccessToken().getUserName());
+						+ accessDao.getAccessToken().getAccessToken()
+						+ " and Username: "
+						+ accessDao.getAccessToken().getUserName());
 			}
 		} catch (JSONException e) {
 			throw new WebServerException("Error in parsing JSON", e);
@@ -91,10 +95,12 @@ public class UserDaoImpl extends BasicDaoImpl implements UserDao {
 						.getString("userAccessToken");
 				System.out.println("User Access Token Received: "
 						+ userAccessToken);
-				setAccessToken(new AccessToken(userAccessToken, username));
+				accessDao.setAccessToken(new AccessToken(userAccessToken,
+						username));
 				System.out.println("Stored Access Token: "
-						+ getAccessToken().getAccessToken() + " and Username: "
-						+ getAccessToken().getUserName());
+						+ accessDao.getAccessToken().getAccessToken()
+						+ " and Username: "
+						+ accessDao.getAccessToken().getUserName());
 				return true;
 			} else if (response.getJSONObject("data").get("isValid")
 					.equals("false")) {
@@ -115,15 +121,4 @@ public class UserDaoImpl extends BasicDaoImpl implements UserDao {
 		return null;
 	}
 
-	@Override
-	public AccessToken getAccessToken() {
-		AccessToken token = DatabaseHandler.getDBHandler().getAccessToken();
-		return token;
-	}
-
-	@Override
-	public void setAccessToken(AccessToken accessToken) {
-		DatabaseHandler.getDBHandler().setAccessToken(accessToken);
-
-	}
 }
