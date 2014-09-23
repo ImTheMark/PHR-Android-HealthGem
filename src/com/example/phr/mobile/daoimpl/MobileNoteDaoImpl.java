@@ -62,8 +62,8 @@ public class MobileNoteDaoImpl implements MobileNoteDao {
 	}
 
 	@Override
-	public List<Note> getAllNote() throws ParseException {
-		List<Note> noteList = new ArrayList<Note>();
+	public ArrayList<Note> getAll() throws ParseException {
+		ArrayList<Note> noteList = new ArrayList<Note>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_NOTES;
 

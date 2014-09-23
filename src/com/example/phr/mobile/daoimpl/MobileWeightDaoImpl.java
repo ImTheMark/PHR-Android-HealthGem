@@ -65,8 +65,8 @@ public class MobileWeightDaoImpl implements MobileWeightDao {
 	}
 
 	@Override
-	public List<Weight> getAllWeight() throws ParseException {
-		List<Weight> weightList = new ArrayList<Weight>();
+	public ArrayList<Weight> getAll() throws ParseException {
+		ArrayList<Weight> weightList = new ArrayList<Weight>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_WEIGHT;
 

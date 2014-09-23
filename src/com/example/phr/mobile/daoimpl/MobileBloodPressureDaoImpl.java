@@ -64,8 +64,8 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 	}
 
 	@Override
-	public List<BloodPressure> getAllBloodPressure() throws ParseException {
-		List<BloodPressure> bpList = new ArrayList<BloodPressure>();
+	public ArrayList<BloodPressure> getAll() throws ParseException {
+		ArrayList<BloodPressure> bpList = new ArrayList<BloodPressure>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_BLOODPRESSURE;
 

@@ -65,8 +65,8 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 	}
 
 	@Override
-	public List<BloodSugar> getAllBloodSugar() throws ParseException {
-		List<BloodSugar> bsList = new ArrayList<BloodSugar>();
+	public ArrayList<BloodSugar> getAll() throws ParseException {
+		ArrayList<BloodSugar> bsList = new ArrayList<BloodSugar>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_BLOODSUGAR;
 

@@ -64,8 +64,8 @@ public class MobileCheckupDaoImpl implements MobileCheckupDao {
 	}
 
 	@Override
-	public List<CheckUp> getAllCheckUp() throws ParseException {
-		List<CheckUp> cuList = new ArrayList<CheckUp>();
+	public ArrayList<CheckUp> getAll() throws ParseException {
+		ArrayList<CheckUp> cuList = new ArrayList<CheckUp>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_CHECKUP;
 
