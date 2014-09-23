@@ -25,7 +25,7 @@ public abstract class GenericWebTrackerDaoImpl<TrackerEntry> extends
 			data.put("objectToAdd", GSONConverter.convertObjectToJSON(object));
 			String jsonToSend = jsonRequestCreator
 					.createJSONRequest(data, null);
-			System.out.println("JSON Request Sent: " + jsonToSend);
+			System.out.println("" + "JSON Request Sent: " + jsonToSend);
 			JSONObject response = performHttpRequest_JSON(command, jsonToSend);
 			System.out.println("JSON Response Received: " + response);
 
