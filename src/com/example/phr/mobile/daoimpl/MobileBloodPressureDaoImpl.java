@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 
 import com.example.phr.exceptions.DataAccessException;
+import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.ImageHandlerException;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileBloodPressureDao;
@@ -61,6 +62,44 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 		// Inserting Row
 		db.insert(DatabaseHandler.TABLE_BLOODPRESSURE, null, values);
 		db.close(); // Closing database connection
+	}
+
+	@Override
+	public void edit(BloodPressure bp) throws DataAccessException,
+			EntryNotFoundException {
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+				Locale.ENGLISH);
+
+		ContentValues values = new ContentValues();
+		values.put(DatabaseHandler.BP_DATEADDED, fmt.format(bp.getTimestamp()));
+		values.put(DatabaseHandler.BP_SYSTOLIC, bp.getSystolic());
+		values.put(DatabaseHandler.BP_DIASTOLIC, bp.getDiastolic());
+		values.put(DatabaseHandler.BP_STATUS, bp.getStatus());
+
+		try {
+			if (bp.getImage().getFileName() == null
+					&& bp.getImage().getEncodedImage() != null) {
+				String encoded = bp.getImage().getEncodedImage();
+				String fileName = ImageHandler.saveImageReturnFileName(encoded);
+				bp.getImage().setFileName(fileName);
+			}
+		} catch (FileNotFoundException e) {
+			throw new DataAccessException("An error occurred in the DAO layer",
+					e);
+		} catch (ImageHandlerException e) {
+			throw new DataAccessException("An error occurred in the DAO layer",
+					e);
+		}
+		if (bp.getImage().getFileName() != null)
+			values.put(DatabaseHandler.BP_PHOTO, bp.getImage().getFileName());
+		if (bp.getFbPost() != null)
+			values.put(DatabaseHandler.BP_FBPOSTID, bp.getFbPost().getId());
+		
+		db.update(DatabaseHandler.TABLE_BLOODPRESSURE, values, DatabaseHandler.BP_ID + "=" + bp.getEntryID(), null);
+		db.close();
 	}
 
 	@Override

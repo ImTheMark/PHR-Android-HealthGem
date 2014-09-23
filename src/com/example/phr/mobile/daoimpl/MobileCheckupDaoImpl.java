@@ -7,11 +7,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+
 import com.example.phr.exceptions.DataAccessException;
+import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.ImageHandlerException;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileCheckupDao;
@@ -61,6 +64,45 @@ public class MobileCheckupDaoImpl implements MobileCheckupDao {
 		db.insert(DatabaseHandler.TABLE_CHECKUP, null, values);
 		db.close();
 		
+	}
+
+	@Override
+	public void edit(CheckUp checkUp) throws DataAccessException,
+			EntryNotFoundException {
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+				Locale.ENGLISH);
+
+		ContentValues values = new ContentValues();
+		values.put(DatabaseHandler.CU_DATEADDED, fmt.format(checkUp.getTimestamp()));
+		values.put(DatabaseHandler.CU_PURPOSE, checkUp.getPurpose());
+		values.put(DatabaseHandler.CU_DOCTORNAME, checkUp.getDoctorsName());
+		values.put(DatabaseHandler.CU_NOTES, checkUp.getNotes());
+		values.put(DatabaseHandler.CU_STATUS, checkUp.getStatus());
+
+		try {
+			if (checkUp.getImage().getFileName() == null
+					&& checkUp.getImage().getEncodedImage() != null) {
+				String encoded = checkUp.getImage().getEncodedImage();
+				String fileName = ImageHandler.saveImageReturnFileName(encoded);
+				checkUp.getImage().setFileName(fileName);
+			}
+		} catch (FileNotFoundException e) {
+			throw new DataAccessException("An error occurred in the DAO layer",
+					e);
+		} catch (ImageHandlerException e) {
+			throw new DataAccessException("An error occurred in the DAO layer",
+					e);
+		}
+		if (checkUp.getImage().getFileName() != null)
+			values.put(DatabaseHandler.CU_PHOTO, checkUp.getImage().getFileName());
+		if (checkUp.getFbPost() != null)
+			values.put(DatabaseHandler.CU_FBPOSTID, checkUp.getFbPost().getId());
+
+		db.update(DatabaseHandler.TABLE_CHECKUP, values, DatabaseHandler.CU_ID + "=" + checkUp.getEntryID(), null);
+		db.close();
 	}
 
 	@Override

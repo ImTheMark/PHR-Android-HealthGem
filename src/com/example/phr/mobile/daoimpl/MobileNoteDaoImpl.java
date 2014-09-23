@@ -7,11 +7,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+
 import com.example.phr.exceptions.DataAccessException;
+import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.ImageHandlerException;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileNoteDao;
@@ -58,7 +61,44 @@ public class MobileNoteDaoImpl implements MobileNoteDao {
 
 		db.insert(DatabaseHandler.TABLE_NOTES, null, values);
 		db.close();
-		
+	}
+
+	@Override
+	public void edit(Note note) throws DataAccessException,
+			EntryNotFoundException {
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+				Locale.ENGLISH);
+
+		ContentValues values = new ContentValues();
+		values.put(DatabaseHandler.NOTES_DATEADDED, fmt.format(note.getTimestamp()));
+		values.put(DatabaseHandler.NOTES_NOTE, note.getNote());
+		values.put(DatabaseHandler.NOTES_STATUS, note.getStatus());
+
+		try {
+			if (note.getImage().getFileName() == null
+					&& note.getImage().getEncodedImage() != null) {
+				String encoded = note.getImage().getEncodedImage();
+				String fileName = ImageHandler.saveImageReturnFileName(encoded);
+				note.getImage().setFileName(fileName);
+			}
+		} catch (FileNotFoundException e) {
+			throw new DataAccessException("An error occurred in the DAO layer",
+					e);
+		} catch (ImageHandlerException e) {
+			throw new DataAccessException("An error occurred in the DAO layer",
+					e);
+		}
+		if (note.getImage().getFileName() != null)
+			values.put(DatabaseHandler.NOTES_PHOTO, note.getImage().getFileName());
+		if (note.getFbPost() != null)
+			values.put(DatabaseHandler.NOTES_FBPOSTID, note.getFbPost().getId());
+
+
+		db.update(DatabaseHandler.TABLE_NOTES, values, DatabaseHandler.NOTES_ID + "=" + note.getEntryID(), null);
+		db.close();
 	}
 
 	@Override

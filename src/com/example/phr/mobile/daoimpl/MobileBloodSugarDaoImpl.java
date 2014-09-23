@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 
 import com.example.phr.exceptions.DataAccessException;
+import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.ImageHandlerException;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileBloodSugarDao;
@@ -65,6 +66,45 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 	}
 
 	@Override
+	public void edit(BloodSugar bloodSugar) throws DataAccessException,
+			EntryNotFoundException {
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+				Locale.ENGLISH);
+
+		ContentValues values = new ContentValues();
+		values.put(DatabaseHandler.BS_DATEADDED, fmt.format(bloodSugar.getTimestamp()));
+		values.put(DatabaseHandler.BS_BLOODSUGAR, bloodSugar.getBloodSugar());
+		values.put(DatabaseHandler.BS_TYPE, bloodSugar.getType());
+		values.put(DatabaseHandler.BS_STATUS, bloodSugar.getStatus());
+
+		try {
+			if (bloodSugar.getImage().getFileName() == null
+					&& bloodSugar.getImage().getEncodedImage() != null) {
+				String encoded = bloodSugar.getImage().getEncodedImage();
+				String fileName = ImageHandler.saveImageReturnFileName(encoded);
+				bloodSugar.getImage().setFileName(fileName);
+			}
+		} catch (FileNotFoundException e) {
+			throw new DataAccessException("An error occurred in the DAO layer",
+					e);
+		} catch (ImageHandlerException e) {
+			throw new DataAccessException("An error occurred in the DAO layer",
+					e);
+		}
+		if (bloodSugar.getImage().getFileName() != null)
+			values.put(DatabaseHandler.BS_PHOTO, bloodSugar.getImage().getFileName());
+		if (bloodSugar.getFbPost() != null)
+			values.put(DatabaseHandler.BS_FBPOSTID, bloodSugar.getFbPost().getId());
+
+		db.update(DatabaseHandler.TABLE_BLOODSUGAR, values, DatabaseHandler.BS_ID + "=" + bloodSugar.getEntryID(), null);
+		db.close();
+		
+	}
+
+	@Override
 	public ArrayList<BloodSugar> getAll() throws ParseException {
 		ArrayList<BloodSugar> bsList = new ArrayList<BloodSugar>();
 		String selectQuery = "SELECT  * FROM "
@@ -74,7 +114,6 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 				.getWritableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
 
-		// looping through all rows and adding to list
 		if (cursor.moveToFirst()) {
 			do {
 				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
@@ -97,7 +136,6 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 			} while (cursor.moveToNext());
 		}
 
-		// return contact list
 		db.close();
 		return bsList;
 	}

@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 
 import com.example.phr.exceptions.DataAccessException;
+import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.ImageHandlerException;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileNoteDao;
@@ -61,6 +62,43 @@ public class MobileWeightDaoImpl implements MobileWeightDao {
 			values.put(DatabaseHandler.WEIGHT_FBPOSTID, weight.getFbPost().getId());
 
 		db.insert(DatabaseHandler.TABLE_WEIGHT, null, values);
+		db.close();
+	}
+
+	@Override
+	public void edit(Weight weight) throws DataAccessException,
+			EntryNotFoundException {
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+				Locale.ENGLISH);
+
+		ContentValues values = new ContentValues();
+		values.put(DatabaseHandler.WEIGHT_DATEADDED, fmt.format(weight.getTimestamp()));
+		values.put(DatabaseHandler.WEIGHT_POUNDS, weight.getWeightInPounds());
+		values.put(DatabaseHandler.WEIGHT_STATUS, weight.getStatus());
+
+		try {
+			if (weight.getImage().getFileName() == null
+					&& weight.getImage().getEncodedImage() != null) {
+				String encoded = weight.getImage().getEncodedImage();
+				String fileName = ImageHandler.saveImageReturnFileName(encoded);
+				weight.getImage().setFileName(fileName);
+			}
+		} catch (FileNotFoundException e) {
+			throw new DataAccessException("An error occurred in the DAO layer",
+					e);
+		} catch (ImageHandlerException e) {
+			throw new DataAccessException("An error occurred in the DAO layer",
+					e);
+		}
+		if (weight.getImage().getFileName() != null)
+			values.put(DatabaseHandler.WEIGHT_PHOTO, weight.getImage().getFileName());
+		if (weight.getFbPost() != null)
+			values.put(DatabaseHandler.WEIGHT_FBPOSTID, weight.getFbPost().getId());
+
+		db.update(DatabaseHandler.TABLE_WEIGHT, values, DatabaseHandler.WEIGHT_ID + "=" + weight.getEntryID(), null);
 		db.close();
 	}
 
