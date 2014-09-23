@@ -92,7 +92,7 @@ public class BloodPressureTrackerActivity extends Activity {
 
 		MobileBloodPressureDaoImpl bpDaoImpl = new MobileBloodPressureDaoImpl();
 		try {
-			list = bpDaoImpl.getAllBloodPressure();
+			list = bpDaoImpl.getAll();
 			reverselist = Lists.reverse(list);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -301,7 +301,7 @@ public class BloodPressureTrackerActivity extends Activity {
 
 		MobileBloodPressureDaoImpl bpDaoImpl = new MobileBloodPressureDaoImpl();
 		try {
-			list = bpDaoImpl.getAllBloodPressure();
+			list = bpDaoImpl.getAll();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

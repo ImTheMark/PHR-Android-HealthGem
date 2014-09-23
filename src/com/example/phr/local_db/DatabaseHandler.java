@@ -51,6 +51,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public static final String BS_ID = "id";
 	public static final String BS_DATEADDED = "dateAdded";
 	public static final String BS_BLOODSUGAR = "bloodSugar";
+	public static final String BS_TYPE = "type";
 	public static final String BS_STATUS = "status";
 	public static final String BS_PHOTO = "photo";
 	public static final String BS_FBPOSTID = "fbPostID";
@@ -61,7 +62,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public static final String CU_DATEADDED = "dateAdded";
 	public static final String CU_PURPOSE = "purpose";
 	public static final String CU_DOCTORNAME = "doctorsName";
-	public static final String CU_LOCATION = "location";
 	public static final String CU_NOTES = "notes";
 	public static final String CU_STATUS = "status";
 	public static final String CU_PHOTO = "photo";
@@ -81,7 +81,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public static final String TABLE_NOTES = "notestracker";
 	public static final String NOTES_ID = "id";
 	public static final String NOTES_DATEADDED = "dateAdded";
-	public static final String NOTES_TITLE = "title";
 	public static final String NOTES_NOTE = "note";
 	public static final String NOTES_STATUS = "status";
 	public static final String NOTES_PHOTO = "photo";
@@ -145,6 +144,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ BS_ID + " INTEGER PRIMARY KEY ," 
 				+ BS_DATEADDED + " TEXT,"
 				+ BS_BLOODSUGAR + " REAL," 
+				+ BS_TYPE + " TEXT," 
 				+ BS_STATUS + " TEXT,"
 				+ BS_PHOTO + " TEXT,"  
 				+ BS_FBPOSTID + " INTEGER"  
@@ -157,7 +157,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ CU_DATEADDED + " TEXT,"
 				+ CU_PURPOSE + " TEXT," 
 				+ CU_DOCTORNAME + " TEXT," 
-				+ CU_LOCATION + " TEXT," 
 				+ CU_NOTES + " TEXT," 
 				+ CU_STATUS + " TEXT,"
 				+ CU_PHOTO + " TEXT,"  
@@ -181,7 +180,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ TABLE_NOTES + "(" 
 				+ NOTES_ID + " INTEGER PRIMARY KEY ," 
 				+ NOTES_DATEADDED + " TEXT,"
-				+ NOTES_TITLE + " TEXT," 
 				+ NOTES_NOTE + " TEXT," 
 				+ NOTES_STATUS + " TEXT,"
 				+ NOTES_PHOTO + " TEXT,"  
