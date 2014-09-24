@@ -1,11 +1,13 @@
 package com.example.phr.web.daoimpl;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.WebServerException;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.web.dao.WebBloodPressureDao;
+import com.google.gson.reflect.TypeToken;
 
 public class WebBloodPressureDaoImpl extends
 		GenericWebTrackerDaoImpl<BloodPressure> implements WebBloodPressureDao {
@@ -35,6 +37,8 @@ public class WebBloodPressureDaoImpl extends
 	public List<BloodPressure> getAll() throws WebServerException,
 			OutdatedAccessTokenException {
 		String command = "/tracker/getAllBloodPressure";
-		return getAllUsingHttp(command, BloodPressure.class);
+		Type type = new TypeToken<List<BloodPressure>>() {
+		}.getType();
+		return getAllUsingHttp(command, type);
 	}
 }
