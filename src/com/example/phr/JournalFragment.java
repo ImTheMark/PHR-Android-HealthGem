@@ -39,7 +39,7 @@ public class JournalFragment extends Fragment {
 
 		mDailyJournalList = (ListView) rootView
 				.findViewById(R.id.listView_daily_journal);
-		mJournalTabsPlaceholder = (LinearLayout) rootView
+		/*mJournalTabsPlaceholder = (LinearLayout) rootView
 				.findViewById(R.id.journalTabsPlaceholder);
 		
 		mDailyJournalList.setOnScrollListener(new OnScrollListener() {
@@ -67,7 +67,7 @@ public class JournalFragment extends Fragment {
 				  mJournalTabsPlaceholder.setVisibility(View.GONE);
 				 
 			}
-		});
+		});*/
 
 		// FAKE DATA
 		List<DailyJournal> list = new ArrayList<DailyJournal>();
@@ -135,7 +135,7 @@ public class JournalFragment extends Fragment {
 			}
 		});
 
-		mBtnStatus = (Button) rootView.findViewById(R.id.btnStatus);
+	/*	mBtnStatus = (Button) rootView.findViewById(R.id.btnStatus);
 		mBtnStatus.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -143,7 +143,7 @@ public class JournalFragment extends Fragment {
 						NewStatusActivity.class);
 				startActivity(intent);
 			}
-		});
+		});*/
 
 		return rootView;
 	}

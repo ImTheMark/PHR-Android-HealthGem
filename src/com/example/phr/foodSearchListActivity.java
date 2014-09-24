@@ -3,9 +3,8 @@ package com.example.phr;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.phr.enums.TrackerInputType;
-import com.example.phr.exceptions.OutdatedAccessTokenException;
-import com.example.phr.exceptions.ServiceException;
+import com.example.phr.adapter.SingleFoodAdapter;
+import com.example.phr.model.FoodSingle;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -23,19 +22,20 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class ActivitiesSearchListActivity extends Activity{
+public class foodSearchListActivity extends Activity{
+	
 	EditText searchWord;
-	ListView searchList;
 	ImageButton searchButton;
-	ArrayAdapter<String> adapter;
-	ArrayList<String> result;
+	ListView searchList;
+	SingleFoodAdapter foodsingleAdapter;
+	List<FoodSingle> list;
 	
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_list);
-		setTitle("Activity Search List");
+		setTitle("Food Search List");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		searchList = (ListView) findViewById(R.id.searchList);
 		searchWord = (EditText) findViewById(R.id.searchWord);
@@ -45,29 +45,37 @@ public class ActivitiesSearchListActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				
-				result = new ArrayList<String>();
-				result.add("jogging");
-				result.add("running");
-				adapter = new ArrayAdapter<String>(getApplicationContext(),
-		                R.layout.item_custom_listview, result);
+				// FAKE DATA
+				list = new ArrayList<FoodSingle>();
+				FoodSingle data1 = new FoodSingle("Sinigang","cup",10.8,222,17,16.56,"via fatsecret");
+				FoodSingle data2 = new FoodSingle("Bacon","slice",2.09,27,0.07,1.85,"");
+				FoodSingle data3 = new FoodSingle("Hash browns","piece",12,210,26,2,"");
+
+				list.add(data3);
+				list.add(data2);
+				list.add(data1);
 				
-				searchList.setAdapter(adapter);
+				foodsingleAdapter = new SingleFoodAdapter(getApplicationContext(), list);
+				searchList.setAdapter(foodsingleAdapter);
 			}
 		});
-
+		
 		searchList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				// TODO Auto-generated method stub
-		        Intent intent=new Intent();  
-		        intent.putExtra("activity chosen",result.get(arg2)); 
-		        Log.e("activity chosen ", result.get(arg2));
-		        setResult(3,intent);  
+				Log.e("foodsingle", list.get(arg2).getFood());
+				Intent intent=new Intent();  
+		        intent.putExtra("food chosen",list.get(arg2).getFood()); 
+		        intent.putExtra("cal",list.get(arg2).getCal()); 
+		        intent.putExtra("protein",list.get(arg2).getProtein()); 
+		        intent.putExtra("fat",list.get(arg2).getFat()); 
+		        intent.putExtra("carbs",list.get(arg2).getCarbs()); 
+		        intent.putExtra("serving",list.get(arg2).getServing()); 
+		        setResult(4,intent);  
 		        finish();
 			}
-
-        });
+		});
 		
 	}
 	
@@ -82,7 +90,7 @@ public class ActivitiesSearchListActivity extends Activity{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_item_add_new_activity:
-			Intent i = new Intent(getApplicationContext(), AddNewActivityActivity.class);
+			Intent i = new Intent(getApplicationContext(), AddNewFoodActivity.class);
 			startActivity(i);
 			
 		default:
@@ -90,5 +98,6 @@ public class ActivitiesSearchListActivity extends Activity{
 		}
 
 	}
+
 
 }

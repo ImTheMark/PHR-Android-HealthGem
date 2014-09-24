@@ -40,6 +40,7 @@ public class SummaryReportFragment extends Fragment {
 	int cProgressStatus = 13;
 	Button mBtnRetrieve;
 	Button mBtnWrite;
+	Button mBtnStatus;
 
 	
 	@Override
@@ -77,6 +78,16 @@ public class SummaryReportFragment extends Fragment {
 				/*Intent intent = new Intent(getActivity().getApplicationContext(),
 						NewStatusActivity.class);
 				startActivity(intent);*/
+			}
+		});
+		
+		mBtnStatus = (Button) rootView.findViewById(R.id.btnStatus);
+		mBtnStatus.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(),
+						NewStatusActivity.class);
+				startActivity(intent);
 			}
 		});
 		

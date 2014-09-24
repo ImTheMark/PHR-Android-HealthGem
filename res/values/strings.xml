@@ -17,9 +17,20 @@
 		<item>After meal</item>
 	</string-array>
     
+    <string-array name="foodUnit">
+		<item>slice</item>
+		<item>kg</item>
+		<item>serving</item>
+	</string-array>
+    
      <string-array name="weightUnit">
 		<item>kg</item>
 		<item>lb</item>
+	</string-array>
+	
+     <string-array name="timeUnit">
+		<item>min</item>
+		<item>hr</item>
 	</string-array>
     <string name="lorem_ipsum"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel mattis nunc, ut sollicitudin eros. Donec volutpat enim et augue tristique, at facilisis felis lobortis. Cras porttitor elementum libero sed scelerisque. Nam suscipit ante eget lectus pellentesque placerat. Duis mollis, risus vel faucibus blandit, lacus nisl feugiat risus, sit amet blandit purus neque ac mi. Curabitur aliquet turpis elit, eu porta tortor gravida nec. Nulla convallis aliquam odio, congue blandit nibh pretium sit amet. Nam posuere ultrices odio molestie dignissim. In adipiscing nibh sit amet nulla imperdiet aliquet. Aliquam posuere risus ut ipsum viverra, eget iaculis risus consequat. Cras feugiat consequat tincidunt. Fusce iaculis mi sapien, tincidunt adipiscing nibh tincidunt id.
 

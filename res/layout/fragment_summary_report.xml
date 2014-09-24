@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E8E8E8" >
+    
+    <ScrollView
+        android:id="@+id/viewDisplay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E8E8E8" >
@@ -8,8 +14,9 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" 
     android:background="#E8E8E8"
+    android:layout_marginBottom="20dp"
     >
-
+    
     <RelativeLayout
         android:id="@+id/btnAchievements"
         android:layout_width="match_parent"
@@ -435,7 +442,8 @@
         android:layout_marginTop="6dp"
         android:background="@drawable/container_dropshadow"
         android:orientation="horizontal"
-        android:weightSum="5" >
+        android:weightSum="5" 
+        android:layout_marginBottom="60dp">
 
         <LinearLayout
             android:id="@+id/titleHolder"
@@ -510,7 +518,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center" >
+                android:gravity="center" 
+                >
 
                 <TextView
                     android:id="@+id/textView6"
@@ -549,6 +558,7 @@
             android:layout_marginLeft="2dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
+            
             android:layout_weight="1"
             android:orientation="vertical" >
 
@@ -568,3 +578,24 @@
 </LinearLayout>
     
 </ScrollView>
+
+<LinearLayout
+        android:id="@+id/journalTabsPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@id/viewDisplay"
+        android:gravity="center"
+        android:background="#319DF5" >
+        
+        <Button
+            android:id="@+id/btnStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#319DF5"
+            style="?android:attr/buttonStyleSmall"
+            android:text="Post a Status" />
+
+    </LinearLayout>
+    
+</RelativeLayout>

@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class NewStatusActivity extends Activity {
 	NumberPicker sugarPicker;
 	Spinner sugarTypeSpinner;
 	Spinner weightUnitSpinner;
+	Spinner activityUnitSpinner;
 	TextView txtSystolic;
 	TextView txtDiastolic;
 	TextView txtSugar;
@@ -58,9 +60,16 @@ public class NewStatusActivity extends Activity {
 	TextView txtActivity;
 	TextView txtActivityDuration;
 	TextView txtActivityDurationUnit;
+	TextView txtActivityCal;
 	TextView txtFood;
 	TextView txtFoodQuantity;
 	TextView txtFoodQuantityUnit;
+	TextView txtFoodCal;
+	TextView txtFoodCarbs;
+	TextView txtFoodProtein;
+	TextView txtFoodFat;
+	TextView txtFoodSize;
+	TextView txtFoodUnit;
 	EditText bpStatus;
 	EditText bsStatus;
 	EditText foodStatus;
@@ -69,6 +78,7 @@ public class NewStatusActivity extends Activity {
 	EditText weightStatus;
 	EditText checkupStatus;
 	EditText activityStatus;
+	EditText activityDuration;
 	EditText purpose;
 	EditText doctor;
 	ScrollView bpTemplate;
@@ -78,6 +88,8 @@ public class NewStatusActivity extends Activity {
 	ScrollView checkupTemplate;
 	ScrollView foodTemplate;
 	ScrollView activityTemplate;
+	LinearLayout activityCal;
+	LinearLayout foodCal;
 	String currentTracker;
 	final Context context = this;
 
@@ -134,12 +146,19 @@ public class NewStatusActivity extends Activity {
 		activityStatus = (EditText) findViewById(R.id.txtActivityStatus);
 		txtActivityDurationUnit = (TextView) findViewById(R.id.activityDurationUnit);
 		txtActivityDuration = (TextView) findViewById(R.id.activityDuration);
+		activityCal = (LinearLayout) findViewById(R.id.activityCal);
+		txtActivityCal = (TextView) findViewById(R.id.txtActivityCal);
+		
 		//food post
 		txtFood = (TextView) findViewById(R.id.food);
 		foodStatus = (EditText) findViewById(R.id.txtFoodStatus);
 		txtFoodQuantityUnit = (TextView) findViewById(R.id.foodQuantityUnit);
-		txtFoodQuantity = (TextView) findViewById(R.id.foodQuantity);
-		
+		txtFoodQuantity = (TextView) findViewById(R.id.foodQuantitySize);
+		foodCal = (LinearLayout) findViewById(R.id.foodCal);
+		txtFoodCal = (TextView) findViewById(R.id.txtfoodCal);
+		txtFoodCarbs = (TextView) findViewById(R.id.txtfoodCarbs);
+		txtFoodFat = (TextView) findViewById(R.id.txtfoodFat);
+		txtFoodProtein = (TextView) findViewById(R.id.txtfoodProtein);
 
 		mBtnAddPhoto = (ImageButton) findViewById(R.id.btnAddPhoto);
 		mBtnAddPhoto.setOnClickListener(new OnClickListener() {
@@ -174,9 +193,9 @@ public class NewStatusActivity extends Activity {
 				startActivityForResult(intent, 2);
 			}
 		});
-
+		Intent in = getIntent();
 		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
+		if (extras != null && in.hasExtra("tracker")) {
 			String tracker = extras.getString("tracker");
 
 			if (tracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
@@ -202,6 +221,54 @@ public class NewStatusActivity extends Activity {
 				callActivityInput();
 			}
 		}
+		else if (extras != null && in.hasExtra("from")){
+			String from = extras.getString("from");
+			
+			if(from.equals("new activity")){
+				currentTracker = TrackerInputType.ACTIVITY;
+				setNewActivity(extras.getString("activity_name"),extras.getString("activity_cal"),
+						extras.getString("activity_duration"),extras.getString("activity_unit"));
+				
+			}else if (from.equals("new food")){
+				currentTracker = TrackerInputType.FOOD;
+				setNewFood(extras.getString("food_name"),extras.getString("food_cal"),
+						extras.getString("food_protein"),extras.getString("food_carbs"),
+						extras.getString("food_fat"),extras.getString("food_serving"),
+						extras.getString("food_unit"));
+			}
+			
+		}
+	}
+
+	private void setNewFood(String food, String cal, String protein, String carbs, 
+									String fat, String serving, String unit) {
+		// TODO Auto-generated method stub
+		
+		setAllTemplateGone();
+		foodTemplate.setVisibility(View.VISIBLE);
+		foodCal.setVisibility(View.VISIBLE);
+		
+		txtFoodCal.setText(cal);
+		txtFoodProtein.setText(protein);
+		txtFoodCarbs.setText(carbs);
+		txtFoodFat.setText(fat);
+		txtFood.setText(food);
+		txtFoodQuantityUnit.setText(unit);
+		txtFoodQuantity.setText(serving);
+		
+	}
+
+	private void setNewActivity(String name, String cal, String duration, String unit) {
+		// TODO Auto-generated method stub
+		setAllTemplateGone();
+		activityTemplate.setVisibility(View.VISIBLE);
+		activityCal.setVisibility(View.VISIBLE);
+		
+		txtActivity.setText(name);
+		txtActivityDurationUnit.setText(unit);
+		txtActivityDuration.setText(duration);
+		txtActivityCal.setText(cal);
+		
 	}
 
 	@Override
@@ -235,12 +302,109 @@ public class NewStatusActivity extends Activity {
 				callActivityInput();
 			}
 		}
+		else if (requestCode == 3){
+			String activity = data.getStringExtra("activity chosen");
+			currentTracker = TrackerInputType.ACTIVITY;
+			callActivityDurationInput(activity);
+		}
+		else if (requestCode == 4){
+			String food = data.getStringExtra("food chosen");
+			String serving = data.getStringExtra("serving");
+			double cal = data.getDoubleExtra("cal", 0.0);
+			double protein = data.getDoubleExtra("protein", 0.0);
+			double carbs = data.getDoubleExtra("carbs", 0.0);
+			double fat = data.getDoubleExtra("fat", 0.0);
+			currentTracker = TrackerInputType.FOOD;
+			callFoodServingInput(food,serving,cal,protein,carbs,fat);
+		}
+	}
+
+	private void callFoodServingInput(final String food,final String serving, final double cal
+			, final double protein, final double carbs, final double fat) {
+		// TODO Auto-generated method stub
+		
+		LayoutInflater layoutInflater = LayoutInflater.from(context);
+
+		View foodView = layoutInflater.inflate(R.layout.item_food_serving_input,
+				null);
+
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				context);
+		alertDialogBuilder.setView(foodView);
+		txtFoodSize = (EditText) foodView.findViewById(R.id.txtFoodServingSize);
+		txtFoodUnit = (TextView) foodView.findViewById(R.id.foodUnit);
+		txtFoodUnit.setText(serving);
+		alertDialogBuilder
+				.setCancelable(false)
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						// set activity cal  -- get from database
+						setNewFood(food,String.valueOf(cal),String.valueOf(protein),
+								String.valueOf(carbs),String.valueOf(fat),
+								String.valueOf(txtFoodSize.getText()),serving);
+						
+					}
+				})
+				.setNegativeButton("Cancel",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.cancel();
+							}
+						});
+
+		// create an alert dialog
+		AlertDialog alertD = alertDialogBuilder.create();
+		alertD.show();
+		
+	}
+
+	private void callActivityDurationInput(final String activity) {
+		// TODO Auto-generated method stub
+		
+		LayoutInflater layoutInflater = LayoutInflater.from(context);
+
+		View activityView = layoutInflater.inflate(R.layout.item_activity_duration_input,
+				null);
+
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				context);
+		alertDialogBuilder.setView(activityView);
+		activityDuration = (EditText) activityView.findViewById(R.id.txtActivityDurationTime);
+		activityUnitSpinner = (Spinner) activityView
+				.findViewById(R.id.activityUnitSpinner);
+		alertDialogBuilder
+				.setCancelable(false)
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						// set activity cal  -- get from database
+						setNewActivity(activity,"30",
+								activityDuration.getText().toString(),String.valueOf(activityUnitSpinner
+										.getSelectedItem()));
+					}
+				})
+				.setNegativeButton("Cancel",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.cancel();
+							}
+						});
+
+		// create an alert dialog
+		AlertDialog alertD = alertDialogBuilder.create();
+		alertD.show();
 	}
 
 	private void callActivityInput() {
 		// TODO Auto-generated method stub
-		setAllTemplateGone();
-		activityTemplate.setVisibility(View.VISIBLE);
+
+		Intent intent = new Intent(getApplicationContext(),
+				ActivitiesSearchListActivity.class);
+		startActivityForResult(intent, 3);	
+		
 	}
 
 	private void callCheckUpInput() {
@@ -285,8 +449,10 @@ public class NewStatusActivity extends Activity {
 
 	private void callFoodInput() {
 		// TODO Auto-generated method stub
-		setAllTemplateGone();
-		foodTemplate.setVisibility(View.VISIBLE);
+
+		Intent intent = new Intent(getApplicationContext(),
+				foodSearchListActivity.class);
+		startActivityForResult(intent, 4);	
 	}
 
 	private void callNotesInput() {
@@ -488,6 +654,8 @@ public class NewStatusActivity extends Activity {
 		checkupTemplate.setVisibility(View.GONE);
 		activityTemplate.setVisibility(View.GONE);
 		foodTemplate.setVisibility(View.GONE);
+		activityCal.setVisibility(View.GONE);
+		foodCal.setVisibility(View.GONE);
 	}
 
 	@Override

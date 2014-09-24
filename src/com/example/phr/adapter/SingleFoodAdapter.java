@@ -59,7 +59,7 @@ public class SingleFoodAdapter extends BaseAdapter {
 
 			viewHolder = new ViewHolder();
 			viewHolder.fat = (TextView) convertView
-					.findViewById(R.id.foodCal);
+					.findViewById(R.id.foodFat);
 			viewHolder.carbs = (TextView) convertView
 					.findViewById(R.id.foodCarbs);
 			viewHolder.protein = (TextView) convertView
@@ -97,14 +97,7 @@ public class SingleFoodAdapter extends BaseAdapter {
 		viewHolder.serving.setText(String.valueOf(mListOfFoodSingle.get(
 				position).getServing()));
 		
-		convertView.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				
-				// FOR STATUS ON CLICK
-			}
-		});
+		
 		return convertView;
 	}
 

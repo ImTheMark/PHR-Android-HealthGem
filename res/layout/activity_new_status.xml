@@ -22,9 +22,7 @@
 		        android:id="@+id/txtFoodStatus"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_weight="1.0"
 		        android:background="#00000000"
-	            android:ems="1"
 	            android:hint=" enter status..." 
 	            android:padding="10dp"
 	            android:inputType="text"
@@ -54,7 +52,7 @@
 	            android:text=" of " />
 	        
 	        <TextView
-	            android:id="@+id/foodQuantity"
+	            android:id="@+id/foodQuantitySize"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:textStyle="bold"
@@ -284,7 +282,7 @@
             android:id="@+id/activity_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" 
-            android:gravity="right"
+          
             >
             
 	        <EditText
@@ -353,7 +351,7 @@
             android:id="@+id/checkup_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" 
-            android:gravity="right"
+            
             >
             
 	        <EditText
@@ -444,7 +442,108 @@
 
     </LinearLayout>
 
+    
     <LinearLayout
+        android:id="@+id/foodCal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_above="@id/statusTabsPlaceholder"
+        android:gravity="center"
+        android:visibility="gone" >
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/txtfoodCal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="1230"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="cal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/txtfoodProtein"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="1230"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="protein" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/txtfoodFat"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="789"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="fat" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/txtfoodCarbs"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="678"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="carbs" />
+            </LinearLayout>
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/activityCal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -459,12 +558,21 @@
             android:text="Total calorie: " />
 
         <TextView
-            android:id="@+id/txtCal"
+            android:id="@+id/txtActivityCal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="478 kcal"
+            android:text="478"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        <TextView
+            android:id="@+id/txtCalUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" kcal"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>
 
+    
+    
 </RelativeLayout>
