@@ -1,5 +1,6 @@
 package com.example.phr.tools;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import org.json.JSONException;
@@ -32,9 +33,12 @@ public class GSONConverter {
 	}
 
 	public static <T> List<T> convertJSONToObjectList(String jsonString,
-			Class<T> classTypeToGenerate) {
+			Type type) {
 		Gson gson = new Gson();
-		// convert to list
-		return null;
+		List<T> list = gson.fromJson(jsonString, type);
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i));
+		}
+		return list;
 	}
 }

@@ -1,5 +1,6 @@
 package com.example.phr.web.daoimpl;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import org.json.JSONException;
@@ -116,9 +117,8 @@ public abstract class GenericWebTrackerDaoImpl<TrackerEntry> extends
 		}
 	}
 
-	public List<TrackerEntry> getAllUsingHttp(String command,
-			Class<TrackerEntry> classTypeToGenerate) throws WebServerException,
-			OutdatedAccessTokenException {
+	public List<TrackerEntry> getAllUsingHttp(String command, Type type)
+			throws WebServerException, OutdatedAccessTokenException {
 		try {
 			JSONObject data = new JSONObject();
 			data.put("accessToken", accessDao.getAccessToken().getAccessToken());
@@ -134,8 +134,7 @@ public abstract class GenericWebTrackerDaoImpl<TrackerEntry> extends
 						"The access token used in the request is outdated, please ask the user to log in again.");
 			} else if (response.get("status").equals("success")) {
 				String list = response.getJSONObject("data").getString("list");
-				return GSONConverter.convertJSONToObjectList(list,
-						classTypeToGenerate);
+				return GSONConverter.convertJSONToObjectList(list, type);
 			} else {
 				throw new WebServerException(
 						"An error has occurred while communicating"

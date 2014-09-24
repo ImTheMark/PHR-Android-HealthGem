@@ -1,11 +1,13 @@
 package com.example.phr.web.daoimpl;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.WebServerException;
 import com.example.phr.mobile.models.Weight;
 import com.example.phr.web.dao.WebWeightDao;
+import com.google.gson.reflect.TypeToken;
 
 public class WebWeightDaoImpl extends GenericWebTrackerDaoImpl<Weight>
 		implements WebWeightDao {
@@ -34,7 +36,9 @@ public class WebWeightDaoImpl extends GenericWebTrackerDaoImpl<Weight>
 	public List<Weight> getAll() throws WebServerException,
 			OutdatedAccessTokenException {
 		String command = "/tracker/getAllWeight";
-		return getAllUsingHttp(command, Weight.class);
+		Type type = new TypeToken<List<Weight>>() {
+		}.getType();
+		return getAllUsingHttp(command, type);
 	}
 
 }
