@@ -31,6 +31,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public static final String ACT_ID = "id";
 	public static final String ACT_DATEADDED = "dateAdded";
 	public static final String ACT_ACTIVITYID = "activityID";
+	public static final String ACT_DURATION = "durationInSeconds";
 	public static final String ACT_CALORIEBURNED = "calorieBurnedPerHour";
 	public static final String ACT_STATUS = "status";
 	public static final String ACT_PHOTO = "photo";
@@ -120,6 +121,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ ACT_ID + " INTEGER PRIMARY KEY ," 
 				+ ACT_DATEADDED + " TEXT,"
 				+ ACT_ACTIVITYID + " INTEGER," 
+				+ ACT_DURATION + " INTEGER," 
 				+ ACT_CALORIEBURNED + " INTEGER," 
 				+ ACT_STATUS + " TEXT,"
 				+ ACT_PHOTO + " TEXT,"  
