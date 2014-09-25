@@ -16,7 +16,7 @@ import com.example.phr.tools.GSONConverter;
 import com.example.phr.tools.JSONRequestCreator;
 import com.example.phr.web.dao.UserDao;
 
-public class UserDaoImpl extends BasicDaoImpl implements UserDao {
+public class UserDaoImpl extends BasicDaoImpl<User> implements UserDao {
 
 	private JSONRequestCreator jsonRequestCreator;
 	private AccessDao accessDao;
