@@ -6,6 +6,29 @@ public class Weight extends TrackerEntry {
 
 	private double weightInPounds;
 
+	public Weight(FBPost fbPost, Timestamp timestamp, String status,
+			PHRImage image) {
+		super(fbPost, timestamp, status, image);
+		// TODO Auto-generated constructor stub
+	}
+
+	public Weight(Integer entryID, FBPost fbPost, Timestamp timestamp,
+			String status, PHRImage image) {
+		super(entryID, fbPost, timestamp, status, image);
+		// TODO Auto-generated constructor stub
+	}
+
+	public Weight(Integer entryID, Timestamp timestamp, String status,
+			PHRImage image) {
+		super(entryID, timestamp, status, image);
+		// TODO Auto-generated constructor stub
+	}
+
+	public Weight(Timestamp timestamp, String status, PHRImage image) {
+		super(timestamp, status, image);
+		// TODO Auto-generated constructor stub
+	}
+
 	public Weight(Integer entryID, FBPost fbPost, Timestamp timestamp,
 			String status, PHRImage image, double weightInPounds) {
 		super(entryID, fbPost, timestamp, status, image);
