@@ -1,19 +1,19 @@
 package com.example.phr.mobile.models;
 
-public class Activity {
+public class ActivitySingle {
 	
 	Integer entryID;
 	String name;
 	double MET;
 	
-	public Activity(Integer entryID, String name, double mET) {
+	public ActivitySingle(Integer entryID, String name, double mET) {
 		super();
 		this.entryID = entryID;
 		this.name = name;
 		MET = mET;
 	}
 	
-	public Activity(String name, double mET) {
+	public ActivitySingle(String name, double mET) {
 		super();
 		this.name = name;
 		MET = mET;

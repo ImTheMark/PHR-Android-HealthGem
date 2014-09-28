@@ -4,12 +4,12 @@ import java.sql.Timestamp;
 
 public class ActivityTrackerEntry extends TrackerEntry {
 
-	Activity activity;
+	ActivitySingle activity;
 	double calorisBurnedPerHour;
 
 	public ActivityTrackerEntry(Integer entryID, FBPost fbPost,
 			Timestamp timestamp, String status, PHRImage image,
-			Activity activity, double calorisBurnedPerHour) {
+			ActivitySingle activity, double calorisBurnedPerHour) {
 		super(entryID, fbPost, timestamp, status, image);
 		this.activity = activity;
 		this.calorisBurnedPerHour = calorisBurnedPerHour;
@@ -17,14 +17,14 @@ public class ActivityTrackerEntry extends TrackerEntry {
 
 	public ActivityTrackerEntry(Integer entryID, 
 			Timestamp timestamp, String status, PHRImage image,
-			Activity activity, double calorisBurnedPerHour) {
+			ActivitySingle activity, double calorisBurnedPerHour) {
 		super(entryID, timestamp, status, image);
 		this.activity = activity;
 		this.calorisBurnedPerHour = calorisBurnedPerHour;
 	}
 
 	public ActivityTrackerEntry(FBPost fbPost, Timestamp timestamp,
-			String status, PHRImage image, Activity activity,
+			String status, PHRImage image, ActivitySingle activity,
 			double calorisBurnedPerHour) {
 		super(fbPost, timestamp, status, image);
 		this.activity = activity;
@@ -32,17 +32,17 @@ public class ActivityTrackerEntry extends TrackerEntry {
 	}
 
 	public ActivityTrackerEntry(Timestamp timestamp, String status,
-			PHRImage image, Activity activity, double calorisBurnedPerHour) {
+			PHRImage image, ActivitySingle activity, double calorisBurnedPerHour) {
 		super(timestamp, status, image);
 		this.activity = activity;
 		this.calorisBurnedPerHour = calorisBurnedPerHour;
 	}
 
-	public Activity getActivity() {
+	public ActivitySingle getActivity() {
 		return activity;
 	}
 
-	public void setActivity(Activity activity) {
+	public void setActivity(ActivitySingle activity) {
 		this.activity = activity;
 	}
 

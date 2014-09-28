@@ -30,13 +30,19 @@ import android.widget.TextView;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
+import com.example.phr.mobile.models.ActivityTrackerEntry;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.mobile.models.BloodSugar;
+import com.example.phr.mobile.models.ActivitySingle;
+import com.example.phr.mobile.models.CheckUp;
+import com.example.phr.mobile.models.Note;
 import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.mobile.models.PHRImageType;
 import com.example.phr.mobile.models.Weight;
 import com.example.phr.service.BloodPressureService;
 import com.example.phr.serviceimpl.BloodPressureServiceImpl;
+import com.example.phr.tools.WeightConverter;
+
 
 public class NewStatusActivity extends Activity {
 
@@ -272,7 +278,7 @@ public class NewStatusActivity extends Activity {
 		
 	}
 
-	private void setNewActivity(String name, String cal, String duration, String unit) {
+	private void setNewActivity(String name, String met, String duration, String unit) {
 		// TODO Auto-generated method stub
 		setAllTemplateGone();
 		activityTemplate.setVisibility(View.VISIBLE);
@@ -281,7 +287,8 @@ public class NewStatusActivity extends Activity {
 		txtActivity.setText(name);
 		txtActivityDurationUnit.setText(unit);
 		txtActivityDuration.setText(duration);
-		txtActivityCal.setText(cal);
+		double cal = Double.parseDouble(met) * 5; //not true
+		txtActivityCal.setText(String.valueOf(cal));
 		
 	}
 
@@ -393,7 +400,7 @@ public class NewStatusActivity extends Activity {
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
-						// set activity cal  -- get from database
+						// set activity met -- get from database
 						setNewActivity(activity,"30",
 								activityDuration.getText().toString(),String.valueOf(activityUnitSpinner
 										.getSelectedItem()));
@@ -665,12 +672,20 @@ public class NewStatusActivity extends Activity {
 		
 			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
 			double newWeight;
+			if(String.valueOf(weightUnitSpinner
+					.getSelectedItem()).equals("kg")){
+				newWeight =  WeightConverter.convertKgToLbs(Double.parseDouble(
+						String.valueOf(txtWeight.getText())));	
+			}else{
+				newWeight = Double.parseDouble(
+						String.valueOf(txtWeight.getText()));
+			}
 			Weight weight = new Weight(timestamp, weightStatus.getText()
-					.toString(), image, Double.parseDouble(String.valueOf(txtWeight.getText()))
+					.toString(), image, newWeight
 					);
 			
-		//	BloodSugarService bsService = new BloodSugarServiceImpl();
-		//	bsService.add(bs);
+		//	WeightService weightService = new WeightServiceImpl();
+		//	weightService.add(weight);
 		
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -678,6 +693,97 @@ public class NewStatusActivity extends Activity {
 		}
 
 }
+	
+	private void addNoteToDatabase() throws ServiceException,
+	OutdatedAccessTokenException {
+		
+		try {
+			
+			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
+					+ timeFormat.format(calobj.getTime()));
+			Timestamp timestamp = new Timestamp(date.getTime());
+			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
+			Note note = new Note(timestamp, null, image,notesStatus.getText().toString());
+			
+		//	NoteService noteService = new NoteServiceImpl();
+		//	noteService.add(note);
+		
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+}	
+
+	
+	private void addFoodToDatabase() throws ServiceException,
+	OutdatedAccessTokenException {
+		
+		try {
+			
+			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
+					+ timeFormat.format(calobj.getTime()));
+			Timestamp timestamp = new Timestamp(date.getTime());
+			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
+			
+		
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+}	
+
+	
+	private void addCheckUpToDatabase() throws ServiceException,
+	OutdatedAccessTokenException {
+		
+		try {
+			
+			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
+					+ timeFormat.format(calobj.getTime()));
+			Timestamp timestamp = new Timestamp(date.getTime());
+			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
+			CheckUp checkup = new CheckUp(timestamp, null, image,checkupStatus.getText().toString(),
+					txtPurpose.getText().toString(),txtDoctor.getText().toString());
+			
+		//	CheckUpService checkupService = new CheckUpServiceImpl();
+		//	checkupService.add(checkup);
+		
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+}	
+	
+	private void addActivityToDatabase() throws ServiceException,
+	OutdatedAccessTokenException {
+		
+		try {
+			
+			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
+					+ timeFormat.format(calobj.getTime()));
+			Timestamp timestamp = new Timestamp(date.getTime());
+			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
+			ActivitySingle activity = new ActivitySingle(txtActivity.getText().toString(),30.0);
+			ActivityTrackerEntry activityEntry = new ActivityTrackerEntry(timestamp, activityStatus.getText().toString(), image,
+					activity,Double.parseDouble(txtActivityCal.getText().toString()));
+			
+			//reference for calling
+			//txtActivityDurationUnit.setText(unit);
+			//txtActivityDuration.setText(duration);
+			
+			
+		//	ActivityService activityService = new ActivityServiceImpl();
+		//	ActivityService.add(activityEntry);
+		
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+}	
 
 	private void setAllTemplateGone() {
 		bsTemplate.setVisibility(View.GONE);
@@ -731,6 +837,81 @@ public class NewStatusActivity extends Activity {
 				// onBackPressed();
 				Intent intent = new Intent(getApplicationContext(),
 						BloodSugarTrackerActivity.class);
+				startActivity(intent);
+			}
+			else if (currentTracker.equals(TrackerInputType.WEIGHT)) {
+				try {
+					addWeightToDatabase();
+				} catch (ServiceException e) {
+					// output error message or something
+					System.out.println(e.getMessage());
+				} catch (OutdatedAccessTokenException e) {
+					// Message - > Log user out
+					e.printStackTrace();
+				}
+				// onBackPressed();
+				Intent intent = new Intent(getApplicationContext(),
+						WeightTrackerActivity.class);
+				startActivity(intent);
+			}
+			else if (currentTracker.equals(TrackerInputType.CHECKUP)) {
+				try {
+					addCheckUpToDatabase();
+				} catch (ServiceException e) {
+					// output error message or something
+					System.out.println(e.getMessage());
+				} catch (OutdatedAccessTokenException e) {
+					// Message - > Log user out
+					e.printStackTrace();
+				}
+				// onBackPressed();
+				Intent intent = new Intent(getApplicationContext(),
+						CheckupTrackerActivity.class);
+				startActivity(intent);
+			}
+			else if (currentTracker.equals(TrackerInputType.NOTES)) {
+				try {
+					addNoteToDatabase();
+				} catch (ServiceException e) {
+					// output error message or something
+					System.out.println(e.getMessage());
+				} catch (OutdatedAccessTokenException e) {
+					// Message - > Log user out
+					e.printStackTrace();
+				}
+				// onBackPressed();
+				Intent intent = new Intent(getApplicationContext(),
+						NoteTrackerActivity.class);
+				startActivity(intent);
+			}
+			else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
+				try {
+					addActivityToDatabase();
+				} catch (ServiceException e) {
+					// output error message or something
+					System.out.println(e.getMessage());
+				} catch (OutdatedAccessTokenException e) {
+					// Message - > Log user out
+					e.printStackTrace();
+				}
+				// onBackPressed();
+				Intent intent = new Intent(getApplicationContext(),
+						ActivitiesTrackerActivity.class);
+				startActivity(intent);
+			}
+			else if (currentTracker.equals(TrackerInputType.FOOD)) {
+				try {
+					addFoodToDatabase();
+				} catch (ServiceException e) {
+					// output error message or something
+					System.out.println(e.getMessage());
+				} catch (OutdatedAccessTokenException e) {
+					// Message - > Log user out
+					e.printStackTrace();
+				}
+				// onBackPressed();
+				Intent intent = new Intent(getApplicationContext(),
+						FoodTrackerDailyActivity.class);
 				startActivity(intent);
 			}
 			return true;
