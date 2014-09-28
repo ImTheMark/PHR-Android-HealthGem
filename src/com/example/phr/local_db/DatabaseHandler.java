@@ -26,11 +26,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public static final String KEY_USERNAME = "username";
 	public static final String KEY_ACCESSTOKEN = "token";
 	
+	// ACTIVITY LIST
+	public static final String TABLE_ACTIVITYLIST = "activitylist";
+	public static final String ACTLIST_ID = "id";
+	public static final String ACTLIST_NAME = "name";
+	public static final String ACTLIST_MET = "MET";
+	
 	// ACTIVITY DATABASE
 	public static final String TABLE_ACTIVITY = "activitytracker";
 	public static final String ACT_ID = "id";
 	public static final String ACT_DATEADDED = "dateAdded";
 	public static final String ACT_ACTIVITYID = "activityID";
+	public static final String ACT_DURATION = "durationInSeconds";
 	public static final String ACT_CALORIEBURNED = "calorieBurnedPerHour";
 	public static final String ACT_STATUS = "status";
 	public static final String ACT_PHOTO = "photo";
@@ -66,6 +73,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public static final String CU_STATUS = "status";
 	public static final String CU_PHOTO = "photo";
 	public static final String CU_FBPOSTID = "fbPostID";
+	
+	// FOODLIST DATABASE
+	public static final String TABLE_FOODLIST = "foodlist";
+	public static final String FOODLIST_ID = "id";
+	public static final String FOODLIST_NAME = "name";
+	public static final String FOODLIST_CALORIE = "calorie";
+	public static final String FOODLIST_SERVINGUNIT = "servingUnit";
+	public static final String FOODLIST_SERVINGSIZE = "servingSize";
+	public static final String FOODLIST_RESTAURANTID = "restaurantID";
+	public static final String FOODLIST_FROMFATSECRET = "fromFatSecret";
 	
 	// FOOD DATABASE
 	public static final String TABLE_FOOD = "foodtracker";
@@ -115,11 +132,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ ")";
 		
 		
+		String CREATE_ACTIVITYLIST_TABLE = "CREATE TABLE "
+				+ TABLE_ACTIVITYLIST + "(" 
+				+ ACTLIST_ID + " INTEGER PRIMARY KEY ," 
+				+ ACTLIST_NAME + " TEXT,"
+				+ ACTLIST_MET + " REAL"
+				+ ")";
+		
+		
 		String CREATE_ACTIVITY_TABLE = "CREATE TABLE "
 				+ TABLE_ACTIVITY + "(" 
 				+ ACT_ID + " INTEGER PRIMARY KEY ," 
 				+ ACT_DATEADDED + " TEXT,"
 				+ ACT_ACTIVITYID + " INTEGER," 
+				+ ACT_DURATION + " INTEGER," 
 				+ ACT_CALORIEBURNED + " INTEGER," 
 				+ ACT_STATUS + " TEXT,"
 				+ ACT_PHOTO + " TEXT,"  
@@ -164,6 +190,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ ")";
 		
 		
+		String CREATE_FOODLIST_TABLE = "CREATE TABLE "
+				+ TABLE_FOODLIST + "(" 
+				+ FOODLIST_ID + " INTEGER PRIMARY KEY ," 
+				+ FOODLIST_NAME + " TEXT,"
+				+ FOODLIST_CALORIE + " REAL," 
+				+ FOODLIST_SERVINGUNIT + " TEXT," 
+				+ FOODLIST_SERVINGSIZE + " REAL,"
+				+ FOODLIST_RESTAURANTID + " INTEGER,"  
+				+ FOODLIST_FROMFATSECRET + " INTEGER"  
+				+ ")";
+		
+		
 		String CREATE_FOOD_TABLE = "CREATE TABLE "
 				+ TABLE_FOOD + "(" 
 				+ FOOD_ID + " INTEGER PRIMARY KEY ," 
@@ -197,12 +235,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ WEIGHT_FBPOSTID + " INTEGER"  
 				+ ")";
 		
-		
 		db.execSQL(CREATE_ACCESSTOKEN_TABLE);
+		db.execSQL(CREATE_ACTIVITYLIST_TABLE);
 		db.execSQL(CREATE_ACTIVITY_TABLE);
 		db.execSQL(CREATE_BLOODPRESSURE_TABLE);
 		db.execSQL(CREATE_BLOODSUGAR_TABLE);
 		db.execSQL(CREATE_CHECKUP_TABLE);
+		db.execSQL(CREATE_FOODLIST_TABLE);
 		db.execSQL(CREATE_FOOD_TABLE);
 		db.execSQL(CREATE_NOTES_TABLE);
 		db.execSQL(CREATE_WEIGHT_TABLE);
@@ -211,10 +250,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACCESSTOKEN);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACTIVITYLIST);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACTIVITY);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_BLOODPRESSURE);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_BLOODSUGAR);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_CHECKUP);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_FOODLIST);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_FOOD);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTES);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_WEIGHT);
