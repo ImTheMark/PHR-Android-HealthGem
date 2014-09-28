@@ -31,8 +31,10 @@ import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.BloodPressure;
+import com.example.phr.mobile.models.BloodSugar;
 import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.mobile.models.PHRImageType;
+import com.example.phr.mobile.models.Weight;
 import com.example.phr.service.BloodPressureService;
 import com.example.phr.serviceimpl.BloodPressureServiceImpl;
 
@@ -91,6 +93,10 @@ public class NewStatusActivity extends Activity {
 	LinearLayout activityCal;
 	LinearLayout foodCal;
 	String currentTracker;
+	DateFormat dateFormat;
+	DateFormat timeFormat;
+	DateFormat fmt;
+	Calendar calobj;
 	final Context context = this;
 
 	@Override
@@ -114,6 +120,14 @@ public class NewStatusActivity extends Activity {
 		 * Intent(getApplicationContext(), CheckinLocationActivity.class);
 		 * startActivity(intent); } });
 		 */
+		dateFormat = new SimpleDateFormat("MMM dd, yyyy",
+				Locale.ENGLISH);
+		timeFormat = new SimpleDateFormat("HH:mm:ss",
+				Locale.ENGLISH);
+		fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss",
+				Locale.ENGLISH);
+		calobj = Calendar.getInstance();
+		
 		currentTracker = TrackerInputType.NOTES;
 		// templates
 		bsTemplate = (ScrollView) findViewById(R.id.bloodsugar_template);
@@ -597,13 +611,6 @@ public class NewStatusActivity extends Activity {
 			OutdatedAccessTokenException {
 
 		try {
-			DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy",
-					Locale.ENGLISH);
-			DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss",
-					Locale.ENGLISH);
-			DateFormat fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss",
-					Locale.ENGLISH);
-			Calendar calobj = Calendar.getInstance();
 			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
@@ -627,17 +634,18 @@ public class NewStatusActivity extends Activity {
 			OutdatedAccessTokenException {
 
 		try {
-			DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy",
-					Locale.ENGLISH);
-			DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss",
-					Locale.ENGLISH);
-			DateFormat fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss",
-					Locale.ENGLISH);
-			Calendar calobj = Calendar.getInstance();
+			
 			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
-			System.out.println(timestamp);
+
+			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
+			BloodSugar bs = new BloodSugar(timestamp, bsStatus.getText()
+					.toString(), image, sugarPicker.getCurrent(),
+					String.valueOf(sugarTypeSpinner.getSelectedItem())
+					);
+//			BloodSugarService bsService = new BloodSugarServiceImpl();
+//			bsService.add(bs);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -645,6 +653,31 @@ public class NewStatusActivity extends Activity {
 		}
 
 	}
+	
+	private void addWeightToDatabase() throws ServiceException,
+	OutdatedAccessTokenException {
+		
+		try {
+			
+			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
+					+ timeFormat.format(calobj.getTime()));
+			Timestamp timestamp = new Timestamp(date.getTime());
+		
+			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
+			double newWeight;
+			Weight weight = new Weight(timestamp, weightStatus.getText()
+					.toString(), image, Double.parseDouble(String.valueOf(txtWeight.getText()))
+					);
+			
+		//	BloodSugarService bsService = new BloodSugarServiceImpl();
+		//	bsService.add(bs);
+		
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+}
 
 	private void setAllTemplateGone() {
 		bsTemplate.setVisibility(View.GONE);
@@ -679,6 +712,7 @@ public class NewStatusActivity extends Activity {
 					e.printStackTrace();
 				}
 				// onBackPressed();
+				Log.e("added","bp");
 				Intent intent = new Intent(getApplicationContext(),
 						BloodPressureTrackerActivity.class);
 				startActivity(intent);

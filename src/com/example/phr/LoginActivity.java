@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.local_db.DatabaseHandler;
+import com.example.phr.local_db.SPreference;
 import com.example.phr.model.Client;
 import com.example.phr.service.UserService;
 import com.example.phr.serviceimpl.UserServiceImpl;
@@ -51,10 +52,10 @@ public class LoginActivity extends Activity {
 		formPassword = (EditText) findViewById(R.id.txtPassword);
 		userService = new UserServiceImpl();
 
-		/*
-		 * final SPreference sp = new SPreference(this.getApplicationContext());
-		 * formUsername.setText(sp.loadPreferences("id"));
-		 */
+		
+		/* final SPreference sp = new SPreference(this.getApplicationContext());
+		 formUsername.setText(sp.loadPreferences("id"));*/
+		 
 
 		mBtnLogin.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -63,10 +64,10 @@ public class LoginActivity extends Activity {
 				username = formUsername.getText().toString();
 				password = formPassword.getText().toString();
 
-				// sp.savePreferences("id", username);
+				//sp.savePreferences("id", username);
 
-				if (password.length() > 0 && username.length() > 0) {
-					/*try {
+				/*if (password.length() > 0 && username.length() > 0) {
+					try {
 						boolean isValid = userService.validateUser(username,
 								password);
 						if (isValid) {*/
@@ -78,13 +79,13 @@ public class LoginActivity extends Activity {
 						}
 					} catch (ServiceException e) {
 						mTextValid.setText("Error in Internet Connection");
-					}*/
+					}
 
 				}
 
 				else {
 					mTextValid.setText("Please Input Password & Username");
-				}
+				}*/
 
 			}
 		});
