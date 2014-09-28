@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.WebServerException;
-import com.example.phr.model.BloodSugar;
+import com.example.phr.mobile.models.BloodSugar;
 import com.example.phr.web.dao.WebBloodSugarDao;
 import com.google.gson.reflect.TypeToken;
 
