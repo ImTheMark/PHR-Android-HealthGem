@@ -22,7 +22,8 @@ public abstract class GenericWebTrackerDaoImpl<TrackerEntry> extends
 			OutdatedAccessTokenException {
 		try {
 			JSONObject data = new JSONObject();
-			data.put("accessToken", accessDao.getAccessToken());
+			data.put("accessToken", accessDao.getAccessToken().getAccessToken());
+			data.put("username", accessDao.getAccessToken().getUserName());
 			data.put("objectToAdd", GSONConverter.convertObjectToJSON(object));
 			String jsonToSend = jsonRequestCreator
 					.createJSONRequest(data, null);
@@ -56,6 +57,7 @@ public abstract class GenericWebTrackerDaoImpl<TrackerEntry> extends
 		try {
 			JSONObject data = new JSONObject();
 			data.put("accessToken", accessDao.getAccessToken().getAccessToken());
+			data.put("username", accessDao.getAccessToken().getUserName());
 			data.put("objectToEdit", GSONConverter.convertObjectToJSON(object));
 			String jsonToSend = jsonRequestCreator
 					.createJSONRequest(data, null);
@@ -89,6 +91,7 @@ public abstract class GenericWebTrackerDaoImpl<TrackerEntry> extends
 		try {
 			JSONObject data = new JSONObject();
 			data.put("accessToken", accessDao.getAccessToken().getAccessToken());
+			data.put("username", accessDao.getAccessToken().getUserName());
 			data.put("objectToDelete",
 					GSONConverter.convertObjectToJSON(object));
 			String jsonToSend = jsonRequestCreator
@@ -122,6 +125,7 @@ public abstract class GenericWebTrackerDaoImpl<TrackerEntry> extends
 		try {
 			JSONObject data = new JSONObject();
 			data.put("accessToken", accessDao.getAccessToken().getAccessToken());
+			data.put("username", accessDao.getAccessToken().getUserName());
 			String jsonToSend = jsonRequestCreator
 					.createJSONRequest(data, null);
 			System.out.println("JSON Request Sent: " + jsonToSend);

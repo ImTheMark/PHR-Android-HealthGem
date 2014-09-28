@@ -15,7 +15,6 @@ public class AccessDaoImpl implements AccessDao {
 	@Override
 	public void setAccessToken(AccessToken accessToken) {
 		DatabaseHandler.getDBHandler().setAccessToken(accessToken);
-
 	}
 
 }

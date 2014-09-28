@@ -22,15 +22,17 @@ public class WebBloodPressureDaoImpl extends
 	}
 
 	@Override
-	public void edit(BloodPressure object) {
-		// TODO Auto-generated method stub
-
+	public void edit(BloodPressure object) throws WebServerException,
+			OutdatedAccessTokenException {
+		String command = "tracker/editBloodPressure";
+		editUsingHttp(command, object);
 	}
 
 	@Override
-	public void delete(BloodPressure object) {
-		// TODO Auto-generated method stub
-
+	public void delete(BloodPressure object) throws WebServerException,
+			OutdatedAccessTokenException {
+		String command = "tracker/deleteBloodPressure";
+		deleteUsingHttp(command, object);
 	}
 
 	@Override

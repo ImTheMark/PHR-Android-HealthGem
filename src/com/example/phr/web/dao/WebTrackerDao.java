@@ -10,9 +10,11 @@ public interface WebTrackerDao<TrackerEntry> {
 	public int add_ReturnEntryIdInWeb(TrackerEntry object)
 			throws WebServerException, OutdatedAccessTokenException;
 
-	public void edit(TrackerEntry object);
+	public void edit(TrackerEntry object) throws WebServerException,
+			OutdatedAccessTokenException;
 
-	public void delete(TrackerEntry object);
+	public void delete(TrackerEntry object) throws WebServerException,
+			OutdatedAccessTokenException;
 
 	public List<TrackerEntry> getAll() throws WebServerException,
 			OutdatedAccessTokenException;
