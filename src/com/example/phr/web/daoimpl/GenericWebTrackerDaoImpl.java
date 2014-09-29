@@ -3,6 +3,7 @@ package com.example.phr.web.daoimpl;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -137,8 +138,9 @@ public abstract class GenericWebTrackerDaoImpl<TrackerEntry> extends
 				throw new OutdatedAccessTokenException(
 						"The access token used in the request is outdated, please ask the user to log in again.");
 			} else if (response.get("status").equals("success")) {
-				String list = response.getJSONObject("data").getString("list");
-				return GSONConverter.convertJSONToObjectList(list, type);
+				JSONArray array = response.getJSONObject("data").getJSONArray(
+						"array");
+				return GSONConverter.convertJSONArrayToObjectList(array, type);
 			} else {
 				throw new WebServerException(
 						"An error has occurred while communicating"
