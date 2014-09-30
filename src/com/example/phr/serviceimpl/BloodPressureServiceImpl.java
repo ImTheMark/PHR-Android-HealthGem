@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import com.example.phr.exceptions.DataAccessException;
+import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.exceptions.WebServerException;
@@ -45,15 +46,15 @@ public class BloodPressureServiceImpl implements BloodPressureService {
 	}
 
 	@Override
-	public void edit(BloodPressure object) {
-		// TODO Auto-generated method stub
-
+	public void edit(BloodPressure bloodPressure) throws WebServerException, OutdatedAccessTokenException, DataAccessException, EntryNotFoundException {
+		webBloodPressureDao.edit(bloodPressure);
+		mobileBloodPressureDao.edit(bloodPressure);
 	}
 
 	@Override
-	public void delete(BloodPressure object) {
-		// TODO Auto-generated method stub
-
+	public void delete(BloodPressure bloodPressure) throws WebServerException, OutdatedAccessTokenException {
+		webBloodPressureDao.delete(bloodPressure);
+		//mobileBloodPressureDao.delete(bloodPressure);
 	}
 
 	@Override
