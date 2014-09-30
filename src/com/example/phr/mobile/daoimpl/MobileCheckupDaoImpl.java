@@ -141,4 +141,12 @@ public class MobileCheckupDaoImpl implements MobileCheckupDao {
 		db.close();
 		return cuList;
 	}
+
+	@Override
+	public void delete(CheckUp checkUp) throws DataAccessException,
+			EntryNotFoundException {
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		db.delete(DatabaseHandler.TABLE_CHECKUP, DatabaseHandler.CU_ID + "=" + checkUp.getEntryID(), null);
+	}
 }

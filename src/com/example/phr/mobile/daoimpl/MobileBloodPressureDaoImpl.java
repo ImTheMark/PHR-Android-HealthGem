@@ -134,4 +134,12 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 		db.close();
 		return bpList;
 	}
+
+	@Override
+	public void delete(BloodPressure bp) throws DataAccessException,
+			EntryNotFoundException {
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		db.delete(DatabaseHandler.TABLE_BLOODPRESSURE, DatabaseHandler.BP_ID + "=" + bp.getEntryID(), null);
+	}
 }
