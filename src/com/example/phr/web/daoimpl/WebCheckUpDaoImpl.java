@@ -6,41 +6,41 @@ import java.util.List;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.WebServerException;
 import com.example.phr.mobile.models.BloodPressure;
-import com.example.phr.web.dao.WebBloodPressureDao;
+import com.example.phr.mobile.models.CheckUp;
+import com.example.phr.web.dao.WebCheckUpDao;
 import com.google.gson.reflect.TypeToken;
 
-public class WebBloodPressureDaoImpl extends
-		GenericWebTrackerDaoImpl<BloodPressure> implements WebBloodPressureDao {
+public class WebCheckUpDaoImpl extends
+	GenericWebTrackerDaoImpl<CheckUp>implements WebCheckUpDao {
 
 	@Override
-	public int add_ReturnEntryIdInWeb(BloodPressure object)
+	public int add_ReturnEntryIdInWeb(CheckUp object)
 			throws WebServerException, OutdatedAccessTokenException {
-
-		String command = "tracker/addBloodPressure";
+		String command = "tracker/addCheckUp";
 		return add_ReturnEntryIDToWebUsingHttp(command, object);
-
 	}
 
 	@Override
-	public void edit(BloodPressure object) throws WebServerException,
+	public void edit(CheckUp object) throws WebServerException,
 			OutdatedAccessTokenException {
-		String command = "tracker/editBloodPressure";
+		String command = "tracker/editCheckUp";
 		editUsingHttp(command, object);
 	}
 
 	@Override
-	public void delete(BloodPressure object) throws WebServerException,
+	public void delete(CheckUp object) throws WebServerException,
 			OutdatedAccessTokenException {
-		String command = "tracker/deleteBloodPressure";
+		String command = "tracker/deleteCheckUp";
 		deleteUsingHttp(command, object);
 	}
 
 	@Override
-	public List<BloodPressure> getAll() throws WebServerException,
+	public List<CheckUp> getAll() throws WebServerException,
 			OutdatedAccessTokenException {
-		String command = "/tracker/getAllBloodPressure";
-		Type type = new TypeToken<List<BloodPressure>>() {
+		String command = "/tracker/getAllCheckUp";
+		Type type = new TypeToken<List<CheckUp>>() {
 		}.getType();
 		return getAllUsingHttp(command, type);
 	}
+
 }

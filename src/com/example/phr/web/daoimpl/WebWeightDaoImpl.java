@@ -13,23 +13,22 @@ public class WebWeightDaoImpl extends GenericWebTrackerDaoImpl<Weight>
 		implements WebWeightDao {
 
 	@Override
-	public int add_ReturnEntryIdInWeb(Weight weight) throws WebServerException,
+	public int add_ReturnEntryIdInWeb(Weight object) throws WebServerException,
 			OutdatedAccessTokenException {
 		String command = "tracker/addWeight";
-		String fieldName = "weight";
-		return add_ReturnEntryIDToWebUsingHttp(command, weight);
+		return add_ReturnEntryIDToWebUsingHttp(command, object);
 	}
 
 	@Override
-	public void edit(Weight weight) {
-		// TODO Auto-generated method stub
-
+	public void edit(Weight object) throws WebServerException, OutdatedAccessTokenException {
+		String command = "tracker/editWeight";
+		editUsingHttp(command, object);
 	}
 
 	@Override
-	public void delete(Weight weight) {
-		// TODO Auto-generated method stub
-
+	public void delete(Weight object) throws WebServerException, OutdatedAccessTokenException {
+		String command = "tracker/deleteWeight";
+		deleteUsingHttp(command, object);
 	}
 
 	@Override

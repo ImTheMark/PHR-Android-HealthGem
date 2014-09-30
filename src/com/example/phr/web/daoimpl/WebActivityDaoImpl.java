@@ -5,42 +5,42 @@ import java.util.List;
 
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.WebServerException;
+import com.example.phr.mobile.models.Activity;
 import com.example.phr.mobile.models.BloodPressure;
-import com.example.phr.web.dao.WebBloodPressureDao;
+import com.example.phr.web.dao.WebActivityDao;
 import com.google.gson.reflect.TypeToken;
 
-public class WebBloodPressureDaoImpl extends
-		GenericWebTrackerDaoImpl<BloodPressure> implements WebBloodPressureDao {
+public class WebActivityDaoImpl extends
+		GenericWebTrackerDaoImpl<Activity> implements WebActivityDao {
 
 	@Override
-	public int add_ReturnEntryIdInWeb(BloodPressure object)
+	public int add_ReturnEntryIdInWeb(Activity object)
 			throws WebServerException, OutdatedAccessTokenException {
-
-		String command = "tracker/addBloodPressure";
+		String command = "tracker/addActivity";
 		return add_ReturnEntryIDToWebUsingHttp(command, object);
-
 	}
 
 	@Override
-	public void edit(BloodPressure object) throws WebServerException,
+	public void edit(Activity object) throws WebServerException,
 			OutdatedAccessTokenException {
-		String command = "tracker/editBloodPressure";
+		String command = "tracker/editActivity";
 		editUsingHttp(command, object);
 	}
 
 	@Override
-	public void delete(BloodPressure object) throws WebServerException,
+	public void delete(Activity object) throws WebServerException,
 			OutdatedAccessTokenException {
-		String command = "tracker/deleteBloodPressure";
+		String command = "tracker/deleteActivity";
 		deleteUsingHttp(command, object);
 	}
 
 	@Override
-	public List<BloodPressure> getAll() throws WebServerException,
+	public List<Activity> getAll() throws WebServerException,
 			OutdatedAccessTokenException {
-		String command = "/tracker/getAllBloodPressure";
-		Type type = new TypeToken<List<BloodPressure>>() {
+		String command = "/tracker/getAllActivity";
+		Type type = new TypeToken<List<Activity>>() {
 		}.getType();
 		return getAllUsingHttp(command, type);
 	}
+
 }
