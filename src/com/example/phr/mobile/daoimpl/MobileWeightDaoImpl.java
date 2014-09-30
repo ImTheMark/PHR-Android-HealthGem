@@ -136,4 +136,12 @@ public class MobileWeightDaoImpl implements MobileWeightDao {
 		db.close();
 		return weightList;
 	}
+
+	@Override
+	public void delete(Weight weight) throws DataAccessException,
+			EntryNotFoundException {
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		db.delete(DatabaseHandler.TABLE_WEIGHT, DatabaseHandler.WEIGHT_ID + "=" + weight.getEntryID(), null);
+	}
 }

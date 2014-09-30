@@ -40,4 +40,11 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void delete(ActivityTrackerEntry object) throws DataAccessException,
+			EntryNotFoundException {
+		// TODO Auto-generated method stub
+		
+	}
 }

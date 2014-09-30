@@ -135,4 +135,13 @@ public class MobileNoteDaoImpl implements MobileNoteDao {
 		db.close();
 		return noteList;
 	}
+
+	@Override
+	public void delete(Note note) throws DataAccessException,
+			EntryNotFoundException {
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		db.delete(DatabaseHandler.TABLE_NOTES, DatabaseHandler.NOTES_ID + "=" + note.getEntryID(), null);
+		
+	}
 }

@@ -49,4 +49,11 @@ public class MobileFoodDaoImpl implements MobileFoodDao {
 		return null;
 	}
 
+	@Override
+	public void delete(FoodTrackerEntry object) throws DataAccessException,
+			EntryNotFoundException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

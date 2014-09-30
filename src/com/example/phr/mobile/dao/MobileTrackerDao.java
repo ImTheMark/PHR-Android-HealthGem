@@ -15,4 +15,7 @@ public interface MobileTrackerDao<T> {
 	
 	public ArrayList<T> getAll() throws ParseException;
 
+	public void delete(T object) throws DataAccessException,
+			EntryNotFoundException;
+
 }

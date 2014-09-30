@@ -139,5 +139,13 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 		db.close();
 		return bsList;
 	}
+
+	@Override
+	public void delete(BloodSugar bloodSugar) throws DataAccessException,
+			EntryNotFoundException {
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		db.delete(DatabaseHandler.TABLE_BLOODSUGAR, DatabaseHandler.BS_ID + "=" + bloodSugar.getEntryID(), null);
+	}
 	
 }
