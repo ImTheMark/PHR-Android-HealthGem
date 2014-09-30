@@ -9,14 +9,14 @@ import org.json.JSONObject;
 
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.WebServerException;
-import com.example.phr.mobile.dao.AccessDao;
-import com.example.phr.mobile.daoimpl.AccessDaoImpl;
+import com.example.phr.mobile.dao.MobileAccessDao;
+import com.example.phr.mobile.daoimpl.MobileAccessDaoImpl;
 import com.example.phr.tools.GSONConverter;
 
 public abstract class GenericWebTrackerDaoImpl<TrackerEntry> extends
 		BasicDaoImpl {
 
-	AccessDao accessDao = new AccessDaoImpl();
+	MobileAccessDao accessDao = new MobileAccessDaoImpl();
 
 	public int add_ReturnEntryIDToWebUsingHttp(String command,
 			TrackerEntry object) throws WebServerException,

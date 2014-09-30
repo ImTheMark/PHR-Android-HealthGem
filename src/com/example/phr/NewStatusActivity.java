@@ -33,7 +33,6 @@ import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.ActivityTrackerEntry;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.mobile.models.BloodSugar;
-import com.example.phr.mobile.models.ActivitySingle;
 import com.example.phr.mobile.models.CheckUp;
 import com.example.phr.mobile.models.Note;
 import com.example.phr.mobile.models.PHRImage;
@@ -766,7 +765,7 @@ public class NewStatusActivity extends Activity {
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
 			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
-			ActivitySingle activity = new ActivitySingle(txtActivity.getText().toString(),30.0);
+			com.example.phr.mobile.models.Activity activity = new com.example.phr.mobile.models.Activity(txtActivity.getText().toString(),30.0);
 			ActivityTrackerEntry activityEntry = new ActivityTrackerEntry(timestamp, activityStatus.getText().toString(), image,
 					activity,Double.parseDouble(txtActivityCal.getText().toString()));
 			

@@ -8,8 +8,8 @@ import org.json.JSONObject;
 
 import com.example.phr.exceptions.UserAlreadyExistsException;
 import com.example.phr.exceptions.WebServerException;
-import com.example.phr.mobile.dao.AccessDao;
-import com.example.phr.mobile.daoimpl.AccessDaoImpl;
+import com.example.phr.mobile.dao.MobileAccessDao;
+import com.example.phr.mobile.daoimpl.MobileAccessDaoImpl;
 import com.example.phr.model.AccessToken;
 import com.example.phr.model.User;
 import com.example.phr.tools.GSONConverter;
@@ -19,11 +19,11 @@ import com.example.phr.web.dao.UserDao;
 public class UserDaoImpl extends BasicDaoImpl implements UserDao {
 
 	private JSONRequestCreator jsonRequestCreator;
-	private AccessDao accessDao;
+	private MobileAccessDao accessDao;
 
 	public UserDaoImpl() {
 		jsonRequestCreator = new JSONRequestCreator();
-		accessDao = new AccessDaoImpl();
+		accessDao = new MobileAccessDaoImpl();
 	}
 
 	@Override
