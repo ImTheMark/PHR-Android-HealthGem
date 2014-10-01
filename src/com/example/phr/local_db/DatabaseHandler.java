@@ -84,6 +84,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public static final String FOODLIST_RESTAURANTID = "restaurantID";
 	public static final String FOODLIST_FROMFATSECRET = "fromFatSecret";
 	
+	// RESTAURANT LIST DATABASE
+	public static final String TABLE_RESTAURANTLIST = "restaurantlist";
+	public static final String RESTOLIST_ID = "id";
+	public static final String RESTOLIST_NAME = "name";
+	
 	// FOOD DATABASE
 	public static final String TABLE_FOOD = "foodtracker";
 	public static final String FOOD_ID = "id";

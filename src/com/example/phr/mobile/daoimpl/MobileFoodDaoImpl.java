@@ -1,59 +1,214 @@
 package com.example.phr.mobile.daoimpl;
 
+import java.io.FileNotFoundException;
+import java.sql.Timestamp;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
+
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 
 import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.EntryNotFoundException;
+import com.example.phr.exceptions.ImageHandlerException;
+import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileFoodDao;
+import com.example.phr.mobile.models.FBPost;
 import com.example.phr.mobile.models.Food;
 import com.example.phr.mobile.models.FoodTrackerEntry;
+import com.example.phr.mobile.models.PHRImage;
+import com.example.phr.tools.DateTimeParser;
+import com.example.phr.tools.ImageHandler;
 
 public class MobileFoodDaoImpl implements MobileFoodDao {
 
 	@Override
-	public void add(FoodTrackerEntry object) throws DataAccessException {
-		// TODO Auto-generated method stub
+	public void add(FoodTrackerEntry food) throws DataAccessException {
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+				Locale.ENGLISH);
+
+		ContentValues values = new ContentValues();
+		values.put(DatabaseHandler.FOOD_ID, food.getEntryID());
+		values.put(DatabaseHandler.FOOD_DATEADDED, fmt.format(food.getTimestamp()));
+		values.put(DatabaseHandler.FOOD_FOODID, food.getFood().getEntryID());
+		values.put(DatabaseHandler.FOOD_SERVINGCOUNT, food.getServingCount());
+		values.put(DatabaseHandler.FOOD_STATUS, food.getStatus());
+		
+		try {
+			if (food.getImage().getFileName() == null
+					&& food.getImage().getEncodedImage() != null) {
+				String encoded = food.getImage().getEncodedImage();
+				String fileName = ImageHandler.saveImageReturnFileName(encoded);
+				food.getImage().setFileName(fileName);
+			}
+		} catch (FileNotFoundException e) {
+			throw new DataAccessException("An error occurred in the DAO layer",
+					e);
+		} catch (ImageHandlerException e) {
+			throw new DataAccessException("An error occurred in the DAO layer",
+					e);
+		}
+		if (food.getImage().getFileName() != null)
+			values.put(DatabaseHandler.FOOD_PHOTO, food.getImage().getFileName());
+		if (food.getFbPost() != null)
+			values.put(DatabaseHandler.FOOD_FBPOSTID, food.getFbPost().getId());
+
+		db.insert(DatabaseHandler.TABLE_FOOD, null, values);
+		db.close();
 		
 	}
 
 	@Override
-	public void edit(FoodTrackerEntry object) throws DataAccessException,
+	public void edit(FoodTrackerEntry food) throws DataAccessException,
 			EntryNotFoundException {
-		// TODO Auto-generated method stub
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+				Locale.ENGLISH);
+
+		ContentValues values = new ContentValues();
+		values.put(DatabaseHandler.FOOD_ID, food.getEntryID());
+		values.put(DatabaseHandler.FOOD_DATEADDED, fmt.format(food.getTimestamp()));
+		values.put(DatabaseHandler.FOOD_FOODID, food.getFood().getEntryID());
+		values.put(DatabaseHandler.FOOD_SERVINGCOUNT, food.getServingCount());
+		values.put(DatabaseHandler.FOOD_STATUS, food.getStatus());
 		
+		try {
+			if (food.getImage().getFileName() == null
+					&& food.getImage().getEncodedImage() != null) {
+				String encoded = food.getImage().getEncodedImage();
+				String fileName = ImageHandler.saveImageReturnFileName(encoded);
+				food.getImage().setFileName(fileName);
+			}
+		} catch (FileNotFoundException e) {
+			throw new DataAccessException("An error occurred in the DAO layer",
+					e);
+		} catch (ImageHandlerException e) {
+			throw new DataAccessException("An error occurred in the DAO layer",
+					e);
+		}
+		if (food.getImage().getFileName() != null)
+			values.put(DatabaseHandler.FOOD_PHOTO, food.getImage().getFileName());
+		if (food.getFbPost() != null)
+			values.put(DatabaseHandler.FOOD_FBPOSTID, food.getFbPost().getId());
+
+		db.update(DatabaseHandler.TABLE_FOOD, values, DatabaseHandler.FOOD_ID + "=" + food.getEntryID(), null);
+		db.close();
 	}
 
 	@Override
 	public ArrayList<FoodTrackerEntry> getAll() throws ParseException {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<FoodTrackerEntry> foodList = new ArrayList<FoodTrackerEntry>();
+		String selectQuery = "SELECT  * FROM "
+				+ DatabaseHandler.TABLE_FOOD;
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+						.getString(1));
+				PHRImage image = new PHRImage();
+				image.setFileName(cursor.getString(5));
+				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+				String encoded = ImageHandler.encodeImageToBase64(bitmap);
+				image.setEncodedImage(encoded);
+
+				
+/*				FoodTrackerEntry food = new FoodTrackerEntry(cursor.getInt(0),
+						new FBPost(cursor.getInt(6)),
+						timestamp, 
+						cursor.getString(4), 
+						image,
+						new Food(cursor.getString(2)), 
+						cursor.getDouble(3));
+
+				foodList.add(food);*/
+			} while (cursor.moveToNext());
+		}
+
+		db.close();
+		return foodList;
 	}
 
 	@Override
 	public int addFoodListEntryReturnEntryID(Food food)
 			throws DataAccessException {
-		// TODO Auto-generated method stub
-		return 0;
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		
+		ContentValues values = new ContentValues();
+		values.put(DatabaseHandler.FOODLIST_ID, food.getEntryID());
+		values.put(DatabaseHandler.FOODLIST_NAME, food.getName());
+		values.put(DatabaseHandler.FOODLIST_CALORIE, food.getCalorie());
+		values.put(DatabaseHandler.FOODLIST_SERVINGUNIT, food.getServingUnit());
+		values.put(DatabaseHandler.FOODLIST_SERVINGSIZE, food.getServingSize());
+		values.put(DatabaseHandler.FOODLIST_RESTAURANTID, food.getRestaurantID());
+		values.put(DatabaseHandler.FOODLIST_FROMFATSECRET, food.getFromFatsecret());
+		
+		db.insert(DatabaseHandler.TABLE_FOODLIST, null, values);
+		db.close();
+		
+		return (Integer) null;
 	}
 
 	@Override
 	public Boolean checkFoodEntryInList(Food food) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
+		Boolean bool = false;
+		String selectQuery = "SELECT  * FROM "
+				+ DatabaseHandler.TABLE_FOODLIST;
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst())
+			bool =  true;
+
+		db.close();
+		return bool;
 	}
 
 	@Override
 	public ArrayList<Food> getAllFood() throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Food> foodList = new ArrayList<Food>();
+		String selectQuery = "SELECT  * FROM "
+				+ DatabaseHandler.TABLE_FOODLIST;
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+				Boolean bool = cursor.getInt(5) != 0;
+				Food food = new Food(cursor.getString(0), cursor.getDouble(1), cursor.getString(2),
+						cursor.getDouble(3), cursor.getInt(4), bool);
+				foodList.add(food);
+			} while (cursor.moveToNext());
+		}
+
+		db.close();
+		return foodList;
 	}
 
 	@Override
-	public void delete(FoodTrackerEntry object) throws DataAccessException,
+	public void delete(FoodTrackerEntry food) throws DataAccessException,
 			EntryNotFoundException {
-		// TODO Auto-generated method stub
-		
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		db.delete(DatabaseHandler.TABLE_FOOD, DatabaseHandler.FOOD_ID + "=" + food.getEntryID(), null);
+		db.close();
 	}
 
 }
