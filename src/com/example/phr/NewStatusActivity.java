@@ -28,8 +28,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.phr.enums.TrackerInputType;
+import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
+import com.example.phr.exceptions.WebServerException;
 import com.example.phr.mobile.models.ActivityTrackerEntry;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.mobile.models.BloodSugar;
@@ -614,7 +616,7 @@ public class NewStatusActivity extends Activity {
 	}
 
 	private void addBloodPressureToDatabase() throws ServiceException,
-			OutdatedAccessTokenException {
+			OutdatedAccessTokenException, WebServerException, DataAccessException {
 
 		try {
 			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
@@ -814,6 +816,12 @@ public class NewStatusActivity extends Activity {
 					System.out.println(e.getMessage());
 				} catch (OutdatedAccessTokenException e) {
 					// Message - > Log user out
+					e.printStackTrace();
+				} catch (WebServerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (DataAccessException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				// onBackPressed();
