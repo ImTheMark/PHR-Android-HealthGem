@@ -11,37 +11,40 @@ import com.example.phr.mobile.dao.MobileCheckupDao;
 import com.example.phr.mobile.daoimpl.MobileCheckupDaoImpl;
 import com.example.phr.mobile.models.CheckUp;
 import com.example.phr.service.CheckUpService;
+import com.example.phr.web.dao.WebCheckUpDao;
+import com.example.phr.web.daoimpl.WebCheckUpDaoImpl;
 
 public class CheckUpServiceImpl implements CheckUpService {
 
-	//WebCheckUpDao webCheckUpDao;
+	WebCheckUpDao webCheckUpDao;
 	MobileCheckupDao mobileCheckUpDao;
 
 	public CheckUpServiceImpl() {
-		//webCheckUpDao = new WebCheckUpDaoImpl();
+		webCheckUpDao = new WebCheckUpDaoImpl();
 		mobileCheckUpDao = new MobileCheckupDaoImpl();
 	}
 
 	@Override
-	public void add(CheckUp object) throws ServiceException,
-			OutdatedAccessTokenException {
-		// TODO Auto-generated method stub
-		
+	public void add(CheckUp checkUp) throws ServiceException,
+			OutdatedAccessTokenException, WebServerException, DataAccessException {
+		int entryID = webCheckUpDao.add_ReturnEntryIdInWeb(checkUp); 
+		checkUp.setEntryID(entryID); 
+		mobileCheckUpDao.add(checkUp);
 	}
 
 	@Override
-	public void edit(CheckUp object) throws WebServerException,
+	public void edit(CheckUp checkUp) throws WebServerException,
 			OutdatedAccessTokenException, DataAccessException,
 			EntryNotFoundException {
-		// TODO Auto-generated method stub
-		
+		webCheckUpDao.edit(checkUp);
+		mobileCheckUpDao.edit(checkUp);
 	}
 
 	@Override
-	public void delete(CheckUp object) throws WebServerException,
-			OutdatedAccessTokenException {
-		// TODO Auto-generated method stub
-		
+	public void delete(CheckUp checkUp) throws WebServerException,
+			OutdatedAccessTokenException, DataAccessException, EntryNotFoundException {
+		webCheckUpDao.delete(checkUp);
+		mobileCheckUpDao.delete(checkUp);
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import com.example.phr.exceptions.DataAccessException;
+import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.exceptions.WebServerException;
@@ -26,34 +27,22 @@ public class BloodSugarServiceImpl implements BloodSugarService {
 
 	@Override
 	public void add(BloodSugar bloodSugar) throws ServiceException,
-			OutdatedAccessTokenException {
-		java.util.Date date = new java.util.Date();
-		Timestamp timestamp = new Timestamp(date.getTime());
-		/*try {
-			int entryID = webBloodSugarDao
-					.add_ReturnEntryIdInWeb(bloodSugar); 
-			bloodSugar.setEntryID(entryID); 
-			mobileBloodSugarDao.add(bloodSugar);
-		} catch (WebServerException e) {
-			throw new ServiceException(
-					"An error occured while trying to add bp to web", e);
-		} catch (DataAccessException e) {
-			throw new ServiceException(
-					"An error occured while trying to add bp to web", e);
-		}*/
-
+			OutdatedAccessTokenException, WebServerException, DataAccessException {
+		int entryID = webBloodSugarDao.add_ReturnEntryIdInWeb(bloodSugar); 
+		bloodSugar.setEntryID(entryID); 
+		mobileBloodSugarDao.add(bloodSugar);
 	}
 
 	@Override
-	public void edit(BloodSugar object) {
-		// TODO Auto-generated method stub
-
+	public void edit(BloodSugar bloodSugar) throws WebServerException, OutdatedAccessTokenException, DataAccessException, EntryNotFoundException {
+		webBloodSugarDao.edit(bloodSugar);
+		mobileBloodSugarDao.edit(bloodSugar);
 	}
 
 	@Override
-	public void delete(BloodSugar object) {
-		// TODO Auto-generated method stub
-
+	public void delete(BloodSugar bloodSugar) throws WebServerException, OutdatedAccessTokenException, DataAccessException, EntryNotFoundException {		
+		webBloodSugarDao.delete(bloodSugar);
+		mobileBloodSugarDao.delete(bloodSugar);
 	}
 
 	@Override

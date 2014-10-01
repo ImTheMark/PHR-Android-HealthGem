@@ -11,11 +11,11 @@ import com.example.phr.exceptions.WebServerException;
 public interface TrackerService<T> {
 
 	public void add(T object) throws ServiceException,
-			OutdatedAccessTokenException;
+			OutdatedAccessTokenException, WebServerException, DataAccessException;
 
 	public void edit(T object) throws WebServerException, OutdatedAccessTokenException, DataAccessException, EntryNotFoundException;
 
-	public void delete(T object) throws WebServerException, OutdatedAccessTokenException;
+	public void delete(T object) throws WebServerException, OutdatedAccessTokenException, DataAccessException, EntryNotFoundException;
 
 	public List<T> getAll();
 
