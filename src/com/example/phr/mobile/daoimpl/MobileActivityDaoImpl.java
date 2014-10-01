@@ -1,13 +1,16 @@
 package com.example.phr.mobile.daoimpl;
 
 import java.io.FileNotFoundException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 
 import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.EntryNotFoundException;
@@ -16,6 +19,11 @@ import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileActivityDao;
 import com.example.phr.mobile.models.Activity;
 import com.example.phr.mobile.models.ActivityTrackerEntry;
+import com.example.phr.mobile.models.BloodPressure;
+import com.example.phr.mobile.models.BloodSugar;
+import com.example.phr.mobile.models.FBPost;
+import com.example.phr.mobile.models.PHRImage;
+import com.example.phr.tools.DateTimeParser;
 import com.example.phr.tools.ImageHandler;
 
 public class MobileActivityDaoImpl implements MobileActivityDao {
@@ -100,6 +108,43 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 	}
 
 	@Override
+	public ArrayList<ActivityTrackerEntry> getAll() throws ParseException {
+		ArrayList<ActivityTrackerEntry> actList = new ArrayList<ActivityTrackerEntry>();
+		String selectQuery = "SELECT  * FROM "
+				+ DatabaseHandler.TABLE_ACTIVITY;
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+						.getString(1));
+				PHRImage image = new PHRImage();
+				image.setFileName(cursor.getString(6));
+				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+				String encoded = ImageHandler.encodeImageToBase64(bitmap);
+				image.setEncodedImage(encoded);
+
+				
+/*				ActivityTrackerEntry act = new ActivityTrackerEntry(cursor.getInt(0),
+						new FBPost(cursor.getInt(7)),
+						timestamp, 
+						cursor.getString(5), 
+						image,
+						cursor.getDouble(2), 
+						cursor.getString(3));
+
+				actList.add(act);*/
+			} while (cursor.moveToNext());
+		}
+
+		db.close();
+		return actList;
+	}
+
+	@Override
 	public void delete(ActivityTrackerEntry activity) throws DataAccessException,
 			EntryNotFoundException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
@@ -109,20 +154,36 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 	}
 
 	@Override
-	public ArrayList<ActivityTrackerEntry> getAll() throws ParseException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int addActivityListEntryReturnEntryID(Activity activity) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return 0;
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put(DatabaseHandler.ACTLIST_ID, activity.getEntryID());
+		values.put(DatabaseHandler.ACTLIST_NAME, activity.getName());
+		values.put(DatabaseHandler.ACTLIST_MET, activity.getMET());
+		db.insert(DatabaseHandler.TABLE_ACTIVITYLIST, null, values);
+		db.close();
+		
+		return (Integer) null;
 	}
 
 	@Override
 	public ArrayList<Activity> getAllActivity() throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Activity> actList = new  ArrayList<Activity>();
+		String selectQuery = "SELECT  * FROM "
+				+ DatabaseHandler.TABLE_ACTIVITYLIST;
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+				actList.add(new Activity(cursor.getInt(0), cursor.getString(2), cursor.getDouble(3)));
+			} while (cursor.moveToNext());
+		}
+
+		db.close();
+		return actList;
 	}
 }
