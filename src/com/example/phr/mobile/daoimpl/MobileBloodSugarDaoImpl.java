@@ -146,6 +146,7 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
 		db.delete(DatabaseHandler.TABLE_BLOODSUGAR, DatabaseHandler.BS_ID + "=" + bloodSugar.getEntryID(), null);
+		db.close();
 	}
 	
 }

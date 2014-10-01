@@ -142,6 +142,7 @@ public class MobileNoteDaoImpl implements MobileNoteDao {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
 		db.delete(DatabaseHandler.TABLE_NOTES, DatabaseHandler.NOTES_ID + "=" + note.getEntryID(), null);
+		db.close();
 		
 	}
 }

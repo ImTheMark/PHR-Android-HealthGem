@@ -141,5 +141,6 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
 		db.delete(DatabaseHandler.TABLE_BLOODPRESSURE, DatabaseHandler.BP_ID + "=" + bp.getEntryID(), null);
+		db.close();
 	}
 }

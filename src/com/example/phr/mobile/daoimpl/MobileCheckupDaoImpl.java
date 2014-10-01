@@ -148,5 +148,6 @@ public class MobileCheckupDaoImpl implements MobileCheckupDao {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
 		db.delete(DatabaseHandler.TABLE_CHECKUP, DatabaseHandler.CU_ID + "=" + checkUp.getEntryID(), null);
+		db.close();
 	}
 }

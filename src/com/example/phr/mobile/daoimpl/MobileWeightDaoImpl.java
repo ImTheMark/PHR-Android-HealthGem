@@ -143,5 +143,6 @@ public class MobileWeightDaoImpl implements MobileWeightDao {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
 		db.delete(DatabaseHandler.TABLE_WEIGHT, DatabaseHandler.WEIGHT_ID + "=" + weight.getEntryID(), null);
+		db.close();
 	}
 }
