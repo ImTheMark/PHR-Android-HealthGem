@@ -26,25 +26,48 @@ public class WeightServiceImpl implements WeightService {
 
 	@Override
 	public void add(Weight weight) throws ServiceException,
-			OutdatedAccessTokenException, WebServerException, DataAccessException {
-		int entryID = webWeightDao.add_ReturnEntryIdInWeb(weight); 
-		weight.setEntryID(entryID); 
-		mobileWeightDao.add(weight);
+			OutdatedAccessTokenException {
+		int entryID;
+		try {
+			entryID = webWeightDao.add_ReturnEntryIdInWeb(weight);
+			weight.setEntryID(entryID); 
+			mobileWeightDao.add(weight);
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to add weight to web", e);
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to add weight to web", e);
+		} 
 	}
 
 	@Override
-	public void edit(Weight weight) throws WebServerException,
-			OutdatedAccessTokenException, DataAccessException,
-			EntryNotFoundException {
-		webWeightDao.edit(weight);
-		mobileWeightDao.edit(weight);
+	public void edit(Weight weight) throws OutdatedAccessTokenException, EntryNotFoundException, ServiceException {
+		try {
+			webWeightDao.edit(weight);
+			mobileWeightDao.edit(weight);
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to edit weight to web", e);
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to edit weight to web", e);
+		}
 	}
 
 	@Override
-	public void delete(Weight weight) throws WebServerException,
-			OutdatedAccessTokenException, DataAccessException, EntryNotFoundException {
-		webWeightDao.delete(weight);
-		mobileWeightDao.delete(weight);
+	public void delete(Weight weight) throws ServiceException,
+			OutdatedAccessTokenException, EntryNotFoundException {
+		try {
+			webWeightDao.delete(weight);
+			mobileWeightDao.delete(weight);
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to delete weight to web", e);
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to delete weight to web", e);
+		}
 	}
 
 	@Override

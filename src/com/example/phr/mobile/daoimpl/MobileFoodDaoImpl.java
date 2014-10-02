@@ -123,7 +123,7 @@ public class MobileFoodDaoImpl implements MobileFoodDao {
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 				String encoded = ImageHandler.encodeImageToBase64(bitmap);
 				image.setEncodedImage(encoded);
-
+//add 'food' to foodlist table
 				
 /*				FoodTrackerEntry food = new FoodTrackerEntry(cursor.getInt(0),
 						new FBPost(cursor.getInt(6)),
@@ -142,7 +142,7 @@ public class MobileFoodDaoImpl implements MobileFoodDao {
 	}
 
 	@Override
-	public int addFoodListEntryReturnEntryID(Food food)
+	public void addFoodListEntry(Food food)
 			throws DataAccessException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
@@ -158,12 +158,10 @@ public class MobileFoodDaoImpl implements MobileFoodDao {
 		
 		db.insert(DatabaseHandler.TABLE_FOODLIST, null, values);
 		db.close();
-		
-		return (Integer) null;
 	}
 
 	@Override
-	public Boolean checkFoodEntryInList(Food food) throws DataAccessException {
+	public Boolean foodEntryExists(Food food) throws DataAccessException {
 		Boolean bool = false;
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_FOODLIST;

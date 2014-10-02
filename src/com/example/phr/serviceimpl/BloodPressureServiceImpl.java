@@ -53,18 +53,31 @@ public class BloodPressureServiceImpl implements BloodPressureService {
 			webBloodPressureDao.edit(bloodPressure);
 			mobileBloodPressureDao.edit(bloodPressure);
 		} catch (WebServerException e) {
-			throw new ServiceException("Error performing action", e);
+			throw new ServiceException(
+					"An error occured while trying to edit bp to web", e);
 		} catch (DataAccessException e) {
-			throw new ServiceException("Error performing action", e);
+			throw new ServiceException(
+					"An error occured while trying to edit bp to web", e);
 		}
 
 	}
 
 	@Override
-	public void delete(BloodPressure bloodPressure) throws WebServerException,
+	public void delete(BloodPressure bloodPressure) throws ServiceException,
 			OutdatedAccessTokenException {
-		webBloodPressureDao.delete(bloodPressure);
-		// mobileBloodPressureDao.delete(bloodPressure);
+		try {
+			webBloodPressureDao.delete(bloodPressure);
+			mobileBloodPressureDao.delete(bloodPressure);
+		} catch (WebServerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to delete bp to web", e);
+		} catch (EntryNotFoundException e) {
+			throw new ServiceException(
+					"An error occured while trying to delete bp to web", e);
+		}
 	}
 
 	@Override

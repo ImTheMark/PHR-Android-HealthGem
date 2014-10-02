@@ -167,8 +167,7 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 	}
 
 	@Override
-	public int addActivityListEntryReturnEntryID(Activity activity)
-			throws DataAccessException {
+	public void addActivityListEntry(Activity activity) {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
 		ContentValues values = new ContentValues();
@@ -177,8 +176,6 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 		values.put(DatabaseHandler.ACTLIST_MET, activity.getMET());
 		db.insert(DatabaseHandler.TABLE_ACTIVITYLIST, null, values);
 		db.close();
-
-		return null;
 	}
 
 	@Override

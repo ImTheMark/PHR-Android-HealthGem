@@ -26,25 +26,49 @@ public class CheckUpServiceImpl implements CheckUpService {
 
 	@Override
 	public void add(CheckUp checkUp) throws ServiceException,
-			OutdatedAccessTokenException, WebServerException, DataAccessException {
-		int entryID = webCheckUpDao.add_ReturnEntryIdInWeb(checkUp); 
-		checkUp.setEntryID(entryID); 
-		mobileCheckUpDao.add(checkUp);
+			OutdatedAccessTokenException {
+		int entryID;
+		try {
+			entryID = webCheckUpDao.add_ReturnEntryIdInWeb(checkUp);
+			checkUp.setEntryID(entryID); 
+			mobileCheckUpDao.add(checkUp);
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to add cu to web", e);
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to add cu to web", e);
+		} 
 	}
 
 	@Override
-	public void edit(CheckUp checkUp) throws WebServerException,
-			OutdatedAccessTokenException, DataAccessException,
-			EntryNotFoundException {
-		webCheckUpDao.edit(checkUp);
-		mobileCheckUpDao.edit(checkUp);
+	public void edit(CheckUp checkUp) throws ServiceException,
+			OutdatedAccessTokenException, EntryNotFoundException {
+		try {
+			webCheckUpDao.edit(checkUp);
+			mobileCheckUpDao.edit(checkUp);
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to edit cu to web", e);
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to edit cu to web", e);
+		}
 	}
 
 	@Override
-	public void delete(CheckUp checkUp) throws WebServerException,
-			OutdatedAccessTokenException, DataAccessException, EntryNotFoundException {
-		webCheckUpDao.delete(checkUp);
-		mobileCheckUpDao.delete(checkUp);
+	public void delete(CheckUp checkUp) throws ServiceException,
+			OutdatedAccessTokenException, EntryNotFoundException {
+		try {
+			webCheckUpDao.delete(checkUp);
+			mobileCheckUpDao.delete(checkUp);
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to delete cu to web", e);
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to delete cu to web", e);
+		}
 	}
 
 	@Override

@@ -26,23 +26,47 @@ public class BloodSugarServiceImpl implements BloodSugarService {
 	}
 
 	@Override
-	public void add(BloodSugar bloodSugar) throws ServiceException,
-			OutdatedAccessTokenException, WebServerException, DataAccessException {
-		int entryID = webBloodSugarDao.add_ReturnEntryIdInWeb(bloodSugar); 
-		bloodSugar.setEntryID(entryID); 
-		mobileBloodSugarDao.add(bloodSugar);
+	public void add(BloodSugar bloodSugar) throws ServiceException, OutdatedAccessTokenException {
+		int entryID;
+		try {
+			entryID = webBloodSugarDao.add_ReturnEntryIdInWeb(bloodSugar);
+			bloodSugar.setEntryID(entryID); 
+			mobileBloodSugarDao.add(bloodSugar);
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to add bs to web", e);
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to add bs to web", e);
+		} 
 	}
 
 	@Override
-	public void edit(BloodSugar bloodSugar) throws WebServerException, OutdatedAccessTokenException, DataAccessException, EntryNotFoundException {
-		webBloodSugarDao.edit(bloodSugar);
-		mobileBloodSugarDao.edit(bloodSugar);
+	public void edit(BloodSugar bloodSugar) throws ServiceException, OutdatedAccessTokenException, EntryNotFoundException {
+		try {
+			webBloodSugarDao.edit(bloodSugar);
+			mobileBloodSugarDao.edit(bloodSugar);
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to edit bs to web", e);
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to edit bs to web", e);
+		}
 	}
 
 	@Override
-	public void delete(BloodSugar bloodSugar) throws WebServerException, OutdatedAccessTokenException, DataAccessException, EntryNotFoundException {		
-		webBloodSugarDao.delete(bloodSugar);
-		mobileBloodSugarDao.delete(bloodSugar);
+	public void delete(BloodSugar bloodSugar) throws ServiceException, OutdatedAccessTokenException, EntryNotFoundException {		
+		try {
+			webBloodSugarDao.delete(bloodSugar);
+			mobileBloodSugarDao.delete(bloodSugar);
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to delete bs to web", e);
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to delete bs to web", e);
+		}
 	}
 
 	@Override

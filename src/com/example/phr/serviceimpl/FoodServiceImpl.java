@@ -20,15 +20,14 @@ public class FoodServiceImpl implements FoodService {
 	}
 
 	@Override
-	public void edit(FoodTrackerEntry object) throws WebServerException,
-			OutdatedAccessTokenException, DataAccessException,
-			EntryNotFoundException {
+	public void edit(FoodTrackerEntry object) throws ServiceException,
+			OutdatedAccessTokenException, EntryNotFoundException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(FoodTrackerEntry object) throws WebServerException,
+	public void delete(FoodTrackerEntry object) throws ServiceException,
 			OutdatedAccessTokenException {
 		// TODO Auto-generated method stub
 		

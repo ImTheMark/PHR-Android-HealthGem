@@ -26,25 +26,49 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public void add(Note note) throws ServiceException,
-			OutdatedAccessTokenException, WebServerException, DataAccessException {
-		int entryID = webNoteDao.add_ReturnEntryIdInWeb(note); 
-		note.setEntryID(entryID); 
-		mobileNoteDao.add(note);
+			OutdatedAccessTokenException {
+		int entryID;
+		try {
+			entryID = webNoteDao.add_ReturnEntryIdInWeb(note);
+			note.setEntryID(entryID); 
+			mobileNoteDao.add(note);
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to add note to web", e);
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to add note to web", e);
+		} 
 	}
 
 	@Override
-	public void edit(Note note) throws WebServerException,
-			OutdatedAccessTokenException, DataAccessException,
-			EntryNotFoundException {
-		webNoteDao.edit(note);
-		mobileNoteDao.edit(note);
+	public void edit(Note note) throws ServiceException,
+			OutdatedAccessTokenException, EntryNotFoundException {
+		try {
+			webNoteDao.edit(note);
+			mobileNoteDao.edit(note);
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to edit note to web", e);
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to edit note to web", e);
+		}
 	}
 
 	@Override
-	public void delete(Note note) throws WebServerException,
-			OutdatedAccessTokenException, DataAccessException, EntryNotFoundException {
-		webNoteDao.delete(note);
-		mobileNoteDao.delete(note);
+	public void delete(Note note) throws OutdatedAccessTokenException, 
+			ServiceException, EntryNotFoundException {
+		try {
+			webNoteDao.delete(note);
+			mobileNoteDao.delete(note);
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to delete note to web", e);
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to delete note to web", e);
+		}
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import com.example.phr.mobile.models.ActivityTrackerEntry;
 
 public interface MobileActivityDao extends MobileTrackerDao<ActivityTrackerEntry> {
 	
-	public int addActivityListEntryReturnEntryID(Activity activity) throws DataAccessException;
+	public void addActivityListEntry(Activity activity);
 	
 	public ArrayList<Activity> getAllActivity() throws DataAccessException;
 	
