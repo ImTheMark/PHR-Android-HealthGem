@@ -145,4 +145,40 @@ public class MobileNoteDaoImpl implements MobileNoteDao {
 		db.close();
 		
 	}
+
+	@Override
+	public List<Note> getAllReversed() throws ParseException {
+		List<Note> noteList = new ArrayList<Note>();
+		String selectQuery = "SELECT  * FROM "
+				+ DatabaseHandler.TABLE_NOTES
+				+ " ORDER BY " + DatabaseHandler.NOTES_DATEADDED + " DESC";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+						.getString(1));
+				PHRImage image = new PHRImage();
+				image.setFileName(cursor.getString(4));
+				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+				String encoded = ImageHandler.encodeImageToBase64(bitmap);
+				image.setEncodedImage(encoded);
+				
+				Note note = new Note(cursor.getInt(0),
+						new FBPost(cursor.getInt(5)),
+						timestamp, 
+						cursor.getString(3), 
+						image,
+						cursor.getString(2));
+
+				noteList.add(note);
+			} while (cursor.moveToNext());
+		}
+
+		db.close();
+		return noteList;
+	}
 }

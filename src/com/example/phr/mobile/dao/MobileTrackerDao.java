@@ -1,6 +1,7 @@
 package com.example.phr.mobile.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.text.ParseException;
 
 import com.example.phr.exceptions.DataAccessException;
@@ -17,5 +18,7 @@ public interface MobileTrackerDao<T> {
 
 	public void delete(T object) throws DataAccessException,
 			EntryNotFoundException;
+	
+	public List<T> getAllReversed() throws ParseException;
 
 }

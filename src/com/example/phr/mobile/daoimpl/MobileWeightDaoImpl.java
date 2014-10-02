@@ -145,4 +145,40 @@ public class MobileWeightDaoImpl implements MobileWeightDao {
 		db.delete(DatabaseHandler.TABLE_WEIGHT, DatabaseHandler.WEIGHT_ID + "=" + weight.getEntryID(), null);
 		db.close();
 	}
+
+	@Override
+	public List<Weight> getAllReversed() throws ParseException {
+		List<Weight> weightList = new ArrayList<Weight>();
+		String selectQuery = "SELECT  * FROM "
+				+ DatabaseHandler.TABLE_WEIGHT
+				+ " ORDER BY " + DatabaseHandler.WEIGHT_DATEADDED + " DESC";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+						.getString(1));
+				PHRImage image = new PHRImage();
+				image.setFileName(cursor.getString(4));
+				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+				String encoded = ImageHandler.encodeImageToBase64(bitmap);
+				image.setEncodedImage(encoded);
+				
+				Weight weight = new Weight(cursor.getInt(0),
+						new FBPost(cursor.getInt(5)),
+						timestamp, 
+						cursor.getString(3), 
+						image,
+						cursor.getDouble(2));
+
+				weightList.add(weight);
+			} while (cursor.moveToNext());
+		}
+
+		db.close();
+		return weightList;
+	}
 }

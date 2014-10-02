@@ -150,4 +150,42 @@ public class MobileCheckupDaoImpl implements MobileCheckupDao {
 		db.delete(DatabaseHandler.TABLE_CHECKUP, DatabaseHandler.CU_ID + "=" + checkUp.getEntryID(), null);
 		db.close();
 	}
+
+	@Override
+	public List<CheckUp> getAllReversed() throws ParseException {
+		List<CheckUp> cuList = new ArrayList<CheckUp>();
+		String selectQuery = "SELECT  * FROM "
+				+ DatabaseHandler.TABLE_CHECKUP
+				+ " ORDER BY " + DatabaseHandler.CU_DATEADDED + " DESC";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+						.getString(1));
+				PHRImage image = new PHRImage();
+				image.setFileName(cursor.getString(6));
+				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+				String encoded = ImageHandler.encodeImageToBase64(bitmap);
+				image.setEncodedImage(encoded);
+				
+				CheckUp cu = new CheckUp(cursor.getInt(0),
+						new FBPost(cursor.getInt(7)),
+						timestamp, 
+						cursor.getString(5), 
+						image,
+						cursor.getString(2), 
+						cursor.getString(3), 
+						cursor.getString(4));
+
+				cuList.add(cu);
+			} while (cursor.moveToNext());
+		}
+
+		db.close();
+		return cuList;
+	}
 }

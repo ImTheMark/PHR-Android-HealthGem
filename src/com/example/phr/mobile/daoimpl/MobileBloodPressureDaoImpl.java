@@ -59,9 +59,8 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 		if (bp.getFbPost() != null)
 			values.put(DatabaseHandler.BP_FBPOSTID, bp.getFbPost().getId());
 
-		// Inserting Row
 		db.insert(DatabaseHandler.TABLE_BLOODPRESSURE, null, values);
-		db.close(); // Closing database connection
+		db.close(); 
 	}
 
 	@Override
@@ -112,7 +111,6 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 				.getWritableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
 
-		// looping through all rows and adding to list
 		if (cursor.moveToFirst()) {
 			do {
 				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
@@ -129,8 +127,7 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 				bpList.add(bp);
 			} while (cursor.moveToNext());
 		}
-
-		// return contact list
+		
 		db.close();
 		return bpList;
 	}
@@ -142,5 +139,37 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 				.getWritableDatabase();
 		db.delete(DatabaseHandler.TABLE_BLOODPRESSURE, DatabaseHandler.BP_ID + "=" + bp.getEntryID(), null);
 		db.close();
+	}
+
+	@Override
+	public List<BloodPressure> getAllReversed() throws ParseException {
+		List<BloodPressure> bpList = new ArrayList<BloodPressure>();
+		String selectQuery = "SELECT  * FROM "
+				+ DatabaseHandler.TABLE_BLOODPRESSURE
+				+ " ORDER BY " + DatabaseHandler.BP_DATEADDED + " DESC";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+						.getString(1));
+				PHRImage image = new PHRImage();
+				image.setFileName(cursor.getString(5));
+				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+				String encoded = ImageHandler.encodeImageToBase64(bitmap);
+				image.setEncodedImage(encoded);
+				BloodPressure bp = new BloodPressure(cursor.getInt(0),
+						timestamp, cursor.getString(4), image,
+						cursor.getInt(2), cursor.getInt(3));
+
+				bpList.add(bp);
+			} while (cursor.moveToNext());
+		}
+		
+		db.close();
+		return bpList;
 	}
 }

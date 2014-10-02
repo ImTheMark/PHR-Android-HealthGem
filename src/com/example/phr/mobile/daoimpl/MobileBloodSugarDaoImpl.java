@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import android.content.ContentValues;
@@ -153,6 +154,39 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 		db.delete(DatabaseHandler.TABLE_BLOODSUGAR, DatabaseHandler.BS_ID + "="
 				+ bloodSugar.getEntryID(), null);
 		db.close();
+	}
+
+	@Override
+	public List<BloodSugar> getAllReversed() throws ParseException {
+		List<BloodSugar> bsList = new ArrayList<BloodSugar>();
+		String selectQuery = "SELECT  * FROM "
+				+ DatabaseHandler.TABLE_BLOODSUGAR
+				+ " ORDER BY " + DatabaseHandler.BS_DATEADDED + " DESC";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+						.getString(1));
+				PHRImage image = new PHRImage();
+				image.setFileName(cursor.getString(5));
+				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+				String encoded = ImageHandler.encodeImageToBase64(bitmap);
+				image.setEncodedImage(encoded);
+
+				BloodSugar bs = new BloodSugar(cursor.getInt(0), new FBPost(
+						cursor.getInt(6)), timestamp, cursor.getString(4),
+						image, cursor.getDouble(2), cursor.getString(3));
+
+				bsList.add(bs);
+			} while (cursor.moveToNext());
+		}
+
+		db.close();
+		return bsList;
 	}
 
 }
