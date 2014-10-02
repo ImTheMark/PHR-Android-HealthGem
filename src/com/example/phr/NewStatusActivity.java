@@ -798,7 +798,7 @@ public class NewStatusActivity extends Activity {
 			// txtActivityDuration.setText(duration);
 
 			ActivityService activityService = new ActivityServiceImpl();
-			// ActivityService.add(activityEntry);
+			activityService.add(activityEntry);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
