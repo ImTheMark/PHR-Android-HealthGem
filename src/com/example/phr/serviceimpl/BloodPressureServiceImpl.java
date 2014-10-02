@@ -46,15 +46,25 @@ public class BloodPressureServiceImpl implements BloodPressureService {
 	}
 
 	@Override
-	public void edit(BloodPressure bloodPressure) throws WebServerException, OutdatedAccessTokenException, DataAccessException, EntryNotFoundException {
-		webBloodPressureDao.edit(bloodPressure);
-		mobileBloodPressureDao.edit(bloodPressure);
+	public void edit(BloodPressure bloodPressure)
+			throws OutdatedAccessTokenException, EntryNotFoundException,
+			ServiceException {
+		try {
+			webBloodPressureDao.edit(bloodPressure);
+			mobileBloodPressureDao.edit(bloodPressure);
+		} catch (WebServerException e) {
+			throw new ServiceException("Error performing action", e);
+		} catch (DataAccessException e) {
+			throw new ServiceException("Error performing action", e);
+		}
+
 	}
 
 	@Override
-	public void delete(BloodPressure bloodPressure) throws WebServerException, OutdatedAccessTokenException {
+	public void delete(BloodPressure bloodPressure) throws WebServerException,
+			OutdatedAccessTokenException {
 		webBloodPressureDao.delete(bloodPressure);
-		//mobileBloodPressureDao.delete(bloodPressure);
+		// mobileBloodPressureDao.delete(bloodPressure);
 	}
 
 	@Override

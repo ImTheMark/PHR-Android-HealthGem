@@ -18,10 +18,8 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
-import com.example.phr.exceptions.WebServerException;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.mobile.models.PHRImageType;
@@ -87,12 +85,6 @@ public class BloodPressurePostActivity extends Activity {
 			} catch (OutdatedAccessTokenException e) {
 				// Message - > Log user out
 				e.printStackTrace();
-			} catch (WebServerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (DataAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 			// onBackPressed();
 			Intent intent = new Intent(getApplicationContext(),
@@ -106,7 +98,7 @@ public class BloodPressurePostActivity extends Activity {
 	}
 
 	private void addBloodPressureToDatabase() throws ServiceException,
-			OutdatedAccessTokenException, WebServerException, DataAccessException {
+			OutdatedAccessTokenException {
 
 		try {
 			DateFormat fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss",

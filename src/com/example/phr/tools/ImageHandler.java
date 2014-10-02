@@ -69,10 +69,13 @@ public class ImageHandler {
 	}
 
 	public static Bitmap decodeImage(String encodedImage) {
-		Base64 base64 = new Base64();
-		byte[] imageInByte = base64.decode(encodedImage);
-		return BitmapFactory
-				.decodeByteArray(imageInByte, 0, imageInByte.length);
+		if(encodedImage != null){
+			Base64 base64 = new Base64();
+			byte[] imageInByte = base64.decode(encodedImage);
+			return BitmapFactory
+					.decodeByteArray(imageInByte, 0, imageInByte.length);
+		}
+		return null;
 	}
 
 	public static String getEncodedImageFromFile(String fileName) {

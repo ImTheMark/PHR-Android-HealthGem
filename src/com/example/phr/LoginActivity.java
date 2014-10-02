@@ -53,8 +53,8 @@ public class LoginActivity extends Activity {
 		userService = new UserServiceImpl();
 
 		
-		/* final SPreference sp = new SPreference(this.getApplicationContext());
-		 formUsername.setText(sp.loadPreferences("id"));*/
+		 final SPreference sp = new SPreference(this.getApplicationContext());
+		 formUsername.setText(sp.loadPreferences("id"));
 		 
 
 		mBtnLogin.setOnClickListener(new View.OnClickListener() {
@@ -64,17 +64,17 @@ public class LoginActivity extends Activity {
 				username = formUsername.getText().toString();
 				password = formPassword.getText().toString();
 
-				//sp.savePreferences("id", username);
+				sp.savePreferences("id", username);
 
-				/*if (password.length() > 0 && username.length() > 0) {
+				if (password.length() > 0 && username.length() > 0) {
 					try {
 						boolean isValid = userService.validateUser(username,
 								password);
-						if (isValid) {*/
+						if (isValid) {
 							Intent intent = new Intent(getApplicationContext(),
 									MainActivity.class);
 							startActivity(intent);
-						/*} else {
+						} else {
 							mTextValid.setText("Invalid Username/Password");
 						}
 					} catch (ServiceException e) {
@@ -85,7 +85,7 @@ public class LoginActivity extends Activity {
 
 				else {
 					mTextValid.setText("Please Input Password & Username");
-				}*/
+				}
 
 			}
 		});

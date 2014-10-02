@@ -8,12 +8,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -40,10 +42,17 @@ import com.example.phr.mobile.models.Note;
 import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.mobile.models.PHRImageType;
 import com.example.phr.mobile.models.Weight;
+import com.example.phr.service.ActivityService;
 import com.example.phr.service.BloodPressureService;
+import com.example.phr.service.BloodSugarService;
+import com.example.phr.service.NoteService;
+import com.example.phr.service.WeightService;
+import com.example.phr.serviceimpl.ActivityServiceImpl;
 import com.example.phr.serviceimpl.BloodPressureServiceImpl;
+import com.example.phr.serviceimpl.BloodSugarServiceImpl;
+import com.example.phr.serviceimpl.NoteServiceImpl;
+import com.example.phr.serviceimpl.WeightServiceImpl;
 import com.example.phr.tools.WeightConverter;
-
 
 public class NewStatusActivity extends Activity {
 
@@ -106,11 +115,17 @@ public class NewStatusActivity extends Activity {
 	Calendar calobj;
 	final Context context = this;
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setTitle("Post a Status");
 		setContentView(R.layout.activity_new_status);
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+				.permitAll().build();
+
+		StrictMode.setThreadPolicy(policy);
+
 		/*
 		 * mBtnTagFriend = (ImageButton)findViewById(R.id.btnTagFriend);
 		 * mBtnTagFriend.setOnClickListener(new OnClickListener() {
@@ -127,14 +142,11 @@ public class NewStatusActivity extends Activity {
 		 * Intent(getApplicationContext(), CheckinLocationActivity.class);
 		 * startActivity(intent); } });
 		 */
-		dateFormat = new SimpleDateFormat("MMM dd, yyyy",
-				Locale.ENGLISH);
-		timeFormat = new SimpleDateFormat("HH:mm:ss",
-				Locale.ENGLISH);
-		fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss",
-				Locale.ENGLISH);
+		dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
+		timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+		fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss", Locale.ENGLISH);
 		calobj = Calendar.getInstance();
-		
+
 		currentTracker = TrackerInputType.NOTES;
 		// templates
 		bsTemplate = (ScrollView) findViewById(R.id.bloodsugar_template);
@@ -162,15 +174,15 @@ public class NewStatusActivity extends Activity {
 		txtDoctor = (TextView) findViewById(R.id.doctor);
 		checkupStatus = (EditText) findViewById(R.id.txtBSStatus);
 		txtPurpose = (TextView) findViewById(R.id.purpose);
-		//activity post
+		// activity post
 		txtActivity = (TextView) findViewById(R.id.activity);
 		activityStatus = (EditText) findViewById(R.id.txtActivityStatus);
 		txtActivityDurationUnit = (TextView) findViewById(R.id.activityDurationUnit);
 		txtActivityDuration = (TextView) findViewById(R.id.activityDuration);
 		activityCal = (LinearLayout) findViewById(R.id.activityCal);
 		txtActivityCal = (TextView) findViewById(R.id.txtActivityCal);
-		
-		//food post
+
+		// food post
 		txtFood = (TextView) findViewById(R.id.food);
 		foodStatus = (EditText) findViewById(R.id.txtFoodStatus);
 		txtFoodQuantityUnit = (TextView) findViewById(R.id.foodQuantityUnit);
@@ -228,7 +240,7 @@ public class NewStatusActivity extends Activity {
 			} else if (tracker.equals(TrackerInputType.NOTES)) {
 				currentTracker = TrackerInputType.NOTES;
 				callNotesInput();
-			}else if (tracker.equals(TrackerInputType.WEIGHT)) {
+			} else if (tracker.equals(TrackerInputType.WEIGHT)) {
 				currentTracker = TrackerInputType.WEIGHT;
 				callWeightInput();
 			} else if (tracker.equals(TrackerInputType.FOOD)) {
@@ -241,34 +253,38 @@ public class NewStatusActivity extends Activity {
 				currentTracker = TrackerInputType.ACTIVITY;
 				callActivityInput();
 			}
-		}
-		else if (extras != null && in.hasExtra("from")){
+		} else if (extras != null && in.hasExtra("from")) {
 			String from = extras.getString("from");
-			
-			if(from.equals("new activity")){
+
+			if (from.equals("new activity")) {
 				currentTracker = TrackerInputType.ACTIVITY;
-				setNewActivity(extras.getString("activity_name"),extras.getString("activity_cal"),
-						extras.getString("activity_duration"),extras.getString("activity_unit"));
-				
-			}else if (from.equals("new food")){
+				setNewActivity(extras.getString("activity_name"),
+						extras.getString("activity_cal"),
+						extras.getString("activity_duration"),
+						extras.getString("activity_unit"));
+
+			} else if (from.equals("new food")) {
 				currentTracker = TrackerInputType.FOOD;
-				setNewFood(extras.getString("food_name"),extras.getString("food_cal"),
-						extras.getString("food_protein"),extras.getString("food_carbs"),
-						extras.getString("food_fat"),extras.getString("food_serving"),
+				setNewFood(extras.getString("food_name"),
+						extras.getString("food_cal"),
+						extras.getString("food_protein"),
+						extras.getString("food_carbs"),
+						extras.getString("food_fat"),
+						extras.getString("food_serving"),
 						extras.getString("food_unit"));
 			}
-			
+
 		}
 	}
 
-	private void setNewFood(String food, String cal, String protein, String carbs, 
-									String fat, String serving, String unit) {
+	private void setNewFood(String food, String cal, String protein,
+			String carbs, String fat, String serving, String unit) {
 		// TODO Auto-generated method stub
-		
+
 		setAllTemplateGone();
 		foodTemplate.setVisibility(View.VISIBLE);
 		foodCal.setVisibility(View.VISIBLE);
-		
+
 		txtFoodCal.setText(cal);
 		txtFoodProtein.setText(protein);
 		txtFoodCarbs.setText(carbs);
@@ -276,21 +292,22 @@ public class NewStatusActivity extends Activity {
 		txtFood.setText(food);
 		txtFoodQuantityUnit.setText(unit);
 		txtFoodQuantity.setText(serving);
-		
+
 	}
 
-	private void setNewActivity(String name, String met, String duration, String unit) {
+	private void setNewActivity(String name, String met, String duration,
+			String unit) {
 		// TODO Auto-generated method stub
 		setAllTemplateGone();
 		activityTemplate.setVisibility(View.VISIBLE);
 		activityCal.setVisibility(View.VISIBLE);
-		
+
 		txtActivity.setText(name);
 		txtActivityDurationUnit.setText(unit);
 		txtActivityDuration.setText(duration);
-		double cal = Double.parseDouble(met) * 5; //not true
+		double cal = Double.parseDouble(met) * 5; // not true
 		txtActivityCal.setText(String.valueOf(cal));
-		
+
 	}
 
 	@Override
@@ -310,7 +327,7 @@ public class NewStatusActivity extends Activity {
 			} else if (item.equals(TrackerInputType.NOTES)) {
 				currentTracker = TrackerInputType.NOTES;
 				callNotesInput();
-			}else if (item.equals(TrackerInputType.WEIGHT)) {
+			} else if (item.equals(TrackerInputType.WEIGHT)) {
 				currentTracker = TrackerInputType.WEIGHT;
 				callWeightInput();
 			} else if (item.equals(TrackerInputType.FOOD)) {
@@ -323,13 +340,11 @@ public class NewStatusActivity extends Activity {
 				currentTracker = TrackerInputType.ACTIVITY;
 				callActivityInput();
 			}
-		}
-		else if (requestCode == 3){
+		} else if (requestCode == 3) {
 			String activity = data.getStringExtra("activity chosen");
 			currentTracker = TrackerInputType.ACTIVITY;
 			callActivityDurationInput(activity);
-		}
-		else if (requestCode == 4){
+		} else if (requestCode == 4) {
 			String food = data.getStringExtra("food chosen");
 			String serving = data.getStringExtra("serving");
 			double cal = data.getDoubleExtra("cal", 0.0);
@@ -337,18 +352,19 @@ public class NewStatusActivity extends Activity {
 			double carbs = data.getDoubleExtra("carbs", 0.0);
 			double fat = data.getDoubleExtra("fat", 0.0);
 			currentTracker = TrackerInputType.FOOD;
-			callFoodServingInput(food,serving,cal,protein,carbs,fat);
+			callFoodServingInput(food, serving, cal, protein, carbs, fat);
 		}
 	}
 
-	private void callFoodServingInput(final String food,final String serving, final double cal
-			, final double protein, final double carbs, final double fat) {
+	private void callFoodServingInput(final String food, final String serving,
+			final double cal, final double protein, final double carbs,
+			final double fat) {
 		// TODO Auto-generated method stub
-		
+
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
 
-		View foodView = layoutInflater.inflate(R.layout.item_food_serving_input,
-				null);
+		View foodView = layoutInflater.inflate(
+				R.layout.item_food_serving_input, null);
 
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 				context);
@@ -361,11 +377,12 @@ public class NewStatusActivity extends Activity {
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
-						// set activity cal  -- get from database
-						setNewFood(food,String.valueOf(cal),String.valueOf(protein),
-								String.valueOf(carbs),String.valueOf(fat),
-								String.valueOf(txtFoodSize.getText()),serving);
-						
+						// set activity cal -- get from database
+						setNewFood(food, String.valueOf(cal),
+								String.valueOf(protein), String.valueOf(carbs),
+								String.valueOf(fat),
+								String.valueOf(txtFoodSize.getText()), serving);
+
 					}
 				})
 				.setNegativeButton("Cancel",
@@ -379,21 +396,22 @@ public class NewStatusActivity extends Activity {
 		// create an alert dialog
 		AlertDialog alertD = alertDialogBuilder.create();
 		alertD.show();
-		
+
 	}
 
 	private void callActivityDurationInput(final String activity) {
 		// TODO Auto-generated method stub
-		
+
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
 
-		View activityView = layoutInflater.inflate(R.layout.item_activity_duration_input,
-				null);
+		View activityView = layoutInflater.inflate(
+				R.layout.item_activity_duration_input, null);
 
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 				context);
 		alertDialogBuilder.setView(activityView);
-		activityDuration = (EditText) activityView.findViewById(R.id.txtActivityDurationTime);
+		activityDuration = (EditText) activityView
+				.findViewById(R.id.txtActivityDurationTime);
 		activityUnitSpinner = (Spinner) activityView
 				.findViewById(R.id.activityUnitSpinner);
 		alertDialogBuilder
@@ -402,9 +420,9 @@ public class NewStatusActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						// set activity met -- get from database
-						setNewActivity(activity,"30",
-								activityDuration.getText().toString(),String.valueOf(activityUnitSpinner
-										.getSelectedItem()));
+						setNewActivity(activity, "30", activityDuration
+								.getText().toString(), String
+								.valueOf(activityUnitSpinner.getSelectedItem()));
 					}
 				})
 				.setNegativeButton("Cancel",
@@ -425,14 +443,14 @@ public class NewStatusActivity extends Activity {
 
 		Intent intent = new Intent(getApplicationContext(),
 				ActivitiesSearchListActivity.class);
-		startActivityForResult(intent, 3);	
-		
+		startActivityForResult(intent, 3);
+
 	}
 
 	private void callCheckUpInput() {
 		// TODO Auto-generated method stub
 		setAllTemplateGone();
-		
+
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
 
 		View checkupView = layoutInflater.inflate(R.layout.item_checkup_input,
@@ -474,7 +492,7 @@ public class NewStatusActivity extends Activity {
 
 		Intent intent = new Intent(getApplicationContext(),
 				foodSearchListActivity.class);
-		startActivityForResult(intent, 4);	
+		startActivityForResult(intent, 4);
 	}
 
 	private void callNotesInput() {
@@ -616,7 +634,8 @@ public class NewStatusActivity extends Activity {
 	}
 
 	private void addBloodPressureToDatabase() throws ServiceException,
-			OutdatedAccessTokenException, WebServerException, DataAccessException {
+			OutdatedAccessTokenException, WebServerException,
+			DataAccessException {
 
 		try {
 			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
@@ -625,7 +644,7 @@ public class NewStatusActivity extends Activity {
 
 			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
 			BloodPressure bp = new BloodPressure(timestamp, bpStatus.getText()
-					.toString(), image, systolicPicker.getCurrent(),
+					.toString(), null, systolicPicker.getCurrent(),
 					diastolicPicker.getCurrent());
 
 			BloodPressureService bpService = new BloodPressureServiceImpl();
@@ -639,21 +658,54 @@ public class NewStatusActivity extends Activity {
 	}
 
 	private void addBloodSugarToDatabase() throws ServiceException,
-			OutdatedAccessTokenException {
+			OutdatedAccessTokenException, WebServerException,
+			DataAccessException {
 
 		try {
-			
+
 			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
 
 			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
 			BloodSugar bs = new BloodSugar(timestamp, bsStatus.getText()
-					.toString(), image, sugarPicker.getCurrent(),
-					String.valueOf(sugarTypeSpinner.getSelectedItem())
-					);
-//			BloodSugarService bsService = new BloodSugarServiceImpl();
-//			bsService.add(bs);
+					.toString(), null, sugarPicker.getCurrent(),
+					String.valueOf(sugarTypeSpinner.getSelectedItem()));
+			BloodSugarService bsService = new BloodSugarServiceImpl();
+			bsService.add(bs);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void addWeightToDatabase() throws ServiceException,
+			OutdatedAccessTokenException, WebServerException,
+			DataAccessException {
+
+		try {
+
+			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
+					+ timeFormat.format(calobj.getTime()));
+			Timestamp timestamp = new Timestamp(date.getTime());
+
+			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
+			double newWeight;
+			if (String.valueOf(weightUnitSpinner.getSelectedItem())
+					.equals("kg")) {
+				newWeight = WeightConverter.convertKgToLbs(Double
+						.parseDouble(String.valueOf(txtWeight.getText())));
+			} else {
+				newWeight = Double.parseDouble(String.valueOf(txtWeight
+						.getText()));
+			}
+			Weight weight = new Weight(timestamp, weightStatus.getText()
+					.toString(), image, newWeight);
+
+			WeightService weightService = new WeightServiceImpl();
+			weightService.add(weight);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -661,130 +713,99 @@ public class NewStatusActivity extends Activity {
 		}
 
 	}
-	
-	private void addWeightToDatabase() throws ServiceException,
-	OutdatedAccessTokenException {
-		
-		try {
-			
-			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
-					+ timeFormat.format(calobj.getTime()));
-			Timestamp timestamp = new Timestamp(date.getTime());
-		
-			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
-			double newWeight;
-			if(String.valueOf(weightUnitSpinner
-					.getSelectedItem()).equals("kg")){
-				newWeight =  WeightConverter.convertKgToLbs(Double.parseDouble(
-						String.valueOf(txtWeight.getText())));	
-			}else{
-				newWeight = Double.parseDouble(
-						String.valueOf(txtWeight.getText()));
-			}
-			Weight weight = new Weight(timestamp, weightStatus.getText()
-					.toString(), image, newWeight
-					);
-			
-		//	WeightService weightService = new WeightServiceImpl();
-		//	weightService.add(weight);
-		
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
-}
-	
 	private void addNoteToDatabase() throws ServiceException,
-	OutdatedAccessTokenException {
-		
+			OutdatedAccessTokenException, WebServerException,
+			DataAccessException {
+
 		try {
-			
+
 			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
 			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
-			Note note = new Note(timestamp, null, image,notesStatus.getText().toString());
-			
-		//	NoteService noteService = new NoteServiceImpl();
-		//	noteService.add(note);
-		
+			Note note = new Note(timestamp, null, image, notesStatus.getText()
+					.toString());
+
+			NoteService noteService = new NoteServiceImpl();
+			noteService.add(note);
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-}	
+	}
 
-	
 	private void addFoodToDatabase() throws ServiceException,
-	OutdatedAccessTokenException {
-		
+			OutdatedAccessTokenException {
+
 		try {
-			
+
 			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
 			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
-			
-		
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-}	
+	}
 
-	
 	private void addCheckUpToDatabase() throws ServiceException,
-	OutdatedAccessTokenException {
-		
+			OutdatedAccessTokenException {
+
 		try {
-			
+
 			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
 			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
-			CheckUp checkup = new CheckUp(timestamp, null, image,checkupStatus.getText().toString(),
-					txtPurpose.getText().toString(),txtDoctor.getText().toString());
-			
-		//	CheckUpService checkupService = new CheckUpServiceImpl();
-		//	checkupService.add(checkup);
-		
+			CheckUp checkup = new CheckUp(timestamp, null, image, checkupStatus
+					.getText().toString(), txtPurpose.getText().toString(),
+					txtDoctor.getText().toString());
+
+			// CheckUpService checkupService = new CheckUpServiceImpl();
+			// checkupService.add(checkup);
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-}	
-	
+	}
+
 	private void addActivityToDatabase() throws ServiceException,
-	OutdatedAccessTokenException {
-		
+			OutdatedAccessTokenException {
+
 		try {
-			
+
 			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
 			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
-			com.example.phr.mobile.models.Activity activity = new com.example.phr.mobile.models.Activity(txtActivity.getText().toString(),30.0);
-			ActivityTrackerEntry activityEntry = new ActivityTrackerEntry(timestamp, activityStatus.getText().toString(), image,
-					activity,Double.parseDouble(txtActivityCal.getText().toString()));
-			
-			//reference for calling
-			//txtActivityDurationUnit.setText(unit);
-			//txtActivityDuration.setText(duration);
-			
-			
-		//	ActivityService activityService = new ActivityServiceImpl();
-		//	ActivityService.add(activityEntry);
-		
+			com.example.phr.mobile.models.Activity activity = new com.example.phr.mobile.models.Activity(
+					txtActivity.getText().toString(), 30.0);
+			ActivityTrackerEntry activityEntry = new ActivityTrackerEntry(
+					timestamp, activityStatus.getText().toString(), image,
+					activity, Double.parseDouble(txtActivityCal.getText()
+							.toString()));
+
+			// reference for calling
+			// txtActivityDurationUnit.setText(unit);
+			// txtActivityDuration.setText(duration);
+
+			ActivityService activityService = new ActivityServiceImpl();
+			// ActivityService.add(activityEntry);
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-}	
+	}
 
 	private void setAllTemplateGone() {
 		bsTemplate.setVisibility(View.GONE);
@@ -825,7 +846,7 @@ public class NewStatusActivity extends Activity {
 					e.printStackTrace();
 				}
 				// onBackPressed();
-				Log.e("added","bp");
+				Log.e("added", "bp");
 				Intent intent = new Intent(getApplicationContext(),
 						BloodPressureTrackerActivity.class);
 				startActivity(intent);
@@ -840,13 +861,18 @@ public class NewStatusActivity extends Activity {
 				} catch (OutdatedAccessTokenException e) {
 					// Message - > Log user out
 					e.printStackTrace();
+				} catch (WebServerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (DataAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 				// onBackPressed();
 				Intent intent = new Intent(getApplicationContext(),
 						BloodSugarTrackerActivity.class);
 				startActivity(intent);
-			}
-			else if (currentTracker.equals(TrackerInputType.WEIGHT)) {
+			} else if (currentTracker.equals(TrackerInputType.WEIGHT)) {
 				try {
 					addWeightToDatabase();
 				} catch (ServiceException e) {
@@ -855,13 +881,18 @@ public class NewStatusActivity extends Activity {
 				} catch (OutdatedAccessTokenException e) {
 					// Message - > Log user out
 					e.printStackTrace();
+				} catch (WebServerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (DataAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 				// onBackPressed();
 				Intent intent = new Intent(getApplicationContext(),
 						WeightTrackerActivity.class);
 				startActivity(intent);
-			}
-			else if (currentTracker.equals(TrackerInputType.CHECKUP)) {
+			} else if (currentTracker.equals(TrackerInputType.CHECKUP)) {
 				try {
 					addCheckUpToDatabase();
 				} catch (ServiceException e) {
@@ -875,8 +906,7 @@ public class NewStatusActivity extends Activity {
 				Intent intent = new Intent(getApplicationContext(),
 						CheckupTrackerActivity.class);
 				startActivity(intent);
-			}
-			else if (currentTracker.equals(TrackerInputType.NOTES)) {
+			} else if (currentTracker.equals(TrackerInputType.NOTES)) {
 				try {
 					addNoteToDatabase();
 				} catch (ServiceException e) {
@@ -885,13 +915,18 @@ public class NewStatusActivity extends Activity {
 				} catch (OutdatedAccessTokenException e) {
 					// Message - > Log user out
 					e.printStackTrace();
+				} catch (WebServerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (DataAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 				// onBackPressed();
 				Intent intent = new Intent(getApplicationContext(),
 						NoteTrackerActivity.class);
 				startActivity(intent);
-			}
-			else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
+			} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
 				try {
 					addActivityToDatabase();
 				} catch (ServiceException e) {
@@ -905,8 +940,7 @@ public class NewStatusActivity extends Activity {
 				Intent intent = new Intent(getApplicationContext(),
 						ActivitiesTrackerActivity.class);
 				startActivity(intent);
-			}
-			else if (currentTracker.equals(TrackerInputType.FOOD)) {
+			} else if (currentTracker.equals(TrackerInputType.FOOD)) {
 				try {
 					addFoodToDatabase();
 				} catch (ServiceException e) {

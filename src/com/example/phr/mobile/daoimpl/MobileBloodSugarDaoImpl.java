@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import android.content.ContentValues;
@@ -36,17 +35,21 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHandler.BS_ID, bloodSugar.getEntryID());
-		values.put(DatabaseHandler.BS_DATEADDED, fmt.format(bloodSugar.getTimestamp()));
+		values.put(DatabaseHandler.BS_DATEADDED,
+				fmt.format(bloodSugar.getTimestamp()));
 		values.put(DatabaseHandler.BS_BLOODSUGAR, bloodSugar.getBloodSugar());
 		values.put(DatabaseHandler.BS_TYPE, bloodSugar.getType());
 		values.put(DatabaseHandler.BS_STATUS, bloodSugar.getStatus());
 
 		try {
-			if (bloodSugar.getImage().getFileName() == null
-					&& bloodSugar.getImage().getEncodedImage() != null) {
-				String encoded = bloodSugar.getImage().getEncodedImage();
-				String fileName = ImageHandler.saveImageReturnFileName(encoded);
-				bloodSugar.getImage().setFileName(fileName);
+			if (bloodSugar.getImage() != null) {
+				if (bloodSugar.getImage().getFileName() == null
+						&& bloodSugar.getImage().getEncodedImage() != null) {
+					String encoded = bloodSugar.getImage().getEncodedImage();
+					String fileName = ImageHandler
+							.saveImageReturnFileName(encoded);
+					bloodSugar.getImage().setFileName(fileName);
+				}
 			}
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
@@ -56,9 +59,11 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 					e);
 		}
 		if (bloodSugar.getImage().getFileName() != null)
-			values.put(DatabaseHandler.BS_PHOTO, bloodSugar.getImage().getFileName());
+			values.put(DatabaseHandler.BS_PHOTO, bloodSugar.getImage()
+					.getFileName());
 		if (bloodSugar.getFbPost() != null)
-			values.put(DatabaseHandler.BS_FBPOSTID, bloodSugar.getFbPost().getId());
+			values.put(DatabaseHandler.BS_FBPOSTID, bloodSugar.getFbPost()
+					.getId());
 
 		// Inserting Row
 		db.insert(DatabaseHandler.TABLE_BLOODSUGAR, null, values);
@@ -75,7 +80,8 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 				Locale.ENGLISH);
 
 		ContentValues values = new ContentValues();
-		values.put(DatabaseHandler.BS_DATEADDED, fmt.format(bloodSugar.getTimestamp()));
+		values.put(DatabaseHandler.BS_DATEADDED,
+				fmt.format(bloodSugar.getTimestamp()));
 		values.put(DatabaseHandler.BS_BLOODSUGAR, bloodSugar.getBloodSugar());
 		values.put(DatabaseHandler.BS_TYPE, bloodSugar.getType());
 		values.put(DatabaseHandler.BS_STATUS, bloodSugar.getStatus());
@@ -95,13 +101,16 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 					e);
 		}
 		if (bloodSugar.getImage().getFileName() != null)
-			values.put(DatabaseHandler.BS_PHOTO, bloodSugar.getImage().getFileName());
+			values.put(DatabaseHandler.BS_PHOTO, bloodSugar.getImage()
+					.getFileName());
 		if (bloodSugar.getFbPost() != null)
-			values.put(DatabaseHandler.BS_FBPOSTID, bloodSugar.getFbPost().getId());
+			values.put(DatabaseHandler.BS_FBPOSTID, bloodSugar.getFbPost()
+					.getId());
 
-		db.update(DatabaseHandler.TABLE_BLOODSUGAR, values, DatabaseHandler.BS_ID + "=" + bloodSugar.getEntryID(), null);
+		db.update(DatabaseHandler.TABLE_BLOODSUGAR, values,
+				DatabaseHandler.BS_ID + "=" + bloodSugar.getEntryID(), null);
 		db.close();
-		
+
 	}
 
 	@Override
@@ -123,14 +132,10 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 				String encoded = ImageHandler.encodeImageToBase64(bitmap);
 				image.setEncodedImage(encoded);
-				
-				BloodSugar bs = new BloodSugar(cursor.getInt(0),
-						new FBPost(cursor.getInt(6)),
-						timestamp, 
-						cursor.getString(4), 
-						image,
-						cursor.getDouble(2), 
-						cursor.getString(3));
+
+				BloodSugar bs = new BloodSugar(cursor.getInt(0), new FBPost(
+						cursor.getInt(6)), timestamp, cursor.getString(4),
+						image, cursor.getDouble(2), cursor.getString(3));
 
 				bsList.add(bs);
 			} while (cursor.moveToNext());
@@ -145,8 +150,9 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 			EntryNotFoundException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
-		db.delete(DatabaseHandler.TABLE_BLOODSUGAR, DatabaseHandler.BS_ID + "=" + bloodSugar.getEntryID(), null);
+		db.delete(DatabaseHandler.TABLE_BLOODSUGAR, DatabaseHandler.BS_ID + "="
+				+ bloodSugar.getEntryID(), null);
 		db.close();
 	}
-	
+
 }

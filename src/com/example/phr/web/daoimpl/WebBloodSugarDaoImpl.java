@@ -16,7 +16,6 @@ public class WebBloodSugarDaoImpl extends GenericWebTrackerDaoImpl<BloodSugar>
 	public int add_ReturnEntryIdInWeb(BloodSugar bloodSugar)
 			throws WebServerException, OutdatedAccessTokenException {
 		String command = "tracker/addBloodSugar";
-		String fieldName = "bloodSugar";
 		return add_ReturnEntryIDToWebUsingHttp(command, bloodSugar);
 	}
 

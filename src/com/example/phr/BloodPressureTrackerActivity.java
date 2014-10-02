@@ -92,7 +92,7 @@ public class BloodPressureTrackerActivity extends Activity {
 
 		MobileBloodPressureDaoImpl bpDaoImpl = new MobileBloodPressureDaoImpl();
 		try {
-			list = bpDaoImpl.getAll();
+			list = bpDaoImpl.getAllReversed();
 			reverselist = Lists.reverse(list);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -117,14 +117,16 @@ public class BloodPressureTrackerActivity extends Activity {
 		mBtnBloodPressurePost.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				/*Intent intent = new Intent(getApplicationContext(),
-						BloodPressurePostActivity.class);
-				startActivity(intent);*/
-				
-				Intent i = new Intent(getApplicationContext(), NewStatusActivity.class);
-				i.putExtra("tracker",TrackerInputType.BLOOD_PRESSURE);
+				/*
+				 * Intent intent = new Intent(getApplicationContext(),
+				 * BloodPressurePostActivity.class); startActivity(intent);
+				 */
+
+				Intent i = new Intent(getApplicationContext(),
+						NewStatusActivity.class);
+				i.putExtra("tracker", TrackerInputType.BLOOD_PRESSURE);
 				startActivity(i);
-				
+
 			}
 		});
 
