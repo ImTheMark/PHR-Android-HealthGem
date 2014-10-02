@@ -644,7 +644,7 @@ public class NewStatusActivity extends Activity {
 
 			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
 			BloodPressure bp = new BloodPressure(timestamp, bpStatus.getText()
-					.toString(), null, systolicPicker.getCurrent(),
+					.toString(), image, systolicPicker.getCurrent(),
 					diastolicPicker.getCurrent());
 
 			BloodPressureService bpService = new BloodPressureServiceImpl();
