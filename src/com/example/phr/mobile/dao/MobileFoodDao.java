@@ -7,11 +7,12 @@ import com.example.phr.mobile.models.Food;
 import com.example.phr.mobile.models.FoodTrackerEntry;
 
 public interface MobileFoodDao extends MobileTrackerDao<FoodTrackerEntry> {
-	
-	public int addFoodListEntryReturnEntryID(Food food) throws DataAccessException;
-	
-	public Boolean checkFoodEntryInList(Food food) throws DataAccessException;
-	
-	public ArrayList<Food> getAllFood () throws DataAccessException;
+
+	public int addFoodListEntryReturnEntryID(Food food)
+			throws DataAccessException;
+
+	public Boolean foodEntryExists(Food food) throws DataAccessException;
+
+	public ArrayList<Food> getAllFood() throws DataAccessException;
 
 }
