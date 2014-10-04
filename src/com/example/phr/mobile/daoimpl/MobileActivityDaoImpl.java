@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import android.content.ContentValues;
@@ -19,7 +20,6 @@ import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileActivityDao;
 import com.example.phr.mobile.models.Activity;
 import com.example.phr.mobile.models.ActivityTrackerEntry;
-import com.example.phr.mobile.models.FBPost;
 import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.tools.DateTimeParser;
 import com.example.phr.tools.ImageHandler;
@@ -122,8 +122,7 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 	@Override
 	public ArrayList<ActivityTrackerEntry> getAll() throws ParseException {
 		ArrayList<ActivityTrackerEntry> actList = new ArrayList<ActivityTrackerEntry>();
-		String selectQuery = "SELECT  * FROM "
-				+ DatabaseHandler.TABLE_ACTIVITY;
+		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_ACTIVITY;
 
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
@@ -139,16 +138,17 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 				String encoded = ImageHandler.encodeImageToBase64(bitmap);
 				image.setEncodedImage(encoded);
 
-				Activity activity = ActivityDao.getActivity(cursor.getDouble(2))
-				ActivityTrackerEntry act = new ActivityTrackerEntry(cursor.getInt(0),
-						new FBPost(cursor.getInt(7)),
-						timestamp, 
-						cursor.getString(5), 
-						image,
-						new Activity(cursor.getDouble(2)), 
-						cursor.getString(3));
-
-				actList.add(act);
+				/*
+				 * Activity activity =
+				 * ActivityDao.getActivity(cursor.getDouble(2))
+				 * ActivityTrackerEntry act = new
+				 * ActivityTrackerEntry(cursor.getInt(0), new
+				 * FBPost(cursor.getInt(7)), timestamp, cursor.getString(5),
+				 * image, new Activity(cursor.getDouble(2)),
+				 * cursor.getString(3));
+				 * 
+				 * actList.add(act);
+				 */
 			} while (cursor.moveToNext());
 		}
 
@@ -197,5 +197,11 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 
 		db.close();
 		return actList;
+	}
+
+	@Override
+	public List<ActivityTrackerEntry> getAllReversed() throws ParseException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -45,11 +45,13 @@ import com.example.phr.mobile.models.Weight;
 import com.example.phr.service.ActivityService;
 import com.example.phr.service.BloodPressureService;
 import com.example.phr.service.BloodSugarService;
+import com.example.phr.service.CheckUpService;
 import com.example.phr.service.NoteService;
 import com.example.phr.service.WeightService;
 import com.example.phr.serviceimpl.ActivityServiceImpl;
 import com.example.phr.serviceimpl.BloodPressureServiceImpl;
 import com.example.phr.serviceimpl.BloodSugarServiceImpl;
+import com.example.phr.serviceimpl.CheckUpServiceImpl;
 import com.example.phr.serviceimpl.NoteServiceImpl;
 import com.example.phr.serviceimpl.WeightServiceImpl;
 import com.example.phr.tools.WeightConverter;
@@ -113,6 +115,7 @@ public class NewStatusActivity extends Activity {
 	DateFormat timeFormat;
 	DateFormat fmt;
 	Calendar calobj;
+	String mode;
 	final Context context = this;
 
 	@SuppressLint("NewApi")
@@ -226,29 +229,33 @@ public class NewStatusActivity extends Activity {
 				startActivityForResult(intent, 2);
 			}
 		});
+
+		mode = "add";
+
 		Intent in = getIntent();
 		Bundle extras = getIntent().getExtras();
 		if (extras != null && in.hasExtra("tracker")) {
+			mode = "add";
 			String tracker = extras.getString("tracker");
 
 			if (tracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
 				currentTracker = TrackerInputType.BLOOD_PRESSURE;
-				callBloodPressureInput();
+				callBloodPressureInput(120, 80);
 			} else if (tracker.equals(TrackerInputType.BLOOD_SUGAR)) {
 				currentTracker = TrackerInputType.BLOOD_SUGAR;
-				callBloodSugarInput();
+				callBloodSugarInput("120", "before meal");
 			} else if (tracker.equals(TrackerInputType.NOTES)) {
 				currentTracker = TrackerInputType.NOTES;
 				callNotesInput();
 			} else if (tracker.equals(TrackerInputType.WEIGHT)) {
 				currentTracker = TrackerInputType.WEIGHT;
-				callWeightInput();
+				callWeightInput("100", "lb");
 			} else if (tracker.equals(TrackerInputType.FOOD)) {
 				currentTracker = TrackerInputType.FOOD;
 				callFoodInput();
 			} else if (tracker.equals(TrackerInputType.CHECKUP)) {
 				currentTracker = TrackerInputType.CHECKUP;
-				callCheckUpInput();
+				callCheckUpInput("doctor's name", "purpose");
 			} else if (tracker.equals(TrackerInputType.ACTIVITY)) {
 				currentTracker = TrackerInputType.ACTIVITY;
 				callActivityInput();
@@ -258,33 +265,36 @@ public class NewStatusActivity extends Activity {
 
 			if (from.equals("new activity")) {
 				currentTracker = TrackerInputType.ACTIVITY;
-				setNewActivity(extras.getString("activity_name"),
+				setActivityTemplate(extras.getString("activity_name"),
 						extras.getString("activity_cal"),
 						extras.getString("activity_duration"),
-						extras.getString("activity_unit"));
+						extras.getString("activity_unit"), "");
 
 			} else if (from.equals("new food")) {
 				currentTracker = TrackerInputType.FOOD;
-				setNewFood(extras.getString("food_name"),
+				setFoodTemplate(extras.getString("food_name"),
 						extras.getString("food_cal"),
 						extras.getString("food_protein"),
 						extras.getString("food_carbs"),
 						extras.getString("food_fat"),
 						extras.getString("food_serving"),
-						extras.getString("food_unit"));
+						extras.getString("food_unit"), "");
 			}
+		} else if (extras != null && in.hasExtra("edit")) {
+			/*
+			 * Bundle b = this.getIntent().getExtras(); if(b!=null)
+			 * mCurrentListing = b.getParcelable(Constants.CUSTOM_LISTING);
+			 */
 
 		}
 	}
 
-	private void setNewFood(String food, String cal, String protein,
-			String carbs, String fat, String serving, String unit) {
+	private void setFoodTemplate(String food, String cal, String protein,
+			String carbs, String fat, String serving, String unit, String status) {
 		// TODO Auto-generated method stub
-
 		setAllTemplateGone();
 		foodTemplate.setVisibility(View.VISIBLE);
 		foodCal.setVisibility(View.VISIBLE);
-
 		txtFoodCal.setText(cal);
 		txtFoodProtein.setText(protein);
 		txtFoodCarbs.setText(carbs);
@@ -292,22 +302,83 @@ public class NewStatusActivity extends Activity {
 		txtFood.setText(food);
 		txtFoodQuantityUnit.setText(unit);
 		txtFoodQuantity.setText(serving);
+		if (mode.equals("add"))
+			foodStatus.setText("how you feel? ");
+		else
+			foodStatus.setText(status);
 
 	}
 
-	private void setNewActivity(String name, String met, String duration,
-			String unit) {
+	private void setActivityTemplate(String name, String met, String duration,
+			String unit, String status) {
 		// TODO Auto-generated method stub
 		setAllTemplateGone();
 		activityTemplate.setVisibility(View.VISIBLE);
 		activityCal.setVisibility(View.VISIBLE);
-
 		txtActivity.setText(name);
 		txtActivityDurationUnit.setText(unit);
 		txtActivityDuration.setText(duration);
 		double cal = Double.parseDouble(met) * 5; // not true
 		txtActivityCal.setText(String.valueOf(cal));
+		if (mode.equals("add"))
+			activityStatus.setText("how you feel? ");
+		else
+			activityStatus.setText(status);
+	}
 
+	private void setCheckupTemplate(String doctor, String purpose, String status) {
+		setAllTemplateGone();
+		checkupTemplate.setVisibility(View.VISIBLE);
+		txtDoctor.setText(doctor);
+		txtPurpose.setText(purpose);
+		if (mode.equals("add"))
+			checkupStatus.setText("how you feel? ");
+		else
+			checkupStatus.setText(status);
+	}
+
+	private void setWeightTemplate(String weight, String unit, String status) {
+		setAllTemplateGone();
+		weightTemplate.setVisibility(View.VISIBLE);
+		txtWeight.setText(weight);
+		txtWeightUnit.setText(unit);
+		if (mode.equals("add"))
+			weightStatus.setText("how you feel? ");
+		else
+			weightStatus.setText(status);
+	}
+
+	private void setBloodSugarTemplate(String bloodsugar,
+			String bloodsugartype, String status) {
+		setAllTemplateGone();
+		bsTemplate.setVisibility(View.VISIBLE);
+		txtSugar.setText(bloodsugar);
+		txtSugarType.setText(bloodsugartype);
+		if (mode.equals("add"))
+			bsStatus.setText("how you feel? ");
+		else
+			bsStatus.setText(status);
+	}
+
+	private void setBloodPressureTemplate(String systolic, String diastolic,
+			String status) {
+		setAllTemplateGone();
+		bpTemplate.setVisibility(View.VISIBLE);
+		txtSystolic.setText(Integer.toString(systolicPicker.getCurrent()));
+		txtDiastolic.setText(Integer.toString(diastolicPicker.getCurrent()));
+		if (mode.equals("add"))
+			bpStatus.setText("how you feel? ");
+		else
+			bpStatus.setText(status);
+	}
+
+	private void setNoteTemplate(String note) {
+		setAllTemplateGone();
+		notesTemplate.setVisibility(View.VISIBLE);
+		if (mode.equals("add"))
+			notesStatus.setText("how you feel? ");
+		else
+			notesStatus.setText(note);
 	}
 
 	@Override
@@ -320,22 +391,22 @@ public class NewStatusActivity extends Activity {
 			Log.e("itemValue = ", item);
 			if (item.equals(TrackerInputType.BLOOD_PRESSURE)) {
 				currentTracker = TrackerInputType.BLOOD_PRESSURE;
-				callBloodPressureInput();
+				callBloodPressureInput(120, 80);
 			} else if (item.equals(TrackerInputType.BLOOD_SUGAR)) {
 				currentTracker = TrackerInputType.BLOOD_SUGAR;
-				callBloodSugarInput();
+				callBloodSugarInput("120", "before meal");
 			} else if (item.equals(TrackerInputType.NOTES)) {
 				currentTracker = TrackerInputType.NOTES;
 				callNotesInput();
 			} else if (item.equals(TrackerInputType.WEIGHT)) {
 				currentTracker = TrackerInputType.WEIGHT;
-				callWeightInput();
+				callWeightInput("100", "lb");
 			} else if (item.equals(TrackerInputType.FOOD)) {
 				currentTracker = TrackerInputType.FOOD;
 				callFoodInput();
 			} else if (item.equals(TrackerInputType.CHECKUP)) {
 				currentTracker = TrackerInputType.CHECKUP;
-				callCheckUpInput();
+				callCheckUpInput("doctor's name", "purpose");
 			} else if (item.equals(TrackerInputType.ACTIVITY)) {
 				currentTracker = TrackerInputType.ACTIVITY;
 				callActivityInput();
@@ -378,10 +449,11 @@ public class NewStatusActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						// set activity cal -- get from database
-						setNewFood(food, String.valueOf(cal),
+						setFoodTemplate(food, String.valueOf(cal),
 								String.valueOf(protein), String.valueOf(carbs),
 								String.valueOf(fat),
-								String.valueOf(txtFoodSize.getText()), serving);
+								String.valueOf(txtFoodSize.getText()), serving,
+								foodStatus.getText().toString());
 
 					}
 				})
@@ -420,9 +492,10 @@ public class NewStatusActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						// set activity met -- get from database
-						setNewActivity(activity, "30", activityDuration
-								.getText().toString(), String
-								.valueOf(activityUnitSpinner.getSelectedItem()));
+						setActivityTemplate(activity, "30", activityDuration
+								.getText().toString(),
+								String.valueOf(activityUnitSpinner
+										.getSelectedItem()), "How you feel? ");
 					}
 				})
 				.setNegativeButton("Cancel",
@@ -447,7 +520,7 @@ public class NewStatusActivity extends Activity {
 
 	}
 
-	private void callCheckUpInput() {
+	private void callCheckUpInput(String txtDoctor, String txtPurpose) {
 		// TODO Auto-generated method stub
 		setAllTemplateGone();
 
@@ -460,18 +533,18 @@ public class NewStatusActivity extends Activity {
 				context);
 		alertDialogBuilder.setView(checkupView);
 		doctor = (EditText) checkupView.findViewById(R.id.txtDoctor);
+		doctor.setText(txtDoctor);
 		purpose = (EditText) checkupView.findViewById(R.id.txtPurpose);
+		purpose.setText(txtPurpose);
 		alertDialogBuilder
 				.setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 
-						setAllTemplateGone();
-						checkupTemplate.setVisibility(View.VISIBLE);
-
-						txtDoctor.setText(doctor.getText());
-						txtPurpose.setText(purpose.getText());
+						setCheckupTemplate(doctor.getText().toString(), purpose
+								.getText().toString(), checkupStatus.getText()
+								.toString());
 					}
 				})
 				.setNegativeButton("Cancel",
@@ -497,13 +570,11 @@ public class NewStatusActivity extends Activity {
 
 	private void callNotesInput() {
 		// TODO Auto-generated method stub
-		setAllTemplateGone();
-		notesTemplate.setVisibility(View.VISIBLE);
+		setNoteTemplate(notesStatus.getText().toString());
 	}
 
-	private void callWeightInput() {
+	private void callWeightInput(String txtWeight, String txtUnit) {
 		// TODO Auto-generated method stub
-		setAllTemplateGone();
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
 
 		View weightView = layoutInflater.inflate(R.layout.item_weight_input,
@@ -513,6 +584,7 @@ public class NewStatusActivity extends Activity {
 				context);
 		alertDialogBuilder.setView(weightView);
 		weight = (EditText) weightView.findViewById(R.id.txtWeight);
+		weight.setText(txtWeight);
 		weightUnitSpinner = (Spinner) weightView
 				.findViewById(R.id.weightUnitSpinner);
 		alertDialogBuilder
@@ -521,12 +593,10 @@ public class NewStatusActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 
-						setAllTemplateGone();
-						weightTemplate.setVisibility(View.VISIBLE);
+						setWeightTemplate(weight.getText().toString(), String
+								.valueOf(weightUnitSpinner.getSelectedItem()),
+								weightStatus.getText().toString());
 
-						txtWeight.setText(weight.getText());
-						txtWeightUnit.setText(String.valueOf(weightUnitSpinner
-								.getSelectedItem()));
 					}
 				})
 				.setNegativeButton("Cancel",
@@ -542,7 +612,7 @@ public class NewStatusActivity extends Activity {
 		alertD.show();
 	}
 
-	private void callBloodSugarInput() {
+	private void callBloodSugarInput(String txtbs, String txttype) {
 		// TODO Auto-generated method stub
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
 
@@ -554,21 +624,19 @@ public class NewStatusActivity extends Activity {
 		alertDialogBuilder.setView(bsView);
 		sugarPicker = (NumberPicker) bsView.findViewById(R.id.sugarPicker);
 		sugarTypeSpinner = (Spinner) bsView.findViewById(R.id.sugarTypeSpinner);
-		sugarPicker.setCurrent(120);
+		sugarPicker.setCurrent(Integer.parseInt(txtbs));
 		alertDialogBuilder
 				.setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 
-						setAllTemplateGone();
-						bsTemplate.setVisibility(View.VISIBLE);
 						Log.e("sugar",
 								Integer.toString(sugarPicker.getCurrent()));
-						txtSugar.setText(Integer.toString(sugarPicker
-								.getCurrent()));
-						txtSugarType.setText(String.valueOf(sugarTypeSpinner
-								.getSelectedItem()));
+						setBloodSugarTemplate(Integer.toString(sugarPicker
+								.getCurrent()), String.valueOf(sugarTypeSpinner
+								.getSelectedItem()), bsStatus.getText()
+								.toString());
 					}
 				})
 				.setNegativeButton("Cancel",
@@ -585,11 +653,10 @@ public class NewStatusActivity extends Activity {
 
 	}
 
-	private void callBloodPressureInput() {
+	private void callBloodPressureInput(int systolic, int diastolic) {
 		// TODO Auto-generated method stub
 
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
-
 		View bpView = layoutInflater.inflate(R.layout.item_bloodpressure_input,
 				null);
 
@@ -600,23 +667,20 @@ public class NewStatusActivity extends Activity {
 				.findViewById(R.id.systolicPicker);
 		diastolicPicker = (NumberPicker) bpView
 				.findViewById(R.id.diastolicPicker);
-		systolicPicker.setCurrent(120);
-		diastolicPicker.setCurrent(80);
+		systolicPicker.setCurrent(systolic);
+		diastolicPicker.setCurrent(diastolic);
 		alertDialogBuilder
 				.setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 
-						setAllTemplateGone();
-						bpTemplate.setVisibility(View.VISIBLE);
-						Log.e("in", "kkdks");
 						Log.e("systolic",
 								Integer.toString(systolicPicker.getCurrent()));
-						txtSystolic.setText(Integer.toString(systolicPicker
-								.getCurrent()));
-						txtDiastolic.setText(Integer.toString(diastolicPicker
-								.getCurrent()));
+						setBloodPressureTemplate(
+								Integer.toString(systolicPicker.getCurrent()),
+								Integer.toString(diastolicPicker.getCurrent()),
+								bpStatus.getText().toString());
 
 					}
 				})
@@ -763,12 +827,12 @@ public class NewStatusActivity extends Activity {
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
 			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
-			CheckUp checkup = new CheckUp(timestamp, null, image, checkupStatus
+			CheckUp checkup = new CheckUp(timestamp, null, null, checkupStatus
 					.getText().toString(), txtPurpose.getText().toString(),
 					txtDoctor.getText().toString());
 
-			// CheckUpService checkupService = new CheckUpServiceImpl();
-			// checkupService.add(checkup);
+			CheckUpService checkupService = new CheckUpServiceImpl();
+			checkupService.add(checkup);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

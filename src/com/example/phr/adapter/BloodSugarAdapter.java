@@ -3,25 +3,21 @@ package com.example.phr.adapter;
 import java.util.List;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.phr.BloodPressureTrackerActivity;
-import com.example.phr.BloodSugarTrackerActivity;
 import com.example.phr.R;
-import com.example.phr.model.BloodSugar;
+import com.example.phr.mobile.models.BloodSugar;
+import com.example.phr.tools.DateTimeParser;
 
-public class BloodSugarAdapter extends BaseAdapter{
+public class BloodSugarAdapter extends BaseAdapter {
 
-	
-	private Context mContext;
-	private List<BloodSugar> mListOfBloodSugar;
+	private final Context mContext;
+	private final List<BloodSugar> mListOfBloodSugar;
 
 	private static class ViewHolder {
 		TextView glucoseLevel;
@@ -30,25 +26,29 @@ public class BloodSugarAdapter extends BaseAdapter{
 		TextView time;
 		ImageView image;
 	}
-	
-	
-	public BloodSugarAdapter(Context aContext, List<BloodSugar> aListOfBloodSugar) {
+
+	public BloodSugarAdapter(Context aContext,
+			List<BloodSugar> aListOfBloodSugar) {
 		mListOfBloodSugar = aListOfBloodSugar;
 		mContext = aContext;
 	}
 
+	@Override
 	public int getCount() {
 		return mListOfBloodSugar.size();
 	}
 
+	@Override
 	public Object getItem(int position) {
 		return mListOfBloodSugar.get(position);
 	}
 
+	@Override
 	public long getItemId(int position) {
 		return position;
 	}
 
+	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder viewHolder;
 
@@ -60,40 +60,33 @@ public class BloodSugarAdapter extends BaseAdapter{
 			viewHolder = new ViewHolder();
 			viewHolder.glucoseLevel = (TextView) convertView
 					.findViewById(R.id.txtGlucose);
-			viewHolder.type = (TextView) convertView
-					.findViewById(R.id.txtType);
+			viewHolder.type = (TextView) convertView.findViewById(R.id.txtType);
 			viewHolder.date = (TextView) convertView
 					.findViewById(R.id.txtglucosedate);
 
 			viewHolder.time = (TextView) convertView
 					.findViewById(R.id.txtglucosetime);
-			
+
 			viewHolder.image = (ImageView) convertView
 					.findViewById(R.id.glucoseimage);
-			
+
 			convertView.setTag(viewHolder);
 		}
 
 		viewHolder = (ViewHolder) convertView.getTag();
-		viewHolder.glucoseLevel.setText(String.valueOf(mListOfBloodSugar.get(position).getGlucoseLevel()));
-		viewHolder.type.setText(String.valueOf(mListOfBloodSugar.get(position).getType()));
-		viewHolder.date.setText(String.valueOf(mListOfBloodSugar.get(
-				position).getDate()));
+		viewHolder.glucoseLevel.setText(String.valueOf(mListOfBloodSugar.get(
+				position).getBloodSugar()));
+		viewHolder.type.setText(String.valueOf(mListOfBloodSugar.get(position)
+				.getType()));
+		viewHolder.date.setText(String.valueOf(DateTimeParser
+				.getDate(mListOfBloodSugar.get(position).getTimestamp())));
 
-		viewHolder.time.setText(String.valueOf(mListOfBloodSugar.get(
-				position).getTime()));
-		
-		viewHolder.image.setImageDrawable(mListOfBloodSugar.get(position)
-				.getImage());
-		
-		convertView.setOnClickListener(new OnClickListener() {
+		viewHolder.time.setText(String.valueOf(DateTimeParser
+				.getTime(mListOfBloodSugar.get(position).getTimestamp())));
 
-			@Override
-			public void onClick(View v) {
-				
-				// FOR STATUS ON CLICK
-			}
-		});
+		// viewHolder.image.setImageDrawable(mListOfBloodSugar.get(position)
+		// .getImage());
+
 		return convertView;
 	}
 }

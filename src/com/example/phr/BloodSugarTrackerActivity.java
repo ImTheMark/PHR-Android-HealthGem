@@ -1,5 +1,6 @@
 package com.example.phr;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,21 +23,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.example.phr.adapter.BloodSugarAdapter;
 import com.example.phr.enums.TrackerInputType;
-import com.example.phr.model.BloodSugar;
+import com.example.phr.mobile.daoimpl.MobileBloodSugarDaoImpl;
+import com.example.phr.mobile.models.BloodSugar;
 
-public class BloodSugarTrackerActivity extends Activity{
+public class BloodSugarTrackerActivity extends Activity {
 
-	
 	ListView mBloodSugarList;
 	BloodSugarAdapter bloodSugarAdapter;
 	ImageView mBtnBloodsugarPost;
+	List<BloodSugar> list;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -44,34 +46,50 @@ public class BloodSugarTrackerActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_bloodsugar_tracker);
 		setTitle("Blood Sugar Tracker");
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		mBloodSugarList = (ListView) findViewById(R.id.listView_bloodsugar);
-				
+		list = new ArrayList<BloodSugar>();
 		// FAKE DATA
-		List<BloodSugar> list = new ArrayList<BloodSugar>();
-		BloodSugar data1 = new BloodSugar(1, 7.5, "Post prandial" ,"" ,"Jul 12, 2014", "3:40pm", getResources().getDrawable(R.drawable.bloodsugar_normal));
-		
-		BloodSugar data2 = new BloodSugar(2, 9, "Post prandial" ,"" ,"Jul 05, 2014", "5:40pm", getResources().getDrawable(R.drawable.bloodsugar_warning));
+		/*
+		 * BloodSugar data1 = new BloodSugar(1, 7.5, "Post prandial" ,""
+		 * ,"Jul 12, 2014", "3:40pm",
+		 * getResources().getDrawable(R.drawable.bloodsugar_normal));
+		 * 
+		 * BloodSugar data2 = new BloodSugar(2, 9, "Post prandial" ,""
+		 * ,"Jul 05, 2014", "5:40pm",
+		 * getResources().getDrawable(R.drawable.bloodsugar_warning));
+		 * 
+		 * BloodSugar data3 = new BloodSugar(3, 7.4, "Post prandial" ,""
+		 * ,"Jun 28, 2014", "8:40pm",
+		 * getResources().getDrawable(R.drawable.bloodsugar_normal));
+		 * 
+		 * BloodSugar data4 = new BloodSugar(4, 9, "Post prandial" ,""
+		 * ,"Jun 21, 2014", "3:40pm",
+		 * getResources().getDrawable(R.drawable.bloodsugar_warning));
+		 * 
+		 * BloodSugar data5 = new BloodSugar(2, 9, "Post prandial" ,""
+		 * ,"Jun 14, 2014", "5:40pm",
+		 * getResources().getDrawable(R.drawable.bloodsugar_warning));
+		 * 
+		 * BloodSugar data6 = new BloodSugar(3, 7.4, "Post prandial" ,""
+		 * ,"Jun 07, 2014", "8:40pm",
+		 * getResources().getDrawable(R.drawable.bloodsugar_normal));
+		 * 
+		 * BloodSugar data7 = new BloodSugar(4, 9, "Post prandial" ,""
+		 * ,"May 31, 2014", "3:40pm",
+		 * getResources().getDrawable(R.drawable.bloodsugar_warning));
+		 * 
+		 * list.add(data1); list.add(data2); list.add(data3); list.add(data4);
+		 * list.add(data5); list.add(data6); list.add(data7);
+		 */
 
-		BloodSugar data3 = new BloodSugar(3, 7.4, "Post prandial" ,"" ,"Jun 28, 2014", "8:40pm", getResources().getDrawable(R.drawable.bloodsugar_normal));
-		
-		BloodSugar data4 = new BloodSugar(4, 9, "Post prandial" ,"" ,"Jun 21, 2014", "3:40pm", getResources().getDrawable(R.drawable.bloodsugar_warning));
-		
-		BloodSugar data5 = new BloodSugar(2, 9, "Post prandial" ,"" ,"Jun 14, 2014", "5:40pm", getResources().getDrawable(R.drawable.bloodsugar_warning));
-
-		BloodSugar data6 = new BloodSugar(3, 7.4, "Post prandial" ,"" ,"Jun 07, 2014", "8:40pm", getResources().getDrawable(R.drawable.bloodsugar_normal));
-		
-		BloodSugar data7 = new BloodSugar(4, 9, "Post prandial" ,"" ,"May 31, 2014", "3:40pm", getResources().getDrawable(R.drawable.bloodsugar_warning));
-
-		list.add(data1);
-		list.add(data2);
-		list.add(data3);
-		list.add(data4);
-		list.add(data5);
-		list.add(data6);
-		list.add(data7);
-		
-		
+		MobileBloodSugarDaoImpl bsDaoImpl = new MobileBloodSugarDaoImpl();
+		try {
+			list = bsDaoImpl.getAllReversed();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		bloodSugarAdapter = new BloodSugarAdapter(getApplicationContext(), list);
 		mBloodSugarList.setAdapter(bloodSugarAdapter);
@@ -79,15 +97,22 @@ public class BloodSugarTrackerActivity extends Activity{
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				Log.e("bloodsugar", "CLICKED!");
+				Log.e("bloodsugar",
+						String.valueOf(list.get(arg2).getBloodSugar()));
+				/*
+				 * Intent i = new Intent(); Bundle b = new Bundle();
+				 * b.putParcelable("bs", list.get); i.putExtras(b);
+				 * i.setClass(this, NewStatusActivity.class); startActivity(i);
+				 */
 			}
 		});
-		
-		//Graph	
-	//------------------------------
+
+		// Graph
+		// ------------------------------
 		View bloodSugarChart;
 
-		String[] bloodSugarMonth = new String[] { "May 31", "Jun 07", "Jun 14", "Jun 21", "Jun 28","Jul 05", "Jul 12"};
+		String[] bloodSugarMonth = new String[] { "May 31", "Jun 07", "Jun 14",
+				"Jun 21", "Jun 28", "Jul 05", "Jul 12" };
 
 		int[] bloodSugarx = { 1, 2, 3, 4, 5, 6, 7 };
 		double[] bloodsugar = { 9, 7.4, 9, 9, 7.4, 9, 7.5 };
@@ -99,9 +124,9 @@ public class BloodSugarTrackerActivity extends Activity{
 		}
 
 		XYMultipleSeriesDataset bloodsugarDataset = new XYMultipleSeriesDataset();
-		
+
 		bloodsugarDataset.addSeries(bloodSugarSeries);
-		
+
 		XYSeriesRenderer mmolRenderer = new XYSeriesRenderer();
 		mmolRenderer.setColor(Color.parseColor("#B559BA"));
 		mmolRenderer.setPointStyle(PointStyle.CIRCLE);
@@ -111,8 +136,7 @@ public class BloodSugarTrackerActivity extends Activity{
 		mmolRenderer.setChartValuesTextSize(25);
 		mmolRenderer.setChartValuesSpacing(20);
 
-
-		XYMultipleSeriesRenderer bloodSugarMultiRenderer = new 
+		XYMultipleSeriesRenderer bloodSugarMultiRenderer = new
 
 		XYMultipleSeriesRenderer();
 		bloodSugarMultiRenderer.setXLabels(0);
@@ -126,7 +150,7 @@ public class BloodSugarTrackerActivity extends Activity{
 		bloodSugarMultiRenderer.setPointSize(10);
 		bloodSugarMultiRenderer.setXAxisMin(0);
 		bloodSugarMultiRenderer.setXAxisMax(7);
-		
+
 		// margin --- top, left, bottom, right
 		bloodSugarMultiRenderer.setMargins(new int[] { 90, 100, 120, 50 });
 		bloodSugarMultiRenderer.setLegendHeight(60);
@@ -136,8 +160,10 @@ public class BloodSugarTrackerActivity extends Activity{
 		}
 
 		bloodSugarMultiRenderer.setApplyBackgroundColor(true);
-		bloodSugarMultiRenderer.setBackgroundColor(Color.argb(0x00, 0x01, 0x01, 0x01));
-		bloodSugarMultiRenderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
+		bloodSugarMultiRenderer.setBackgroundColor(Color.argb(0x00, 0x01, 0x01,
+				0x01));
+		bloodSugarMultiRenderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01,
+				0x01));
 		bloodSugarMultiRenderer.setAxesColor(Color.BLACK);
 		bloodSugarMultiRenderer.setLabelsColor(Color.BLACK);
 		bloodSugarMultiRenderer.setXLabelsColor(Color.BLACK);
@@ -153,39 +179,37 @@ public class BloodSugarTrackerActivity extends Activity{
 				bloodsugarDataset, bloodSugarMultiRenderer);
 
 		bloodSugarContainer.addView(bloodSugarChart);
-		
-		
+
 		mBtnBloodsugarPost = (ImageView) findViewById(R.id.bloodsugarBanner);
 		mBtnBloodsugarPost.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(getApplicationContext(), NewStatusActivity.class);
-				i.putExtra("tracker",TrackerInputType.BLOOD_SUGAR);
+				Intent i = new Intent(getApplicationContext(),
+						NewStatusActivity.class);
+				i.putExtra("tracker", TrackerInputType.BLOOD_SUGAR);
 				startActivity(i);
 			}
 		});
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    // Inflate the menu items for use in the action bar
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.menu_tracker_help, menu);
-	    return super.onCreateOptionsMenu(menu);
+		// Inflate the menu items for use in the action bar
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_tracker_help, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	@Override
-    public boolean onOptionsItemSelected(MenuItem item) 
-    {
-        switch (item.getItemId()) 
-        {
-        case android.R.id.home: 
-            onBackPressed();
-            break;
-        default:
-            return super.onOptionsItemSelected(item);
-        }
-        return true;
-    }
-	
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			onBackPressed();
+			break;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+		return true;
+	}
+
 }

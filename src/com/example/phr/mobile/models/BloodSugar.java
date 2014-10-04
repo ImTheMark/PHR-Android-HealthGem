@@ -14,8 +14,8 @@ public class BloodSugar extends TrackerEntry {
 		this.type = type;
 	}
 
-	public BloodSugar(Integer entryID, Timestamp timestamp,
-			String status, PHRImage image, double bloodSugar, String type) {
+	public BloodSugar(Integer entryID, Timestamp timestamp, String status,
+			PHRImage image, double bloodSugar, String type) {
 		super(entryID, timestamp, status, image);
 		this.bloodSugar = bloodSugar;
 		this.type = type;
@@ -50,5 +50,5 @@ public class BloodSugar extends TrackerEntry {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
+
 }
