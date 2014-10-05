@@ -6,12 +6,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-import org.apache.commons.codec.binary.Base64;
-
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
 
 import com.example.phr.application.HealthGem;
 
@@ -58,24 +57,21 @@ public class ImageHandler {
 
 		return null;
 	}
-
-	public static String encodeImageToBase64(Bitmap image) {
-		Bitmap immagex = image;
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		immagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-		Base64 base64 = new Base64();
-		String imageEncoded = new String(base64.encode(baos.toByteArray()));
-		return imageEncoded;
+	
+ 	public static String encodeImageToBase64(Bitmap image)
+	{
+	    Bitmap immagex=image;
+	    ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+	    immagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+	    byte[] b = baos.toByteArray();
+	    String imageEncoded = Base64.encodeToString(b,Base64.DEFAULT);
+	    return imageEncoded;
 	}
-
-	public static Bitmap decodeImage(String encodedImage) {
-		if(encodedImage != null){
-			Base64 base64 = new Base64();
-			byte[] imageInByte = base64.decode(encodedImage);
-			return BitmapFactory
-					.decodeByteArray(imageInByte, 0, imageInByte.length);
-		}
-		return null;
+	
+	public static Bitmap decodeImage(String encodedImage) 
+	{
+		byte[] imageInByte = Base64.decode(encodedImage, 0);
+	    return BitmapFactory.decodeByteArray(imageInByte, 0, imageInByte.length); 
 	}
 
 	public static String getEncodedImageFromFile(String fileName) {
