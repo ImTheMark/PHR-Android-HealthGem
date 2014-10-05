@@ -71,9 +71,13 @@ public class WeightServiceImpl implements WeightService {
 	}
 
 	@Override
-	public List<Weight> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Weight> getAll() throws ServiceException {
+		try {
+			return mobileWeightDao.getAllReversed();
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to retrieve", e);
+		}
 	}
 
 	@Override

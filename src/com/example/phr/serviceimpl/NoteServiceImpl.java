@@ -72,9 +72,13 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	@Override
-	public List<Note> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Note> getAll() throws ServiceException {
+		try {
+			return mobileNoteDao.getAllReversed();
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to retrieve", e);
+		}
 	}
 
 	@Override

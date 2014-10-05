@@ -72,9 +72,13 @@ public class CheckUpServiceImpl implements CheckUpService {
 	}
 
 	@Override
-	public List<CheckUp> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<CheckUp> getAll() throws ServiceException {
+		try {
+			return mobileCheckUpDao.getAllReversed();
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to retrieve", e);
+		}
 	}
 
 	@Override
