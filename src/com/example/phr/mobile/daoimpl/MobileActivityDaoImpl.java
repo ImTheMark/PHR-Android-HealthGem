@@ -120,7 +120,7 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 	}
 
 	@Override
-	public ArrayList<ActivityTrackerEntry> getAll() throws ParseException {
+	public ArrayList<ActivityTrackerEntry> getAll() throws DataAccessException{
 		ArrayList<ActivityTrackerEntry> actList = new ArrayList<ActivityTrackerEntry>();
 		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_ACTIVITY;
 
@@ -130,8 +130,12 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 
 		if (cursor.moveToFirst()) {
 			do {
-				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
-						.getString(1));
+				try {
+					Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+				} catch (ParseException e) {
+					throw new DataAccessException("Cannot complete operation due to parse failure", e);
+				}
 				PHRImage image = new PHRImage();
 				image.setFileName(cursor.getString(6));
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
@@ -200,7 +204,7 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 	}
 
 	@Override
-	public List<ActivityTrackerEntry> getAllReversed() throws ParseException {
+	public List<ActivityTrackerEntry> getAllReversed() throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}

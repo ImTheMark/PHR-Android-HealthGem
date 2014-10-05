@@ -73,7 +73,7 @@ public class WeightServiceImpl implements WeightService {
 	@Override
 	public List<Weight> getAll() throws ServiceException {
 		try {
-			return mobileWeightDao.getAllReversed();
+			return mobileWeightDao.getAll();
 		} catch (DataAccessException e) {
 			throw new ServiceException(
 					"An error occured while trying to retrieve", e);

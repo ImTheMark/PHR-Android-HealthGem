@@ -106,7 +106,7 @@ public class MobileCheckupDaoImpl implements MobileCheckupDao {
 	}
 
 	@Override
-	public ArrayList<CheckUp> getAll() throws ParseException {
+	public ArrayList<CheckUp> getAll() throws DataAccessException{
 		ArrayList<CheckUp> cuList = new ArrayList<CheckUp>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_CHECKUP;
@@ -117,8 +117,13 @@ public class MobileCheckupDaoImpl implements MobileCheckupDao {
 
 		if (cursor.moveToFirst()) {
 			do {
-				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
-						.getString(1));
+				Timestamp timestamp;
+				try {
+					timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+				} catch (ParseException e) {
+					throw new DataAccessException("Cannot complete operation due to parse failure", e);
+				}
 				PHRImage image = new PHRImage();
 				image.setFileName(cursor.getString(6));
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
@@ -152,7 +157,7 @@ public class MobileCheckupDaoImpl implements MobileCheckupDao {
 	}
 
 	@Override
-	public List<CheckUp> getAllReversed() throws ParseException {
+	public List<CheckUp> getAllReversed() throws DataAccessException{
 		List<CheckUp> cuList = new ArrayList<CheckUp>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_CHECKUP
@@ -164,8 +169,13 @@ public class MobileCheckupDaoImpl implements MobileCheckupDao {
 
 		if (cursor.moveToFirst()) {
 			do {
-				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
-						.getString(1));
+				Timestamp timestamp;
+				try {
+					timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+				} catch (ParseException e) {
+					throw new DataAccessException("Cannot complete operation due to parse failure", e);
+				}
 				PHRImage image = new PHRImage();
 				image.setFileName(cursor.getString(6));
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());

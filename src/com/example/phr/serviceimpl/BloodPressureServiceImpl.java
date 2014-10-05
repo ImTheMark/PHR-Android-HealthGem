@@ -80,7 +80,7 @@ public class BloodPressureServiceImpl implements BloodPressureService {
 	@Override
 	public List<BloodPressure> getAll() throws ServiceException {
 		try {
-			return mobileBloodPressureDao.getAllReversed();
+			return mobileBloodPressureDao.getAll();
 		} catch (DataAccessException e) {
 			throw new ServiceException("An error occured while trying to get the list", e);
 		}

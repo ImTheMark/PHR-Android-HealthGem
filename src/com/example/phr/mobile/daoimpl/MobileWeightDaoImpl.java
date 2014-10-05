@@ -103,7 +103,7 @@ public class MobileWeightDaoImpl implements MobileWeightDao {
 	}
 
 	@Override
-	public ArrayList<Weight> getAll() throws ParseException {
+	public ArrayList<Weight> getAll() throws DataAccessException {
 		ArrayList<Weight> weightList = new ArrayList<Weight>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_WEIGHT;
@@ -114,8 +114,13 @@ public class MobileWeightDaoImpl implements MobileWeightDao {
 
 		if (cursor.moveToFirst()) {
 			do {
-				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
-						.getString(1));
+				Timestamp timestamp;
+				try {
+					timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+				} catch (ParseException e) {
+					throw new DataAccessException("Cannot complete operation due to parse failure", e);
+				}
 				PHRImage image = new PHRImage();
 				image.setFileName(cursor.getString(4));
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
@@ -147,7 +152,7 @@ public class MobileWeightDaoImpl implements MobileWeightDao {
 	}
 
 	@Override
-	public List<Weight> getAllReversed() throws ParseException {
+	public List<Weight> getAllReversed() throws DataAccessException {
 		List<Weight> weightList = new ArrayList<Weight>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_WEIGHT
@@ -159,8 +164,13 @@ public class MobileWeightDaoImpl implements MobileWeightDao {
 
 		if (cursor.moveToFirst()) {
 			do {
-				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
-						.getString(1));
+				Timestamp timestamp;
+				try {
+					timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+				} catch (ParseException e) {
+					throw new DataAccessException("Cannot complete operation due to parse failure", e);
+				}
 				PHRImage image = new PHRImage();
 				image.setFileName(cursor.getString(4));
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());

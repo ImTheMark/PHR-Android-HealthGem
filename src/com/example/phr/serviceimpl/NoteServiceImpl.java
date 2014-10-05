@@ -74,7 +74,7 @@ public class NoteServiceImpl implements NoteService {
 	@Override
 	public List<Note> getAll() throws ServiceException {
 		try {
-			return mobileNoteDao.getAllReversed();
+			return mobileNoteDao.getAll();
 		} catch (DataAccessException e) {
 			throw new ServiceException(
 					"An error occured while trying to retrieve", e);

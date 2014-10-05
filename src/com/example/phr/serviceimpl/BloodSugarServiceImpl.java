@@ -72,7 +72,7 @@ public class BloodSugarServiceImpl implements BloodSugarService {
 	@Override
 	public List<BloodSugar> getAll() throws ServiceException {
 		try {
-			return mobileBloodSugarDao.getAllReversed();
+			return mobileBloodSugarDao.getAll();
 		} catch (DataAccessException e) {
 			throw new ServiceException(
 					"An error occured while trying to retrieve", e);

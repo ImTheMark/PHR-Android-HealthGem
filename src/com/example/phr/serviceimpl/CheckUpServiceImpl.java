@@ -74,7 +74,7 @@ public class CheckUpServiceImpl implements CheckUpService {
 	@Override
 	public List<CheckUp> getAll() throws ServiceException {
 		try {
-			return mobileCheckUpDao.getAllReversed();
+			return mobileCheckUpDao.getAll();
 		} catch (DataAccessException e) {
 			throw new ServiceException(
 					"An error occured while trying to retrieve", e);
