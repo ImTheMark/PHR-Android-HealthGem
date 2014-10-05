@@ -64,7 +64,7 @@ public class BloodPressureServiceImpl implements BloodPressureService {
 
 	@Override
 	public void delete(BloodPressure bloodPressure) throws ServiceException,
-			OutdatedAccessTokenException {
+			OutdatedAccessTokenException, EntryNotFoundException {
 		try {
 			webBloodPressureDao.delete(bloodPressure);
 			mobileBloodPressureDao.delete(bloodPressure);
@@ -74,16 +74,16 @@ public class BloodPressureServiceImpl implements BloodPressureService {
 		} catch (DataAccessException e) {
 			throw new ServiceException(
 					"An error occured while trying to delete bp to web", e);
-		} catch (EntryNotFoundException e) {
-			throw new ServiceException(
-					"An error occured while trying to delete bp to web", e);
-		}
+		} 
 	}
 
 	@Override
-	public List<BloodPressure> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<BloodPressure> getAll() throws ServiceException {
+		try {
+			return mobileBloodPressureDao.getAllReversed();
+		} catch (DataAccessException e) {
+			throw new ServiceException("An error occured while trying to get the list", e);
+		}
 	}
 
 	@Override
