@@ -19,7 +19,7 @@ public interface TrackerService<T> {
 	public void delete(T object) throws OutdatedAccessTokenException, 
 			EntryNotFoundException, ServiceException;
 
-	public List<T> getAll();
+	public List<T> getAll() throws ServiceException;
 
 	public T get(int entryID);
 }

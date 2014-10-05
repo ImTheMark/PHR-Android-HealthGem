@@ -5,7 +5,6 @@ import java.util.List;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
@@ -16,8 +15,8 @@ import com.example.phr.tools.DateTimeParser;
 
 public class BloodPressureAdapter extends BaseAdapter {
 
-	private Context mContext;
-	private List<BloodPressure> mListOfBloodPressure;
+	private final Context mContext;
+	private final List<BloodPressure> mListOfBloodPressure;
 
 	private static class ViewHolder {
 		TextView sys;
@@ -86,14 +85,6 @@ public class BloodPressureAdapter extends BaseAdapter {
 		 * .getImage());
 		 */
 
-		convertView.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				// FOR STATUS ON CLICK
-			}
-		});
 		return convertView;
 	}
 }

@@ -102,7 +102,7 @@ public class MobileNoteDaoImpl implements MobileNoteDao {
 	}
 
 	@Override
-	public ArrayList<Note> getAll() throws ParseException {
+	public ArrayList<Note> getAll() throws DataAccessException {
 		ArrayList<Note> noteList = new ArrayList<Note>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_NOTES;
@@ -113,8 +113,13 @@ public class MobileNoteDaoImpl implements MobileNoteDao {
 
 		if (cursor.moveToFirst()) {
 			do {
-				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
-						.getString(1));
+				Timestamp timestamp;
+				try {
+					timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+				} catch (ParseException e) {
+					throw new DataAccessException("Cannot complete operation due to parse failure", e);
+				}
 				PHRImage image = new PHRImage();
 				image.setFileName(cursor.getString(4));
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
@@ -147,7 +152,7 @@ public class MobileNoteDaoImpl implements MobileNoteDao {
 	}
 
 	@Override
-	public List<Note> getAllReversed() throws ParseException {
+	public List<Note> getAllReversed() throws DataAccessException {
 		List<Note> noteList = new ArrayList<Note>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_NOTES
@@ -159,8 +164,13 @@ public class MobileNoteDaoImpl implements MobileNoteDao {
 
 		if (cursor.moveToFirst()) {
 			do {
-				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
-						.getString(1));
+				Timestamp timestamp;
+				try {
+					timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+				} catch (ParseException e) {
+					throw new DataAccessException("Cannot complete operation due to parse failure", e);
+				}
 				PHRImage image = new PHRImage();
 				image.setFileName(cursor.getString(4));
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());

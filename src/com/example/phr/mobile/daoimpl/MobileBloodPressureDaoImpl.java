@@ -102,7 +102,7 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 	}
 
 	@Override
-	public ArrayList<BloodPressure> getAll() throws ParseException {
+	public ArrayList<BloodPressure> getAll() throws DataAccessException {
 		ArrayList<BloodPressure> bpList = new ArrayList<BloodPressure>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_BLOODPRESSURE;
@@ -113,8 +113,13 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 
 		if (cursor.moveToFirst()) {
 			do {
-				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
-						.getString(1));
+				Timestamp timestamp;
+				try {
+					timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+				} catch (ParseException e) {
+					throw new DataAccessException("An error has occured while trying to access data", e);
+				}
 				PHRImage image = new PHRImage();
 				image.setFileName(cursor.getString(5));
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
@@ -142,7 +147,7 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 	}
 
 	@Override
-	public List<BloodPressure> getAllReversed() throws ParseException {
+	public List<BloodPressure> getAllReversed() throws DataAccessException{
 		List<BloodPressure> bpList = new ArrayList<BloodPressure>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_BLOODPRESSURE
@@ -154,8 +159,13 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 
 		if (cursor.moveToFirst()) {
 			do {
-				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
-						.getString(1));
+				Timestamp timestamp;
+				try {
+					timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+				} catch (ParseException e) {
+					throw new DataAccessException("An error has occured while trying to access data", e);
+				}
 				PHRImage image = new PHRImage();
 				image.setFileName(cursor.getString(5));
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());

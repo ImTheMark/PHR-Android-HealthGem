@@ -1,27 +1,22 @@
 package com.example.phr.adapter;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
-import com.example.phr.R;
-import com.example.phr.model.Status;
-
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.phr.R;
+import com.example.phr.model.Status;
+
 public class StatusAdapter extends BaseAdapter {
 
-	private Context mContext;
-	private List<Status> mListOfStatus;
+	private final Context mContext;
+	private final List<Status> mListOfStatus;
 	private int positionSelected;
 
 	private static class ViewHolder {
@@ -60,14 +55,17 @@ public class StatusAdapter extends BaseAdapter {
 
 		if (convertView == null) {
 			LayoutInflater inflater = LayoutInflater.from(mContext);
-			convertView = inflater.inflate(R.layout.item_status, parent,
-					false);
+			convertView = inflater.inflate(R.layout.item_status, parent, false);
 
 			viewHolder = new ViewHolder();
-			viewHolder.actionHolder = (TextView) convertView.findViewById(R.id.textViewStatusActionHolder);
-			viewHolder.actionName = (TextView) convertView.findViewById(R.id.textViewStatusAction);
-			viewHolder.datettime = (TextView) convertView.findViewById(R.id.textViewDateTime);
-			viewHolder.status = (TextView) convertView.findViewById(R.id.textViewStatus);
+			viewHolder.actionHolder = (TextView) convertView
+					.findViewById(R.id.textViewStatusActionHolder);
+			viewHolder.actionName = (TextView) convertView
+					.findViewById(R.id.textViewStatusAction);
+			viewHolder.datettime = (TextView) convertView
+					.findViewById(R.id.textViewDateTime);
+			viewHolder.status = (TextView) convertView
+					.findViewById(R.id.textViewStatus);
 			viewHolder.imgPostVia = (ImageView) convertView
 					.findViewById(R.id.imageViewViaPosted);
 			viewHolder.imgAction = (ImageView) convertView
@@ -79,10 +77,10 @@ public class StatusAdapter extends BaseAdapter {
 		}
 
 		viewHolder = (ViewHolder) convertView.getTag();
-		viewHolder.actionHolder.setText(mListOfStatus.get(position).getActionHolder()
-				.toString());
-		viewHolder.actionName.setText(mListOfStatus.get(position).getActionName()
-				.toString());
+		viewHolder.actionHolder.setText(mListOfStatus.get(position)
+				.getActionHolder().toString());
+		viewHolder.actionName.setText(mListOfStatus.get(position)
+				.getActionName().toString());
 		viewHolder.datettime.setText(mListOfStatus.get(position).getDatettime()
 				.toString());
 		viewHolder.status.setText(mListOfStatus.get(position).getStatus()
@@ -91,29 +89,18 @@ public class StatusAdapter extends BaseAdapter {
 				.getPostViaImgUrl());
 		viewHolder.imgAction.setImageDrawable(mListOfStatus.get(position)
 				.getActionImgUrl());
-		if(mListOfStatus.get(position).getStatusImgUrl() != null){
+		if (mListOfStatus.get(position).getStatusImgUrl() != null) {
 			viewHolder.statusImg.setImageDrawable(mListOfStatus.get(position)
 					.getStatusImgUrl());
 			viewHolder.statusImg.setVisibility(View.VISIBLE);
-			
-		}
-		else{
+
+		} else {
 			viewHolder.statusImg.setVisibility(View.GONE);
-			//Log.e("HAHAHA", mListOfStatus.get(position).getStatusImgUrl().toString());
-			
-			
+			// Log.e("HAHAHA",
+			// mListOfStatus.get(position).getStatusImgUrl().toString());
+
 		}
-	
-		
-		
 
-		convertView.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-			}
-		});
 		return convertView;
 	}
 

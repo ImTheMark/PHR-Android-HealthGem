@@ -12,7 +12,7 @@ public interface MobileActivityDao extends MobileTrackerDao<ActivityTrackerEntry
 	
 	public void addActivityListEntry(SQLiteDatabase db, Activity activity);
 	
-	public ArrayList<Activity> getAllActivity() throws DataAccessException;
+	public ArrayList<Activity> getAllActivityListEntry() throws DataAccessException;
 	
 	public Boolean activityListEntryExists(SQLiteDatabase db, Integer activityID) throws DataAccessException;
 	

@@ -125,10 +125,9 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 	}
 
 	@Override
-	public ArrayList<ActivityTrackerEntry> getAll() throws ParseException {
+	public ArrayList<ActivityTrackerEntry> getAll() throws DataAccessException{
 		ArrayList<ActivityTrackerEntry> actList = new ArrayList<ActivityTrackerEntry>();
-		String selectQuery = "SELECT  * FROM "
-				+ DatabaseHandler.TABLE_ACTIVITY;
+		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_ACTIVITY;
 
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
@@ -137,18 +136,19 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 		if (cursor.moveToFirst()) {
 			do {
 				
-				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
-						.getString(1));
-				PHRImage image = new PHRImage();
-				image.setFileName(cursor.getString(6));
-				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
-				String encoded = ImageHandler.encodeImageToBase64(bitmap);
-				image.setEncodedImage(encoded);
 				
-				
-				ActivityTrackerEntry act;
 				try {
-					act = new ActivityTrackerEntry(cursor.getInt(0),
+					Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+
+					PHRImage image = new PHRImage();
+					image.setFileName(cursor.getString(6));
+					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+					String encoded = ImageHandler.encodeImageToBase64(bitmap);
+					image.setEncodedImage(encoded);
+					
+
+					ActivityTrackerEntry act = new ActivityTrackerEntry(cursor.getInt(0),
 							new FBPost(cursor.getInt(7)),
 							timestamp, 
 							cursor.getString(5), 
@@ -156,11 +156,15 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 							getActivityListEntry(db, cursor.getInt(2)), 
 							cursor.getDouble(4));
 					actList.add(act);
+					
+				} catch (ParseException e) {
+					throw new DataAccessException("Cannot complete operation due to parse failure", e);
 				} catch (DataAccessException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
+				
+				
+				
 			} while (cursor.moveToNext());
 		}
 
@@ -169,7 +173,8 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 	}
 
 	@Override
-	public List<ActivityTrackerEntry> getAllReversed() throws ParseException {
+	public List<ActivityTrackerEntry> getAllReversed()
+			throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -194,7 +199,7 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 	}
 
 	@Override
-	public ArrayList<Activity> getAllActivity() throws DataAccessException {
+	public ArrayList<Activity> getAllActivityListEntry() throws DataAccessException {
 		ArrayList<Activity> actList = new ArrayList<Activity>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_ACTIVITYLIST;
@@ -243,7 +248,6 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 			Activity act = new Activity(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2));
 			return act;
 		}
-
 		return null;
 	}
 }
