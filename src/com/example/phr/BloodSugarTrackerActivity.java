@@ -30,6 +30,7 @@ import android.widget.ListView;
 
 import com.example.phr.adapter.BloodSugarAdapter;
 import com.example.phr.enums.TrackerInputType;
+import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.mobile.daoimpl.MobileBloodSugarDaoImpl;
 import com.example.phr.mobile.models.BloodSugar;
 
@@ -86,7 +87,7 @@ public class BloodSugarTrackerActivity extends Activity {
 		MobileBloodSugarDaoImpl bsDaoImpl = new MobileBloodSugarDaoImpl();
 		try {
 			list = bsDaoImpl.getAllReversed();
-		} catch (ParseException e) {
+		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
