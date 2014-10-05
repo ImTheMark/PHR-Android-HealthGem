@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import android.content.ContentValues;
@@ -164,7 +165,8 @@ public class MobileFoodDaoImpl implements MobileFoodDao {
 	public Boolean foodEntryExists(Food food) throws DataAccessException {
 		Boolean bool = false;
 		String selectQuery = "SELECT  * FROM "
-				+ DatabaseHandler.TABLE_FOODLIST;
+				+ DatabaseHandler.TABLE_FOODLIST
+				+ " WHERE " + DatabaseHandler.FOODLIST_ID + " = " +food.getEntryID();
 
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
@@ -207,6 +209,12 @@ public class MobileFoodDaoImpl implements MobileFoodDao {
 				.getWritableDatabase();
 		db.delete(DatabaseHandler.TABLE_FOOD, DatabaseHandler.FOOD_ID + "=" + food.getEntryID(), null);
 		db.close();
+	}
+
+	@Override
+	public List<FoodTrackerEntry> getAllReversed() throws ParseException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
