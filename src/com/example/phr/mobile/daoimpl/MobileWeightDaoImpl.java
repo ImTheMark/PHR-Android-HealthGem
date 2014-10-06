@@ -43,12 +43,14 @@ public class MobileWeightDaoImpl implements MobileWeightDao {
 		values.put(DatabaseHandler.WEIGHT_STATUS, weight.getStatus());
 
 		try {
-			if (weight.getImage().getFileName() == null
-					&& weight.getImage().getEncodedImage() != null) {
+			if (weight.getImage().getFileName() == null) {
 				String encoded = weight.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				weight.getImage().setFileName(fileName);
+				values.put(DatabaseHandler.WEIGHT_PHOTO, weight.getImage().getFileName());
 			}
+			else
+				values.putNull(DatabaseHandler.WEIGHT_PHOTO);
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
@@ -56,8 +58,6 @@ public class MobileWeightDaoImpl implements MobileWeightDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (weight.getImage().getFileName() != null)
-			values.put(DatabaseHandler.WEIGHT_PHOTO, weight.getImage().getFileName());
 		if (weight.getFbPost() != null)
 			values.put(DatabaseHandler.WEIGHT_FBPOSTID, weight.getFbPost().getId());
 
@@ -80,12 +80,14 @@ public class MobileWeightDaoImpl implements MobileWeightDao {
 		values.put(DatabaseHandler.WEIGHT_STATUS, weight.getStatus());
 
 		try {
-			if (weight.getImage().getFileName() == null
-					&& weight.getImage().getEncodedImage() != null) {
+			if (weight.getImage().getFileName() == null) {
 				String encoded = weight.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				weight.getImage().setFileName(fileName);
+				values.put(DatabaseHandler.WEIGHT_PHOTO, weight.getImage().getFileName());
 			}
+			else
+				values.putNull(DatabaseHandler.WEIGHT_PHOTO);
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
@@ -93,8 +95,6 @@ public class MobileWeightDaoImpl implements MobileWeightDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (weight.getImage().getFileName() != null)
-			values.put(DatabaseHandler.WEIGHT_PHOTO, weight.getImage().getFileName());
 		if (weight.getFbPost() != null)
 			values.put(DatabaseHandler.WEIGHT_FBPOSTID, weight.getFbPost().getId());
 
@@ -122,11 +122,15 @@ public class MobileWeightDaoImpl implements MobileWeightDao {
 					throw new DataAccessException("Cannot complete operation due to parse failure", e);
 				}
 				PHRImage image = new PHRImage();
-				image.setFileName(cursor.getString(4));
-				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
-				String encoded = ImageHandler.encodeImageToBase64(bitmap);
-				image.setEncodedImage(encoded);
 				
+				if(cursor.getString(4) == null)
+					image = null;
+				else{
+					image.setFileName(cursor.getString(4));
+					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+					String encoded = ImageHandler.encodeImageToBase64(bitmap);
+					image.setEncodedImage(encoded);
+				}
 				Weight weight = new Weight(cursor.getInt(0),
 						new FBPost(cursor.getInt(5)),
 						timestamp, 
@@ -172,10 +176,15 @@ public class MobileWeightDaoImpl implements MobileWeightDao {
 					throw new DataAccessException("Cannot complete operation due to parse failure", e);
 				}
 				PHRImage image = new PHRImage();
-				image.setFileName(cursor.getString(4));
-				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
-				String encoded = ImageHandler.encodeImageToBase64(bitmap);
-				image.setEncodedImage(encoded);
+				
+				if(cursor.getString(4) == null)
+					image = null;
+				else{
+					image.setFileName(cursor.getString(4));
+					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+					String encoded = ImageHandler.encodeImageToBase64(bitmap);
+					image.setEncodedImage(encoded);
+				}
 				
 				Weight weight = new Weight(cursor.getInt(0),
 						new FBPost(cursor.getInt(5)),
