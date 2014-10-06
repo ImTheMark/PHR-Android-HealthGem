@@ -12,10 +12,12 @@ import org.achartengine.renderer.XYSeriesRenderer;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,6 +25,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -39,6 +42,9 @@ public class BloodSugarTrackerActivity extends Activity {
 	BloodSugarAdapter bloodSugarAdapter;
 	ImageView mBtnBloodsugarPost;
 	List<BloodSugar> list;
+	AlertDialog.Builder alertDialog;
+	ArrayList<String> names;
+	String mode;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -98,7 +104,6 @@ public class BloodSugarTrackerActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		Log.e(String.valueOf(list.size()), "size");
 		bloodSugarAdapter = new BloodSugarAdapter(getApplicationContext(), list);
 		mBloodSugarList.setAdapter(bloodSugarAdapter);
@@ -113,7 +118,45 @@ public class BloodSugarTrackerActivity extends Activity {
 				 * b.putParcelable("bs", list.get); i.putExtras(b);
 				 * i.setClass(this, NewStatusActivity.class); startActivity(i);
 				 */
+				mode = "";
+				names = new ArrayList<String>();
+				names.add("Edit");
+				names.add("Delete");
+				alertDialog = new AlertDialog.Builder(
+						BloodSugarTrackerActivity.this);
+				LayoutInflater inflater = getLayoutInflater();
+				View convertView = inflater.inflate(R.layout.item_dialogbox,
+						null);
+				alertDialog.setView(convertView);
+				alertDialog.setTitle("List");
+				ListView lv = (ListView) convertView
+						.findViewById(R.id.dialogList);
+				ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+						getApplicationContext(),
+						android.R.layout.simple_list_item_1, names);
+				lv.setAdapter(adapter);
+
+				lv.setOnItemClickListener(new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1,
+							int arg2, long arg3) {
+						// TODO Auto-generated method stub
+						mode = names.get(arg2);
+					}
+
+				});
+				AlertDialog alertD = alertDialog.create();
+				alertD.show();
+
+				if (mode.equals("Edit")) {
+
+					BloodSugar item = ((List<BloodSugar>) arg0).get(arg2);
+				} else if (mode.equals("Delete")) {
+
+				}
+
 			}
+
 		});
 
 		// Graph
