@@ -1,8 +1,9 @@
 package com.example.phr.mobile.models;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public abstract class TrackerEntry {
+public abstract class TrackerEntry implements Serializable {
 
 	Integer entryID;
 	FBPost fbPost;

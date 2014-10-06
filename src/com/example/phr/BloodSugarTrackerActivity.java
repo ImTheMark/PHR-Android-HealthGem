@@ -32,6 +32,8 @@ import android.widget.ListView;
 
 import com.example.phr.adapter.BloodSugarAdapter;
 import com.example.phr.enums.TrackerInputType;
+import com.example.phr.exceptions.EntryNotFoundException;
+import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.BloodSugar;
 import com.example.phr.serviceimpl.BloodSugarServiceImpl;
@@ -45,6 +47,9 @@ public class BloodSugarTrackerActivity extends Activity {
 	AlertDialog.Builder alertDialog;
 	ArrayList<String> names;
 	String mode;
+	BloodSugarServiceImpl bsServiceImpl;
+	AlertDialog alertD;
+	BloodSugar chosenItem;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -55,6 +60,7 @@ public class BloodSugarTrackerActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		mBloodSugarList = (ListView) findViewById(R.id.listView_bloodsugar);
 		list = new ArrayList<BloodSugar>();
+
 		// FAKE DATA
 		/*
 		 * BloodSugar data1 = new BloodSugar(1, 7.5, "Post prandial" ,""
@@ -90,7 +96,7 @@ public class BloodSugarTrackerActivity extends Activity {
 		 */
 
 		// MobileBloodSugarDaoImpl bsDaoImpl = new MobileBloodSugarDaoImpl();
-		BloodSugarServiceImpl bsServiceImpl = new BloodSugarServiceImpl();
+		bsServiceImpl = new BloodSugarServiceImpl();
 		try {
 			// list = bsDaoImpl.getAllReversed();
 			// list = bsDaoImpl.getAll();
@@ -118,6 +124,7 @@ public class BloodSugarTrackerActivity extends Activity {
 				 * b.putParcelable("bs", list.get); i.putExtras(b);
 				 * i.setClass(this, NewStatusActivity.class); startActivity(i);
 				 */
+				chosenItem = (BloodSugar) arg0.getAdapter().getItem(arg2);
 				mode = "";
 				names = new ArrayList<String>();
 				names.add("Edit");
@@ -128,7 +135,7 @@ public class BloodSugarTrackerActivity extends Activity {
 				View convertView = inflater.inflate(R.layout.item_dialogbox,
 						null);
 				alertDialog.setView(convertView);
-				alertDialog.setTitle("List");
+				alertDialog.setTitle("What to do?");
 				ListView lv = (ListView) convertView
 						.findViewById(R.id.dialogList);
 				ArrayAdapter<String> adapter = new ArrayAdapter<String>(
@@ -142,18 +149,43 @@ public class BloodSugarTrackerActivity extends Activity {
 							int arg2, long arg3) {
 						// TODO Auto-generated method stub
 						mode = names.get(arg2);
+						alertD.dismiss();
+						Log.e("mode", names.get(arg2));
+
+						if (mode.equals("Edit")) {
+
+							Intent i = new Intent(getApplicationContext(),
+									NewStatusActivity.class);
+							i.putExtra("edit", TrackerInputType.BLOOD_SUGAR);
+							i.putExtra("object", chosenItem);
+							startActivity(i);
+						} else if (mode.equals("Delete")) {
+
+							try {
+								Log.e("bloosugar", "del");
+								bsServiceImpl.delete(chosenItem);
+								Log.e("bloodsugar", "del_done");
+							} catch (ServiceException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (OutdatedAccessTokenException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (EntryNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
+							Intent i = new Intent(getApplicationContext(),
+									BloodSugarTrackerActivity.class);
+							startActivity(i);
+						}
 					}
 
 				});
-				AlertDialog alertD = alertDialog.create();
+				alertD = alertDialog.create();
 				alertD.show();
-
-				if (mode.equals("Edit")) {
-
-					BloodSugar item = ((List<BloodSugar>) arg0).get(arg2);
-				} else if (mode.equals("Delete")) {
-
-				}
+				Log.e("in", "in");
 
 			}
 

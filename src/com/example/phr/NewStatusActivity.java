@@ -117,6 +117,7 @@ public class NewStatusActivity extends Activity {
 	Calendar calobj;
 	String mode;
 	final Context context = this;
+	BloodSugar editBs;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -167,6 +168,23 @@ public class NewStatusActivity extends Activity {
 		txtSugar = (TextView) findViewById(R.id.sugar);
 		bsStatus = (EditText) findViewById(R.id.txtBSStatus);
 		txtSugarType = (TextView) findViewById(R.id.txtSugarType);
+
+		txtSugar.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				callBloodSugarInput(
+						(int) Double.parseDouble(txtSugar.getText().toString()),
+						txtSugarType.getText().toString());
+			}
+		});
+		txtSugarType.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				callBloodSugarInput(
+						(int) Double.parseDouble(txtSugar.getText().toString()),
+						txtSugarType.getText().toString());
+			}
+		});
 		// weight post
 		txtWeight = (TextView) findViewById(R.id.weight);
 		weightStatus = (EditText) findViewById(R.id.txtWeightStatus);
@@ -243,7 +261,7 @@ public class NewStatusActivity extends Activity {
 				callBloodPressureInput(120, 80);
 			} else if (tracker.equals(TrackerInputType.BLOOD_SUGAR)) {
 				currentTracker = TrackerInputType.BLOOD_SUGAR;
-				callBloodSugarInput("120", "before meal");
+				callBloodSugarInput(120, "before meal");
 			} else if (tracker.equals(TrackerInputType.NOTES)) {
 				currentTracker = TrackerInputType.NOTES;
 				callNotesInput();
@@ -281,11 +299,15 @@ public class NewStatusActivity extends Activity {
 						extras.getString("food_unit"), "");
 			}
 		} else if (extras != null && in.hasExtra("edit")) {
-			/*
-			 * Bundle b = this.getIntent().getExtras(); if(b!=null)
-			 * mCurrentListing = b.getParcelable(Constants.CUSTOM_LISTING);
-			 */
-
+			String editTracker = extras.getString("edit");
+			if (editTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
+				editBs = (BloodSugar) in.getExtras().getSerializable("object");
+				mode = "edit";
+				currentTracker = TrackerInputType.BLOOD_SUGAR;
+				Log.e("editbsobject", String.valueOf(editBs.getEntryID()));
+				setBloodSugarTemplate(String.valueOf(editBs.getBloodSugar()),
+						editBs.getType(), editBs.getStatus());
+			}
 		}
 	}
 
@@ -303,8 +325,8 @@ public class NewStatusActivity extends Activity {
 		txtFoodQuantityUnit.setText(unit);
 		txtFoodQuantity.setText(serving);
 		if (mode.equals("add"))
-			foodStatus.setText("how you feel? ");
-		else
+			foodStatus.setHint("how you feel? ");
+		else if (mode.equals("edit"))
 			foodStatus.setText(status);
 
 	}
@@ -321,8 +343,8 @@ public class NewStatusActivity extends Activity {
 		double cal = Double.parseDouble(met) * 5; // not true
 		txtActivityCal.setText(String.valueOf(cal));
 		if (mode.equals("add"))
-			activityStatus.setText("how you feel? ");
-		else
+			activityStatus.setHint("how you feel? ");
+		else if (mode.equals("edit"))
 			activityStatus.setText(status);
 	}
 
@@ -332,8 +354,8 @@ public class NewStatusActivity extends Activity {
 		txtDoctor.setText(doctor);
 		txtPurpose.setText(purpose);
 		if (mode.equals("add"))
-			checkupStatus.setText("how you feel? ");
-		else
+			checkupStatus.setHint("how you feel? ");
+		else if (mode.equals("edit"))
 			checkupStatus.setText(status);
 	}
 
@@ -343,9 +365,9 @@ public class NewStatusActivity extends Activity {
 		txtWeight.setText(weight);
 		txtWeightUnit.setText(unit);
 		if (mode.equals("add"))
-			weightStatus.setText("how you feel? ");
-		else
-			weightStatus.setText(status);
+			weightStatus.setHint("how you feel? ");
+		else if (mode.equals("edit"))
+			weightStatus.setHint(status);
 	}
 
 	private void setBloodSugarTemplate(String bloodsugar,
@@ -355,8 +377,8 @@ public class NewStatusActivity extends Activity {
 		txtSugar.setText(bloodsugar);
 		txtSugarType.setText(bloodsugartype);
 		if (mode.equals("add"))
-			bsStatus.setText("how you feel? ");
-		else
+			bsStatus.setHint("how you feel? ");
+		else if (mode.equals("edit"))
 			bsStatus.setText(status);
 	}
 
@@ -367,8 +389,8 @@ public class NewStatusActivity extends Activity {
 		txtSystolic.setText(Integer.toString(systolicPicker.getCurrent()));
 		txtDiastolic.setText(Integer.toString(diastolicPicker.getCurrent()));
 		if (mode.equals("add"))
-			bpStatus.setText("how you feel? ");
-		else
+			bpStatus.setHint("how you feel? ");
+		else if (mode.equals("edit"))
 			bpStatus.setText(status);
 	}
 
@@ -376,8 +398,8 @@ public class NewStatusActivity extends Activity {
 		setAllTemplateGone();
 		notesTemplate.setVisibility(View.VISIBLE);
 		if (mode.equals("add"))
-			notesStatus.setText("how you feel? ");
-		else
+			notesStatus.setHint("how you feel? ");
+		else if (mode.equals("edit"))
 			notesStatus.setText(note);
 	}
 
@@ -394,7 +416,7 @@ public class NewStatusActivity extends Activity {
 				callBloodPressureInput(120, 80);
 			} else if (item.equals(TrackerInputType.BLOOD_SUGAR)) {
 				currentTracker = TrackerInputType.BLOOD_SUGAR;
-				callBloodSugarInput("120", "before meal");
+				callBloodSugarInput(120, "before meal");
 			} else if (item.equals(TrackerInputType.NOTES)) {
 				currentTracker = TrackerInputType.NOTES;
 				callNotesInput();
@@ -612,7 +634,7 @@ public class NewStatusActivity extends Activity {
 		alertD.show();
 	}
 
-	private void callBloodSugarInput(String txtbs, String txttype) {
+	private void callBloodSugarInput(int txtbs, String txttype) {
 		// TODO Auto-generated method stub
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
 
@@ -624,7 +646,7 @@ public class NewStatusActivity extends Activity {
 		alertDialogBuilder.setView(bsView);
 		sugarPicker = (NumberPicker) bsView.findViewById(R.id.sugarPicker);
 		sugarTypeSpinner = (Spinner) bsView.findViewById(R.id.sugarTypeSpinner);
-		sugarPicker.setCurrent(Integer.parseInt(txtbs));
+		sugarPicker.setCurrent(txtbs);
 		alertDialogBuilder
 				.setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -885,7 +907,10 @@ public class NewStatusActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_status_post, menu);
+		if (mode.equals("add"))
+			getMenuInflater().inflate(R.menu.menu_status_post, menu);
+		else if (mode.equals("edit"))
+			getMenuInflater().inflate(R.menu.menu_edit_status, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -1020,8 +1045,54 @@ public class NewStatusActivity extends Activity {
 				startActivity(intent);
 			}
 			return true;
+
+		case R.id.menu_item_status_edit:
+			if (currentTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
+				try {
+					Log.e("call", "edit");
+					editBloodSugarToDatabase();
+				} catch (ServiceException e) {
+					// output error message or something
+					System.out.println(e.getMessage());
+				} catch (OutdatedAccessTokenException e) {
+					// Message - > Log user out
+					e.printStackTrace();
+				} catch (WebServerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (DataAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				// onBackPressed();
+				Log.e("call", "bsActivity");
+				Intent intent = new Intent(getApplicationContext(),
+						BloodSugarTrackerActivity.class);
+				startActivity(intent);
+			}
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+
+	}
+
+	private void editBloodSugarToDatabase() throws ServiceException,
+			OutdatedAccessTokenException, WebServerException,
+			DataAccessException {
+
+		try {
+			Log.e("in", "edit");
+			BloodSugar bs = new BloodSugar(editBs.getTimestamp(), bsStatus
+					.getText().toString(), null, Double.parseDouble(txtSugar
+					.getText().toString()), txtSugarType.getText().toString());
+			BloodSugarService bsService = new BloodSugarServiceImpl();
+			bsService.edit(bs);
+			Log.e("in", "edited");
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}

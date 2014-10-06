@@ -1,11 +1,12 @@
 package com.example.phr.mobile.models;
 
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 
 import com.example.phr.exceptions.ImageHandlerException;
 import com.example.phr.tools.ImageHandler;
 
-public class PHRImage {
+public class PHRImage implements Serializable {
 
 	private String encodedImage;
 	private String fileName;

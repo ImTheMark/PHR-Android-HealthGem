@@ -1,8 +1,9 @@
 package com.example.phr.mobile.models;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class BloodSugar extends TrackerEntry {
+public class BloodSugar extends TrackerEntry implements Serializable {
 
 	double bloodSugar;
 	String type;

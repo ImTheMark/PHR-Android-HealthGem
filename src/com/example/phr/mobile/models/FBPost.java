@@ -1,8 +1,9 @@
 package com.example.phr.mobile.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class FBPost {
+public class FBPost implements Serializable {
 
 	public Integer id;
 	public String status;
