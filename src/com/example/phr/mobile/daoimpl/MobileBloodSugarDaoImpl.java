@@ -44,14 +44,14 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 
 		try {
 			if (bloodSugar.getImage() != null) {
-				if (bloodSugar.getImage().getFileName() == null
-						&& bloodSugar.getImage().getEncodedImage() != null) {
-					String encoded = bloodSugar.getImage().getEncodedImage();
-					String fileName = ImageHandler
-							.saveImageReturnFileName(encoded);
-					bloodSugar.getImage().setFileName(fileName);
-				}
+				String encoded = bloodSugar.getImage().getEncodedImage();
+				String fileName = ImageHandler
+						.saveImageReturnFileName(encoded);
+				bloodSugar.getImage().setFileName(fileName);
+				values.put(DatabaseHandler.BS_PHOTO, bloodSugar.getImage().getFileName());
 			}
+			else
+				values.putNull(DatabaseHandler.BS_PHOTO);
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
@@ -59,16 +59,13 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (bloodSugar.getImage().getFileName() != null)
-			values.put(DatabaseHandler.BS_PHOTO, bloodSugar.getImage()
-					.getFileName());
+		
 		if (bloodSugar.getFbPost() != null)
 			values.put(DatabaseHandler.BS_FBPOSTID, bloodSugar.getFbPost()
 					.getId());
 
-		// Inserting Row
 		db.insert(DatabaseHandler.TABLE_BLOODSUGAR, null, values);
-		db.close(); // Closing database connection
+		db.close();
 	}
 
 	@Override
@@ -88,12 +85,15 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 		values.put(DatabaseHandler.BS_STATUS, bloodSugar.getStatus());
 
 		try {
-			if (bloodSugar.getImage().getFileName() == null
-					&& bloodSugar.getImage().getEncodedImage() != null) {
+			if (bloodSugar.getImage() != null) {
 				String encoded = bloodSugar.getImage().getEncodedImage();
-				String fileName = ImageHandler.saveImageReturnFileName(encoded);
+				String fileName = ImageHandler
+						.saveImageReturnFileName(encoded);
 				bloodSugar.getImage().setFileName(fileName);
+				values.put(DatabaseHandler.BS_PHOTO, bloodSugar.getImage().getFileName());
 			}
+			else
+				values.putNull(DatabaseHandler.BS_PHOTO);
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
@@ -101,9 +101,7 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (bloodSugar.getImage().getFileName() != null)
-			values.put(DatabaseHandler.BS_PHOTO, bloodSugar.getImage()
-					.getFileName());
+		
 		if (bloodSugar.getFbPost() != null)
 			values.put(DatabaseHandler.BS_FBPOSTID, bloodSugar.getFbPost()
 					.getId());
@@ -133,11 +131,17 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 				} catch (ParseException e) {
 					throw new DataAccessException("Cannot complete operation due to parse failure", e);
 				}
+
 				PHRImage image = new PHRImage();
-				image.setFileName(cursor.getString(5));
-				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
-				String encoded = ImageHandler.encodeImageToBase64(bitmap);
-				image.setEncodedImage(encoded);
+				
+				if(cursor.getString(5) == null)
+					image = null;
+				else{
+					image.setFileName(cursor.getString(5));
+					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+					String encoded = ImageHandler.encodeImageToBase64(bitmap);
+					image.setEncodedImage(encoded);
+				}
 
 				BloodSugar bs = new BloodSugar(cursor.getInt(0), new FBPost(
 						cursor.getInt(6)), timestamp, cursor.getString(4),
@@ -181,11 +185,17 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 				} catch (ParseException e) {
 					throw new DataAccessException("Cannot complete operation due to parse failure", e);
 				}
+
 				PHRImage image = new PHRImage();
-				image.setFileName(cursor.getString(5));
-				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
-				String encoded = ImageHandler.encodeImageToBase64(bitmap);
-				image.setEncodedImage(encoded);
+				
+				if(cursor.getString(5) == null)
+					image = null;
+				else{
+					image.setFileName(cursor.getString(5));
+					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+					String encoded = ImageHandler.encodeImageToBase64(bitmap);
+					image.setEncodedImage(encoded);
+				}
 
 				BloodSugar bs = new BloodSugar(cursor.getInt(0), new FBPost(
 						cursor.getInt(6)), timestamp, cursor.getString(4),
