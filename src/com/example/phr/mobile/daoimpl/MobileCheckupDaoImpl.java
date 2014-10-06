@@ -43,12 +43,14 @@ public class MobileCheckupDaoImpl implements MobileCheckupDao {
 		values.put(DatabaseHandler.CU_STATUS, checkUp.getStatus());
 
 		try {
-			if (checkUp.getImage().getFileName() == null
-					&& checkUp.getImage().getEncodedImage() != null) {
+			if (checkUp.getImage().getFileName() == null) {
 				String encoded = checkUp.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				checkUp.getImage().setFileName(fileName);
+				values.put(DatabaseHandler.CU_PHOTO, checkUp.getImage().getFileName());
 			}
+			else
+				values.putNull(DatabaseHandler.CU_PHOTO);
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
@@ -56,8 +58,6 @@ public class MobileCheckupDaoImpl implements MobileCheckupDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (checkUp.getImage().getFileName() != null)
-			values.put(DatabaseHandler.CU_PHOTO, checkUp.getImage().getFileName());
 		if (checkUp.getFbPost() != null)
 			values.put(DatabaseHandler.CU_FBPOSTID, checkUp.getFbPost().getId());
 
@@ -83,12 +83,14 @@ public class MobileCheckupDaoImpl implements MobileCheckupDao {
 		values.put(DatabaseHandler.CU_STATUS, checkUp.getStatus());
 
 		try {
-			if (checkUp.getImage().getFileName() == null
-					&& checkUp.getImage().getEncodedImage() != null) {
+			if (checkUp.getImage().getFileName() == null) {
 				String encoded = checkUp.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				checkUp.getImage().setFileName(fileName);
+				values.put(DatabaseHandler.CU_PHOTO, checkUp.getImage().getFileName());
 			}
+			else
+				values.putNull(DatabaseHandler.CU_PHOTO);
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
@@ -96,8 +98,6 @@ public class MobileCheckupDaoImpl implements MobileCheckupDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (checkUp.getImage().getFileName() != null)
-			values.put(DatabaseHandler.CU_PHOTO, checkUp.getImage().getFileName());
 		if (checkUp.getFbPost() != null)
 			values.put(DatabaseHandler.CU_FBPOSTID, checkUp.getFbPost().getId());
 
@@ -125,10 +125,15 @@ public class MobileCheckupDaoImpl implements MobileCheckupDao {
 					throw new DataAccessException("Cannot complete operation due to parse failure", e);
 				}
 				PHRImage image = new PHRImage();
-				image.setFileName(cursor.getString(6));
-				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
-				String encoded = ImageHandler.encodeImageToBase64(bitmap);
-				image.setEncodedImage(encoded);
+				
+				if(cursor.getString(6) == null)
+					image = null;
+				else{
+					image.setFileName(cursor.getString(6));
+					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+					String encoded = ImageHandler.encodeImageToBase64(bitmap);
+					image.setEncodedImage(encoded);
+				}
 				
 				CheckUp cu = new CheckUp(cursor.getInt(0),
 						new FBPost(cursor.getInt(7)),
@@ -177,10 +182,16 @@ public class MobileCheckupDaoImpl implements MobileCheckupDao {
 					throw new DataAccessException("Cannot complete operation due to parse failure", e);
 				}
 				PHRImage image = new PHRImage();
-				image.setFileName(cursor.getString(6));
-				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
-				String encoded = ImageHandler.encodeImageToBase64(bitmap);
-				image.setEncodedImage(encoded);
+				
+				if(cursor.getString(6) == null)
+					image = null;
+				else{
+					image.setFileName(cursor.getString(6));
+					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+					String encoded = ImageHandler.encodeImageToBase64(bitmap);
+					image.setEncodedImage(encoded);
+				}
+				
 				
 				CheckUp cu = new CheckUp(cursor.getInt(0),
 						new FBPost(cursor.getInt(7)),

@@ -43,12 +43,15 @@ public class MobileFoodDaoImpl implements MobileFoodDao {
 		values.put(DatabaseHandler.FOOD_STATUS, food.getStatus());
 
 		try {
-			if (food.getImage().getFileName() == null
-					&& food.getImage().getEncodedImage() != null) {
+			if (food.getImage().getFileName() == null) {
 				String encoded = food.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				food.getImage().setFileName(fileName);
+				values.put(DatabaseHandler.FOOD_PHOTO, food.getImage()
+						.getFileName());
 			}
+			else
+				values.putNull(DatabaseHandler.FOOD_PHOTO);
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
@@ -56,9 +59,6 @@ public class MobileFoodDaoImpl implements MobileFoodDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (food.getImage().getFileName() != null)
-			values.put(DatabaseHandler.FOOD_PHOTO, food.getImage()
-					.getFileName());
 		if (food.getFbPost() != null)
 			values.put(DatabaseHandler.FOOD_FBPOSTID, food.getFbPost().getId());
 
@@ -85,12 +85,15 @@ public class MobileFoodDaoImpl implements MobileFoodDao {
 		values.put(DatabaseHandler.FOOD_STATUS, food.getStatus());
 
 		try {
-			if (food.getImage().getFileName() == null
-					&& food.getImage().getEncodedImage() != null) {
+			if (food.getImage().getFileName() == null) {
 				String encoded = food.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				food.getImage().setFileName(fileName);
+				values.put(DatabaseHandler.FOOD_PHOTO, food.getImage()
+						.getFileName());
 			}
+			else
+				values.putNull(DatabaseHandler.FOOD_PHOTO);
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
@@ -98,9 +101,6 @@ public class MobileFoodDaoImpl implements MobileFoodDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (food.getImage().getFileName() != null)
-			values.put(DatabaseHandler.FOOD_PHOTO, food.getImage()
-					.getFileName());
 		if (food.getFbPost() != null)
 			values.put(DatabaseHandler.FOOD_FBPOSTID, food.getFbPost().getId());
 
@@ -127,10 +127,15 @@ public class MobileFoodDaoImpl implements MobileFoodDao {
 					throw new DataAccessException("Cannot complete operation due to parse failure", e);
 				}
 				PHRImage image = new PHRImage();
-				image.setFileName(cursor.getString(5));
-				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
-				String encoded = ImageHandler.encodeImageToBase64(bitmap);
-				image.setEncodedImage(encoded);
+				
+				if(cursor.getString(5) == null)
+					image = null;
+				else{
+					image.setFileName(cursor.getString(5));
+					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+					String encoded = ImageHandler.encodeImageToBase64(bitmap);
+					image.setEncodedImage(encoded);
+				}
 				// add 'food' to foodlist table
 
 				/*

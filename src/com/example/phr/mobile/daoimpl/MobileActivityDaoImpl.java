@@ -52,12 +52,15 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 		values.put(DatabaseHandler.ACT_STATUS, activity.getStatus());
 
 		try {
-			if (activity.getImage().getFileName() == null
-					&& activity.getImage().getEncodedImage() != null) {
+			if (activity.getImage().getFileName() == null) {
 				String encoded = activity.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				activity.getImage().setFileName(fileName);
+				values.put(DatabaseHandler.ACT_PHOTO, activity.getImage()
+						.getFileName());
 			}
+			else
+				values.putNull(DatabaseHandler.ACT_PHOTO);
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
@@ -65,9 +68,6 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (activity.getImage().getFileName() != null)
-			values.put(DatabaseHandler.ACT_PHOTO, activity.getImage()
-					.getFileName());
 		if (activity.getFbPost() != null)
 			values.put(DatabaseHandler.ACT_FBPOSTID, activity.getFbPost()
 					.getId());
@@ -99,12 +99,15 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 		values.put(DatabaseHandler.ACT_STATUS, activity.getStatus());
 
 		try {
-			if (activity.getImage().getFileName() == null
-					&& activity.getImage().getEncodedImage() != null) {
+			if (activity.getImage().getFileName() == null) {
 				String encoded = activity.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				activity.getImage().setFileName(fileName);
+				values.put(DatabaseHandler.ACT_PHOTO, activity.getImage()
+						.getFileName());
 			}
+			else
+				values.putNull(DatabaseHandler.ACT_PHOTO);
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
@@ -112,9 +115,6 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (activity.getImage().getFileName() != null)
-			values.put(DatabaseHandler.ACT_PHOTO, activity.getImage()
-					.getFileName());
 		if (activity.getFbPost() != null)
 			values.put(DatabaseHandler.ACT_FBPOSTID, activity.getFbPost()
 					.getId());
@@ -142,11 +142,15 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 							.getString(1));
 
 					PHRImage image = new PHRImage();
-					image.setFileName(cursor.getString(6));
-					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
-					String encoded = ImageHandler.encodeImageToBase64(bitmap);
-					image.setEncodedImage(encoded);
 					
+					if(cursor.getString(6) == null)
+						image = null;
+					else{
+						image.setFileName(cursor.getString(6));
+						Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+						String encoded = ImageHandler.encodeImageToBase64(bitmap);
+						image.setEncodedImage(encoded);
+					}
 
 					ActivityTrackerEntry act = new ActivityTrackerEntry(cursor.getInt(0),
 							new FBPost(cursor.getInt(7)),

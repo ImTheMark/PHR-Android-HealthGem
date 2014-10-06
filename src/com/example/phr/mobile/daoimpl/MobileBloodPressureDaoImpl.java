@@ -41,12 +41,14 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 		values.put(DatabaseHandler.BP_STATUS, bp.getStatus());
 
 		try {
-			if (bp.getImage().getFileName() == null
-					&& bp.getImage().getEncodedImage() != null) {
+			if (bp.getImage().getFileName() == null) {
 				String encoded = bp.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				bp.getImage().setFileName(fileName);
+				values.put(DatabaseHandler.BP_PHOTO, bp.getImage().getFileName());
 			}
+			else
+				values.putNull(DatabaseHandler.BP_PHOTO);
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
@@ -54,8 +56,6 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (bp.getImage().getFileName() != null)
-			values.put(DatabaseHandler.BP_PHOTO, bp.getImage().getFileName());
 		if (bp.getFbPost() != null)
 			values.put(DatabaseHandler.BP_FBPOSTID, bp.getFbPost().getId());
 
@@ -79,12 +79,14 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 		values.put(DatabaseHandler.BP_STATUS, bp.getStatus());
 
 		try {
-			if (bp.getImage().getFileName() == null
-					&& bp.getImage().getEncodedImage() != null) {
+			if (bp.getImage().getFileName() == null) {
 				String encoded = bp.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				bp.getImage().setFileName(fileName);
+				values.put(DatabaseHandler.BP_PHOTO, bp.getImage().getFileName());
 			}
+			else
+				values.putNull(DatabaseHandler.BP_PHOTO);
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
@@ -92,8 +94,6 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (bp.getImage().getFileName() != null)
-			values.put(DatabaseHandler.BP_PHOTO, bp.getImage().getFileName());
 		if (bp.getFbPost() != null)
 			values.put(DatabaseHandler.BP_FBPOSTID, bp.getFbPost().getId());
 		
@@ -121,10 +121,14 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 					throw new DataAccessException("An error has occured while trying to access data", e);
 				}
 				PHRImage image = new PHRImage();
-				image.setFileName(cursor.getString(5));
-				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
-				String encoded = ImageHandler.encodeImageToBase64(bitmap);
-				image.setEncodedImage(encoded);
+				if(cursor.getString(5) == null)
+					image = null;
+				else{
+					image.setFileName(cursor.getString(5));
+					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+					String encoded = ImageHandler.encodeImageToBase64(bitmap);
+					image.setEncodedImage(encoded);
+				}
 				BloodPressure bp = new BloodPressure(cursor.getInt(0),
 						timestamp, cursor.getString(4), image,
 						cursor.getInt(2), cursor.getInt(3));
@@ -167,10 +171,14 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 					throw new DataAccessException("An error has occured while trying to access data", e);
 				}
 				PHRImage image = new PHRImage();
-				image.setFileName(cursor.getString(5));
-				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
-				String encoded = ImageHandler.encodeImageToBase64(bitmap);
-				image.setEncodedImage(encoded);
+				if(cursor.getString(5) == null)
+					image = null;
+				else{
+					image.setFileName(cursor.getString(5));
+					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+					String encoded = ImageHandler.encodeImageToBase64(bitmap);
+					image.setEncodedImage(encoded);
+				}
 				BloodPressure bp = new BloodPressure(cursor.getInt(0),
 						timestamp, cursor.getString(4), image,
 						cursor.getInt(2), cursor.getInt(3));
