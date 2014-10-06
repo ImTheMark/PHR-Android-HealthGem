@@ -179,8 +179,56 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 	@Override
 	public List<ActivityTrackerEntry> getAllReversed()
 			throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<ActivityTrackerEntry> actList = new ArrayList<ActivityTrackerEntry>();
+		String selectQuery = "SELECT  * FROM " 
+				+ DatabaseHandler.TABLE_ACTIVITY
+				+ " ORDER BY " + DatabaseHandler.ACT_DATEADDED + " DESC";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+				
+				
+				try {
+					Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+
+					PHRImage image = new PHRImage();
+					
+					if(cursor.getString(6) == null)
+						image = null;
+					else{
+						image.setFileName(cursor.getString(6));
+						Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+						String encoded = ImageHandler.encodeImageToBase64(bitmap);
+						image.setEncodedImage(encoded);
+					}
+
+					ActivityTrackerEntry act = new ActivityTrackerEntry(cursor.getInt(0),
+							new FBPost(cursor.getInt(7)),
+							timestamp, 
+							cursor.getString(5), 
+							image,
+							getActivityListEntry(db, cursor.getInt(2)), 
+							cursor.getDouble(4));
+					actList.add(act);
+					
+				} catch (ParseException e) {
+					throw new DataAccessException("Cannot complete operation due to parse failure", e);
+				} catch (DataAccessException e) {
+					e.printStackTrace();
+				}
+				
+				
+				
+			} while (cursor.moveToNext());
+		}
+
+		db.close();
+		return actList;
 	}
 
 	@Override
