@@ -85,12 +85,14 @@ public class BloodSugarTrackerActivity extends Activity {
 
 		MobileBloodSugarDaoImpl bsDaoImpl = new MobileBloodSugarDaoImpl();
 		try {
-			list = bsDaoImpl.getAllReversed();
+			// list = bsDaoImpl.getAllReversed();
+			list = bsDaoImpl.getAll();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+		Log.e(String.valueOf(list.size()), "size");
 		bloodSugarAdapter = new BloodSugarAdapter(getApplicationContext(), list);
 		mBloodSugarList.setAdapter(bloodSugarAdapter);
 		mBloodSugarList.setOnItemClickListener(new OnItemClickListener() {
