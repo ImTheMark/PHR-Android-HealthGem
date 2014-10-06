@@ -29,6 +29,7 @@ import android.widget.ListView;
 
 import com.example.phr.adapter.BloodPressureAdapter;
 import com.example.phr.enums.TrackerInputType;
+import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.daoimpl.MobileBloodPressureDaoImpl;
 import com.example.phr.mobile.models.BloodPressure;
@@ -94,7 +95,7 @@ public class BloodPressureTrackerActivity extends Activity {
 		try {
 			list = bpDaoImpl.getAllReversed();
 			reverselist = Lists.reverse(list);
-		} catch (ParseException e) {
+		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -305,7 +306,7 @@ public class BloodPressureTrackerActivity extends Activity {
 		MobileBloodPressureDaoImpl bpDaoImpl = new MobileBloodPressureDaoImpl();
 		try {
 			list = bpDaoImpl.getAll();
-		} catch (ParseException e) {
+		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

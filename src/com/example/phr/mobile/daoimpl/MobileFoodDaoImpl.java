@@ -110,7 +110,7 @@ public class MobileFoodDaoImpl implements MobileFoodDao {
 	}
 
 	@Override
-	public ArrayList<FoodTrackerEntry> getAll() throws ParseException {
+	public ArrayList<FoodTrackerEntry> getAll() throws DataAccessException {
 		ArrayList<FoodTrackerEntry> foodList = new ArrayList<FoodTrackerEntry>();
 		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_FOOD;
 
@@ -120,8 +120,12 @@ public class MobileFoodDaoImpl implements MobileFoodDao {
 
 		if (cursor.moveToFirst()) {
 			do {
-				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
-						.getString(1));
+				try {
+					Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+				} catch (ParseException e) {
+					throw new DataAccessException("Cannot complete operation due to parse failure", e);
+				}
 				PHRImage image = new PHRImage();
 				image.setFileName(cursor.getString(5));
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
@@ -167,7 +171,9 @@ public class MobileFoodDaoImpl implements MobileFoodDao {
 	@Override
 	public Boolean foodEntryExists(Food food) throws DataAccessException {
 		Boolean bool = false;
-		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_FOODLIST;
+		String selectQuery = "SELECT  * FROM "
+				+ DatabaseHandler.TABLE_FOODLIST
+				+ " WHERE " + DatabaseHandler.FOODLIST_ID + " = " +food.getEntryID();
 
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
@@ -214,7 +220,7 @@ public class MobileFoodDaoImpl implements MobileFoodDao {
 	}
 
 	@Override
-	public List<FoodTrackerEntry> getAllReversed() throws ParseException {
+	public List<FoodTrackerEntry> getAllReversed() throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}

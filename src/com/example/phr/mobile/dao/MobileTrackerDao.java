@@ -14,11 +14,11 @@ public interface MobileTrackerDao<T> {
 	public void edit(T object) throws DataAccessException,
 			EntryNotFoundException;
 	
-	public ArrayList<T> getAll() throws ParseException;
+	public ArrayList<T> getAll() throws DataAccessException;
 
 	public void delete(T object) throws DataAccessException,
 			EntryNotFoundException;
 	
-	public List<T> getAllReversed() throws ParseException;
+	public List<T> getAllReversed() throws  DataAccessException;
 
 }

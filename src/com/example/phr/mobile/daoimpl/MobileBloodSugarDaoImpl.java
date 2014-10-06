@@ -115,7 +115,7 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 	}
 
 	@Override
-	public ArrayList<BloodSugar> getAll() throws ParseException {
+	public ArrayList<BloodSugar> getAll() throws DataAccessException{
 		ArrayList<BloodSugar> bsList = new ArrayList<BloodSugar>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_BLOODSUGAR;
@@ -126,8 +126,13 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 
 		if (cursor.moveToFirst()) {
 			do {
-				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
-						.getString(1));
+				Timestamp timestamp;
+				try {
+					timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+				} catch (ParseException e) {
+					throw new DataAccessException("Cannot complete operation due to parse failure", e);
+				}
 				PHRImage image = new PHRImage();
 				image.setFileName(cursor.getString(5));
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
@@ -157,7 +162,7 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 	}
 
 	@Override
-	public List<BloodSugar> getAllReversed() throws ParseException {
+	public List<BloodSugar> getAllReversed() throws DataAccessException {
 		List<BloodSugar> bsList = new ArrayList<BloodSugar>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_BLOODSUGAR
@@ -169,8 +174,13 @@ public class MobileBloodSugarDaoImpl implements MobileBloodSugarDao {
 
 		if (cursor.moveToFirst()) {
 			do {
-				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
-						.getString(1));
+				Timestamp timestamp;
+				try {
+					timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+				} catch (ParseException e) {
+					throw new DataAccessException("Cannot complete operation due to parse failure", e);
+				}
 				PHRImage image = new PHRImage();
 				image.setFileName(cursor.getString(5));
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());

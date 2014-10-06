@@ -1,6 +1,5 @@
 package com.example.phr;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +29,7 @@ import android.widget.ListView;
 
 import com.example.phr.adapter.BloodSugarAdapter;
 import com.example.phr.enums.TrackerInputType;
+import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.mobile.daoimpl.MobileBloodSugarDaoImpl;
 import com.example.phr.mobile.models.BloodSugar;
 
@@ -87,7 +87,8 @@ public class BloodSugarTrackerActivity extends Activity {
 		try {
 			// list = bsDaoImpl.getAllReversed();
 			list = bsDaoImpl.getAll();
-		} catch (ParseException e) {
+
+		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
