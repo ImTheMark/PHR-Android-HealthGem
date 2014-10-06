@@ -29,9 +29,9 @@ import android.widget.ListView;
 
 import com.example.phr.adapter.BloodSugarAdapter;
 import com.example.phr.enums.TrackerInputType;
-import com.example.phr.exceptions.DataAccessException;
-import com.example.phr.mobile.daoimpl.MobileBloodSugarDaoImpl;
+import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.BloodSugar;
+import com.example.phr.serviceimpl.BloodSugarServiceImpl;
 
 public class BloodSugarTrackerActivity extends Activity {
 
@@ -83,12 +83,18 @@ public class BloodSugarTrackerActivity extends Activity {
 		 * list.add(data5); list.add(data6); list.add(data7);
 		 */
 
-		MobileBloodSugarDaoImpl bsDaoImpl = new MobileBloodSugarDaoImpl();
+		// MobileBloodSugarDaoImpl bsDaoImpl = new MobileBloodSugarDaoImpl();
+		BloodSugarServiceImpl bsServiceImpl = new BloodSugarServiceImpl();
 		try {
 			// list = bsDaoImpl.getAllReversed();
-			list = bsDaoImpl.getAll();
+			// list = bsDaoImpl.getAll();
+			list = bsServiceImpl.getAll();
 
-		} catch (DataAccessException e) {
+			/*
+			 * } catch (DataAccessException e) { // TODO Auto-generated catch
+			 * block e.printStackTrace();
+			 */
+		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
