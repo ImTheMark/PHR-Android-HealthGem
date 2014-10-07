@@ -25,10 +25,10 @@ public class ImageHandler {
 		directory.mkdirs();
 
 		long time = TimestampHandler.getCurrentTimestamp().getTime();
-		String filename = UUIDGenerator.generateUniqueString();
+		String filename = UUIDGenerator.generateUniqueString() +".jpg";
 
 		// Create images
-		File mypath = new File(directory, filename + ".jpg");
+		File mypath = new File(directory, filename);
 
 		FileOutputStream fos = null;
 		try {
@@ -40,7 +40,7 @@ public class ImageHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		System.out.println("Saved as: " + mypath);
 		return filename;
 	}
 
