@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="app_id">458502710946706</string>
+
     <string name="app_name">HealthGem</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -27,6 +29,11 @@
 		<item>kg</item>
 		<item>lb</item>
 	</string-array>
+ 
+    <string-array name="heightUnit">
+        <item>ft</item>
+        <item>cm</item>
+    </string-array>
 	
      <string-array name="timeUnit">
 		<item>min</item>
