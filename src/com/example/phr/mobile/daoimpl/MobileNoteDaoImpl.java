@@ -36,18 +36,19 @@ public class MobileNoteDaoImpl implements MobileNoteDao {
 
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHandler.NOTES_ID, note.getEntryID());
-		values.put(DatabaseHandler.NOTES_DATEADDED, fmt.format(note.getTimestamp()));
+		values.put(DatabaseHandler.NOTES_DATEADDED,
+				fmt.format(note.getTimestamp()));
 		values.put(DatabaseHandler.NOTES_NOTE, note.getNote());
 		values.put(DatabaseHandler.NOTES_STATUS, note.getStatus());
 
 		try {
-			if (note.getImage().getFileName() == null) {
+			if (note.getImage() != null) {
 				String encoded = note.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				note.getImage().setFileName(fileName);
-				values.put(DatabaseHandler.NOTES_PHOTO, note.getImage().getFileName());
-			}
-			else
+				values.put(DatabaseHandler.NOTES_PHOTO, note.getImage()
+						.getFileName());
+			} else
 				values.putNull(DatabaseHandler.NOTES_PHOTO);
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
@@ -73,7 +74,8 @@ public class MobileNoteDaoImpl implements MobileNoteDao {
 				Locale.ENGLISH);
 
 		ContentValues values = new ContentValues();
-		values.put(DatabaseHandler.NOTES_DATEADDED, fmt.format(note.getTimestamp()));
+		values.put(DatabaseHandler.NOTES_DATEADDED,
+				fmt.format(note.getTimestamp()));
 		values.put(DatabaseHandler.NOTES_NOTE, note.getNote());
 		values.put(DatabaseHandler.NOTES_STATUS, note.getStatus());
 
@@ -82,9 +84,9 @@ public class MobileNoteDaoImpl implements MobileNoteDao {
 				String encoded = note.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				note.getImage().setFileName(fileName);
-				values.put(DatabaseHandler.NOTES_PHOTO, note.getImage().getFileName());
-			}
-			else
+				values.put(DatabaseHandler.NOTES_PHOTO, note.getImage()
+						.getFileName());
+			} else
 				values.putNull(DatabaseHandler.NOTES_PHOTO);
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
@@ -96,16 +98,15 @@ public class MobileNoteDaoImpl implements MobileNoteDao {
 		if (note.getFbPost() != null)
 			values.put(DatabaseHandler.NOTES_FBPOSTID, note.getFbPost().getId());
 
-
-		db.update(DatabaseHandler.TABLE_NOTES, values, DatabaseHandler.NOTES_ID + "=" + note.getEntryID(), null);
+		db.update(DatabaseHandler.TABLE_NOTES, values, DatabaseHandler.NOTES_ID
+				+ "=" + note.getEntryID(), null);
 		db.close();
 	}
 
 	@Override
 	public ArrayList<Note> getAll() throws DataAccessException {
 		ArrayList<Note> noteList = new ArrayList<Note>();
-		String selectQuery = "SELECT  * FROM "
-				+ DatabaseHandler.TABLE_NOTES;
+		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_NOTES;
 
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
@@ -115,27 +116,25 @@ public class MobileNoteDaoImpl implements MobileNoteDao {
 			do {
 				Timestamp timestamp;
 				try {
-					timestamp = DateTimeParser.getTimestamp(cursor
-							.getString(1));
+					timestamp = DateTimeParser
+							.getTimestamp(cursor.getString(1));
 				} catch (ParseException e) {
-					throw new DataAccessException("Cannot complete operation due to parse failure", e);
+					throw new DataAccessException(
+							"Cannot complete operation due to parse failure", e);
 				}
 				PHRImage image = new PHRImage();
-				
-				if(cursor.getString(4) == null)
+
+				if (cursor.getString(4) == null)
 					image = null;
-				else{
+				else {
 					image.setFileName(cursor.getString(4));
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 					String encoded = ImageHandler.encodeImageToBase64(bitmap);
 					image.setEncodedImage(encoded);
 				}
-				Note note = new Note(cursor.getInt(0),
-						new FBPost(cursor.getInt(5)),
-						timestamp, 
-						cursor.getString(3), 
-						image,
-						cursor.getString(2));
+				Note note = new Note(cursor.getInt(0), new FBPost(
+						cursor.getInt(5)), timestamp, cursor.getString(3),
+						image, cursor.getString(2));
 
 				noteList.add(note);
 			} while (cursor.moveToNext());
@@ -150,16 +149,16 @@ public class MobileNoteDaoImpl implements MobileNoteDao {
 			EntryNotFoundException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
-		db.delete(DatabaseHandler.TABLE_NOTES, DatabaseHandler.NOTES_ID + "=" + note.getEntryID(), null);
+		db.delete(DatabaseHandler.TABLE_NOTES, DatabaseHandler.NOTES_ID + "="
+				+ note.getEntryID(), null);
 		db.close();
-		
+
 	}
 
 	@Override
 	public List<Note> getAllReversed() throws DataAccessException {
 		List<Note> noteList = new ArrayList<Note>();
-		String selectQuery = "SELECT  * FROM "
-				+ DatabaseHandler.TABLE_NOTES
+		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_NOTES
 				+ " ORDER BY " + DatabaseHandler.NOTES_DATEADDED + " DESC";
 
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
@@ -170,28 +169,26 @@ public class MobileNoteDaoImpl implements MobileNoteDao {
 			do {
 				Timestamp timestamp;
 				try {
-					timestamp = DateTimeParser.getTimestamp(cursor
-							.getString(1));
+					timestamp = DateTimeParser
+							.getTimestamp(cursor.getString(1));
 				} catch (ParseException e) {
-					throw new DataAccessException("Cannot complete operation due to parse failure", e);
+					throw new DataAccessException(
+							"Cannot complete operation due to parse failure", e);
 				}
 				PHRImage image = new PHRImage();
-				
-				if(cursor.getString(4) == null)
+
+				if (cursor.getString(4) == null)
 					image = null;
-				else{
+				else {
 					image.setFileName(cursor.getString(4));
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 					String encoded = ImageHandler.encodeImageToBase64(bitmap);
 					image.setEncodedImage(encoded);
 				}
-				
-				Note note = new Note(cursor.getInt(0),
-						new FBPost(cursor.getInt(5)),
-						timestamp, 
-						cursor.getString(3), 
-						image,
-						cursor.getString(2));
+
+				Note note = new Note(cursor.getInt(0), new FBPost(
+						cursor.getInt(5)), timestamp, cursor.getString(3),
+						image, cursor.getString(2));
 
 				noteList.add(note);
 			} while (cursor.moveToNext());

@@ -1,6 +1,5 @@
 package com.example.phr;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +12,12 @@ import org.achartengine.renderer.XYSeriesRenderer;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,15 +25,19 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.example.phr.adapter.BloodPressureAdapter;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.DataAccessException;
-import com.example.phr.local_db.DatabaseHandler;
+import com.example.phr.exceptions.EntryNotFoundException;
+import com.example.phr.exceptions.OutdatedAccessTokenException;
+import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.daoimpl.MobileBloodPressureDaoImpl;
 import com.example.phr.mobile.models.BloodPressure;
+import com.example.phr.serviceimpl.BloodPressureServiceImpl;
 import com.example.phr.tools.DateTimeParser;
 import com.google.common.collect.Lists;
 
@@ -46,6 +51,12 @@ public class BloodPressureTrackerActivity extends Activity {
 	XYMultipleSeriesDataset bloodPressureDataset;
 	View bloodPressureChart;
 	LinearLayout bloodPressureContainer;
+	AlertDialog.Builder alertDialog;
+	ArrayList<String> names;
+	String mode;
+	BloodPressureServiceImpl bpServiceImpl;
+	AlertDialog alertD;
+	BloodPressure chosenItem;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -111,6 +122,68 @@ public class BloodPressureTrackerActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				Log.e("bloodpressure", "CLICKED!");
+				chosenItem = (BloodPressure) arg0.getAdapter().getItem(arg2);
+				mode = "";
+				names = new ArrayList<String>();
+				names.add("Edit");
+				names.add("Delete");
+				alertDialog = new AlertDialog.Builder(
+						BloodPressureTrackerActivity.this);
+				LayoutInflater inflater = getLayoutInflater();
+				View convertView = inflater.inflate(R.layout.item_dialogbox,
+						null);
+				alertDialog.setView(convertView);
+				alertDialog.setTitle("What to do?");
+				ListView lv = (ListView) convertView
+						.findViewById(R.id.dialogList);
+				ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+						getApplicationContext(),
+						android.R.layout.simple_list_item_1, names);
+				lv.setAdapter(adapter);
+
+				lv.setOnItemClickListener(new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1,
+							int arg2, long arg3) {
+						// TODO Auto-generated method stub
+						mode = names.get(arg2);
+						alertD.dismiss();
+						Log.e("mode", names.get(arg2));
+
+						if (mode.equals("Edit")) {
+
+							Intent i = new Intent(getApplicationContext(),
+									NewStatusActivity.class);
+							i.putExtra("edit", TrackerInputType.BLOOD_PRESSURE);
+							i.putExtra("object", chosenItem);
+							startActivity(i);
+						} else if (mode.equals("Delete")) {
+
+							try {
+								Log.e("bloodpressure", "del");
+								bpServiceImpl.delete(chosenItem);
+								Log.e("bloodpressure", "del_done");
+							} catch (ServiceException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (OutdatedAccessTokenException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (EntryNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
+							Intent i = new Intent(getApplicationContext(),
+									BloodPressureTrackerActivity.class);
+							startActivity(i);
+						}
+					}
+
+				});
+				alertD = alertDialog.create();
+				alertD.show();
+				Log.e("in", "in");
 
 			}
 		});
@@ -119,10 +192,6 @@ public class BloodPressureTrackerActivity extends Activity {
 		mBtnBloodPressurePost.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				/*
-				 * Intent intent = new Intent(getApplicationContext(),
-				 * BloodPressurePostActivity.class); startActivity(intent);
-				 */
 
 				Intent i = new Intent(getApplicationContext(),
 						NewStatusActivity.class);
@@ -300,26 +369,6 @@ public class BloodPressureTrackerActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		DatabaseHandler db = new DatabaseHandler(this);
-		Log.e("bp: ", "resume ..");
-
-		MobileBloodPressureDaoImpl bpDaoImpl = new MobileBloodPressureDaoImpl();
-		try {
-			list = bpDaoImpl.getAll();
-		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		for (BloodPressure bp : list) {
-			// bp.setImage(getResources().getDrawable(R.drawable.bloodpressure_warning));
-		}
-		bloodPressureAdapter = new BloodPressureAdapter(
-				getApplicationContext(), reverselist);
-		mBloodPressureList.setAdapter(bloodPressureAdapter);
-		if (bloodPressureContainer != null)
-			bloodPressureContainer.removeAllViews();
-		createGraph();
 
 	}
 

@@ -138,7 +138,7 @@
 	    android:layout_height="fill_parent"
 	    android:scrollbars="vertical"
 	    android:fillViewport="true"
-	   
+	    android:visibility="gone"
 	    >
            <LinearLayout
             android:id="@+id/bloodsugar_layout"

@@ -47,8 +47,41 @@
         android:layout_weight="3.5"
         android:orientation="vertical"
         android:layout_marginLeft="5dp" 
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="2dp">
+		  <LinearLayout
+           		android:id="@+id/glucosedateholder"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"  
+                android:weightSum="5">
 
+                <TextView
+                    android:id="@+id/txtCheckupdate"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="06 20 2014" 
+                    android:textSize="15sp"
+                    android:textColor="#9e9898"
+                    android:layout_weight="3"
+                    android:maxLines="1"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+                <TextView
+                    android:id="@+id/txtCheckuptime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="2:40 pm" 
+                    android:layout_toRightOf="@id/txtCheckupdate"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="#9e9898"
+                    android:layout_weight="2"
+                    android:maxLines="1"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+               
+
+            </LinearLayout>
        <RelativeLayout
             android:id="@+id/PurposePlaceholder"
             android:layout_width="wrap_content"
@@ -92,27 +125,6 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/lblDoctor"
                 android:text="Dr. Jose Tan" />
-        </RelativeLayout>
-        
-        <RelativeLayout
-            android:id="@+id/placePlaceholder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/lblPlace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Clinic : "
-                android:textStyle="bold" 
-                android:textColor="#0A090A"/>
-
-            <TextView
-                android:id="@+id/txtPlace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/lblPlace"
-                android:text="Metropolitan" />
         </RelativeLayout>
     </LinearLayout>
 

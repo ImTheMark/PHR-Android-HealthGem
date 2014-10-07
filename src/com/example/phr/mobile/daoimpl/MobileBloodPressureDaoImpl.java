@@ -41,13 +41,13 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 		values.put(DatabaseHandler.BP_STATUS, bp.getStatus());
 
 		try {
-			if (bp.getImage().getFileName() == null) {
+			if (bp.getImage() != null) {
 				String encoded = bp.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				bp.getImage().setFileName(fileName);
-				values.put(DatabaseHandler.BP_PHOTO, bp.getImage().getFileName());
-			}
-			else
+				values.put(DatabaseHandler.BP_PHOTO, bp.getImage()
+						.getFileName());
+			} else
 				values.putNull(DatabaseHandler.BP_PHOTO);
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
@@ -60,7 +60,7 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 			values.put(DatabaseHandler.BP_FBPOSTID, bp.getFbPost().getId());
 
 		db.insert(DatabaseHandler.TABLE_BLOODPRESSURE, null, values);
-		db.close(); 
+		db.close();
 	}
 
 	@Override
@@ -83,9 +83,9 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 				String encoded = bp.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				bp.getImage().setFileName(fileName);
-				values.put(DatabaseHandler.BP_PHOTO, bp.getImage().getFileName());
-			}
-			else
+				values.put(DatabaseHandler.BP_PHOTO, bp.getImage()
+						.getFileName());
+			} else
 				values.putNull(DatabaseHandler.BP_PHOTO);
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
@@ -96,8 +96,9 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 		}
 		if (bp.getFbPost() != null)
 			values.put(DatabaseHandler.BP_FBPOSTID, bp.getFbPost().getId());
-		
-		db.update(DatabaseHandler.TABLE_BLOODPRESSURE, values, DatabaseHandler.BP_ID + "=" + bp.getEntryID(), null);
+
+		db.update(DatabaseHandler.TABLE_BLOODPRESSURE, values,
+				DatabaseHandler.BP_ID + "=" + bp.getEntryID(), null);
 		db.close();
 	}
 
@@ -115,15 +116,17 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 			do {
 				Timestamp timestamp;
 				try {
-					timestamp = DateTimeParser.getTimestamp(cursor
-							.getString(1));
+					timestamp = DateTimeParser
+							.getTimestamp(cursor.getString(1));
 				} catch (ParseException e) {
-					throw new DataAccessException("An error has occured while trying to access data", e);
+					throw new DataAccessException(
+							"An error has occured while trying to access data",
+							e);
 				}
 				PHRImage image = new PHRImage();
-				if(cursor.getString(5) == null)
+				if (cursor.getString(5) == null)
 					image = null;
-				else{
+				else {
 					image.setFileName(cursor.getString(5));
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 					String encoded = ImageHandler.encodeImageToBase64(bitmap);
@@ -136,7 +139,7 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 				bpList.add(bp);
 			} while (cursor.moveToNext());
 		}
-		
+
 		db.close();
 		return bpList;
 	}
@@ -146,16 +149,17 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 			EntryNotFoundException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
-		db.delete(DatabaseHandler.TABLE_BLOODPRESSURE, DatabaseHandler.BP_ID + "=" + bp.getEntryID(), null);
+		db.delete(DatabaseHandler.TABLE_BLOODPRESSURE, DatabaseHandler.BP_ID
+				+ "=" + bp.getEntryID(), null);
 		db.close();
 	}
 
 	@Override
-	public List<BloodPressure> getAllReversed() throws DataAccessException{
+	public List<BloodPressure> getAllReversed() throws DataAccessException {
 		List<BloodPressure> bpList = new ArrayList<BloodPressure>();
 		String selectQuery = "SELECT  * FROM "
-				+ DatabaseHandler.TABLE_BLOODPRESSURE
-				+ " ORDER BY " + DatabaseHandler.BP_DATEADDED + " DESC";
+				+ DatabaseHandler.TABLE_BLOODPRESSURE + " ORDER BY "
+				+ DatabaseHandler.BP_DATEADDED + " DESC";
 
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
@@ -165,15 +169,17 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 			do {
 				Timestamp timestamp;
 				try {
-					timestamp = DateTimeParser.getTimestamp(cursor
-							.getString(1));
+					timestamp = DateTimeParser
+							.getTimestamp(cursor.getString(1));
 				} catch (ParseException e) {
-					throw new DataAccessException("An error has occured while trying to access data", e);
+					throw new DataAccessException(
+							"An error has occured while trying to access data",
+							e);
 				}
 				PHRImage image = new PHRImage();
-				if(cursor.getString(5) == null)
+				if (cursor.getString(5) == null)
 					image = null;
-				else{
+				else {
 					image.setFileName(cursor.getString(5));
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 					String encoded = ImageHandler.encodeImageToBase64(bitmap);
@@ -186,7 +192,7 @@ public class MobileBloodPressureDaoImpl implements MobileBloodPressureDao {
 				bpList.add(bp);
 			} while (cursor.moveToNext());
 		}
-		
+
 		db.close();
 		return bpList;
 	}

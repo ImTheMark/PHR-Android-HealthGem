@@ -2,34 +2,32 @@ package com.example.phr.adapter;
 
 import java.util.List;
 
-import com.example.phr.CheckupTrackerActivity;
-import com.example.phr.CheckupTrackerReadModeActivity;
-import com.example.phr.R;
-import com.example.phr.model.Checkup;
-
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.phr.R;
+import com.example.phr.mobile.models.CheckUp;
+import com.example.phr.tools.DateTimeParser;
+
 public class CheckupAdapter extends BaseAdapter {
 
-	private Context mContext;
-	private List<Checkup> mListOfCheckup;
+	private final Context mContext;
+	private final List<CheckUp> mListOfCheckup;
 
 	private static class ViewHolder {
 		TextView ailment;
 		TextView doctor;
-		TextView clinic;
 		TextView day;
 		TextView month;
+		TextView date;
+		TextView time;
 	}
 
-	public CheckupAdapter(Context aContext, List<Checkup> aListOfCheckups) {
+	public CheckupAdapter(Context aContext, List<CheckUp> aListOfCheckups) {
 		mListOfCheckup = aListOfCheckups;
 		mContext = aContext;
 	}
@@ -55,51 +53,40 @@ public class CheckupAdapter extends BaseAdapter {
 
 		if (convertView == null) {
 			LayoutInflater inflater = LayoutInflater.from(mContext);
-			convertView = inflater.inflate(R.layout.item_checkup, parent,
-					false);
+			convertView = inflater
+					.inflate(R.layout.item_checkup, parent, false);
 
 			viewHolder = new ViewHolder();
 			viewHolder.ailment = (TextView) convertView
 					.findViewById(R.id.txtPurpose);
 			viewHolder.doctor = (TextView) convertView
 					.findViewById(R.id.txtDoctor);
-			viewHolder.clinic = (TextView) convertView
-					.findViewById(R.id.txtPlace);
+			viewHolder.date = (TextView) convertView
+					.findViewById(R.id.txtCheckupdate);
 
-			viewHolder.day = (TextView) convertView
-					.findViewById(R.id.txtDay);
-			
-			viewHolder.month = (TextView) convertView
-					.findViewById(R.id.txtMonth);
-			
+			viewHolder.time = (TextView) convertView
+					.findViewById(R.id.txtCheckuptime);
+			// viewHolder.day = (TextView)
+			// convertView.findViewById(R.id.txtDay);
+
+			// viewHolder.month = (TextView) convertView
+			// .findViewById(R.id.txtMonth);
+
 			convertView.setTag(viewHolder);
 		}
 
 		viewHolder = (ViewHolder) convertView.getTag();
-		viewHolder.ailment.setText(mListOfCheckup.get(position).getAilment()
+		viewHolder.ailment.setText(mListOfCheckup.get(position).getPurpose()
 				.toString());
-		viewHolder.doctor.setText(mListOfCheckup.get(position).getDoctor()
+		viewHolder.doctor.setText(mListOfCheckup.get(position).getDoctorsName()
 				.toString());
-		viewHolder.clinic.setText(String.valueOf(mListOfCheckup.get(
-				position).getClinic()));
 
-		viewHolder.day.setText(String.valueOf(mListOfCheckup.get(
-				position).getDay()));
-		
-		viewHolder.month.setText(String.valueOf(mListOfCheckup.get(
-				position).getMonth()));
-		
-		convertView.setOnClickListener(new OnClickListener() {
+		viewHolder.day.setText(String.valueOf(DateTimeParser
+				.getDate(mListOfCheckup.get(position).getTimestamp())));
 
-			@Override
-			public void onClick(View v) {
-				
-				// FOR STATUS ON CLICK
-				Intent intent = new Intent(mContext,
-						CheckupTrackerReadModeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);;
-				v.getContext().startActivity(intent);
-			}
-		});
+		viewHolder.month.setText(String.valueOf(DateTimeParser
+				.getDate(mListOfCheckup.get(position).getTimestamp())));
+
 		return convertView;
 	}
 

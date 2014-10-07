@@ -118,6 +118,10 @@ public class NewStatusActivity extends Activity {
 	String mode;
 	final Context context = this;
 	BloodSugar editBs;
+	BloodPressure editBp;
+	Weight editWeight;
+	Note editNote;
+	CheckUp editCheckup;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -164,6 +168,23 @@ public class NewStatusActivity extends Activity {
 		txtSystolic = (TextView) findViewById(R.id.systolic);
 		txtDiastolic = (TextView) findViewById(R.id.diastolic);
 		bpStatus = (EditText) findViewById(R.id.txtBPStatus);
+		txtSystolic.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				callBloodPressureInput((int) Double.parseDouble(txtSystolic
+						.getText().toString()), (int) Double
+						.parseDouble(txtDiastolic.getText().toString()));
+			}
+		});
+		txtDiastolic.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				callBloodPressureInput((int) Double.parseDouble(txtSystolic
+						.getText().toString()), (int) Double
+						.parseDouble(txtDiastolic.getText().toString()));
+			}
+		});
+
 		// blood sugar post
 		txtSugar = (TextView) findViewById(R.id.sugar);
 		bsStatus = (EditText) findViewById(R.id.txtBSStatus);
@@ -195,6 +216,22 @@ public class NewStatusActivity extends Activity {
 		txtDoctor = (TextView) findViewById(R.id.doctor);
 		checkupStatus = (EditText) findViewById(R.id.txtBSStatus);
 		txtPurpose = (TextView) findViewById(R.id.purpose);
+		txtDoctor.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				callCheckUpInput(txtDoctor.getText().toString(), txtPurpose
+						.getText().toString());
+			}
+		});
+
+		txtPurpose.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				callCheckUpInput(txtDoctor.getText().toString(), txtPurpose
+						.getText().toString());
+			}
+		});
+
 		// activity post
 		txtActivity = (TextView) findViewById(R.id.activity);
 		activityStatus = (EditText) findViewById(R.id.txtActivityStatus);
@@ -273,7 +310,7 @@ public class NewStatusActivity extends Activity {
 				callFoodInput();
 			} else if (tracker.equals(TrackerInputType.CHECKUP)) {
 				currentTracker = TrackerInputType.CHECKUP;
-				callCheckUpInput("doctor's name", "purpose");
+				callCheckUpInput("", "");
 			} else if (tracker.equals(TrackerInputType.ACTIVITY)) {
 				currentTracker = TrackerInputType.ACTIVITY;
 				callActivityInput();
@@ -307,6 +344,24 @@ public class NewStatusActivity extends Activity {
 				Log.e("editbsobject", String.valueOf(editBs.getEntryID()));
 				setBloodSugarTemplate(String.valueOf(editBs.getBloodSugar()),
 						editBs.getType(), editBs.getStatus());
+
+			} else if (editTracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
+				editBp = (BloodPressure) in.getExtras().getSerializable(
+						"object");
+				mode = "edit";
+				currentTracker = TrackerInputType.BLOOD_PRESSURE;
+				Log.e("editbsobject", String.valueOf(editBp.getEntryID()));
+				setBloodPressureTemplate(String.valueOf(editBp.getSystolic()),
+						String.valueOf(editBp.getDiastolic()),
+						editBp.getStatus());
+			} else if (editTracker.equals(TrackerInputType.CHECKUP)) {
+				editCheckup = (CheckUp) in.getExtras()
+						.getSerializable("object");
+				mode = "edit";
+				currentTracker = TrackerInputType.CHECKUP;
+				Log.e("editbsobject", String.valueOf(editCheckup.getEntryID()));
+				setCheckupTemplate(editCheckup.getDoctorsName(),
+						editCheckup.getPurpose(), editCheckup.getNotes());
 			}
 		}
 	}
@@ -386,8 +441,8 @@ public class NewStatusActivity extends Activity {
 			String status) {
 		setAllTemplateGone();
 		bpTemplate.setVisibility(View.VISIBLE);
-		txtSystolic.setText(Integer.toString(systolicPicker.getCurrent()));
-		txtDiastolic.setText(Integer.toString(diastolicPicker.getCurrent()));
+		txtSystolic.setText(systolic);
+		txtDiastolic.setText(diastolic);
 		if (mode.equals("add"))
 			bpStatus.setHint("how you feel? ");
 		else if (mode.equals("edit"))
@@ -730,7 +785,7 @@ public class NewStatusActivity extends Activity {
 
 			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
 			BloodPressure bp = new BloodPressure(timestamp, bpStatus.getText()
-					.toString(), image, systolicPicker.getCurrent(),
+					.toString(), null, systolicPicker.getCurrent(),
 					diastolicPicker.getCurrent());
 
 			BloodPressureService bpService = new BloodPressureServiceImpl();
@@ -788,7 +843,7 @@ public class NewStatusActivity extends Activity {
 						.getText()));
 			}
 			Weight weight = new Weight(timestamp, weightStatus.getText()
-					.toString(), image, newWeight);
+					.toString(), null, newWeight);
 
 			WeightService weightService = new WeightServiceImpl();
 			weightService.add(weight);
@@ -810,7 +865,7 @@ public class NewStatusActivity extends Activity {
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
 			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
-			Note note = new Note(timestamp, null, image, notesStatus.getText()
+			Note note = new Note(timestamp, null, null, notesStatus.getText()
 					.toString());
 
 			NoteService noteService = new NoteServiceImpl();
@@ -849,9 +904,9 @@ public class NewStatusActivity extends Activity {
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
 			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
-			CheckUp checkup = new CheckUp(timestamp, null, null, checkupStatus
-					.getText().toString(), txtPurpose.getText().toString(),
-					txtDoctor.getText().toString());
+			CheckUp checkup = new CheckUp(timestamp, null, null, txtPurpose
+					.getText().toString(), txtDoctor.getText().toString(),
+					checkupStatus.getText().toString());
 
 			CheckUpService checkupService = new CheckUpServiceImpl();
 			checkupService.add(checkup);
@@ -875,7 +930,7 @@ public class NewStatusActivity extends Activity {
 			com.example.phr.mobile.models.Activity activity = new com.example.phr.mobile.models.Activity(
 					txtActivity.getText().toString(), 30.0);
 			ActivityTrackerEntry activityEntry = new ActivityTrackerEntry(
-					timestamp, activityStatus.getText().toString(), image,
+					timestamp, activityStatus.getText().toString(), null,
 					activity, Double.parseDouble(txtActivityCal.getText()
 							.toString()));
 
@@ -918,157 +973,127 @@ public class NewStatusActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_item_status_post:
-			if (currentTracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
-				try {
-					addBloodPressureToDatabase();
-				} catch (ServiceException e) {
-					// output error message or something
-					System.out.println(e.getMessage());
-				} catch (OutdatedAccessTokenException e) {
-					// Message - > Log user out
-					e.printStackTrace();
-				} catch (WebServerException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (DataAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				// onBackPressed();
-				Log.e("added", "bp");
-				Intent intent = new Intent(getApplicationContext(),
-						BloodPressureTrackerActivity.class);
-				startActivity(intent);
-			}
+			try {
+				if (currentTracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
 
-			else if (currentTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
-				try {
+					addBloodPressureToDatabase();
+					Log.e("added", "bp");
+					Intent intent = new Intent(getApplicationContext(),
+							BloodPressureTrackerActivity.class);
+					startActivity(intent);
+				}
+
+				else if (currentTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
+
 					addBloodSugarToDatabase();
-				} catch (ServiceException e) {
-					// output error message or something
-					System.out.println(e.getMessage());
-				} catch (OutdatedAccessTokenException e) {
-					// Message - > Log user out
-					e.printStackTrace();
-				} catch (WebServerException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (DataAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				// onBackPressed();
-				Intent intent = new Intent(getApplicationContext(),
-						BloodSugarTrackerActivity.class);
-				startActivity(intent);
-			} else if (currentTracker.equals(TrackerInputType.WEIGHT)) {
-				try {
+					Intent intent = new Intent(getApplicationContext(),
+							BloodSugarTrackerActivity.class);
+					startActivity(intent);
+				} else if (currentTracker.equals(TrackerInputType.WEIGHT)) {
+
 					addWeightToDatabase();
-				} catch (ServiceException e) {
-					// output error message or something
-					System.out.println(e.getMessage());
-				} catch (OutdatedAccessTokenException e) {
-					// Message - > Log user out
-					e.printStackTrace();
-				} catch (WebServerException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (DataAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				// onBackPressed();
-				Intent intent = new Intent(getApplicationContext(),
-						WeightTrackerActivity.class);
-				startActivity(intent);
-			} else if (currentTracker.equals(TrackerInputType.CHECKUP)) {
-				try {
+					Intent intent = new Intent(getApplicationContext(),
+							WeightTrackerActivity.class);
+					startActivity(intent);
+				} else if (currentTracker.equals(TrackerInputType.CHECKUP)) {
+
 					addCheckUpToDatabase();
-				} catch (ServiceException e) {
-					// output error message or something
-					System.out.println(e.getMessage());
-				} catch (OutdatedAccessTokenException e) {
-					// Message - > Log user out
-					e.printStackTrace();
-				}
-				// onBackPressed();
-				Intent intent = new Intent(getApplicationContext(),
-						CheckupTrackerActivity.class);
-				startActivity(intent);
-			} else if (currentTracker.equals(TrackerInputType.NOTES)) {
-				try {
+					Intent intent = new Intent(getApplicationContext(),
+							CheckupTrackerActivity.class);
+					startActivity(intent);
+				} else if (currentTracker.equals(TrackerInputType.NOTES)) {
+
 					addNoteToDatabase();
-				} catch (ServiceException e) {
-					// output error message or something
-					System.out.println(e.getMessage());
-				} catch (OutdatedAccessTokenException e) {
-					// Message - > Log user out
-					e.printStackTrace();
-				} catch (WebServerException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (DataAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				// onBackPressed();
-				Intent intent = new Intent(getApplicationContext(),
-						NoteTrackerActivity.class);
-				startActivity(intent);
-			} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
-				try {
+					Intent intent = new Intent(getApplicationContext(),
+							NoteTrackerActivity.class);
+					startActivity(intent);
+				} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
+
 					addActivityToDatabase();
-				} catch (ServiceException e) {
-					// output error message or something
-					System.out.println(e.getMessage());
-				} catch (OutdatedAccessTokenException e) {
-					// Message - > Log user out
-					e.printStackTrace();
-				}
-				// onBackPressed();
-				Intent intent = new Intent(getApplicationContext(),
-						ActivitiesTrackerActivity.class);
-				startActivity(intent);
-			} else if (currentTracker.equals(TrackerInputType.FOOD)) {
-				try {
+					Intent intent = new Intent(getApplicationContext(),
+							ActivitiesTrackerActivity.class);
+					startActivity(intent);
+				} else if (currentTracker.equals(TrackerInputType.FOOD)) {
+
 					addFoodToDatabase();
-				} catch (ServiceException e) {
-					// output error message or something
-					System.out.println(e.getMessage());
-				} catch (OutdatedAccessTokenException e) {
-					// Message - > Log user out
-					e.printStackTrace();
+					Intent intent = new Intent(getApplicationContext(),
+							FoodTrackerDailyActivity.class);
+					startActivity(intent);
 				}
-				// onBackPressed();
-				Intent intent = new Intent(getApplicationContext(),
-						FoodTrackerDailyActivity.class);
-				startActivity(intent);
+			} catch (ServiceException e) {
+				// output error message or something
+				System.out.println(e.getMessage());
+			} catch (OutdatedAccessTokenException e) {
+				// Message - > Log user out
+				e.printStackTrace();
+			} catch (WebServerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DataAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			return true;
 
 		case R.id.menu_item_status_edit:
-			if (currentTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
-				try {
+			try {
+				if (currentTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
 					Log.e("call", "edit");
 					editBloodSugarToDatabase();
-				} catch (ServiceException e) {
-					// output error message or something
-					System.out.println(e.getMessage());
-				} catch (OutdatedAccessTokenException e) {
-					// Message - > Log user out
-					e.printStackTrace();
-				} catch (WebServerException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (DataAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Log.e("call", "bsActivity");
+					Intent intent = new Intent(getApplicationContext(),
+							BloodSugarTrackerActivity.class);
+					startActivity(intent);
+				} else if (currentTracker
+						.equals(TrackerInputType.BLOOD_PRESSURE)) {
+					editBloodPressureToDatabase();
+					Log.e("call", "bpActivity");
+					Intent intent = new Intent(getApplicationContext(),
+							BloodPressureTrackerActivity.class);
+					startActivity(intent);
+				} else if (currentTracker.equals(TrackerInputType.WEIGHT)) {
+					editWeightToDatabase();
+					Log.e("call", "weightActivity");
+					Intent intent = new Intent(getApplicationContext(),
+							WeightTrackerActivity.class);
+					startActivity(intent);
+				} else if (currentTracker.equals(TrackerInputType.CHECKUP)) {
+					editCheckUpToDatabase();
+					Log.e("call", "checkupActivity");
+					Intent intent = new Intent(getApplicationContext(),
+							CheckupTrackerActivity.class);
+					startActivity(intent);
+				} else if (currentTracker.equals(TrackerInputType.NOTES)) {
+					editNoteToDatabase();
+					Log.e("call", "noteActivity");
+					Intent intent = new Intent(getApplicationContext(),
+							NoteTrackerActivity.class);
+					startActivity(intent);
+				} else if (currentTracker.equals(TrackerInputType.FOOD)) {
+					editFoodToDatabase();
+					Log.e("call", "foodActivity");
+					Intent intent = new Intent(getApplicationContext(),
+							FoodTrackerDailyActivity.class);
+					startActivity(intent);
+				} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
+					editActivityToDatabase();
+					Log.e("call", "acitivityActivity");
+					Intent intent = new Intent(getApplicationContext(),
+							ActivitiesTrackerActivity.class);
+					startActivity(intent);
 				}
-				// onBackPressed();
-				Log.e("call", "bsActivity");
-				Intent intent = new Intent(getApplicationContext(),
-						BloodSugarTrackerActivity.class);
-				startActivity(intent);
+			} catch (ServiceException e) {
+				// output error message or something
+				System.out.println(e.getMessage());
+			} catch (OutdatedAccessTokenException e) {
+				// Message - > Log user out
+				e.printStackTrace();
+			} catch (WebServerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DataAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			return true;
 		default:
@@ -1083,9 +1108,10 @@ public class NewStatusActivity extends Activity {
 
 		try {
 			Log.e("in", "edit");
-			BloodSugar bs = new BloodSugar(editBs.getTimestamp(), bsStatus
-					.getText().toString(), null, Double.parseDouble(txtSugar
-					.getText().toString()), txtSugarType.getText().toString());
+			BloodSugar bs = new BloodSugar(editBs.getEntryID(),
+					editBs.getTimestamp(), bsStatus.getText().toString(), null,
+					Double.parseDouble(txtSugar.getText().toString()),
+					txtSugarType.getText().toString());
 			BloodSugarService bsService = new BloodSugarServiceImpl();
 			bsService.edit(bs);
 			Log.e("in", "edited");
@@ -1097,4 +1123,122 @@ public class NewStatusActivity extends Activity {
 
 	}
 
+	private void editBloodPressureToDatabase() throws ServiceException,
+			OutdatedAccessTokenException, WebServerException,
+			DataAccessException {
+
+		try {
+			Log.e("in", "edit");
+			BloodPressure bp = new BloodPressure(editBp.getEntryID(),
+					editBp.getTimestamp(), bpStatus.getText().toString(), null,
+					Integer.parseInt(txtSystolic.getText().toString()),
+					Integer.parseInt(txtDiastolic.getText().toString()));
+
+			BloodPressureService bpService = new BloodPressureServiceImpl();
+			bpService.edit(bp);
+
+			Log.e("in", "edited");
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void editWeightToDatabase() throws ServiceException,
+			OutdatedAccessTokenException, WebServerException,
+			DataAccessException {
+
+		try {
+			Log.e("in", "edit");
+			double newWeight;
+			if (txtWeightUnit.equals("kg")) {
+				newWeight = WeightConverter.convertKgToLbs(Double
+						.parseDouble(String.valueOf(txtWeight.getText())));
+			} else {
+				newWeight = Double.parseDouble(String.valueOf(txtWeight
+						.getText()));
+			}
+			Weight weight = new Weight(editWeight.getEntryID(),
+					editWeight.getTimestamp(), weightStatus.getText()
+							.toString(), null, newWeight);
+
+			WeightService weightService = new WeightServiceImpl();
+			weightService.edit(weight);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void editCheckUpToDatabase() throws ServiceException,
+			OutdatedAccessTokenException, WebServerException,
+			DataAccessException {
+
+		try {
+			Log.e("in", "edit");
+			CheckUp checkup = new CheckUp(editCheckup.getEntryID(),
+					editCheckup.getTimestamp(), null, null, txtPurpose
+							.getText().toString(), txtDoctor.getText()
+							.toString(), checkupStatus.getText().toString());
+
+			CheckUpService checkupService = new CheckUpServiceImpl();
+			checkupService.edit(checkup);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void editNoteToDatabase() throws ServiceException,
+			OutdatedAccessTokenException, WebServerException,
+			DataAccessException {
+
+		try {
+			Log.e("in", "edit");
+			Note note = new Note(editNote.getEntryID(),
+					editNote.getTimestamp(), null, null, notesStatus.getText()
+							.toString());
+
+			NoteService noteService = new NoteServiceImpl();
+			noteService.edit(note);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void editFoodToDatabase() throws ServiceException,
+			OutdatedAccessTokenException, WebServerException,
+			DataAccessException {
+
+		try {
+			Log.e("in", "edit");
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void editActivityToDatabase() throws ServiceException,
+			OutdatedAccessTokenException, WebServerException,
+			DataAccessException {
+
+		try {
+			Log.e("in", "edit");
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 }
