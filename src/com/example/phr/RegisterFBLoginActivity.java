@@ -1,5 +1,7 @@
 package com.example.phr;
 
+import com.facebook.widget.LoginButton;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class RegisterFBLoginActivity extends Activity {
+	
+	LoginButton btnLogin;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

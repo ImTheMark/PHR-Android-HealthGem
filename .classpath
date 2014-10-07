@@ -5,9 +5,9 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry exported="true" kind="lib" path="/FacebookSDK"/>
 	<classpathentry kind="lib" path="libs/graphview-3.1.jar"/>
 	<classpathentry kind="lib" path="libs/gson-2.2.2.jar"/>
 	<classpathentry kind="lib" path="libs/guava-18.0.jar"/>
-	<classpathentry kind="lib" path="/FacebookSDK"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
