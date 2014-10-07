@@ -2,6 +2,8 @@ package com.example.phr.serviceimpl;
 
 import java.util.List;
 
+import android.util.Log;
+
 import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
@@ -30,7 +32,7 @@ public class CheckUpServiceImpl implements CheckUpService {
 		int entryID;
 		try {
 			entryID = webCheckUpDao.add_ReturnEntryIdInWeb(checkUp);
-			checkUp.setEntryID(entryID); 
+			checkUp.setEntryID(entryID);
 			mobileCheckUpDao.add(checkUp);
 		} catch (WebServerException e) {
 			throw new ServiceException(
@@ -38,13 +40,14 @@ public class CheckUpServiceImpl implements CheckUpService {
 		} catch (DataAccessException e) {
 			throw new ServiceException(
 					"An error occured while trying to add cu to web", e);
-		} 
+		}
 	}
 
 	@Override
 	public void edit(CheckUp checkUp) throws ServiceException,
 			OutdatedAccessTokenException, EntryNotFoundException {
 		try {
+			Log.e("checkupserviceimpl", "edit");
 			webCheckUpDao.edit(checkUp);
 			mobileCheckUpDao.edit(checkUp);
 		} catch (WebServerException e) {
@@ -60,6 +63,7 @@ public class CheckUpServiceImpl implements CheckUpService {
 	public void delete(CheckUp checkUp) throws ServiceException,
 			OutdatedAccessTokenException, EntryNotFoundException {
 		try {
+			Log.e("checkupserviceimpl", "del");
 			webCheckUpDao.delete(checkUp);
 			mobileCheckUpDao.delete(checkUp);
 		} catch (WebServerException e) {

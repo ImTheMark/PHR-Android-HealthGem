@@ -45,6 +45,7 @@ public class CheckupTrackerReadModeActivity extends Activity {
 		note = (TextView) findViewById(R.id.checkUpNote);
 
 		purpose.setText(chosenItem.getPurpose());
+		note.setText(chosenItem.getNotes());
 		doctor.setText(chosenItem.getDoctorsName());
 		date.setText(String.valueOf(DateTimeParser.getDate(chosenItem
 				.getTimestamp())));

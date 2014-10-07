@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,12 +30,8 @@ public class CheckupTrackerActivity extends Activity {
 	CheckupAdapter checkupAdapter;
 	LinearLayout mBtnCheckupPost;;
 	LinearLayout mBtnCheckupDoctor;
-	AlertDialog.Builder alertDialog;
 	List<CheckUp> list;
-	ArrayList<String> names;
-	String mode;
 	CheckUpServiceImpl checkupServiceImpl;
-	AlertDialog alertD;
 	CheckUp chosenItem;
 
 	@SuppressLint("NewApi")
@@ -86,6 +81,7 @@ public class CheckupTrackerActivity extends Activity {
 					long arg3) {
 				Intent i = new Intent(getApplicationContext(),
 						CheckupTrackerReadModeActivity.class);
+				chosenItem = (CheckUp) arg0.getAdapter().getItem(arg2);
 				i.putExtra("object", chosenItem);
 				startActivity(i);
 			}
@@ -102,17 +98,6 @@ public class CheckupTrackerActivity extends Activity {
 			}
 		});
 
-		mBtnCheckupDoctor = (LinearLayout) findViewById(R.id.btnAddCheckupDoctor);
-		mBtnCheckupDoctor.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {/*
-										 * Intent intent = new
-										 * Intent(getApplicationContext(),
-										 * CheckupTrackerAddDoctorActivity
-										 * .class); startActivity(intent);
-										 */
-			}
-		});
 	}
 
 	@Override

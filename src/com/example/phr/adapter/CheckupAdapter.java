@@ -81,12 +81,17 @@ public class CheckupAdapter extends BaseAdapter {
 		viewHolder.doctor.setText(mListOfCheckup.get(position).getDoctorsName()
 				.toString());
 
-		viewHolder.day.setText(String.valueOf(DateTimeParser
+		// viewHolder.day.setText(String.valueOf(DateTimeParser
+		// .getDate(mListOfCheckup.get(position).getTimestamp())));
+		//
+		// viewHolder.month.setText(String.valueOf(DateTimeParser
+		// .getDate(mListOfCheckup.get(position).getTimestamp())));
+
+		viewHolder.date.setText(String.valueOf(DateTimeParser
 				.getDate(mListOfCheckup.get(position).getTimestamp())));
 
-		viewHolder.month.setText(String.valueOf(DateTimeParser
-				.getDate(mListOfCheckup.get(position).getTimestamp())));
-
+		viewHolder.time.setText(String.valueOf(DateTimeParser
+				.getTime(mListOfCheckup.get(position).getTimestamp())));
 		return convertView;
 	}
 

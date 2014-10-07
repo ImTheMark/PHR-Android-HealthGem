@@ -33,6 +33,12 @@
                 android:layout_height="wrap_content"
                 android:text="July 23, 2014 "
                 android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  " />
             
             <TextView
                 android:id="@+id/checkupTime"

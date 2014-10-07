@@ -4,8 +4,10 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import android.annotation.SuppressLint;
@@ -210,11 +212,19 @@ public class NewStatusActivity extends Activity {
 		txtWeight = (TextView) findViewById(R.id.weight);
 		weightStatus = (EditText) findViewById(R.id.txtWeightStatus);
 		txtWeightUnit = (TextView) findViewById(R.id.txtWeightUnit);
+		txtWeight.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				callWeightInput(txtDoctor.getText().toString(), txtPurpose
+						.getText().toString());
+			}
+		});
+
 		// note post
 		notesStatus = (EditText) findViewById(R.id.txtNotesStatus);
 		// checkup post
 		txtDoctor = (TextView) findViewById(R.id.doctor);
-		checkupStatus = (EditText) findViewById(R.id.txtBSStatus);
+		checkupStatus = (EditText) findViewById(R.id.txtCheckupStatus);
 		txtPurpose = (TextView) findViewById(R.id.purpose);
 		txtDoctor.setOnClickListener(new OnClickListener() {
 			@Override
@@ -362,6 +372,20 @@ public class NewStatusActivity extends Activity {
 				Log.e("editbsobject", String.valueOf(editCheckup.getEntryID()));
 				setCheckupTemplate(editCheckup.getDoctorsName(),
 						editCheckup.getPurpose(), editCheckup.getNotes());
+			} else if (editTracker.equals(TrackerInputType.NOTES)) {
+				editNote = (Note) in.getExtras().getSerializable("object");
+				mode = "edit";
+				currentTracker = TrackerInputType.NOTES;
+				Log.e("editbsobject", String.valueOf(editNote.getEntryID()));
+				setNoteTemplate(editNote.getNote());
+			} else if (editTracker.equals(TrackerInputType.WEIGHT)) {
+				editWeight = (Weight) in.getExtras().getSerializable("object");
+				mode = "edit";
+				currentTracker = TrackerInputType.WEIGHT;
+				Log.e("editbsobject", String.valueOf(editWeight.getEntryID()));
+				setWeightTemplate(
+						String.valueOf(editWeight.getWeightInPounds()), "lb",
+						editWeight.getStatus());
 			}
 		}
 	}
@@ -483,7 +507,7 @@ public class NewStatusActivity extends Activity {
 				callFoodInput();
 			} else if (item.equals(TrackerInputType.CHECKUP)) {
 				currentTracker = TrackerInputType.CHECKUP;
-				callCheckUpInput("doctor's name", "purpose");
+				callCheckUpInput("", "");
 			} else if (item.equals(TrackerInputType.ACTIVITY)) {
 				currentTracker = TrackerInputType.ACTIVITY;
 				callActivityInput();
@@ -664,6 +688,13 @@ public class NewStatusActivity extends Activity {
 		weight.setText(txtWeight);
 		weightUnitSpinner = (Spinner) weightView
 				.findViewById(R.id.weightUnitSpinner);
+		List<String> list = new ArrayList<String>();
+		list.add("kg");
+		list.add("lb");
+		int index = list.indexOf(txtUnit);
+		if (index != -1)
+			weightUnitSpinner.setSelection(index);
+
 		alertDialogBuilder
 				.setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -1128,7 +1159,7 @@ public class NewStatusActivity extends Activity {
 			DataAccessException {
 
 		try {
-			Log.e("in", "edit");
+			Log.e("edit", "bloodpressure");
 			BloodPressure bp = new BloodPressure(editBp.getEntryID(),
 					editBp.getTimestamp(), bpStatus.getText().toString(), null,
 					Integer.parseInt(txtSystolic.getText().toString()),
