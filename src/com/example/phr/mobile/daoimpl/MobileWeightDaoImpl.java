@@ -198,4 +198,64 @@ public class MobileWeightDaoImpl implements MobileWeightDao {
 		db.close();
 		return weightList;
 	}
+
+	@Override
+	public List<List<Weight>> getAllGroupedByDate() throws DataAccessException {
+		List<List<Weight>> groupedWeightList = new ArrayList<List<Weight>>();
+		
+
+		List<Weight> weightList = new ArrayList<Weight>();
+		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_WEIGHT
+				+ " ORDER BY " + DatabaseHandler.WEIGHT_DATEADDED + " DESC";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+				Timestamp timestamp;
+				try {
+					timestamp = DateTimeParser
+							.getTimestamp(cursor.getString(1));
+				} catch (ParseException e) {
+					throw new DataAccessException(
+							"Cannot complete operation due to parse failure", e);
+				}
+				PHRImage image = new PHRImage();
+
+				if (cursor.getString(4) == null)
+					image = null;
+				else {
+					image.setFileName(cursor.getString(4));
+					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+					String encoded = ImageHandler.encodeImageToBase64(bitmap);
+					image.setEncodedImage(encoded);
+				}
+
+				Weight weight = new Weight(cursor.getInt(0), new FBPost(
+						cursor.getInt(5)), timestamp, cursor.getString(3),
+						image, cursor.getDouble(2));
+
+				weightList.add(weight);
+			} while (cursor.moveToNext());
+		}
+		db.close();
+		
+		
+		while(weightList.size() != 0){
+			List<Weight> weightListPerDay = new ArrayList<Weight>();
+			String monthDay = DateTimeParser.getMonthDay(weightList.get(0).getTimestamp());
+			
+			do{
+				Weight weight = weightList.remove(0);
+				weightListPerDay.add(weight);
+			}while(weightList.size() != 0 && monthDay.equals(DateTimeParser.getMonthDay(weightList.get(0).getTimestamp())));
+			
+			
+			groupedWeightList.add(weightListPerDay);
+		}
+		
+		return groupedWeightList;
+	}
 }
