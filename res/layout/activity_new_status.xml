@@ -2,25 +2,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    
+
     <ScrollView
-	    android:id="@+id/food_template"
+        android:id="@+id/generalTemplate"
         android:layout_alignParentTop="true"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:scrollbars="vertical"
-	    android:fillViewport="true"
-	    android:visibility="gone">
-        
+	    android:fillViewport="true">
+
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
             
-            >
             
-	
 	        <EditText
-		        android:id="@+id/txtFoodStatus"
+		        android:id="@+id/txtStatus"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:background="#00000000"
@@ -30,374 +28,245 @@
 	            >
 	              <requestFocus />
 	        </EditText>
-	
-	        <TextView
-	            android:id="@+id/textView1"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="- Eating " />
-	        
-	        <TextView
-	            android:id="@+id/food"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:textStyle="bold"
-	            android:text=" Chocolate Cake" 
-	            android:textColor="#E05C5C" 
-	            />
-	        
-	        <TextView
-	            android:id="@+id/textView1"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text=" of " />
-	        
-	        <TextView
-	            android:id="@+id/foodQuantitySize"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:textStyle="bold"
-	            android:text="1" 
-	            android:textColor="#E05C5C" 
-	            />
-            <TextView
-	            android:id="@+id/foodQuantityUnit"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:textStyle="bold"
-	            android:text="slice" 
-	            android:textColor="#E05C5C" 
-	            />
-	        
-        </LinearLayout>
 
-    </ScrollView>
+	        <LinearLayout
+	            android:id="@+id/food_template"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" 
+	            android:visibility="gone">
 
-     <ScrollView
-        android:id="@+id/bloodpressure_template"
-        android:layout_alignParentTop="true"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:scrollbars="vertical"
-	    android:fillViewport="true"
-	    android:visibility="gone"
-	    >
-           <LinearLayout
-            android:id="@+id/bloodpressure_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-            >
-            
-	        <EditText
-		        android:id="@+id/txtBPStatus"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:background="#00000000"
-	            android:hint=" How you feel ? " 
-	            android:padding="10dp"
-	            android:inputType="text">
-	              <requestFocus />
-	        </EditText>
-	
-	        <TextView
-	            android:id="@+id/textView1"
+	            <TextView
+	                android:id="@+id/textView1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text="- Eating " />
+
+	            <TextView
+	                android:id="@+id/food"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text=" Chocolate Cake"
+	                android:textColor="#E05C5C"
+	                android:textStyle="bold" />
+
+	            <TextView
+	                android:id="@+id/textView1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text=" of " />
+
+	            <TextView
+	                android:id="@+id/foodQuantitySize"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text="1"
+	                android:textColor="#E05C5C"
+	                android:textStyle="bold" />
+
+	            <TextView
+	                android:id="@+id/foodQuantityUnit"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text="slice"
+	                android:textColor="#E05C5C"
+	                android:textStyle="bold" />
+	        </LinearLayout>
+
+	        <LinearLayout
+	            android:id="@+id/bloodpressure_template"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content" 
+	            android:visibility="gone">
+
+	            <TextView
+	                android:id="@+id/textView1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="- Measuring blood pressure  " />
+
+	            <TextView
+	                android:id="@+id/systolic"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="100"
+	                android:textColor="#E05C5C"
+	                android:textStyle="bold" />
+
+	            <TextView
+	                android:id="@+id/textView1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text=" / " />
+
+	            <TextView
+	                android:id="@+id/diastolic"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="100"
+	                android:textColor="#E05C5C"
+	                android:textStyle="bold" />
+	        </LinearLayout>
+
+	        <LinearLayout
+	            android:id="@+id/bloodsugar_template"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:text="- Measuring blood pressure  " />
-	        
-	        <TextView
-	            android:id="@+id/systolic"
+	            android:orientation="vertical" 
+	            android:visibility="gone">
+
+	            <TextView
+	                android:id="@+id/textView1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="- Measuring blood sugar  " />
+
+	            <TextView
+	                android:id="@+id/sugar"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:clickable="true"
+	                android:onClick="onClick"
+	                android:text="100"
+	                android:textColor="#E05C5C"
+	                android:textStyle="bold" />
+
+	            <TextView
+	                android:id="@+id/textView1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text=" mg/dL " />
+
+	            <TextView
+	                android:id="@+id/txtSugarType"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:clickable="true"
+	                android:onClick="onClick"
+	                android:text="after meal"
+	                android:textColor="#E05C5C" />
+	        </LinearLayout>
+
+	        <LinearLayout
+	            android:id="@+id/weight_template"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:textStyle="bold"
-	            android:text="100" 
-	            android:textColor="#E05C5C" 
-	            />
-	        
-	        <TextView
-	            android:id="@+id/textView1"
-	            android:layout_width="wrap_content"
+	            android:visibility="gone" >
+
+	            <TextView
+	                android:id="@+id/textView1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text="- Measuring weight  " />
+
+	            <TextView
+	                android:id="@+id/weight"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text="50"
+	                android:textColor="#E05C5C"
+	                android:textStyle="bold" />
+
+	            <TextView
+	                android:id="@+id/txtWeightUnit"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text="  kg " />
+	        </LinearLayout>
+
+	        <LinearLayout
+	            android:id="@+id/activity_template"
+	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
-	            android:text=" / " />
-	        
-	        <TextView
-	            android:id="@+id/diastolic"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:textStyle="bold"
-	            android:text="100" 
-	            android:textColor="#E05C5C" 
-	            />
-            
-        </LinearLayout>
-    </ScrollView>
-    
-     <ScrollView
-        android:id="@+id/bloodsugar_template"
-        android:layout_alignParentTop="true"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:scrollbars="vertical"
-	    android:fillViewport="true"
-	    android:visibility="gone"
-	    >
-           <LinearLayout
-            android:id="@+id/bloodsugar_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" 
-             android:orientation="vertical"
-            >
-            
-	        <EditText
-		        android:id="@+id/txtBSStatus"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:background="#00000000"
-	            android:hint=" How you feel ?  " 
-	            android:padding="10dp"
-	            android:inputType="text">
-	              <requestFocus />
-	        </EditText>
-	
-	        <TextView
-	            android:id="@+id/textView1"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="- Measuring blood sugar  " />
-	        
-	        <TextView
-	            android:id="@+id/sugar"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:textStyle="bold"
-	            android:text="100" 
-	            android:onClick="onClick"
-				android:clickable="true"
-	            android:textColor="#E05C5C" 
-	            />
-	        
-	        <TextView
-	            android:id="@+id/textView1"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text=" mg/dL " />
-	        
-	        <TextView
-	            android:id="@+id/txtSugarType"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="after meal"
-	            android:textColor="#E05C5C" 
-	            android:onClick="onClick"
-				android:clickable="true" />
-        </LinearLayout>
-    </ScrollView>
-     
-     <ScrollView
-        android:id="@+id/weight_template"
-        android:layout_alignParentTop="true"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:scrollbars="vertical"
-	    android:fillViewport="true"
-	    android:visibility="gone"
-	    >
-           <LinearLayout
-            android:id="@+id/weight_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-            android:gravity="left"
-            >
-            
-	        <EditText
-		        android:id="@+id/txtWeightStatus"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:background="#00000000"
-	            android:hint=" How you feel ?  " 
-	            android:padding="10dp"
-	            android:inputType="text">
-	              <requestFocus />
-	        </EditText>
-	
-	        <TextView
-	            android:id="@+id/textView1"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="- Measuring weight  " />
-	        
-	        <TextView
-	            android:id="@+id/weight"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:textStyle="bold"
-	            android:text="50" 
-	            android:textColor="#E05C5C" 
-	            />
-	        
-	        <TextView
-	            android:id="@+id/txtWeightUnit"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="  kg " />
-        </LinearLayout>
-    </ScrollView>
-     
-     <ScrollView
-        android:id="@+id/notes_template"
-        android:layout_alignParentTop="true"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:scrollbars="vertical"
-	    android:fillViewport="true"
-	    android:visibility="visible"
-	    >
-           <LinearLayout
-            android:id="@+id/bloodsugar_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-            android:gravity="left"
-            >
-            
-	        <EditText
-		        android:id="@+id/txtNotesStatus"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:background="#00000000"
-	            android:hint=" How you feel ?  " 
-	            android:padding="10dp"
-	            android:inputType="text">
-	              <requestFocus />
-	        </EditText>
-	
-        </LinearLayout>
-    </ScrollView>
-     
-     <ScrollView
-        android:id="@+id/activity_template"
-        android:layout_alignParentTop="true"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:scrollbars="vertical"
-	    android:fillViewport="true"
-	    android:visibility="gone"
-	    >
-           <LinearLayout
-            android:id="@+id/activity_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-          
-            >
-            
-	        <EditText
-		        android:id="@+id/txtActivityStatus"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:background="#00000000"
-	            android:hint=" How you feel ? " 
-	            android:padding="10dp"
-	            android:inputType="text">
-	              <requestFocus />
-	        </EditText>
-	
-	        <TextView
-	            android:id="@+id/textView1"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="- Doing " />
-	        
-	        <TextView
-	            android:id="@+id/activity"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:textStyle="bold"
-	            android:text="jogging" 
-	            android:textColor="#E05C5C" 
-	            />
-	        
-	        <TextView
-	            android:id="@+id/textView1"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text=" for" />
-	        
-	        <TextView
-	            android:id="@+id/activityDuration"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:textStyle="bold"
-	            android:text="10" 
-	            android:textColor="#E05C5C" 
-	            />
-	        
-	        <TextView
-	            android:id="@+id/activityDurationUnit"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:textStyle="bold"
-	            android:text="min" 
-	            android:textColor="#E05C5C" 
-	            />
-            
-        </LinearLayout>
-    </ScrollView>
-     
-     <ScrollView
-        android:id="@+id/checkup_template"
-        android:layout_alignParentTop="true"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:scrollbars="vertical"
-	    android:fillViewport="true"
-	    android:visibility="gone"
-	    >
-           <LinearLayout
-            android:id="@+id/checkup_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-            
-            >
-            
-	        <EditText
-		        android:id="@+id/txtCheckupStatus"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:background="#00000000"
-	            android:hint=" How you feel ? " 
-	            android:padding="10dp"
-	            android:inputType="text">
-	              <requestFocus />
-	        </EditText>
-	
-	        <TextView
-	            android:id="@+id/textView1"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="- Checkup with  " />
-	        
-	        <TextView
-	            android:id="@+id/doctor"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:textStyle="bold"
-	            android:text="mr.tan" 
-	            android:textColor="#E05C5C" 
-	            />
-	        
-	        <TextView
-	            android:id="@+id/textView1"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text=" because of " />
-	        
-	        <TextView
-	            android:id="@+id/purpose"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:textStyle="bold"
-	            android:text="dengue" 
-	            android:textColor="#E05C5C" 
-	            />
+	            android:visibility="gone" >
+
+	            <TextView
+	                android:id="@+id/textView1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text="- Doing " />
+
+	            <TextView
+	                android:id="@+id/activity"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text="jogging"
+	                android:textColor="#E05C5C"
+	                android:textStyle="bold" />
+
+	            <TextView
+	                android:id="@+id/textView1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text=" for" />
+
+	            <TextView
+	                android:id="@+id/activityDuration"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text="10"
+	                android:textColor="#E05C5C"
+	                android:textStyle="bold" />
+
+	            <TextView
+	                android:id="@+id/activityDurationUnit"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text="min"
+	                android:textColor="#E05C5C"
+	                android:textStyle="bold" />
+	        </LinearLayout>
+
+	        <LinearLayout
+	            android:id="@+id/checkup_template"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content" 
+	            android:visibility="gone">
+
+	            <TextView
+	                android:id="@+id/textView1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text="- Checkup with  " />
+
+	            <TextView
+	                android:id="@+id/doctor"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text="mr.tan"
+	                android:textColor="#E05C5C"
+	                android:textStyle="bold" />
+
+	            <TextView
+	                android:id="@+id/textView1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text=" because of " />
+
+	            <TextView
+	                android:id="@+id/purpose"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text="dengue"
+	                android:textColor="#E05C5C"
+	                android:textStyle="bold" />
+	        </LinearLayout>
             
         </LinearLayout>
     </ScrollView>
@@ -407,9 +276,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignBottom="@id/notes_template"
-        android:gravity="center"
-        android:background="#E8E8E8" >
+        android:background="#E8E8E8"
+        android:gravity="center" >
+
         <ImageButton 
             android:id="@+id/btnAddActions" 
             android:layout_width="wrap_content" 
@@ -434,7 +303,8 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:padding="10dp"
-            android:src="@drawable/activitynewstatus_icon_timedate" />
+            android:src="@drawable/activitynewstatus_icon_timedate"
+            android:visibility="gone" />
         
         <ImageButton
             android:id="@+id/btnFb"

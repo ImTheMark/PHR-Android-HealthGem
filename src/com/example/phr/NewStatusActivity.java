@@ -27,7 +27,6 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -92,24 +91,17 @@ public class NewStatusActivity extends Activity {
 	TextView txtFoodFat;
 	TextView txtFoodSize;
 	TextView txtFoodUnit;
-	EditText bpStatus;
-	EditText bsStatus;
-	EditText foodStatus;
 	EditText notesStatus;
 	EditText weight;
-	EditText weightStatus;
-	EditText checkupStatus;
-	EditText activityStatus;
 	EditText activityDuration;
 	EditText purpose;
 	EditText doctor;
-	ScrollView bpTemplate;
-	ScrollView bsTemplate;
-	ScrollView notesTemplate;
-	ScrollView weightTemplate;
-	ScrollView checkupTemplate;
-	ScrollView foodTemplate;
-	ScrollView activityTemplate;
+	LinearLayout bpTemplate;
+	LinearLayout bsTemplate;
+	LinearLayout weightTemplate;
+	LinearLayout checkupTemplate;
+	LinearLayout foodTemplate;
+	LinearLayout activityTemplate;
 	LinearLayout activityCal;
 	LinearLayout foodCal;
 	String currentTracker;
@@ -159,17 +151,15 @@ public class NewStatusActivity extends Activity {
 
 		currentTracker = TrackerInputType.NOTES;
 		// templates
-		bsTemplate = (ScrollView) findViewById(R.id.bloodsugar_template);
-		bpTemplate = (ScrollView) findViewById(R.id.bloodpressure_template);
-		notesTemplate = (ScrollView) findViewById(R.id.notes_template);
-		weightTemplate = (ScrollView) findViewById(R.id.weight_template);
-		checkupTemplate = (ScrollView) findViewById(R.id.checkup_template);
-		foodTemplate = (ScrollView) findViewById(R.id.food_template);
-		activityTemplate = (ScrollView) findViewById(R.id.activity_template);
+		bsTemplate = (LinearLayout) findViewById(R.id.bloodsugar_template);
+		bpTemplate = (LinearLayout) findViewById(R.id.bloodpressure_template);
+		weightTemplate = (LinearLayout) findViewById(R.id.weight_template);
+		checkupTemplate = (LinearLayout) findViewById(R.id.checkup_template);
+		foodTemplate = (LinearLayout) findViewById(R.id.food_template);
+		activityTemplate = (LinearLayout) findViewById(R.id.activity_template);
 		// blood pressure post
 		txtSystolic = (TextView) findViewById(R.id.systolic);
 		txtDiastolic = (TextView) findViewById(R.id.diastolic);
-		bpStatus = (EditText) findViewById(R.id.txtBPStatus);
 		txtSystolic.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -189,7 +179,6 @@ public class NewStatusActivity extends Activity {
 
 		// blood sugar post
 		txtSugar = (TextView) findViewById(R.id.sugar);
-		bsStatus = (EditText) findViewById(R.id.txtBSStatus);
 		txtSugarType = (TextView) findViewById(R.id.txtSugarType);
 
 		txtSugar.setOnClickListener(new OnClickListener() {
@@ -210,7 +199,6 @@ public class NewStatusActivity extends Activity {
 		});
 		// weight post
 		txtWeight = (TextView) findViewById(R.id.weight);
-		weightStatus = (EditText) findViewById(R.id.txtWeightStatus);
 		txtWeightUnit = (TextView) findViewById(R.id.txtWeightUnit);
 		txtWeight.setOnClickListener(new OnClickListener() {
 			@Override
@@ -221,10 +209,9 @@ public class NewStatusActivity extends Activity {
 		});
 
 		// note post
-		notesStatus = (EditText) findViewById(R.id.txtNotesStatus);
+		notesStatus = (EditText) findViewById(R.id.txtStatus);
 		// checkup post
 		txtDoctor = (TextView) findViewById(R.id.doctor);
-		checkupStatus = (EditText) findViewById(R.id.txtCheckupStatus);
 		txtPurpose = (TextView) findViewById(R.id.purpose);
 		txtDoctor.setOnClickListener(new OnClickListener() {
 			@Override
@@ -244,7 +231,6 @@ public class NewStatusActivity extends Activity {
 
 		// activity post
 		txtActivity = (TextView) findViewById(R.id.activity);
-		activityStatus = (EditText) findViewById(R.id.txtActivityStatus);
 		txtActivityDurationUnit = (TextView) findViewById(R.id.activityDurationUnit);
 		txtActivityDuration = (TextView) findViewById(R.id.activityDuration);
 		activityCal = (LinearLayout) findViewById(R.id.activityCal);
@@ -252,7 +238,6 @@ public class NewStatusActivity extends Activity {
 
 		// food post
 		txtFood = (TextView) findViewById(R.id.food);
-		foodStatus = (EditText) findViewById(R.id.txtFoodStatus);
 		txtFoodQuantityUnit = (TextView) findViewById(R.id.foodQuantityUnit);
 		txtFoodQuantity = (TextView) findViewById(R.id.foodQuantitySize);
 		foodCal = (LinearLayout) findViewById(R.id.foodCal);
@@ -390,6 +375,16 @@ public class NewStatusActivity extends Activity {
 		}
 	}
 
+	private void setEditTemplate() {
+		mBtnAddActions.setVisibility(View.GONE);
+		mBtnFb.setVisibility(View.GONE);
+	}
+
+	private void setAddTemplate() {
+		mBtnAddActions.setVisibility(View.VISIBLE);
+		mBtnFb.setVisibility(View.VISIBLE);
+	}
+
 	private void setFoodTemplate(String food, String cal, String protein,
 			String carbs, String fat, String serving, String unit, String status) {
 		// TODO Auto-generated method stub
@@ -403,10 +398,13 @@ public class NewStatusActivity extends Activity {
 		txtFood.setText(food);
 		txtFoodQuantityUnit.setText(unit);
 		txtFoodQuantity.setText(serving);
-		if (mode.equals("add"))
-			foodStatus.setHint("how you feel? ");
-		else if (mode.equals("edit"))
-			foodStatus.setText(status);
+		if (mode.equals("add")) {
+			notesStatus.setHint("how you feel? ");
+			setAddTemplate();
+		} else if (mode.equals("edit")) {
+			notesStatus.setText(status);
+			setEditTemplate();
+		}
 
 	}
 
@@ -421,10 +419,13 @@ public class NewStatusActivity extends Activity {
 		txtActivityDuration.setText(duration);
 		double cal = Double.parseDouble(met) * 5; // not true
 		txtActivityCal.setText(String.valueOf(cal));
-		if (mode.equals("add"))
-			activityStatus.setHint("how you feel? ");
-		else if (mode.equals("edit"))
-			activityStatus.setText(status);
+		if (mode.equals("add")) {
+			notesStatus.setHint("how you feel? ");
+			setAddTemplate();
+		} else if (mode.equals("edit")) {
+			notesStatus.setText(status);
+			setEditTemplate();
+		}
 	}
 
 	private void setCheckupTemplate(String doctor, String purpose, String status) {
@@ -432,10 +433,13 @@ public class NewStatusActivity extends Activity {
 		checkupTemplate.setVisibility(View.VISIBLE);
 		txtDoctor.setText(doctor);
 		txtPurpose.setText(purpose);
-		if (mode.equals("add"))
-			checkupStatus.setHint("how you feel? ");
-		else if (mode.equals("edit"))
-			checkupStatus.setText(status);
+		if (mode.equals("add")) {
+			notesStatus.setHint("how you feel? ");
+			setAddTemplate();
+		} else if (mode.equals("edit")) {
+			notesStatus.setText(status);
+			setEditTemplate();
+		}
 	}
 
 	private void setWeightTemplate(String weight, String unit, String status) {
@@ -443,10 +447,13 @@ public class NewStatusActivity extends Activity {
 		weightTemplate.setVisibility(View.VISIBLE);
 		txtWeight.setText(weight);
 		txtWeightUnit.setText(unit);
-		if (mode.equals("add"))
-			weightStatus.setHint("how you feel? ");
-		else if (mode.equals("edit"))
-			weightStatus.setHint(status);
+		if (mode.equals("add")) {
+			notesStatus.setHint("how you feel? ");
+			setAddTemplate();
+		} else if (mode.equals("edit")) {
+			notesStatus.setText(status);
+			setEditTemplate();
+		}
 	}
 
 	private void setBloodSugarTemplate(String bloodsugar,
@@ -455,10 +462,13 @@ public class NewStatusActivity extends Activity {
 		bsTemplate.setVisibility(View.VISIBLE);
 		txtSugar.setText(bloodsugar);
 		txtSugarType.setText(bloodsugartype);
-		if (mode.equals("add"))
-			bsStatus.setHint("how you feel? ");
-		else if (mode.equals("edit"))
-			bsStatus.setText(status);
+		if (mode.equals("add")) {
+			notesStatus.setHint("how you feel? ");
+			setAddTemplate();
+		} else if (mode.equals("edit")) {
+			notesStatus.setText(status);
+			setEditTemplate();
+		}
 	}
 
 	private void setBloodPressureTemplate(String systolic, String diastolic,
@@ -467,19 +477,24 @@ public class NewStatusActivity extends Activity {
 		bpTemplate.setVisibility(View.VISIBLE);
 		txtSystolic.setText(systolic);
 		txtDiastolic.setText(diastolic);
-		if (mode.equals("add"))
-			bpStatus.setHint("how you feel? ");
-		else if (mode.equals("edit"))
-			bpStatus.setText(status);
+		if (mode.equals("add")) {
+			notesStatus.setHint("how you feel? ");
+			setAddTemplate();
+		} else if (mode.equals("edit")) {
+			notesStatus.setText(status);
+			setEditTemplate();
+		}
 	}
 
 	private void setNoteTemplate(String note) {
 		setAllTemplateGone();
-		notesTemplate.setVisibility(View.VISIBLE);
-		if (mode.equals("add"))
+		if (mode.equals("add")) {
 			notesStatus.setHint("how you feel? ");
-		else if (mode.equals("edit"))
+			setAddTemplate();
+		} else if (mode.equals("edit")) {
 			notesStatus.setText(note);
+			setEditTemplate();
+		}
 	}
 
 	@Override
@@ -554,7 +569,7 @@ public class NewStatusActivity extends Activity {
 								String.valueOf(protein), String.valueOf(carbs),
 								String.valueOf(fat),
 								String.valueOf(txtFoodSize.getText()), serving,
-								foodStatus.getText().toString());
+								notesStatus.getText().toString());
 
 					}
 				})
@@ -644,7 +659,7 @@ public class NewStatusActivity extends Activity {
 					public void onClick(DialogInterface dialog, int id) {
 
 						setCheckupTemplate(doctor.getText().toString(), purpose
-								.getText().toString(), checkupStatus.getText()
+								.getText().toString(), notesStatus.getText()
 								.toString());
 					}
 				})
@@ -703,7 +718,7 @@ public class NewStatusActivity extends Activity {
 
 						setWeightTemplate(weight.getText().toString(), String
 								.valueOf(weightUnitSpinner.getSelectedItem()),
-								weightStatus.getText().toString());
+								notesStatus.getText().toString());
 
 					}
 				})
@@ -743,7 +758,7 @@ public class NewStatusActivity extends Activity {
 								Integer.toString(sugarPicker.getCurrent()));
 						setBloodSugarTemplate(Integer.toString(sugarPicker
 								.getCurrent()), String.valueOf(sugarTypeSpinner
-								.getSelectedItem()), bsStatus.getText()
+								.getSelectedItem()), notesStatus.getText()
 								.toString());
 					}
 				})
@@ -788,7 +803,7 @@ public class NewStatusActivity extends Activity {
 						setBloodPressureTemplate(
 								Integer.toString(systolicPicker.getCurrent()),
 								Integer.toString(diastolicPicker.getCurrent()),
-								bpStatus.getText().toString());
+								notesStatus.getText().toString());
 
 					}
 				})
@@ -815,8 +830,8 @@ public class NewStatusActivity extends Activity {
 			Timestamp timestamp = new Timestamp(date.getTime());
 
 			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
-			BloodPressure bp = new BloodPressure(timestamp, bpStatus.getText()
-					.toString(), null, systolicPicker.getCurrent(),
+			BloodPressure bp = new BloodPressure(timestamp, notesStatus
+					.getText().toString(), null, systolicPicker.getCurrent(),
 					diastolicPicker.getCurrent());
 
 			BloodPressureService bpService = new BloodPressureServiceImpl();
@@ -840,7 +855,7 @@ public class NewStatusActivity extends Activity {
 			Timestamp timestamp = new Timestamp(date.getTime());
 
 			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
-			BloodSugar bs = new BloodSugar(timestamp, bsStatus.getText()
+			BloodSugar bs = new BloodSugar(timestamp, notesStatus.getText()
 					.toString(), null, sugarPicker.getCurrent(),
 					String.valueOf(sugarTypeSpinner.getSelectedItem()));
 			BloodSugarService bsService = new BloodSugarServiceImpl();
@@ -873,7 +888,7 @@ public class NewStatusActivity extends Activity {
 				newWeight = Double.parseDouble(String.valueOf(txtWeight
 						.getText()));
 			}
-			Weight weight = new Weight(timestamp, weightStatus.getText()
+			Weight weight = new Weight(timestamp, notesStatus.getText()
 					.toString(), null, newWeight);
 
 			WeightService weightService = new WeightServiceImpl();
@@ -937,7 +952,7 @@ public class NewStatusActivity extends Activity {
 			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
 			CheckUp checkup = new CheckUp(timestamp, null, null, txtPurpose
 					.getText().toString(), txtDoctor.getText().toString(),
-					checkupStatus.getText().toString());
+					notesStatus.getText().toString());
 
 			CheckUpService checkupService = new CheckUpServiceImpl();
 			checkupService.add(checkup);
@@ -961,7 +976,7 @@ public class NewStatusActivity extends Activity {
 			com.example.phr.mobile.models.Activity activity = new com.example.phr.mobile.models.Activity(
 					txtActivity.getText().toString(), 30.0);
 			ActivityTrackerEntry activityEntry = new ActivityTrackerEntry(
-					timestamp, activityStatus.getText().toString(), null,
+					timestamp, notesStatus.getText().toString(), null,
 					activity, Double.parseDouble(txtActivityCal.getText()
 							.toString()));
 
@@ -982,7 +997,6 @@ public class NewStatusActivity extends Activity {
 	private void setAllTemplateGone() {
 		bsTemplate.setVisibility(View.GONE);
 		bpTemplate.setVisibility(View.GONE);
-		notesTemplate.setVisibility(View.GONE);
 		weightTemplate.setVisibility(View.GONE);
 		checkupTemplate.setVisibility(View.GONE);
 		activityTemplate.setVisibility(View.GONE);
@@ -1140,8 +1154,8 @@ public class NewStatusActivity extends Activity {
 		try {
 			Log.e("in", "edit");
 			BloodSugar bs = new BloodSugar(editBs.getEntryID(),
-					editBs.getTimestamp(), bsStatus.getText().toString(), null,
-					Double.parseDouble(txtSugar.getText().toString()),
+					editBs.getTimestamp(), notesStatus.getText().toString(),
+					null, Double.parseDouble(txtSugar.getText().toString()),
 					txtSugarType.getText().toString());
 			BloodSugarService bsService = new BloodSugarServiceImpl();
 			bsService.edit(bs);
@@ -1161,8 +1175,8 @@ public class NewStatusActivity extends Activity {
 		try {
 			Log.e("edit", "bloodpressure");
 			BloodPressure bp = new BloodPressure(editBp.getEntryID(),
-					editBp.getTimestamp(), bpStatus.getText().toString(), null,
-					Integer.parseInt(txtSystolic.getText().toString()),
+					editBp.getTimestamp(), notesStatus.getText().toString(),
+					null, Integer.parseInt(txtSystolic.getText().toString()),
 					Integer.parseInt(txtDiastolic.getText().toString()));
 
 			BloodPressureService bpService = new BloodPressureServiceImpl();
@@ -1192,8 +1206,8 @@ public class NewStatusActivity extends Activity {
 						.getText()));
 			}
 			Weight weight = new Weight(editWeight.getEntryID(),
-					editWeight.getTimestamp(), weightStatus.getText()
-							.toString(), null, newWeight);
+					editWeight.getTimestamp(),
+					notesStatus.getText().toString(), null, newWeight);
 
 			WeightService weightService = new WeightServiceImpl();
 			weightService.edit(weight);
@@ -1213,7 +1227,7 @@ public class NewStatusActivity extends Activity {
 			CheckUp checkup = new CheckUp(editCheckup.getEntryID(),
 					editCheckup.getTimestamp(), null, null, txtPurpose
 							.getText().toString(), txtDoctor.getText()
-							.toString(), checkupStatus.getText().toString());
+							.toString(), notesStatus.getText().toString());
 
 			CheckUpService checkupService = new CheckUpServiceImpl();
 			checkupService.edit(checkup);

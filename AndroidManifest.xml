@@ -48,6 +48,8 @@
         <activity android:name="com.example.phr.SettingsActivity" />
         <activity android:name="com.example.phr.StatusFeedActivity" />
         <activity android:name="com.example.phr.WeightTrackerActivity" />
+        <activity android:name="com.example.phr.foodSearchListActivity" />
+        <activity android:name="com.example.phr.ActivitiesSearchListActivity" />
     </application>
 
 </manifest>
