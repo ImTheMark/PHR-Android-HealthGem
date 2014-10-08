@@ -10,10 +10,12 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
-import com.example.phr.adapter.GroupedStatusAdapter;
+import com.example.phr.adapter.WeightAdapter;
 import com.example.phr.enums.TrackerInputType;
-import com.example.phr.model.GroupedStatus;
-import com.example.phr.model.Status;
+import com.example.phr.exceptions.DataAccessException;
+import com.example.phr.mobile.dao.MobileWeightDao;
+import com.example.phr.mobile.daoimpl.MobileWeightDaoImpl;
+import com.example.phr.mobile.models.Weight;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -26,14 +28,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
 public class WeightTrackerActivity extends Activity {
 	
-	GroupedStatusAdapter weightAdapter;
+	WeightAdapter weightAdapter;
 	ListView mWeightList;
 	ImageView mBtnAddWeight;
 	
@@ -45,7 +46,17 @@ public class WeightTrackerActivity extends Activity {
 		setTitle("Weight Tracker");
 		mWeightList = (ListView) findViewById(R.id.listViewWeightTracker);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-		weightAdapter = new GroupedStatusAdapter(getApplicationContext(), generateData());
+        
+        
+        MobileWeightDao daoImpl = new MobileWeightDaoImpl();
+        List<List<Weight>> weightList = new ArrayList<List<Weight>>();;
+		try {
+			weightList = daoImpl.getAllGroupedByDate();
+		} catch (DataAccessException e) {
+			Log.e("weightracker", "ERROR IN WEIGHT TRACKER GET ALL LIST");
+		}
+        
+		weightAdapter = new WeightAdapter(getApplicationContext(), weightList);
 		mWeightList.setAdapter(weightAdapter);
 		
 		
@@ -134,128 +145,6 @@ public class WeightTrackerActivity extends Activity {
 		
 		
 		
-	}
-
-	private List<GroupedStatus> generateData() {
-		List<GroupedStatus> list = new ArrayList<GroupedStatus>();
-		
-		GroupedStatus day1 = new GroupedStatus();
-		day1.setMonth("Jul");
-		day1.setDay("12");
-		day1.setAverage("180 lbs");
-		
-		ArrayList<Status> sList = new ArrayList<Status>();
-		Status gain = new Status();
-		gain.setActionHolder("weighting");
-		gain.setActionName("181 lbs");
-		gain.setDatettime("4:18 pm");
-		sList.add(gain);
-		Status loose = new Status();
-		loose.setActionHolder("weighting");
-		loose.setActionName("179 lbs");
-		loose.setDatettime("6:30 am");
-		sList.add(loose);
-		
-		day1.setWeightStatusList(sList);
-		
-		//----------------------
-		
-
-		GroupedStatus day2 = new GroupedStatus();
-		day2.setMonth("Jul");
-		day2.setDay("10");
-		day2.setAverage("178 lbs");
-		
-		ArrayList<Status> sList2 = new ArrayList<Status>();
-		Status gain21 = new Status();
-		gain21.setActionHolder("weighting");
-		gain21.setActionName("178 lbs");
-		gain21.setDatettime("3:50 pm");
-		sList2.add(gain21);
-		
-		day2.setWeightStatusList(sList2);
-		
-		//----------------------
-		
-
-		GroupedStatus day3 = new GroupedStatus();
-		day3.setMonth("May");
-		day3.setDay("22");
-		day3.setAverage("174 lbs");
-		
-		ArrayList<Status> sList3 = new ArrayList<Status>();
-		Status gain31 = new Status();
-		gain31.setActionHolder("weighting");
-		gain31.setActionName("174 lbs");
-		gain31.setDatettime("12:30 pm");
-		sList3.add(gain31);
-		
-		day3.setWeightStatusList(sList3);
-		
-		GroupedStatus day4 = new GroupedStatus();
-		day4.setMonth("May");
-		day4.setDay("20");
-		day4.setAverage("176 lbs");
-		
-		ArrayList<Status> sList4 = new ArrayList<Status>();
-		Status gain41 = new Status();
-		gain41.setActionHolder("weighting");
-		gain41.setActionName("176 lbs");
-		gain41.setDatettime("12:30 pm");
-		sList4.add(gain41);
-		
-		day4.setWeightStatusList(sList4);
-		
-		GroupedStatus day5 = new GroupedStatus();
-		day5.setMonth("May");
-		day5.setDay("15");
-		day5.setAverage("172 lbs");
-		
-		ArrayList<Status> sList5 = new ArrayList<Status>();
-		Status gain51 = new Status();
-		gain51.setActionHolder("weighting");
-		gain51.setActionName("172 lbs");
-		gain51.setDatettime("12:30 pm");
-		sList5.add(gain51);
-		
-		day5.setWeightStatusList(sList5);
-		
-		GroupedStatus day6 = new GroupedStatus();
-		day6.setMonth("May");
-		day6.setDay("08");
-		day6.setAverage("178 lbs");
-		
-		ArrayList<Status> sList6 = new ArrayList<Status>();
-		Status gain61 = new Status();
-		gain61.setActionHolder("weighting");
-		gain61.setActionName("178 lbs");
-		gain61.setDatettime("1:30 pm");
-		sList6.add(gain61);
-		
-		day6.setWeightStatusList(sList6);
-		GroupedStatus day7 = new GroupedStatus();
-		day7.setMonth("May");
-		day7.setDay("01");
-		day7.setAverage("180 lbs");
-		
-		ArrayList<Status> sList7 = new ArrayList<Status>();
-		Status gain71 = new Status();
-		gain71.setActionHolder("weighting");
-		gain71.setActionName("180 lbs");
-		gain71.setDatettime("12:30 pm");
-		sList7.add(gain71);
-		
-		day7.setWeightStatusList(sList7);
-		
-		list.add(day1);
-		list.add(day2);
-		list.add(day3);
-		list.add(day4);
-		list.add(day5);
-		list.add(day6);
-		list.add(day7);
-		
-		return list;
 	}
 	
 	@Override
