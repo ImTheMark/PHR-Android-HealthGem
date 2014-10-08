@@ -18,7 +18,7 @@ import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.ImageHandlerException;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileActivityDao;
-import com.example.phr.mobile.models.Activity;
+import com.example.phr.mobile.models.ActivitySingle;
 import com.example.phr.mobile.models.ActivityTrackerEntry;
 import com.example.phr.mobile.models.FBPost;
 import com.example.phr.mobile.models.PHRImage;
@@ -235,7 +235,7 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 	}
 
 	@Override
-	public void addActivityListEntry(SQLiteDatabase db, Activity activity) {
+	public void addActivityListEntry(SQLiteDatabase db, ActivitySingle activity) {
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHandler.ACTLIST_ID, activity.getEntryID());
 		values.put(DatabaseHandler.ACTLIST_NAME, activity.getName());
@@ -244,9 +244,9 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 	}
 
 	@Override
-	public ArrayList<Activity> getAllActivityListEntry()
+	public ArrayList<ActivitySingle> getAllActivityListEntry()
 			throws DataAccessException {
-		ArrayList<Activity> actList = new ArrayList<Activity>();
+		ArrayList<ActivitySingle> actList = new ArrayList<ActivitySingle>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_ACTIVITYLIST;
 
@@ -256,7 +256,7 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 
 		if (cursor.moveToFirst()) {
 			do {
-				actList.add(new Activity(cursor.getInt(0), cursor.getString(2),
+				actList.add(new ActivitySingle(cursor.getInt(0), cursor.getString(2),
 						cursor.getDouble(3)));
 			} while (cursor.moveToNext());
 		}
@@ -282,7 +282,7 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 	}
 
 	@Override
-	public Activity getActivityListEntry(SQLiteDatabase db, Integer activityID)
+	public ActivitySingle getActivityListEntry(SQLiteDatabase db, Integer activityID)
 			throws DataAccessException {
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_ACTIVITYLIST + " WHERE "
@@ -291,7 +291,7 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 		Cursor cursor = db.rawQuery(selectQuery, null);
 
 		if (cursor.moveToFirst()) {
-			Activity act = new Activity(cursor.getInt(0), cursor.getString(1),
+			ActivitySingle act = new ActivitySingle(cursor.getInt(0), cursor.getString(1),
 					cursor.getDouble(2));
 			return act;
 		}

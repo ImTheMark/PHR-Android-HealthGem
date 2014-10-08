@@ -31,7 +31,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" 
             android:layout_below="@+id/weightQuantityDivider"
-            android:weightSum="2" >
+            android:weightSum="4" >
 
              <EditText
 		        android:id="@+id/txtActivityDurationTime"

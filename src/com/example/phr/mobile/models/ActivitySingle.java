@@ -1,24 +1,25 @@
 package com.example.phr.mobile.models;
 
-public class Activity {
-	
+import java.io.Serializable;
+
+public class ActivitySingle implements Serializable {
+
 	Integer entryID;
 	String name;
 	double MET;
-	
-	public Activity(Integer entryID, String name, double mET) {
+
+	public ActivitySingle(Integer entryID, String name, double mET) {
 		super();
 		this.entryID = entryID;
 		this.name = name;
 		MET = mET;
 	}
-	
-	public Activity(String name, double mET) {
+
+	public ActivitySingle(String name, double mET) {
 		super();
 		this.name = name;
 		MET = mET;
 	}
-
 
 	public Integer getEntryID() {
 		return entryID;
@@ -43,5 +44,5 @@ public class Activity {
 	public void setMET(double mET) {
 		MET = mET;
 	}
-	
+
 }

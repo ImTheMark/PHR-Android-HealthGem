@@ -35,6 +35,7 @@ import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.exceptions.WebServerException;
+import com.example.phr.mobile.models.ActivitySingle;
 import com.example.phr.mobile.models.ActivityTrackerEntry;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.mobile.models.BloodSugar;
@@ -116,6 +117,7 @@ public class NewStatusActivity extends Activity {
 	Weight editWeight;
 	Note editNote;
 	CheckUp editCheckup;
+	ActivitySingle chosenActivity;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -315,20 +317,24 @@ public class NewStatusActivity extends Activity {
 
 			if (from.equals("new activity")) {
 				currentTracker = TrackerInputType.ACTIVITY;
-				setActivityTemplate(extras.getString("activity_name"),
-						extras.getString("activity_cal"),
-						extras.getString("activity_duration"),
-						extras.getString("activity_unit"), "");
+				/*
+				 * setActivityTemplate(extras.getString("activity_name"),
+				 * extras.getString("activity_cal"),
+				 * extras.getString("activity_duration"),
+				 * extras.getString("activity_unit"), "");
+				 */
 
 			} else if (from.equals("new food")) {
 				currentTracker = TrackerInputType.FOOD;
-				setFoodTemplate(extras.getString("food_name"),
-						extras.getString("food_cal"),
-						extras.getString("food_protein"),
-						extras.getString("food_carbs"),
-						extras.getString("food_fat"),
-						extras.getString("food_serving"),
-						extras.getString("food_unit"), "");
+				/*
+				 * setFoodTemplate(extras.getString("food_name"),
+				 * extras.getString("food_cal"),
+				 * extras.getString("food_protein"),
+				 * extras.getString("food_carbs"), extras.getString("food_fat"),
+				 * extras.getString("food_serving"),
+				 * extras.getString("food_unit"), "");
+				 */
+
 			}
 		} else if (extras != null && in.hasExtra("edit")) {
 			String editTracker = extras.getString("edit");
@@ -408,7 +414,7 @@ public class NewStatusActivity extends Activity {
 
 	}
 
-	private void setActivityTemplate(String name, String met, String duration,
+	private void setActivityTemplate(String name, Double met, String duration,
 			String unit, String status) {
 		// TODO Auto-generated method stub
 		setAllTemplateGone();
@@ -417,7 +423,7 @@ public class NewStatusActivity extends Activity {
 		txtActivity.setText(name);
 		txtActivityDurationUnit.setText(unit);
 		txtActivityDuration.setText(duration);
-		double cal = Double.parseDouble(met) * 5; // not true
+		double cal = met * 5; // not true
 		txtActivityCal.setText(String.valueOf(cal));
 		if (mode.equals("add")) {
 			notesStatus.setHint("how you feel? ");
@@ -528,9 +534,11 @@ public class NewStatusActivity extends Activity {
 				callActivityInput();
 			}
 		} else if (requestCode == 3) {
-			String activity = data.getStringExtra("activity chosen");
+			// String activity = data.getStringExtra("activity chosen");
+			chosenActivity = (ActivitySingle) data.getExtras().getSerializable(
+					"activity chosen ");
 			currentTracker = TrackerInputType.ACTIVITY;
-			callActivityDurationInput(activity);
+			callActivityDurationInput(chosenActivity.getName());
 		} else if (requestCode == 4) {
 			String food = data.getStringExtra("food chosen");
 			String serving = data.getStringExtra("serving");
@@ -608,10 +616,12 @@ public class NewStatusActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						// set activity met -- get from database
-						setActivityTemplate(activity, "30", activityDuration
-								.getText().toString(),
-								String.valueOf(activityUnitSpinner
-										.getSelectedItem()), "How you feel? ");
+						setActivityTemplate(chosenActivity.getName(),
+								chosenActivity.getMET(), activityDuration
+										.getText().toString(), String
+										.valueOf(activityUnitSpinner
+												.getSelectedItem()),
+								"How you feel? ");
 					}
 				})
 				.setNegativeButton("Cancel",
@@ -973,7 +983,7 @@ public class NewStatusActivity extends Activity {
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
 			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
-			com.example.phr.mobile.models.Activity activity = new com.example.phr.mobile.models.Activity(
+			com.example.phr.mobile.models.ActivitySingle activity = new com.example.phr.mobile.models.ActivitySingle(
 					txtActivity.getText().toString(), 30.0);
 			ActivityTrackerEntry activityEntry = new ActivityTrackerEntry(
 					timestamp, notesStatus.getText().toString(), null,
