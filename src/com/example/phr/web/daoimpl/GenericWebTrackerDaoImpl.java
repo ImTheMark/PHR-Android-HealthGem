@@ -66,7 +66,7 @@ public abstract class GenericWebTrackerDaoImpl<TrackerEntry> extends
 			JSONObject response = performHttpRequest_JSON(command, jsonToSend);
 			System.out.println("JSON Response Received: " + response);
 
-			if (response.getJSONObject("data").has("isValidAccessToken")
+			if (response.has("data") && response.getJSONObject("data").has("isValidAccessToken")
 					&& response.getJSONObject("data")
 							.getString("isValidAccessToken").equals("false")) {
 				throw new OutdatedAccessTokenException(
@@ -101,7 +101,7 @@ public abstract class GenericWebTrackerDaoImpl<TrackerEntry> extends
 			JSONObject response = performHttpRequest_JSON(command, jsonToSend);
 			System.out.println("JSON Response Received: " + response);
 
-			if (response.getJSONObject("data").has("isValidAccessToken")
+			if (response.has("data") && response.getJSONObject("data").has("isValidAccessToken")
 					&& response.getJSONObject("data")
 							.getString("isValidAccessToken").equals("false")) {
 				throw new OutdatedAccessTokenException(
