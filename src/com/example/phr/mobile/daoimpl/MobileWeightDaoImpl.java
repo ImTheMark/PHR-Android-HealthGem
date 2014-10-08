@@ -5,8 +5,10 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -200,8 +202,8 @@ public class MobileWeightDaoImpl implements MobileWeightDao {
 	}
 
 	@Override
-	public List<List<Weight>> getAllGroupedByDate() throws DataAccessException {
-		List<List<Weight>> groupedWeightList = new ArrayList<List<Weight>>();
+	public Map<String, List<Weight>> getAllGroupedByDate() throws DataAccessException {
+		Map<String, List<Weight>> groupedWeightList= new HashMap<String, List<Weight>>();
 		
 
 		List<Weight> weightList = new ArrayList<Weight>();
@@ -253,7 +255,7 @@ public class MobileWeightDaoImpl implements MobileWeightDao {
 			}while(weightList.size() != 0 && monthDay.equals(DateTimeParser.getMonthDay(weightList.get(0).getTimestamp())));
 			
 			
-			groupedWeightList.add(weightListPerDay);
+			groupedWeightList.put(monthDay, weightListPerDay);
 		}
 		
 		return groupedWeightList;
