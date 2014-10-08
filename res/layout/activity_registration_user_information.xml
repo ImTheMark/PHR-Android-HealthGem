@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageButton
+                android:id="@+id/imageButton1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/picture_placeholder" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp" >
+
+                <TextView
+                    android:id="@+id/textViewRegistrationNameTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/textview_style"
+                    android:text="Name" />
+
+                <View
+                    android:id="@+id/RegistrationNameDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/textViewRegistrationNameTitle"
+                    android:background="#000000" />
+
+                <EditText
+                    android:id="@+id/editTextRegistrationLastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/RegistrationNameDivider"
+                    android:background="@drawable/underline_background"
+                    android:hint="Last"
+                    android:inputType="textPersonName"
+                    android:padding="5dp" />
+
+                <EditText
+                    android:id="@+id/editTextRegistrationFirstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editTextRegistrationLastName"
+                    android:background="@drawable/underline_background"
+                    android:hint="First"
+                    android:inputType="textPersonName"
+                    android:padding="5dp" />
+
+                <EditText
+                    android:id="@+id/editTextRegistrationMiddleName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editTextRegistrationFirstName"
+                    android:background="@drawable/underline_background"
+                    android:hint="Middle"
+                    android:inputType="textPersonName"
+                    android:padding="5dp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="4" >
+
+            <RelativeLayout
+                android:id="@+id/RegistrationBirthDateHolder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:padding="10dp" >
+
+                <TextView
+                    android:id="@+id/textViewRegistrationBirthDateTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/textview_style"
+                    android:text="Birth Date" />
+
+                <View
+                    android:id="@+id/RegistrationBirthDateDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/textViewRegistrationBirthDateTitle"
+                    android:background="#000000" />
+
+                <TextView
+                    android:id="@+id/textViewRegistrationBirthDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/RegistrationBirthDateDivider"
+                    android:background="@drawable/underline_background"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="06/19/1966"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/RegistrationGenderHolder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp" >
+
+                <TextView
+                    android:id="@+id/textViewRegistrationGenderTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/textview_style"
+                    android:text="Gender" />
+
+                <View
+                    android:id="@+id/RegistrationGenderDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/textViewRegistrationGenderTitle"
+                    android:background="#000000" />
+
+                <TextView
+                    android:id="@+id/textViewRegistrationGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/RegistrationGenderDivider"
+                    android:background="@drawable/underline_background"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="M"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/RegistrationHeightHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/textViewRegistrationHeightTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_style"
+                android:text="Height" />
+
+            <View
+                android:id="@+id/RegistrationHeightDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/textViewRegistrationHeightTitle"
+                android:background="#000000" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/RegistrationHeightDivider"
+                android:background="@drawable/underline_background"
+                android:padding="5dp" >
+
+                <EditText
+                    android:id="@+id/txtRegistrationHeightInput"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:ems="10"
+                    android:inputType="numberDecimal" />
+
+                <Spinner
+                    android:id="@+id/dropdownRegistrationHeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:entries="@array/heightUnit" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RegistrationWeightHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/textViewRegistrationWeightTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_style"
+                android:text="Weight" />
+
+            <View
+                android:id="@+id/RegistrationWeightDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/textViewRegistrationWeightTitle"
+                android:background="#000000" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/RegistrationWeightDivider"
+                android:background="@drawable/underline_background"
+                android:padding="5dp" >
+
+                <EditText
+                    android:id="@+id/txtRegistrationWeightInput"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:ems="10"
+                    android:inputType="numberDecimal" />
+
+                <Spinner
+                    android:id="@+id/dropdownRegistrationWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:entries="@array/weightUnit" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/TextViewRegistrationEmergencyContactTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_style"
+                android:text="Emergency Contact" />
+
+            <View
+                android:id="@+id/RegistrationEmergencyContactDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/TextViewRegistrationEmergencyContactTitle"
+                android:background="#000000" />
+
+            <EditText
+                android:id="@+id/EditTextRegistrationEmergencyContactPerson"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/RegistrationEmergencyContactDivider"
+                android:background="@drawable/underline_background"
+                android:hint="Name of Contact Person"
+                android:inputType="textPersonName"
+                android:padding="5dp" />
+
+            <EditText
+                android:id="@+id/EditTextRegistrationEmergencyContactNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/EditTextRegistrationEmergencyContactPerson"
+                android:background="@drawable/underline_background"
+                android:hint="Contact Number"
+                android:inputType="phone"
+                android:padding="5dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/TextViewRegistrationAllergies"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_style"
+                android:text="Allergies" />
+
+            <View
+                android:id="@+id/RegistrationAllergiesDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/TextViewRegistrationAllergies"
+                android:background="#000000" />
+
+            <EditText
+                android:id="@+id/EditTextRegistrationAllergies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/RegistrationAllergiesDivider"
+                android:background="@drawable/underline_background"
+                android:hint="ex. Seafood"
+                android:inputType="textMultiLine"
+                android:padding="5dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/TextViewRegistrationHealthProblems"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_style"
+                android:text="Known Health Problems" />
+
+            <View
+                android:id="@+id/RegistrationHealthProblemsDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/TextViewRegistrationHealthProblems"
+                android:background="#000000" />
+
+            <EditText
+                android:id="@+id/EditTextRegistrationHealthProblems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/RegistrationHealthProblemsDivider"
+                android:background="@drawable/underline_background"
+                android:hint="ex. Diabetes"
+                android:inputType="textMultiLine"
+                android:padding="5dp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>

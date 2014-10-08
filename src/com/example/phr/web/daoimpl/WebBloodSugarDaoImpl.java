@@ -20,15 +20,17 @@ public class WebBloodSugarDaoImpl extends GenericWebTrackerDaoImpl<BloodSugar>
 	}
 
 	@Override
-	public void edit(BloodSugar bloodSugar) {
-		// TODO Auto-generated method stub
-
+	public void edit(BloodSugar object) throws WebServerException,
+			OutdatedAccessTokenException {
+		String command = "tracker/editBloodSugar";
+		editUsingHttp(command, object);
 	}
 
 	@Override
-	public void delete(BloodSugar bloodSugar) {
-		// TODO Auto-generated method stub
-
+	public void delete(BloodSugar object) throws WebServerException,
+			OutdatedAccessTokenException {
+		String command = "tracker/deleteBloodSugar";
+		deleteUsingHttp(command, object);
 	}
 
 	@Override

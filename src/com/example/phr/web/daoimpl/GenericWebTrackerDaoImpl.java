@@ -71,10 +71,10 @@ public abstract class GenericWebTrackerDaoImpl<TrackerEntry> extends
 							.getString("isValidAccessToken").equals("false")) {
 				throw new OutdatedAccessTokenException(
 						"The access token used in the request is outdated, please ask the user to log in again.");
-			} else if (response.get("status").equals("success")) {
+			} else if (response.getString("status").equals("success")) {
 				System.out.println("Editing successful");
 
-			} else {
+			} else if (response.getString("status").equals("fail")) {
 				throw new WebServerException(
 						"An error has occurred while communicating"
 								+ "with the web server.");

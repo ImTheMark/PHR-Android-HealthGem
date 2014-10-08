@@ -1,6 +1,5 @@
 package com.example.phr.serviceimpl;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import com.example.phr.exceptions.DataAccessException;
@@ -26,11 +25,12 @@ public class BloodSugarServiceImpl implements BloodSugarService {
 	}
 
 	@Override
-	public void add(BloodSugar bloodSugar) throws ServiceException, OutdatedAccessTokenException {
+	public void add(BloodSugar bloodSugar) throws ServiceException,
+			OutdatedAccessTokenException {
 		int entryID;
 		try {
 			entryID = webBloodSugarDao.add_ReturnEntryIdInWeb(bloodSugar);
-			bloodSugar.setEntryID(entryID); 
+			bloodSugar.setEntryID(entryID);
 			mobileBloodSugarDao.add(bloodSugar);
 		} catch (WebServerException e) {
 			throw new ServiceException(
@@ -38,11 +38,12 @@ public class BloodSugarServiceImpl implements BloodSugarService {
 		} catch (DataAccessException e) {
 			throw new ServiceException(
 					"An error occured while trying to add bs to web", e);
-		} 
+		}
 	}
 
 	@Override
-	public void edit(BloodSugar bloodSugar) throws ServiceException, OutdatedAccessTokenException, EntryNotFoundException {
+	public void edit(BloodSugar bloodSugar) throws ServiceException,
+			OutdatedAccessTokenException, EntryNotFoundException {
 		try {
 			webBloodSugarDao.edit(bloodSugar);
 			mobileBloodSugarDao.edit(bloodSugar);
@@ -51,12 +52,13 @@ public class BloodSugarServiceImpl implements BloodSugarService {
 					"An error occured while trying to edit bs to web", e);
 		} catch (DataAccessException e) {
 			throw new ServiceException(
-					"An error occured while trying to edit bs to web", e);
+					"An error occured while trying to edit bs to local", e);
 		}
 	}
 
 	@Override
-	public void delete(BloodSugar bloodSugar) throws ServiceException, OutdatedAccessTokenException, EntryNotFoundException {		
+	public void delete(BloodSugar bloodSugar) throws ServiceException,
+			OutdatedAccessTokenException, EntryNotFoundException {
 		try {
 			webBloodSugarDao.delete(bloodSugar);
 			mobileBloodSugarDao.delete(bloodSugar);
