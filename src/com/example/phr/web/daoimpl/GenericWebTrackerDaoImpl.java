@@ -74,7 +74,7 @@ public abstract class GenericWebTrackerDaoImpl<TrackerEntry> extends
 			} else if (response.getString("status").equals("success")) {
 				System.out.println("Editing successful");
 
-			} else if (response.getString("status").equals("fail")) {
+			} else{
 				throw new WebServerException(
 						"An error has occurred while communicating"
 								+ "with the web server.");
