@@ -31,6 +31,12 @@ public class DateTimeParser {
 	}
 
 	@SuppressLint("SimpleDateFormat")
+	public static String getDay(Timestamp date) {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd", Locale.ENGLISH);
+		return formatter.format(date);
+	}
+
+	@SuppressLint("SimpleDateFormat")
 	public static String getMonthDay(Timestamp date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("MMM dd",
 				Locale.ENGLISH);
