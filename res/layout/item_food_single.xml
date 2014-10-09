@@ -177,7 +177,7 @@
             android:textColor="#0A090A" />
 
         <TextView
-            android:id="@+id/txt"
+            android:id="@+id/servingUnit"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"

@@ -59,9 +59,11 @@ public class BloodPressureAdapter extends BaseAdapter {
 			viewHolder = new ViewHolder();
 			viewHolder.sys = (TextView) convertView.findViewById(R.id.txtSys);
 			viewHolder.dia = (TextView) convertView.findViewById(R.id.txtDia);
-			viewHolder.date = (TextView) convertView.findViewById(R.id.txtdate);
+			viewHolder.date = (TextView) convertView
+					.findViewById(R.id.txtBpdate);
 
-			viewHolder.time = (TextView) convertView.findViewById(R.id.txttime);
+			viewHolder.time = (TextView) convertView
+					.findViewById(R.id.txtBptime);
 
 			// viewHolder.image = (ImageView) convertView
 			// .findViewById(R.id.image);

@@ -41,8 +41,8 @@
                 android:gravity="center"  
                 android:weightSum="5">
 
-                <com.example.phr.AutoResizeTextView 
-                    android:id="@+id/txtdate"
+                <TextView 
+                    android:id="@+id/txtBpdate"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:text="06 20 2014" 
@@ -51,8 +51,8 @@
                     android:layout_weight="3"
                     android:maxLines="1"/>
 
-                <com.example.phr.AutoResizeTextView
-                    android:id="@+id/txttime"
+                <TextView
+                    android:id="@+id/txtBptime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="2:40 pm" 

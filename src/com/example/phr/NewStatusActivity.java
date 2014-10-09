@@ -111,6 +111,7 @@ public class NewStatusActivity extends Activity {
 	DateFormat fmt;
 	Calendar calobj;
 	String mode;
+	String kind;
 	final Context context = this;
 	BloodSugar editBs;
 	BloodPressure editBp;
@@ -118,6 +119,7 @@ public class NewStatusActivity extends Activity {
 	Note editNote;
 	CheckUp editCheckup;
 	ActivitySingle chosenActivity;
+	ActivitySingle addActivity;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -205,7 +207,7 @@ public class NewStatusActivity extends Activity {
 		txtWeight.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				callWeightInput(txtDoctor.getText().toString(), txtPurpose
+				callWeightInput(txtWeight.getText().toString(), txtWeightUnit
 						.getText().toString());
 			}
 		});
@@ -333,15 +335,17 @@ public class NewStatusActivity extends Activity {
 
 			if (from.equals("new activity")) {
 				currentTracker = TrackerInputType.ACTIVITY;
-				/*
-				 * setActivityTemplate(extras.getString("activity_name"),
-				 * extras.getString("activity_cal"),
-				 * extras.getString("activity_duration"),
-				 * extras.getString("activity_unit"), "");
-				 */
+				kind = "new";
+				addActivity = (ActivitySingle) in.getExtras().getSerializable(
+						"activity added");
+				setActivityTemplate(extras.getString("activity_name"),
+						addActivity.getMET(),
+						extras.getString("activity_duration"),
+						extras.getString("activity_unit"), "");
 
 			} else if (from.equals("new food")) {
 				currentTracker = TrackerInputType.FOOD;
+				kind = "new";
 				/*
 				 * setFoodTemplate(extras.getString("food_name"),
 				 * extras.getString("food_cal"),
@@ -553,9 +557,11 @@ public class NewStatusActivity extends Activity {
 			// String activity = data.getStringExtra("activity chosen");
 			chosenActivity = (ActivitySingle) data.getExtras().getSerializable(
 					"activity chosen");
+			kind = "old";
 			currentTracker = TrackerInputType.ACTIVITY;
 			callActivityDurationInput(1, "hr");
 		} else if (requestCode == 4) {
+			kind = "old";
 			String food = data.getStringExtra("food chosen");
 			String serving = data.getStringExtra("serving");
 			double cal = data.getDoubleExtra("cal", 0.0);
@@ -624,9 +630,16 @@ public class NewStatusActivity extends Activity {
 		alertDialogBuilder.setView(activityView);
 		activityDuration = (EditText) activityView
 				.findViewById(R.id.txtActivityDurationTime);
-		activityDuration.setText(number);
+		activityDuration.setText(String.valueOf(number));
 		activityUnitSpinner = (Spinner) activityView
 				.findViewById(R.id.activityUnitSpinner);
+
+		List<String> list = new ArrayList<String>();
+		list.add("min");
+		list.add("hr");
+		int index = list.indexOf(unit);
+		if (index != -1)
+			activityUnitSpinner.setSelection(index);
 		alertDialogBuilder
 				.setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -775,6 +788,13 @@ public class NewStatusActivity extends Activity {
 		sugarPicker = (NumberPicker) bsView.findViewById(R.id.sugarPicker);
 		sugarTypeSpinner = (Spinner) bsView.findViewById(R.id.sugarTypeSpinner);
 		sugarPicker.setCurrent(txtbs);
+
+		List<String> list = new ArrayList<String>();
+		list.add("Before meal");
+		list.add("After meal");
+		int index = list.indexOf(txttype);
+		if (index != -1)
+			sugarTypeSpinner.setSelection(index);
 		alertDialogBuilder
 				.setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -1002,13 +1022,16 @@ public class NewStatusActivity extends Activity {
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
 			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
-			com.example.phr.mobile.models.ActivitySingle activity = new com.example.phr.mobile.models.ActivitySingle(
-					txtActivity.getText().toString(), 30.0);
-			ActivityTrackerEntry activityEntry = new ActivityTrackerEntry(
-					timestamp, notesStatus.getText().toString(), null,
-					activity, Double.parseDouble(txtActivityCal.getText()
-							.toString()));
-
+			ActivityTrackerEntry activityEntry = null;
+			if (kind.equals("new")) {
+				activityEntry = new ActivityTrackerEntry(timestamp, notesStatus
+						.getText().toString(), null, chosenActivity,
+						Double.parseDouble(txtActivityCal.getText().toString()));
+			} else if (kind.equals("old")) {
+				// add a new activity to database
+				// get activity entry id
+				// add to activitytrackerentry
+			}
 			// reference for calling
 			// txtActivityDurationUnit.setText(unit);
 			// txtActivityDuration.setText(duration);

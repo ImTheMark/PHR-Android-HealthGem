@@ -6,7 +6,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -15,8 +14,8 @@ import com.example.phr.model.FoodSingle;
 
 public class SingleFoodAdapter extends BaseAdapter {
 
-	private Context mContext;
-	private List<FoodSingle> mListOfFoodSingle;
+	private final Context mContext;
+	private final List<FoodSingle> mListOfFoodSingle;
 
 	private static class ViewHolder {
 		TextView fat;
@@ -25,10 +24,12 @@ public class SingleFoodAdapter extends BaseAdapter {
 		TextView cal;
 		TextView time;
 		TextView food;
-		TextView serving;
+		TextView servingNumber;
+		TextView servingUnit;
 	}
 
-	public SingleFoodAdapter(Context aContext, List<FoodSingle> aListOfFoodSingles) {
+	public SingleFoodAdapter(Context aContext,
+			List<FoodSingle> aListOfFoodSingles) {
 		mListOfFoodSingle = aListOfFoodSingles;
 		mContext = aContext;
 	}
@@ -58,46 +59,44 @@ public class SingleFoodAdapter extends BaseAdapter {
 					false);
 
 			viewHolder = new ViewHolder();
-			viewHolder.fat = (TextView) convertView
-					.findViewById(R.id.foodFat);
+			viewHolder.fat = (TextView) convertView.findViewById(R.id.foodFat);
 			viewHolder.carbs = (TextView) convertView
 					.findViewById(R.id.foodCarbs);
 			viewHolder.protein = (TextView) convertView
 					.findViewById(R.id.foodProtein);
 
-			viewHolder.cal = (TextView) convertView
-					.findViewById(R.id.foodCal);
-			
-			viewHolder.food = (TextView) convertView
-					.findViewById(R.id.food);
-			
-			viewHolder.time = (TextView) convertView
-					.findViewById(R.id.time);
-			
-			viewHolder.serving = (TextView) convertView
+			viewHolder.cal = (TextView) convertView.findViewById(R.id.foodCal);
+
+			viewHolder.food = (TextView) convertView.findViewById(R.id.food);
+
+			viewHolder.time = (TextView) convertView.findViewById(R.id.time);
+
+			viewHolder.servingNumber = (TextView) convertView
 					.findViewById(R.id.serving);
+
+			viewHolder.servingUnit = (TextView) convertView
+					.findViewById(R.id.servingUnit);
 			convertView.setTag(viewHolder);
 		}
 
 		viewHolder = (ViewHolder) convertView.getTag();
-		viewHolder.fat.setText(String.valueOf(mListOfFoodSingle.get(position).getFat()));
-		viewHolder.carbs.setText(String.valueOf(mListOfFoodSingle.get(position).getCarbs()));
+		viewHolder.fat.setText(String.valueOf(mListOfFoodSingle.get(position)
+				.getFat()));
+		viewHolder.carbs.setText(String.valueOf(mListOfFoodSingle.get(position)
+				.getCarbs()));
 		viewHolder.protein.setText(String.valueOf(mListOfFoodSingle.get(
 				position).getProtein()));
 
-		viewHolder.cal.setText(String.valueOf(mListOfFoodSingle.get(
-				position).getCal()));
-		
-		viewHolder.food.setText(mListOfFoodSingle.get(
-				position).getFood());
-		
-		viewHolder.time.setText(mListOfFoodSingle.get(
-				position).getTime());
-		
-		viewHolder.serving.setText(String.valueOf(mListOfFoodSingle.get(
+		viewHolder.cal.setText(String.valueOf(mListOfFoodSingle.get(position)
+				.getCal()));
+
+		viewHolder.food.setText(mListOfFoodSingle.get(position).getFood());
+
+		viewHolder.time.setText(mListOfFoodSingle.get(position).getTime());
+
+		viewHolder.servingNumber.setText(String.valueOf(mListOfFoodSingle.get(
 				position).getServing()));
-		
-		
+
 		return convertView;
 	}
 
