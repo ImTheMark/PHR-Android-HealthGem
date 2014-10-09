@@ -237,6 +237,22 @@ public class NewStatusActivity extends Activity {
 		txtActivityDuration = (TextView) findViewById(R.id.activityDuration);
 		activityCal = (LinearLayout) findViewById(R.id.activityCal);
 		txtActivityCal = (TextView) findViewById(R.id.txtActivityCal);
+		txtActivityDuration.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				callActivityDurationInput(Integer.parseInt(txtActivityDuration
+						.getText().toString()), txtActivityDurationUnit
+						.toString());
+			}
+		});
+		txtActivityDurationUnit.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				callActivityDurationInput(Integer.parseInt(txtActivityDuration
+						.getText().toString()), txtActivityDurationUnit
+						.toString());
+			}
+		});
 
 		// food post
 		txtFood = (TextView) findViewById(R.id.food);
@@ -536,9 +552,9 @@ public class NewStatusActivity extends Activity {
 		} else if (requestCode == 3) {
 			// String activity = data.getStringExtra("activity chosen");
 			chosenActivity = (ActivitySingle) data.getExtras().getSerializable(
-					"activity chosen ");
+					"activity chosen");
 			currentTracker = TrackerInputType.ACTIVITY;
-			callActivityDurationInput(chosenActivity.getName());
+			callActivityDurationInput(1, "hr");
 		} else if (requestCode == 4) {
 			String food = data.getStringExtra("food chosen");
 			String serving = data.getStringExtra("serving");
@@ -595,7 +611,7 @@ public class NewStatusActivity extends Activity {
 
 	}
 
-	private void callActivityDurationInput(final String activity) {
+	private void callActivityDurationInput(int number, String unit) {
 		// TODO Auto-generated method stub
 
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
@@ -608,6 +624,7 @@ public class NewStatusActivity extends Activity {
 		alertDialogBuilder.setView(activityView);
 		activityDuration = (EditText) activityView
 				.findViewById(R.id.txtActivityDurationTime);
+		activityDuration.setText(number);
 		activityUnitSpinner = (Spinner) activityView
 				.findViewById(R.id.activityUnitSpinner);
 		alertDialogBuilder
@@ -864,9 +881,11 @@ public class NewStatusActivity extends Activity {
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
 
-			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
+			String encodedImage = "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAAAAACoWZBhAAAADElEQVR42mNgoCcAAABuAAF2oKnPAAAAAElFTkSuQmCC";
+			// String encodedImage = ImageHandler.encodeImageToBase64(bitmap);
+			PHRImage image = new PHRImage(encodedImage, PHRImageType.IMAGE);
 			BloodSugar bs = new BloodSugar(timestamp, notesStatus.getText()
-					.toString(), null, sugarPicker.getCurrent(),
+					.toString(), image, sugarPicker.getCurrent(),
 					String.valueOf(sugarTypeSpinner.getSelectedItem()));
 			BloodSugarService bsService = new BloodSugarServiceImpl();
 			bsService.add(bs);
