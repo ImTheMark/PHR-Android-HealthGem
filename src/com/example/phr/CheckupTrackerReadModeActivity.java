@@ -14,13 +14,13 @@ import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.CheckUp;
-import com.example.phr.serviceimpl.CheckUpServiceImpl;
+import com.example.phr.serviceimpl.CheckUpTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
 
 public class CheckupTrackerReadModeActivity extends Activity {
 
 	CheckUp chosenItem;
-	CheckUpServiceImpl checkupServiceImpl;
+	CheckUpTrackerServiceImpl checkupServiceImpl;
 	TextView purpose;
 	TextView doctor;
 	TextView date;
@@ -71,7 +71,7 @@ public class CheckupTrackerReadModeActivity extends Activity {
 		case R.id.menu_delete:
 			try {
 				Log.e("checkup", "del");
-				checkupServiceImpl = new CheckUpServiceImpl();
+				checkupServiceImpl = new CheckUpTrackerServiceImpl();
 				checkupServiceImpl.delete(chosenItem);
 				Log.e("checkup", "del_done");
 			} catch (ServiceException e) {

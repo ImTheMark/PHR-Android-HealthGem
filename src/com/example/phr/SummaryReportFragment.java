@@ -27,8 +27,8 @@ import android.widget.ProgressBar;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.WebServerException;
 import com.example.phr.mobile.models.BloodSugar;
-import com.example.phr.web.dao.WebBloodSugarDao;
-import com.example.phr.web.daoimpl.WebBloodSugarDaoImpl;
+import com.example.phr.web.dao.WebBloodSugarTrackerDao;
+import com.example.phr.web.daoimpl.WebBloodSugarTrackerDaoImpl;
 
 public class SummaryReportFragment extends Fragment {
 
@@ -179,7 +179,7 @@ public class SummaryReportFragment extends Fragment {
 
 		dailyContainer.addView(dailyChart);
 
-		WebBloodSugarDao webBloodSugarDao = new WebBloodSugarDaoImpl();
+		WebBloodSugarTrackerDao webBloodSugarDao = new WebBloodSugarTrackerDaoImpl();
 		try {
 			List<BloodSugar> bloodSugarList = webBloodSugarDao.getAll();
 			for (BloodSugar b : bloodSugarList) {

@@ -35,9 +35,9 @@ import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
-import com.example.phr.mobile.daoimpl.MobileBloodPressureDaoImpl;
+import com.example.phr.mobile.daoimpl.MobileBloodPressureTrackerDaoImpl;
 import com.example.phr.mobile.models.BloodPressure;
-import com.example.phr.serviceimpl.BloodPressureServiceImpl;
+import com.example.phr.serviceimpl.BloodPressureTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
 import com.google.common.collect.Lists;
 
@@ -54,7 +54,7 @@ public class BloodPressureTrackerActivity extends Activity {
 	AlertDialog.Builder alertDialog;
 	ArrayList<String> names;
 	String mode;
-	BloodPressureServiceImpl bpServiceImpl;
+	BloodPressureTrackerServiceImpl bpServiceImpl;
 	AlertDialog alertD;
 	BloodPressure chosenItem;
 
@@ -102,7 +102,7 @@ public class BloodPressureTrackerActivity extends Activity {
 		 * list.add(data5); list.add(data6); list.add(data7);
 		 */
 
-		MobileBloodPressureDaoImpl bpDaoImpl = new MobileBloodPressureDaoImpl();
+		MobileBloodPressureTrackerDaoImpl bpDaoImpl = new MobileBloodPressureTrackerDaoImpl();
 		try {
 			list = bpDaoImpl.getAllReversed();
 			reverselist = Lists.reverse(list);

@@ -14,13 +14,13 @@ import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.Note;
-import com.example.phr.serviceimpl.NoteServiceImpl;
+import com.example.phr.serviceimpl.NoteTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
 
 public class NoteReadModeActivity extends Activity {
 
 	Note chosenItem;
-	NoteServiceImpl noteServiceImpl;
+	NoteTrackerServiceImpl noteServiceImpl;
 	TextView date;
 	TextView time;
 	TextView note;
@@ -65,7 +65,7 @@ public class NoteReadModeActivity extends Activity {
 		case R.id.menu_delete:
 			try {
 				Log.e("checkup", "del");
-				noteServiceImpl = new NoteServiceImpl();
+				noteServiceImpl = new NoteTrackerServiceImpl();
 				noteServiceImpl.delete(chosenItem);
 				Log.e("note", "del_done");
 			} catch (ServiceException e) {

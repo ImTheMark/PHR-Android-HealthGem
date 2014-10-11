@@ -1,7 +1,15 @@
 package com.example.phr.service;
 
-import com.example.phr.mobile.models.ActivityTrackerEntry;
+import java.util.List;
 
-public interface ActivityService extends TrackerService<ActivityTrackerEntry> {
+import com.example.phr.model.Activity;
+
+public interface ActivityService {
+
+	public void add(Activity activity);
+	
+	public List<Activity> getAll();
+	
+	public List<Activity> search(String query);
 	
 }

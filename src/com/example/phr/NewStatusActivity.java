@@ -44,18 +44,18 @@ import com.example.phr.mobile.models.Note;
 import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.mobile.models.PHRImageType;
 import com.example.phr.mobile.models.Weight;
-import com.example.phr.service.ActivityService;
-import com.example.phr.service.BloodPressureService;
-import com.example.phr.service.BloodSugarService;
-import com.example.phr.service.CheckUpService;
-import com.example.phr.service.NoteService;
-import com.example.phr.service.WeightService;
-import com.example.phr.serviceimpl.ActivityServiceImpl;
-import com.example.phr.serviceimpl.BloodPressureServiceImpl;
-import com.example.phr.serviceimpl.BloodSugarServiceImpl;
-import com.example.phr.serviceimpl.CheckUpServiceImpl;
-import com.example.phr.serviceimpl.NoteServiceImpl;
-import com.example.phr.serviceimpl.WeightServiceImpl;
+import com.example.phr.service.ActivityTrackerService;
+import com.example.phr.service.BloodPressureTrackerService;
+import com.example.phr.service.BloodSugarTrackerService;
+import com.example.phr.service.CheckUpTrackerService;
+import com.example.phr.service.NoteTrackerService;
+import com.example.phr.service.WeightTrackerService;
+import com.example.phr.serviceimpl.ActivityTrackerServiceImpl;
+import com.example.phr.serviceimpl.BloodPressureTrackerServiceImpl;
+import com.example.phr.serviceimpl.BloodSugarTrackerServiceImpl;
+import com.example.phr.serviceimpl.CheckUpTrackerServiceImpl;
+import com.example.phr.serviceimpl.NoteTrackerServiceImpl;
+import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
 import com.example.phr.tools.WeightConverter;
 
 public class NewStatusActivity extends Activity {
@@ -881,8 +881,8 @@ public class NewStatusActivity extends Activity {
 					.getText().toString(), null, systolicPicker.getCurrent(),
 					diastolicPicker.getCurrent());
 
-			BloodPressureService bpService = new BloodPressureServiceImpl();
-			bpService.add(bp);
+			BloodPressureTrackerService bpTrackerService = new BloodPressureTrackerServiceImpl();
+			bpTrackerService.add(bp);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -907,8 +907,8 @@ public class NewStatusActivity extends Activity {
 			BloodSugar bs = new BloodSugar(timestamp, notesStatus.getText()
 					.toString(), image, sugarPicker.getCurrent(),
 					String.valueOf(sugarTypeSpinner.getSelectedItem()));
-			BloodSugarService bsService = new BloodSugarServiceImpl();
-			bsService.add(bs);
+			BloodSugarTrackerService bsTrackerService = new BloodSugarTrackerServiceImpl();
+			bsTrackerService.add(bs);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -940,8 +940,8 @@ public class NewStatusActivity extends Activity {
 			Weight weight = new Weight(timestamp, notesStatus.getText()
 					.toString(), null, newWeight);
 
-			WeightService weightService = new WeightServiceImpl();
-			weightService.add(weight);
+			WeightTrackerService weightTrackerService = new WeightTrackerServiceImpl();
+			weightTrackerService.add(weight);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -963,8 +963,8 @@ public class NewStatusActivity extends Activity {
 			Note note = new Note(timestamp, null, null, notesStatus.getText()
 					.toString());
 
-			NoteService noteService = new NoteServiceImpl();
-			noteService.add(note);
+			NoteTrackerService noteTrackerService = new NoteTrackerServiceImpl();
+			noteTrackerService.add(note);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -1003,8 +1003,8 @@ public class NewStatusActivity extends Activity {
 					.getText().toString(), txtDoctor.getText().toString(),
 					notesStatus.getText().toString());
 
-			CheckUpService checkupService = new CheckUpServiceImpl();
-			checkupService.add(checkup);
+			CheckUpTrackerService checkupTrackerService = new CheckUpTrackerServiceImpl();
+			checkupTrackerService.add(checkup);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -1036,8 +1036,8 @@ public class NewStatusActivity extends Activity {
 			// txtActivityDurationUnit.setText(unit);
 			// txtActivityDuration.setText(duration);
 
-			ActivityService activityService = new ActivityServiceImpl();
-			activityService.add(activityEntry);
+			ActivityTrackerService activityTrackerService = new ActivityTrackerServiceImpl();
+			activityTrackerService.add(activityEntry);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -1209,8 +1209,8 @@ public class NewStatusActivity extends Activity {
 					editBs.getTimestamp(), notesStatus.getText().toString(),
 					null, Double.parseDouble(txtSugar.getText().toString()),
 					txtSugarType.getText().toString());
-			BloodSugarService bsService = new BloodSugarServiceImpl();
-			bsService.edit(bs);
+			BloodSugarTrackerService bsTrackerService = new BloodSugarTrackerServiceImpl();
+			bsTrackerService.edit(bs);
 			Log.e("in", "edited");
 
 		} catch (Exception e) {
@@ -1231,8 +1231,8 @@ public class NewStatusActivity extends Activity {
 					null, Integer.parseInt(txtSystolic.getText().toString()),
 					Integer.parseInt(txtDiastolic.getText().toString()));
 
-			BloodPressureService bpService = new BloodPressureServiceImpl();
-			bpService.edit(bp);
+			BloodPressureTrackerService bpTrackerService = new BloodPressureTrackerServiceImpl();
+			bpTrackerService.edit(bp);
 
 			Log.e("in", "edited");
 
@@ -1261,8 +1261,8 @@ public class NewStatusActivity extends Activity {
 					editWeight.getTimestamp(),
 					notesStatus.getText().toString(), null, newWeight);
 
-			WeightService weightService = new WeightServiceImpl();
-			weightService.edit(weight);
+			WeightTrackerService weightTrackerService = new WeightTrackerServiceImpl();
+			weightTrackerService.edit(weight);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1281,8 +1281,8 @@ public class NewStatusActivity extends Activity {
 							.getText().toString(), txtDoctor.getText()
 							.toString(), notesStatus.getText().toString());
 
-			CheckUpService checkupService = new CheckUpServiceImpl();
-			checkupService.edit(checkup);
+			CheckUpTrackerService checkupTrackerService = new CheckUpTrackerServiceImpl();
+			checkupTrackerService.edit(checkup);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -1301,8 +1301,8 @@ public class NewStatusActivity extends Activity {
 					editNote.getTimestamp(), null, null, notesStatus.getText()
 							.toString());
 
-			NoteService noteService = new NoteServiceImpl();
-			noteService.edit(note);
+			NoteTrackerService noteTrackerService = new NoteTrackerServiceImpl();
+			noteTrackerService.edit(note);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

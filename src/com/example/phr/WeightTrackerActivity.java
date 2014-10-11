@@ -13,8 +13,8 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import com.example.phr.adapter.WeightAdapter;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.DataAccessException;
-import com.example.phr.mobile.dao.MobileWeightDao;
-import com.example.phr.mobile.daoimpl.MobileWeightDaoImpl;
+import com.example.phr.mobile.dao.MobileWeightTrackerDao;
+import com.example.phr.mobile.daoimpl.MobileWeightTrackerDaoImpl;
 import com.example.phr.mobile.models.Weight;
 
 import android.annotation.SuppressLint;
@@ -48,7 +48,7 @@ public class WeightTrackerActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         
         
-        MobileWeightDao daoImpl = new MobileWeightDaoImpl();
+        MobileWeightTrackerDao daoImpl = new MobileWeightTrackerDaoImpl();
         List<List<Weight>> weightList = new ArrayList<List<Weight>>();;
 		try {
 			weightList = daoImpl.getAllGroupedByDate();

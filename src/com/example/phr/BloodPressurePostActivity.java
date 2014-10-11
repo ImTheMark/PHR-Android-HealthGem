@@ -23,8 +23,8 @@ import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.mobile.models.PHRImageType;
-import com.example.phr.service.BloodPressureService;
-import com.example.phr.serviceimpl.BloodPressureServiceImpl;
+import com.example.phr.service.BloodPressureTrackerService;
+import com.example.phr.serviceimpl.BloodPressureTrackerServiceImpl;
 
 public class BloodPressurePostActivity extends Activity {
 
@@ -116,7 +116,7 @@ public class BloodPressurePostActivity extends Activity {
 					diastolicPicker.getCurrent());
 
 			// WEB SERVER INSERT
-			BloodPressureService bpService = new BloodPressureServiceImpl();
+			BloodPressureTrackerService bpService = new BloodPressureTrackerServiceImpl();
 			bpService.add(bp);
 
 		} catch (ParseException e) {

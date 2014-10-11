@@ -22,7 +22,7 @@ import com.example.phr.adapter.CheckupAdapter;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.CheckUp;
-import com.example.phr.serviceimpl.CheckUpServiceImpl;
+import com.example.phr.serviceimpl.CheckUpTrackerServiceImpl;
 
 public class CheckupTrackerActivity extends Activity {
 
@@ -31,7 +31,7 @@ public class CheckupTrackerActivity extends Activity {
 	LinearLayout mBtnCheckupPost;;
 	LinearLayout mBtnCheckupDoctor;
 	List<CheckUp> list;
-	CheckUpServiceImpl checkupServiceImpl;
+	CheckUpTrackerServiceImpl checkupServiceImpl;
 	CheckUp chosenItem;
 
 	@SuppressLint("NewApi")
@@ -63,7 +63,7 @@ public class CheckupTrackerActivity extends Activity {
 		 * list.add(data1); list.add(data2); list.add(data3); list.add(data4);
 		 */
 		list = new ArrayList<CheckUp>();
-		checkupServiceImpl = new CheckUpServiceImpl();
+		checkupServiceImpl = new CheckUpTrackerServiceImpl();
 		try {
 
 			list = checkupServiceImpl.getAll();

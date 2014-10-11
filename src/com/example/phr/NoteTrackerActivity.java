@@ -22,7 +22,7 @@ import com.example.phr.adapter.NoteAdapter;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.Note;
-import com.example.phr.serviceimpl.NoteServiceImpl;
+import com.example.phr.serviceimpl.NoteTrackerServiceImpl;
 
 public class NoteTrackerActivity extends Activity {
 
@@ -30,7 +30,7 @@ public class NoteTrackerActivity extends Activity {
 	NoteAdapter noteAdapter;
 	ImageView mBtnNotePost;
 	List<Note> list;
-	NoteServiceImpl noteServiceImpl;
+	NoteTrackerServiceImpl noteServiceImpl;
 	Note chosenItem;
 
 	@SuppressLint("NewApi")
@@ -59,7 +59,7 @@ public class NoteTrackerActivity extends Activity {
 		 * list.add(data4);
 		 */
 		list = new ArrayList<Note>();
-		noteServiceImpl = new NoteServiceImpl();
+		noteServiceImpl = new NoteTrackerServiceImpl();
 		try {
 
 			list = noteServiceImpl.getAll();

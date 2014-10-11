@@ -36,7 +36,7 @@ import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.BloodSugar;
-import com.example.phr.serviceimpl.BloodSugarServiceImpl;
+import com.example.phr.serviceimpl.BloodSugarTrackerServiceImpl;
 
 public class BloodSugarTrackerActivity extends Activity {
 
@@ -47,7 +47,7 @@ public class BloodSugarTrackerActivity extends Activity {
 	AlertDialog.Builder alertDialog;
 	ArrayList<String> names;
 	String mode;
-	BloodSugarServiceImpl bsServiceImpl;
+	BloodSugarTrackerServiceImpl bsServiceImpl;
 	AlertDialog alertD;
 	BloodSugar chosenItem;
 
@@ -96,7 +96,7 @@ public class BloodSugarTrackerActivity extends Activity {
 		 */
 
 		// MobileBloodSugarDaoImpl bsDaoImpl = new MobileBloodSugarDaoImpl();
-		bsServiceImpl = new BloodSugarServiceImpl();
+		bsServiceImpl = new BloodSugarTrackerServiceImpl();
 		try {
 			// list = bsDaoImpl.getAllReversed();
 			// list = bsDaoImpl.getAll();
