@@ -16,6 +16,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -26,7 +27,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -56,6 +59,7 @@ import com.example.phr.serviceimpl.BloodSugarTrackerServiceImpl;
 import com.example.phr.serviceimpl.CheckUpTrackerServiceImpl;
 import com.example.phr.serviceimpl.NoteTrackerServiceImpl;
 import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
+import com.example.phr.tools.ImageHandler;
 import com.example.phr.tools.WeightConverter;
 
 public class NewStatusActivity extends Activity {
@@ -65,6 +69,7 @@ public class NewStatusActivity extends Activity {
 	ImageButton mBtnAddPhoto;
 	ImageButton mBtnAddActions;
 	ImageButton mBtnFb;
+	ImageButton mBtnImageDelete;
 	NumberPicker systolicPicker;
 	NumberPicker diastolicPicker;
 	NumberPicker sugarPicker;
@@ -106,6 +111,7 @@ public class NewStatusActivity extends Activity {
 	LinearLayout activityCal;
 	LinearLayout foodCal;
 	String currentTracker;
+	RelativeLayout imageTemplate;
 	DateFormat dateFormat;
 	DateFormat timeFormat;
 	DateFormat fmt;
@@ -120,6 +126,10 @@ public class NewStatusActivity extends Activity {
 	CheckUp editCheckup;
 	ActivitySingle chosenActivity;
 	ActivitySingle addActivity;
+	private static final int CAMERA_REQUEST = 1888;
+	ImageView statusImage;
+	Bitmap photo;
+	Boolean setImage;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -153,6 +163,7 @@ public class NewStatusActivity extends Activity {
 		fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss", Locale.ENGLISH);
 		calobj = Calendar.getInstance();
 
+		setImage = false;
 		currentTracker = TrackerInputType.NOTES;
 		// templates
 		bsTemplate = (LinearLayout) findViewById(R.id.bloodsugar_template);
@@ -266,12 +277,23 @@ public class NewStatusActivity extends Activity {
 		txtFoodFat = (TextView) findViewById(R.id.txtfoodFat);
 		txtFoodProtein = (TextView) findViewById(R.id.txtfoodProtein);
 
+		imageTemplate = (RelativeLayout) findViewById(R.id.imageHolder);
+		mBtnImageDelete = (ImageButton) findViewById(R.id.imageDelete);
+		mBtnImageDelete.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				setImage = false;
+				imageTemplate.setVisibility(View.GONE);
+			}
+		});
+		statusImage = (ImageView) findViewById(R.id.statusImage);
 		mBtnAddPhoto = (ImageButton) findViewById(R.id.btnAddPhoto);
 		mBtnAddPhoto.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-				startActivity(intent);
+				Intent cameraIntent = new Intent(
+						android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+				startActivityForResult(cameraIntent, CAMERA_REQUEST);
 			}
 		});
 		mBtnFb = (ImageButton) findViewById(R.id.btnFb);
@@ -570,6 +592,12 @@ public class NewStatusActivity extends Activity {
 			double fat = data.getDoubleExtra("fat", 0.0);
 			currentTracker = TrackerInputType.FOOD;
 			callFoodServingInput(food, serving, cal, protein, carbs, fat);
+		} else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+			photo = (Bitmap) data.getExtras().get("data");
+			statusImage.setImageBitmap(photo);
+			setImage = true;
+			imageTemplate.setVisibility(View.VISIBLE);
+
 		}
 	}
 
@@ -901,8 +929,9 @@ public class NewStatusActivity extends Activity {
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
 
-			String encodedImage = "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAAAAACoWZBhAAAADElEQVR42mNgoCcAAABuAAF2oKnPAAAAAElFTkSuQmCC";
-			// String encodedImage = ImageHandler.encodeImageToBase64(bitmap);
+			// String encodedImage =
+			// "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAAAAACoWZBhAAAADElEQVR42mNgoCcAAABuAAF2oKnPAAAAAElFTkSuQmCC";
+			String encodedImage = ImageHandler.encodeImageToBase64(photo);
 			PHRImage image = new PHRImage(encodedImage, PHRImageType.IMAGE);
 			BloodSugar bs = new BloodSugar(timestamp, notesStatus.getText()
 					.toString(), image, sugarPicker.getCurrent(),
