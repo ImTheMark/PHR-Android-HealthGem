@@ -24,12 +24,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.example.phr.exceptions.OutdatedAccessTokenException;
-import com.example.phr.exceptions.WebServerException;
-import com.example.phr.mobile.models.BloodSugar;
-import com.example.phr.web.dao.WebBloodSugarTrackerDao;
-import com.example.phr.web.daoimpl.WebBloodSugarTrackerDaoImpl;
-
 public class SummaryReportFragment extends Fragment {
 
 	ProgressBar cProgress;
@@ -178,21 +172,6 @@ public class SummaryReportFragment extends Fragment {
 				.findViewById(R.id.piegraph);
 
 		dailyContainer.addView(dailyChart);
-
-		WebBloodSugarTrackerDao webBloodSugarDao = new WebBloodSugarTrackerDaoImpl();
-		try {
-			List<BloodSugar> bloodSugarList = webBloodSugarDao.getAll();
-			for (BloodSugar b : bloodSugarList) {
-				System.out.println(b.getBloodSugar() + " BLOOD SUGAR "
-						+ b.getTimestamp());
-			}
-		} catch (WebServerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (OutdatedAccessTokenException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		return rootView;
 	}

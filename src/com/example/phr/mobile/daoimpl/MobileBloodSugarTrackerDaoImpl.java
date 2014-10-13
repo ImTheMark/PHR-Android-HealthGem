@@ -24,7 +24,8 @@ import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.tools.DateTimeParser;
 import com.example.phr.tools.ImageHandler;
 
-public class MobileBloodSugarTrackerDaoImpl implements MobileBloodSugarTrackerDao {
+public class MobileBloodSugarTrackerDaoImpl implements
+		MobileBloodSugarTrackerDao {
 
 	@Override
 	public void add(BloodSugar bloodSugar) throws DataAccessException {
@@ -45,12 +46,11 @@ public class MobileBloodSugarTrackerDaoImpl implements MobileBloodSugarTrackerDa
 		try {
 			if (bloodSugar.getImage() != null) {
 				String encoded = bloodSugar.getImage().getEncodedImage();
-				String fileName = ImageHandler
-						.saveImageReturnFileName(encoded);
+				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				bloodSugar.getImage().setFileName(fileName);
-				values.put(DatabaseHandler.BS_PHOTO, bloodSugar.getImage().getFileName());
-			}
-			else
+				values.put(DatabaseHandler.BS_PHOTO, bloodSugar.getImage()
+						.getFileName());
+			} else
 				values.putNull(DatabaseHandler.BS_PHOTO);
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
@@ -59,7 +59,7 @@ public class MobileBloodSugarTrackerDaoImpl implements MobileBloodSugarTrackerDa
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		
+
 		if (bloodSugar.getFbPost() != null)
 			values.put(DatabaseHandler.BS_FBPOSTID, bloodSugar.getFbPost()
 					.getId());
@@ -87,12 +87,11 @@ public class MobileBloodSugarTrackerDaoImpl implements MobileBloodSugarTrackerDa
 		try {
 			if (bloodSugar.getImage() != null) {
 				String encoded = bloodSugar.getImage().getEncodedImage();
-				String fileName = ImageHandler
-						.saveImageReturnFileName(encoded);
+				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				bloodSugar.getImage().setFileName(fileName);
-				values.put(DatabaseHandler.BS_PHOTO, bloodSugar.getImage().getFileName());
-			}
-			else
+				values.put(DatabaseHandler.BS_PHOTO, bloodSugar.getImage()
+						.getFileName());
+			} else
 				values.putNull(DatabaseHandler.BS_PHOTO);
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
@@ -101,7 +100,7 @@ public class MobileBloodSugarTrackerDaoImpl implements MobileBloodSugarTrackerDa
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		
+
 		if (bloodSugar.getFbPost() != null)
 			values.put(DatabaseHandler.BS_FBPOSTID, bloodSugar.getFbPost()
 					.getId());
@@ -113,7 +112,7 @@ public class MobileBloodSugarTrackerDaoImpl implements MobileBloodSugarTrackerDa
 	}
 
 	@Override
-	public ArrayList<BloodSugar> getAll() throws DataAccessException{
+	public ArrayList<BloodSugar> getAll() throws DataAccessException {
 		ArrayList<BloodSugar> bsList = new ArrayList<BloodSugar>();
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_BLOODSUGAR;
@@ -126,17 +125,18 @@ public class MobileBloodSugarTrackerDaoImpl implements MobileBloodSugarTrackerDa
 			do {
 				Timestamp timestamp;
 				try {
-					timestamp = DateTimeParser.getTimestamp(cursor
-							.getString(1));
+					timestamp = DateTimeParser
+							.getTimestamp(cursor.getString(1));
 				} catch (ParseException e) {
-					throw new DataAccessException("Cannot complete operation due to parse failure", e);
+					throw new DataAccessException(
+							"Cannot complete operation due to parse failure", e);
 				}
 
 				PHRImage image = new PHRImage();
-				
-				if(cursor.getString(5) == null)
+
+				if (cursor.getString(5) == null)
 					image = null;
-				else{
+				else {
 					image.setFileName(cursor.getString(5));
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 					String encoded = ImageHandler.encodeImageToBase64(bitmap);
@@ -169,8 +169,8 @@ public class MobileBloodSugarTrackerDaoImpl implements MobileBloodSugarTrackerDa
 	public List<BloodSugar> getAllReversed() throws DataAccessException {
 		List<BloodSugar> bsList = new ArrayList<BloodSugar>();
 		String selectQuery = "SELECT  * FROM "
-				+ DatabaseHandler.TABLE_BLOODSUGAR
-				+ " ORDER BY " + DatabaseHandler.BS_DATEADDED + " DESC";
+				+ DatabaseHandler.TABLE_BLOODSUGAR + " ORDER BY "
+				+ DatabaseHandler.BS_DATEADDED + " DESC";
 
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
@@ -180,17 +180,18 @@ public class MobileBloodSugarTrackerDaoImpl implements MobileBloodSugarTrackerDa
 			do {
 				Timestamp timestamp;
 				try {
-					timestamp = DateTimeParser.getTimestamp(cursor
-							.getString(1));
+					timestamp = DateTimeParser
+							.getTimestamp(cursor.getString(1));
 				} catch (ParseException e) {
-					throw new DataAccessException("Cannot complete operation due to parse failure", e);
+					throw new DataAccessException(
+							"Cannot complete operation due to parse failure", e);
 				}
 
 				PHRImage image = new PHRImage();
-				
-				if(cursor.getString(5) == null)
+
+				if (cursor.getString(5) == null)
 					image = null;
-				else{
+				else {
 					image.setFileName(cursor.getString(5));
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 					String encoded = ImageHandler.encodeImageToBase64(bitmap);
@@ -207,6 +208,12 @@ public class MobileBloodSugarTrackerDaoImpl implements MobileBloodSugarTrackerDa
 
 		db.close();
 		return bsList;
+	}
+
+	@Override
+	public BloodSugar getLatest() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

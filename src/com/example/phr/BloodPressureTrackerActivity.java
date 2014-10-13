@@ -31,11 +31,9 @@ import android.widget.ListView;
 
 import com.example.phr.adapter.BloodPressureAdapter;
 import com.example.phr.enums.TrackerInputType;
-import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
-import com.example.phr.mobile.daoimpl.MobileBloodPressureTrackerDaoImpl;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.serviceimpl.BloodPressureTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
@@ -102,11 +100,15 @@ public class BloodPressureTrackerActivity extends Activity {
 		 * list.add(data5); list.add(data6); list.add(data7);
 		 */
 
-		MobileBloodPressureTrackerDaoImpl bpDaoImpl = new MobileBloodPressureTrackerDaoImpl();
+		// MobileBloodPressureTrackerDaoImpl bpDaoImpl = new
+		// MobileBloodPressureTrackerDaoImpl();
+
+		bpServiceImpl = new BloodPressureTrackerServiceImpl();
 		try {
-			list = bpDaoImpl.getAllReversed();
+			list = bpServiceImpl.getAll();
 			reverselist = Lists.reverse(list);
-		} catch (DataAccessException e) {
+
+		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -91,4 +91,9 @@ public class CheckUpTrackerServiceImpl implements CheckUpTrackerService {
 		return null;
 	}
 
+	@Override
+	public CheckUp getLatest() {
+		return mobileCheckUpTrackerDao.getLatest();
+	}
+
 }

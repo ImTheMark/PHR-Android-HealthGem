@@ -30,7 +30,7 @@ public class WeightTrackerServiceImpl implements WeightTrackerService {
 		int entryID;
 		try {
 			entryID = webWeightTrackerDao.add_ReturnEntryIdInWeb(weight);
-			weight.setEntryID(entryID); 
+			weight.setEntryID(entryID);
 			mobileWeightTrackerDao.add(weight);
 		} catch (WebServerException e) {
 			throw new ServiceException(
@@ -38,11 +38,12 @@ public class WeightTrackerServiceImpl implements WeightTrackerService {
 		} catch (DataAccessException e) {
 			throw new ServiceException(
 					"An error occured while trying to add weight to web", e);
-		} 
+		}
 	}
 
 	@Override
-	public void edit(Weight weight) throws OutdatedAccessTokenException, EntryNotFoundException, ServiceException {
+	public void edit(Weight weight) throws OutdatedAccessTokenException,
+			EntryNotFoundException, ServiceException {
 		try {
 			webWeightTrackerDao.edit(weight);
 			mobileWeightTrackerDao.edit(weight);
@@ -84,6 +85,11 @@ public class WeightTrackerServiceImpl implements WeightTrackerService {
 	public Weight get(int entryID) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Weight getLatest() {
+		return mobileWeightTrackerDao.getLatest();
 	}
 
 }

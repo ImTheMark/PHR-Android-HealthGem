@@ -118,7 +118,7 @@ public class WeightAdapter extends BaseAdapter {
 			average += status.getWeightInKilograms();
 		}
 
-		average /= mListOfGroupedWeightByDate.size();
+		average /= mListOfGroupedWeightByDate.get(position).size();
 		viewHolder.average.setText(String.valueOf(average));
 
 		return convertView;

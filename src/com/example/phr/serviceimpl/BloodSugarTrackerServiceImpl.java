@@ -29,7 +29,8 @@ public class BloodSugarTrackerServiceImpl implements BloodSugarTrackerService {
 			OutdatedAccessTokenException {
 		int entryID;
 		try {
-			entryID = webBloodSugarTrackerDao.add_ReturnEntryIdInWeb(bloodSugar);
+			entryID = webBloodSugarTrackerDao
+					.add_ReturnEntryIdInWeb(bloodSugar);
 			bloodSugar.setEntryID(entryID);
 			mobileBloodSugarTrackerDao.add(bloodSugar);
 		} catch (WebServerException e) {
@@ -85,6 +86,11 @@ public class BloodSugarTrackerServiceImpl implements BloodSugarTrackerService {
 	public BloodSugar get(int entryID) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public BloodSugar getLatest() {
+		return mobileBloodSugarTrackerDao.getLatest();
 	}
 
 }

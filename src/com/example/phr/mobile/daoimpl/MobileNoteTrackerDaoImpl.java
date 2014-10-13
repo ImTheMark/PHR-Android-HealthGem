@@ -80,7 +80,7 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 		values.put(DatabaseHandler.NOTES_STATUS, note.getStatus());
 
 		try {
-			if (note.getImage().getFileName() == null) {
+			if (note.getImage() != null) {
 				String encoded = note.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				note.getImage().setFileName(fileName);
@@ -196,5 +196,11 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 
 		db.close();
 		return noteList;
+	}
+
+	@Override
+	public Note getLatest() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

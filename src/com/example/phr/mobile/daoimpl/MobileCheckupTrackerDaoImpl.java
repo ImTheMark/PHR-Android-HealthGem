@@ -85,7 +85,7 @@ public class MobileCheckupTrackerDaoImpl implements MobileCheckupTrackerDao {
 		values.put(DatabaseHandler.CU_STATUS, checkUp.getStatus());
 
 		try {
-			if (checkUp.getImage().getFileName() == null) {
+			if (checkUp.getImage() != null) {
 				String encoded = checkUp.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				checkUp.getImage().setFileName(fileName);
@@ -203,5 +203,11 @@ public class MobileCheckupTrackerDaoImpl implements MobileCheckupTrackerDao {
 
 		db.close();
 		return cuList;
+	}
+
+	@Override
+	public CheckUp getLatest() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

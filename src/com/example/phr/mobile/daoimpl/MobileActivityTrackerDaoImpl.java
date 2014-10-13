@@ -256,8 +256,8 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 
 		if (cursor.moveToFirst()) {
 			do {
-				actList.add(new ActivitySingle(cursor.getInt(0), cursor.getString(2),
-						cursor.getDouble(3)));
+				actList.add(new ActivitySingle(cursor.getInt(0), cursor
+						.getString(2), cursor.getDouble(3)));
 			} while (cursor.moveToNext());
 		}
 
@@ -282,8 +282,8 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 	}
 
 	@Override
-	public ActivitySingle getActivityListEntry(SQLiteDatabase db, Integer activityID)
-			throws DataAccessException {
+	public ActivitySingle getActivityListEntry(SQLiteDatabase db,
+			Integer activityID) throws DataAccessException {
 		String selectQuery = "SELECT  * FROM "
 				+ DatabaseHandler.TABLE_ACTIVITYLIST + " WHERE "
 				+ DatabaseHandler.ACTLIST_ID + " = " + activityID;
@@ -291,10 +291,16 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 		Cursor cursor = db.rawQuery(selectQuery, null);
 
 		if (cursor.moveToFirst()) {
-			ActivitySingle act = new ActivitySingle(cursor.getInt(0), cursor.getString(1),
-					cursor.getDouble(2));
+			ActivitySingle act = new ActivitySingle(cursor.getInt(0),
+					cursor.getString(1), cursor.getDouble(2));
 			return act;
 		}
+		return null;
+	}
+
+	@Override
+	public ActivityTrackerEntry getLatest() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

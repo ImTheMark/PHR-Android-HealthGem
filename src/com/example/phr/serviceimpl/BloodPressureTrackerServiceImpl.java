@@ -15,7 +15,8 @@ import com.example.phr.service.BloodPressureTrackerService;
 import com.example.phr.web.dao.WebBloodPressureTrackerDao;
 import com.example.phr.web.daoimpl.WebBloodPressureTrackerDaoImpl;
 
-public class BloodPressureTrackerServiceImpl implements BloodPressureTrackerService {
+public class BloodPressureTrackerServiceImpl implements
+		BloodPressureTrackerService {
 
 	WebBloodPressureTrackerDao webBloodPressureTrackerDao;
 	MobileBloodPressureTrackerDao mobileBloodPressureTrackerDao;
@@ -74,7 +75,7 @@ public class BloodPressureTrackerServiceImpl implements BloodPressureTrackerServ
 		} catch (DataAccessException e) {
 			throw new ServiceException(
 					"An error occured while trying to delete bp to web", e);
-		} 
+		}
 	}
 
 	@Override
@@ -82,7 +83,8 @@ public class BloodPressureTrackerServiceImpl implements BloodPressureTrackerServ
 		try {
 			return mobileBloodPressureTrackerDao.getAll();
 		} catch (DataAccessException e) {
-			throw new ServiceException("An error occured while trying to get the list", e);
+			throw new ServiceException(
+					"An error occured while trying to get the list", e);
 		}
 	}
 
@@ -90,6 +92,11 @@ public class BloodPressureTrackerServiceImpl implements BloodPressureTrackerServ
 	public BloodPressure get(int entryID) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public BloodPressure getLatest() {
+		return mobileBloodPressureTrackerDao.getLatest();
 	}
 
 }

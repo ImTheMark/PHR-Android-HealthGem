@@ -23,7 +23,8 @@ import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.tools.DateTimeParser;
 import com.example.phr.tools.ImageHandler;
 
-public class MobileBloodPressureTrackerDaoImpl implements MobileBloodPressureTrackerDao {
+public class MobileBloodPressureTrackerDaoImpl implements
+		MobileBloodPressureTrackerDao {
 
 	@Override
 	public void add(BloodPressure bp) throws DataAccessException {
@@ -79,7 +80,7 @@ public class MobileBloodPressureTrackerDaoImpl implements MobileBloodPressureTra
 		values.put(DatabaseHandler.BP_STATUS, bp.getStatus());
 
 		try {
-			if (bp.getImage().getFileName() == null) {
+			if (bp.getImage() != null) {
 				String encoded = bp.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				bp.getImage().setFileName(fileName);
@@ -195,5 +196,11 @@ public class MobileBloodPressureTrackerDaoImpl implements MobileBloodPressureTra
 
 		db.close();
 		return bpList;
+	}
+
+	@Override
+	public BloodPressure getLatest() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

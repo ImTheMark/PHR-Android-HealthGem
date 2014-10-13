@@ -202,7 +202,6 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 	@Override
 	public List<List<Weight>> getAllGroupedByDate() throws DataAccessException {
 		List<List<Weight>> groupedWeightList = new ArrayList<List<Weight>>();
-		
 
 		List<Weight> weightList = new ArrayList<Weight>();
 		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_WEIGHT
@@ -241,21 +240,28 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 			} while (cursor.moveToNext());
 		}
 		db.close();
-		
-		
-		while(weightList.size() != 0){
+
+		while (weightList.size() != 0) {
 			List<Weight> weightListPerDay = new ArrayList<Weight>();
-			String monthDay = DateTimeParser.getMonthDay(weightList.get(0).getTimestamp());
-			
-			do{
+			String monthDay = DateTimeParser.getMonthDay(weightList.get(0)
+					.getTimestamp());
+
+			do {
 				Weight weight = weightList.remove(0);
 				weightListPerDay.add(weight);
-			}while(weightList.size() != 0 && monthDay.equals(DateTimeParser.getMonthDay(weightList.get(0).getTimestamp())));
-			
-			
+			} while (weightList.size() != 0
+					&& monthDay.equals(DateTimeParser.getMonthDay(weightList
+							.get(0).getTimestamp())));
+
 			groupedWeightList.add(weightListPerDay);
 		}
-		
+
 		return groupedWeightList;
+	}
+
+	@Override
+	public Weight getLatest() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -297,4 +297,10 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 		return null;
 	}
 
+	@Override
+	public FoodTrackerEntry getLatest() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

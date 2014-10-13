@@ -30,7 +30,7 @@ public class NoteTrackerServiceImpl implements NoteTrackerService {
 		int entryID;
 		try {
 			entryID = webNoteTrackerDao.add_ReturnEntryIdInWeb(note);
-			note.setEntryID(entryID); 
+			note.setEntryID(entryID);
 			mobileNoteTrackerDao.add(note);
 		} catch (WebServerException e) {
 			throw new ServiceException(
@@ -38,7 +38,7 @@ public class NoteTrackerServiceImpl implements NoteTrackerService {
 		} catch (DataAccessException e) {
 			throw new ServiceException(
 					"An error occured while trying to add note to web", e);
-		} 
+		}
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class NoteTrackerServiceImpl implements NoteTrackerService {
 	}
 
 	@Override
-	public void delete(Note note) throws OutdatedAccessTokenException, 
+	public void delete(Note note) throws OutdatedAccessTokenException,
 			ServiceException, EntryNotFoundException {
 		try {
 			webNoteTrackerDao.delete(note);
@@ -85,6 +85,11 @@ public class NoteTrackerServiceImpl implements NoteTrackerService {
 	public Note get(int entryID) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Note getLatest() {
+		return mobileNoteTrackerDao.getLatest();
 	}
 
 }

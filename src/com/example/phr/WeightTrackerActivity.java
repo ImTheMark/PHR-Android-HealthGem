@@ -10,13 +10,6 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
-import com.example.phr.adapter.WeightAdapter;
-import com.example.phr.enums.TrackerInputType;
-import com.example.phr.exceptions.DataAccessException;
-import com.example.phr.mobile.dao.MobileWeightTrackerDao;
-import com.example.phr.mobile.daoimpl.MobileWeightTrackerDaoImpl;
-import com.example.phr.mobile.models.Weight;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -32,12 +25,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.example.phr.adapter.WeightAdapter;
+import com.example.phr.enums.TrackerInputType;
+import com.example.phr.exceptions.DataAccessException;
+import com.example.phr.mobile.dao.MobileWeightTrackerDao;
+import com.example.phr.mobile.daoimpl.MobileWeightTrackerDaoImpl;
+import com.example.phr.mobile.models.Weight;
+
 public class WeightTrackerActivity extends Activity {
-	
+
 	WeightAdapter weightAdapter;
 	ListView mWeightList;
 	ImageView mBtnAddWeight;
-	
+
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,41 +45,41 @@ public class WeightTrackerActivity extends Activity {
 		setContentView(R.layout.activity_weight_tracker);
 		setTitle("Weight Tracker");
 		mWeightList = (ListView) findViewById(R.id.listViewWeightTracker);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        
-        
-        MobileWeightTrackerDao daoImpl = new MobileWeightTrackerDaoImpl();
-        List<List<Weight>> weightList = new ArrayList<List<Weight>>();;
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+
+		MobileWeightTrackerDao daoImpl = new MobileWeightTrackerDaoImpl();
+		List<List<Weight>> weightList = new ArrayList<List<Weight>>();
+		;
 		try {
 			weightList = daoImpl.getAllGroupedByDate();
 		} catch (DataAccessException e) {
 			Log.e("weightracker", "ERROR IN WEIGHT TRACKER GET ALL LIST");
 		}
-        
+
 		weightAdapter = new WeightAdapter(getApplicationContext(), weightList);
 		mWeightList.setAdapter(weightAdapter);
-		
-		
+
 		mBtnAddWeight = (ImageView) findViewById(R.id.btnAddWeight);
 		mBtnAddWeight.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
-				Intent i = new Intent(getApplicationContext(), NewStatusActivity.class);
-				i.putExtra("tracker",TrackerInputType.WEIGHT);
+				Intent i = new Intent(getApplicationContext(),
+						NewStatusActivity.class);
+				i.putExtra("tracker", TrackerInputType.WEIGHT);
 				startActivity(i);
 			}
 		});
-		
-		
-		//Graph	
-	//------------------------------
+
+		// Graph
+		// ------------------------------
 		View weightChart;
 
-		String[] weightMonth = new String[] { "May 1", "May 8", "May 15", "May 20", "May 22","Jun 10", "Jul 12"};
+		String[] weightMonth = new String[] { "May 1", "May 8", "May 15",
+				"May 20", "May 22", "Jun 10", "Jul 12" };
 
 		int[] weightx = { 1, 2, 3, 4, 5, 6, 7 };
-		int[] bloodsugar = { 180, 178, 172, 176, 174, 178, 180};
+		int[] bloodsugar = { 180, 178, 172, 176, 174, 178, 180 };
 
 		XYSeries weightSeries = new XYSeries("Weight");
 
@@ -88,9 +88,9 @@ public class WeightTrackerActivity extends Activity {
 		}
 
 		XYMultipleSeriesDataset bloodsugarDataset = new XYMultipleSeriesDataset();
-		
+
 		bloodsugarDataset.addSeries(weightSeries);
-		
+
 		XYSeriesRenderer mmolRenderer = new XYSeriesRenderer();
 		mmolRenderer.setColor(Color.parseColor("#B559BA"));
 		mmolRenderer.setPointStyle(PointStyle.CIRCLE);
@@ -100,8 +100,7 @@ public class WeightTrackerActivity extends Activity {
 		mmolRenderer.setChartValuesTextSize(25);
 		mmolRenderer.setChartValuesSpacing(20);
 
-
-		XYMultipleSeriesRenderer weightMultiRenderer = new 
+		XYMultipleSeriesRenderer weightMultiRenderer = new
 
 		XYMultipleSeriesRenderer();
 		weightMultiRenderer.setXLabels(0);
@@ -115,7 +114,7 @@ public class WeightTrackerActivity extends Activity {
 		weightMultiRenderer.setPointSize(10);
 		weightMultiRenderer.setXAxisMin(0);
 		weightMultiRenderer.setXAxisMax(7);
-		
+
 		// margin --- top, left, bottom, right
 		weightMultiRenderer.setMargins(new int[] { 90, 100, 120, 50 });
 		weightMultiRenderer.setLegendHeight(60);
@@ -125,7 +124,8 @@ public class WeightTrackerActivity extends Activity {
 		}
 
 		weightMultiRenderer.setApplyBackgroundColor(true);
-		weightMultiRenderer.setBackgroundColor(Color.argb(0x00, 0x01, 0x01, 0x01));
+		weightMultiRenderer.setBackgroundColor(Color.argb(0x00, 0x01, 0x01,
+				0x01));
 		weightMultiRenderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
 		weightMultiRenderer.setAxesColor(Color.BLACK);
 		weightMultiRenderer.setLabelsColor(Color.BLACK);
@@ -142,32 +142,27 @@ public class WeightTrackerActivity extends Activity {
 				bloodsugarDataset, weightMultiRenderer);
 
 		weightContainer.addView(weightChart);
-		
-		
-		
+
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    // Inflate the menu items for use in the action bar
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.menu_tracker_help, menu);
-	    return super.onCreateOptionsMenu(menu);
+		// Inflate the menu items for use in the action bar
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_tracker_help, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	@Override
-    public boolean onOptionsItemSelected(MenuItem item) 
-    {
-        switch (item.getItemId()) 
-        {
-        case android.R.id.home: 
-            onBackPressed();
-            break;
-        default:
-            return super.onOptionsItemSelected(item);
-        }
-        return true;
-    }
-	
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			onBackPressed();
+			break;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+		return true;
+	}
 
 }
