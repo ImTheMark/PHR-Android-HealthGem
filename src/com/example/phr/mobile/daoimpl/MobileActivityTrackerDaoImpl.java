@@ -17,8 +17,8 @@ import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.ImageHandlerException;
 import com.example.phr.local_db.DatabaseHandler;
+import com.example.phr.mobile.dao.MobileActivityDao;
 import com.example.phr.mobile.dao.MobileActivityTrackerDao;
-import com.example.phr.mobile.models.ActivitySingle;
 import com.example.phr.mobile.models.ActivityTrackerEntry;
 import com.example.phr.mobile.models.FBPost;
 import com.example.phr.mobile.models.PHRImage;
@@ -26,6 +26,8 @@ import com.example.phr.tools.DateTimeParser;
 import com.example.phr.tools.ImageHandler;
 
 public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
+
+	MobileActivityDao mobileActivityDao = new MobileActivityDaoImpl();
 
 	@Override
 	public void add(ActivityTrackerEntry activity) throws DataAccessException {
@@ -42,8 +44,7 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 		values.put(DatabaseHandler.ACT_ACTIVITYID, activity.getActivity()
 				.getEntryID());
 
-		if (!activityListEntryExists(db, activity.getActivity().getEntryID()))
-			addActivityListEntry(db, activity.getActivity());
+		mobileActivityDao.addReturnsEntryId(activity.getActivity());
 
 		// values.put(DatabaseHandler.ACT_DURATION,
 		// activity.getCalorisBurnedPerHour());
@@ -154,15 +155,13 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 					ActivityTrackerEntry act = new ActivityTrackerEntry(
 							cursor.getInt(0), new FBPost(cursor.getInt(7)),
 							timestamp, cursor.getString(5), image,
-							getActivityListEntry(db, cursor.getInt(2)),
+							mobileActivityDao.get(cursor.getInt(2)),
 							cursor.getDouble(4));
 					actList.add(act);
 
 				} catch (ParseException e) {
 					throw new DataAccessException(
 							"Cannot complete operation due to parse failure", e);
-				} catch (DataAccessException e) {
-					e.printStackTrace();
 				}
 
 			} while (cursor.moveToNext());
@@ -206,15 +205,13 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 					ActivityTrackerEntry act = new ActivityTrackerEntry(
 							cursor.getInt(0), new FBPost(cursor.getInt(7)),
 							timestamp, cursor.getString(5), image,
-							getActivityListEntry(db, cursor.getInt(2)),
+							mobileActivityDao.get(cursor.getInt(2)),
 							cursor.getDouble(4));
 					actList.add(act);
 
 				} catch (ParseException e) {
 					throw new DataAccessException(
 							"Cannot complete operation due to parse failure", e);
-				} catch (DataAccessException e) {
-					e.printStackTrace();
 				}
 
 			} while (cursor.moveToNext());
@@ -232,70 +229,6 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 		db.delete(DatabaseHandler.TABLE_ACTIVITY, DatabaseHandler.ACT_ID + "="
 				+ activity.getEntryID(), null);
 		db.close();
-	}
-
-	@Override
-	public void addActivityListEntry(SQLiteDatabase db, ActivitySingle activity) {
-		ContentValues values = new ContentValues();
-		values.put(DatabaseHandler.ACTLIST_ID, activity.getEntryID());
-		values.put(DatabaseHandler.ACTLIST_NAME, activity.getName());
-		values.put(DatabaseHandler.ACTLIST_MET, activity.getMET());
-		db.insert(DatabaseHandler.TABLE_ACTIVITYLIST, null, values);
-	}
-
-	@Override
-	public ArrayList<ActivitySingle> getAllActivityListEntry()
-			throws DataAccessException {
-		ArrayList<ActivitySingle> actList = new ArrayList<ActivitySingle>();
-		String selectQuery = "SELECT  * FROM "
-				+ DatabaseHandler.TABLE_ACTIVITYLIST;
-
-		SQLiteDatabase db = DatabaseHandler.getDBHandler()
-				.getWritableDatabase();
-		Cursor cursor = db.rawQuery(selectQuery, null);
-
-		if (cursor.moveToFirst()) {
-			do {
-				actList.add(new ActivitySingle(cursor.getInt(0), cursor
-						.getString(2), cursor.getDouble(3)));
-			} while (cursor.moveToNext());
-		}
-
-		db.close();
-		return actList;
-	}
-
-	@Override
-	public Boolean activityListEntryExists(SQLiteDatabase db, Integer activityID)
-			throws DataAccessException {
-		Boolean bool = false;
-		String selectQuery = "SELECT  * FROM "
-				+ DatabaseHandler.TABLE_ACTIVITYLIST + " WHERE "
-				+ DatabaseHandler.ACTLIST_ID + " = " + activityID;
-
-		Cursor cursor = db.rawQuery(selectQuery, null);
-
-		if (cursor.moveToFirst())
-			bool = true;
-
-		return bool;
-	}
-
-	@Override
-	public ActivitySingle getActivityListEntry(SQLiteDatabase db,
-			Integer activityID) throws DataAccessException {
-		String selectQuery = "SELECT  * FROM "
-				+ DatabaseHandler.TABLE_ACTIVITYLIST + " WHERE "
-				+ DatabaseHandler.ACTLIST_ID + " = " + activityID;
-
-		Cursor cursor = db.rawQuery(selectQuery, null);
-
-		if (cursor.moveToFirst()) {
-			ActivitySingle act = new ActivitySingle(cursor.getInt(0),
-					cursor.getString(1), cursor.getDouble(2));
-			return act;
-		}
-		return null;
 	}
 
 	@Override

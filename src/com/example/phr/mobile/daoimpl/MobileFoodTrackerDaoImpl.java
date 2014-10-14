@@ -221,4 +221,10 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 		db.close();
 	}
 
+	@Override
+	public FoodTrackerEntry getLatest() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
