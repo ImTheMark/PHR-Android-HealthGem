@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.phr.enums.TrackerInputType;
@@ -24,6 +25,7 @@ public class NoteReadModeActivity extends Activity {
 	TextView date;
 	TextView time;
 	TextView note;
+	ImageView image;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -39,12 +41,21 @@ public class NoteReadModeActivity extends Activity {
 		date = (TextView) findViewById(R.id.textViewNoteReadDate);
 		time = (TextView) findViewById(R.id.textViewNoteReadTime);
 		note = (TextView) findViewById(R.id.txtFullNotes);
+		image = (ImageView) findViewById(R.id.imageViewNoteReadHolder);
 
 		note.setText(chosenItem.getNote());
 		date.setText(String.valueOf(DateTimeParser.getDate(chosenItem
 				.getTimestamp())));
 		time.setText(String.valueOf(DateTimeParser.getTime(chosenItem
 				.getTimestamp())));
+
+		/*
+		 * if (chosenItem.getImage() != null) {
+		 * 
+		 * Log.e("img", chosenItem.getImage().getFileName());
+		 * image.setImageBitmap(ImageHandler.loadImage(chosenItem.getImage()
+		 * .getFileName())); }
+		 */
 
 	}
 

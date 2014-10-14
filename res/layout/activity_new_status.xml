@@ -24,7 +24,7 @@
 		        android:background="#00000000"
 	            android:hint=" How you feel ? " 
 	            android:padding="10dp"
-	            android:inputType="text"
+	            android:inputType="textMultiLine"
 	            >
 	              <requestFocus />
 	        </EditText>
@@ -116,7 +116,6 @@
 	            android:id="@+id/bloodsugar_template"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:orientation="vertical" 
 	            android:visibility="gone">
 
 	            <TextView
@@ -270,15 +269,15 @@
 
 	        <RelativeLayout
 	            android:id="@+id/imageHolder"
-	             android:padding="10dp"
-	            android:layout_width="match_parent"
+	            android:padding="10dp"
+	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
 	            android:orientation="vertical" 
 	            android:visibility="gone" >
 
 	            <ImageView
 	                android:id="@+id/statusImage"
-	                android:layout_width="wrap_content"
+	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
 	                android:src="@drawable/activitybloodsugar_smileygood" />
 

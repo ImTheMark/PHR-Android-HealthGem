@@ -1,5 +1,6 @@
 package com.example.phr.adapter;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import android.content.Context;
@@ -104,7 +105,9 @@ public class WeightAdapter extends BaseAdapter {
 			// kg for now
 
 			TextView txtWeight = new TextView(mContext);
-			txtWeight.setText(String.valueOf(status.getWeightInKilograms()));
+			DecimalFormat df = new DecimalFormat("#.00");
+			String weightFormated = df.format(status.getWeightInKilograms());
+			txtWeight.setText(weightFormated);
 			RelativeLayout.LayoutParams w = new RelativeLayout.LayoutParams(
 					RelativeLayout.LayoutParams.WRAP_CONTENT,
 					RelativeLayout.LayoutParams.WRAP_CONTENT);

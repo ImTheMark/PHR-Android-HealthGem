@@ -1,5 +1,6 @@
 package com.example.phr;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -17,8 +18,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -59,6 +63,7 @@ import com.example.phr.serviceimpl.BloodSugarTrackerServiceImpl;
 import com.example.phr.serviceimpl.CheckUpTrackerServiceImpl;
 import com.example.phr.serviceimpl.NoteTrackerServiceImpl;
 import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
+import com.example.phr.tools.DecodeImage;
 import com.example.phr.tools.ImageHandler;
 import com.example.phr.tools.WeightConverter;
 
@@ -130,6 +135,7 @@ public class NewStatusActivity extends Activity {
 	ImageView statusImage;
 	Bitmap photo;
 	Boolean setImage;
+	public static final int CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE = 1777;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -291,9 +297,18 @@ public class NewStatusActivity extends Activity {
 		mBtnAddPhoto.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent cameraIntent = new Intent(
-						android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-				startActivityForResult(cameraIntent, CAMERA_REQUEST);
+				/*
+				 * Intent cameraIntent = new Intent(
+				 * android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+				 * startActivityForResult(cameraIntent, CAMERA_REQUEST);
+				 */
+				Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+				File file = new File(Environment.getExternalStorageDirectory()
+						+ File.separator + "image.jpg");
+				intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+				startActivityForResult(intent,
+						CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE);
+
 			}
 		});
 		mBtnFb = (ImageButton) findViewById(R.id.btnFb);
@@ -594,10 +609,19 @@ public class NewStatusActivity extends Activity {
 			callFoodServingInput(food, serving, cal, protein, carbs, fat);
 		} else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
 			photo = (Bitmap) data.getExtras().get("data");
+			// photo = scaleBitmap(photo, 500, 500);
 			statusImage.setImageBitmap(photo);
 			setImage = true;
 			imageTemplate.setVisibility(View.VISIBLE);
 
+		} else if (requestCode == CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE) {
+			// Get our saved file into a bitmap object:
+			File file = new File(Environment.getExternalStorageDirectory()
+					+ File.separator + "image.jpg");
+			photo = DecodeImage.decodeFile(file.getAbsolutePath());
+			statusImage.setImageBitmap(photo);
+			setImage = true;
+			imageTemplate.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -903,10 +927,14 @@ public class NewStatusActivity extends Activity {
 			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
-
-			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
+			PHRImage image;
+			if (setImage == true) {
+				String encodedImage = ImageHandler.encodeImageToBase64(photo);
+				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
+			} else
+				image = null;
 			BloodPressure bp = new BloodPressure(timestamp, notesStatus
-					.getText().toString(), null, systolicPicker.getCurrent(),
+					.getText().toString(), image, systolicPicker.getCurrent(),
 					diastolicPicker.getCurrent());
 
 			BloodPressureTrackerService bpTrackerService = new BloodPressureTrackerServiceImpl();
@@ -928,11 +956,12 @@ public class NewStatusActivity extends Activity {
 			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
-
-			// String encodedImage =
-			// "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAAAAACoWZBhAAAADElEQVR42mNgoCcAAABuAAF2oKnPAAAAAElFTkSuQmCC";
-			String encodedImage = ImageHandler.encodeImageToBase64(photo);
-			PHRImage image = new PHRImage(encodedImage, PHRImageType.IMAGE);
+			PHRImage image;
+			if (setImage == true) {
+				String encodedImage = ImageHandler.encodeImageToBase64(photo);
+				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
+			} else
+				image = null;
 			BloodSugar bs = new BloodSugar(timestamp, notesStatus.getText()
 					.toString(), image, sugarPicker.getCurrent(),
 					String.valueOf(sugarTypeSpinner.getSelectedItem()));
@@ -956,7 +985,12 @@ public class NewStatusActivity extends Activity {
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
 
-			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
+			PHRImage image;
+			if (setImage == true) {
+				String encodedImage = ImageHandler.encodeImageToBase64(photo);
+				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
+			} else
+				image = null;
 			double newWeight;
 			if (String.valueOf(weightUnitSpinner.getSelectedItem())
 					.equals("kg")) {
@@ -967,7 +1001,7 @@ public class NewStatusActivity extends Activity {
 						.getText()));
 			}
 			Weight weight = new Weight(timestamp, notesStatus.getText()
-					.toString(), null, newWeight);
+					.toString(), image, newWeight);
 
 			WeightTrackerService weightTrackerService = new WeightTrackerServiceImpl();
 			weightTrackerService.add(weight);
@@ -988,8 +1022,13 @@ public class NewStatusActivity extends Activity {
 			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
-			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
-			Note note = new Note(timestamp, null, null, notesStatus.getText()
+			PHRImage image;
+			if (setImage == true) {
+				String encodedImage = ImageHandler.encodeImageToBase64(photo);
+				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
+			} else
+				image = null;
+			Note note = new Note(timestamp, null, image, notesStatus.getText()
 					.toString());
 
 			NoteTrackerService noteTrackerService = new NoteTrackerServiceImpl();
@@ -1010,7 +1049,12 @@ public class NewStatusActivity extends Activity {
 			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
-			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
+			PHRImage image;
+			if (setImage == true) {
+				String encodedImage = ImageHandler.encodeImageToBase64(photo);
+				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
+			} else
+				image = null;
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -1027,8 +1071,13 @@ public class NewStatusActivity extends Activity {
 			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
-			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
-			CheckUp checkup = new CheckUp(timestamp, null, null, txtPurpose
+			PHRImage image;
+			if (setImage == true) {
+				String encodedImage = ImageHandler.encodeImageToBase64(photo);
+				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
+			} else
+				image = null;
+			CheckUp checkup = new CheckUp(timestamp, null, image, txtPurpose
 					.getText().toString(), txtDoctor.getText().toString(),
 					notesStatus.getText().toString());
 
@@ -1050,11 +1099,16 @@ public class NewStatusActivity extends Activity {
 			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
-			PHRImage image = new PHRImage("test-image", PHRImageType.IMAGE);
+			PHRImage image;
+			if (setImage == true) {
+				String encodedImage = ImageHandler.encodeImageToBase64(photo);
+				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
+			} else
+				image = null;
 			ActivityTrackerEntry activityEntry = null;
 			if (kind.equals("new")) {
 				activityEntry = new ActivityTrackerEntry(timestamp, notesStatus
-						.getText().toString(), null, chosenActivity,
+						.getText().toString(), image, chosenActivity,
 						Double.parseDouble(txtActivityCal.getText().toString()));
 			} else if (kind.equals("old")) {
 				// add a new activity to database
