@@ -1,8 +1,15 @@
 package com.example.phr.mobile.dao;
 
+import java.util.List;
+
 import com.example.phr.mobile.models.Food;
 
 public interface MobileFoodDao {
 
-	public void add(Food food);
+	public int addReturnsEntryId(Food food);
+
+	public List<Food> getAll();
+
+	public Food get(int id);
+
 }

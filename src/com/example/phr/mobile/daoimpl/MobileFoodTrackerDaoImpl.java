@@ -17,15 +17,17 @@ import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.ImageHandlerException;
 import com.example.phr.local_db.DatabaseHandler;
+import com.example.phr.mobile.dao.MobileFoodDao;
 import com.example.phr.mobile.dao.MobileFoodTrackerDao;
 import com.example.phr.mobile.models.FBPost;
-import com.example.phr.mobile.models.Food;
 import com.example.phr.mobile.models.FoodTrackerEntry;
 import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.tools.DateTimeParser;
 import com.example.phr.tools.ImageHandler;
 
 public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
+
+	MobileFoodDao mobileFoodDao = new MobileFoodDaoImpl();
 
 	@Override
 	public void add(FoodTrackerEntry food) throws DataAccessException {
@@ -40,10 +42,9 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 		values.put(DatabaseHandler.FOOD_DATEADDED,
 				fmt.format(food.getTimestamp()));
 
-		if (!foodListEntryExists(db, food.getFood()))
-			addFoodListEntry(db, food.getFood());
+		int foodEntryId = mobileFoodDao.addReturnsEntryId(food.getFood());
 
-		values.put(DatabaseHandler.FOOD_FOODID, food.getFood().getEntryID());
+		values.put(DatabaseHandler.FOOD_FOODID, foodEntryId);
 		values.put(DatabaseHandler.FOOD_SERVINGCOUNT, food.getServingCount());
 		values.put(DatabaseHandler.FOOD_STATUS, food.getStatus());
 
@@ -85,10 +86,9 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 		values.put(DatabaseHandler.FOOD_DATEADDED,
 				fmt.format(food.getTimestamp()));
 
-		if (!foodListEntryExists(db, food.getFood()))
-			addFoodListEntry(db, food.getFood());
+		int foodEntryId = mobileFoodDao.addReturnsEntryId(food.getFood());
 
-		values.put(DatabaseHandler.FOOD_FOODID, food.getFood().getEntryID());
+		values.put(DatabaseHandler.FOOD_FOODID, foodEntryId);
 		values.put(DatabaseHandler.FOOD_SERVINGCOUNT, food.getServingCount());
 		values.put(DatabaseHandler.FOOD_STATUS, food.getStatus());
 
@@ -146,7 +146,7 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 					FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
 							cursor.getInt(0), new FBPost(cursor.getInt(6)),
 							timestamp, cursor.getString(4), image,
-							getFoodListEntry(db, cursor.getInt(2)),
+							mobileFoodDao.get(cursor.getInt(2)),
 							cursor.getDouble(3));
 
 					foodList.add(foodTrackerEntry);
@@ -194,7 +194,7 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 					FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
 							cursor.getInt(0), new FBPost(cursor.getInt(6)),
 							timestamp, cursor.getString(4), image,
-							getFoodListEntry(db, cursor.getInt(2)),
+							mobileFoodDao.get(cursor.getInt(2)),
 							cursor.getDouble(3));
 
 					foodList.add(foodTrackerEntry);
@@ -219,88 +219,6 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 		db.delete(DatabaseHandler.TABLE_FOOD, DatabaseHandler.FOOD_ID + "="
 				+ food.getEntryID(), null);
 		db.close();
-	}
-
-	@Override
-	public void addFoodListEntry(SQLiteDatabase db, Food food)
-			throws DataAccessException {
-		ContentValues values = new ContentValues();
-		values.put(DatabaseHandler.FOODLIST_ID, food.getEntryID());
-		values.put(DatabaseHandler.FOODLIST_NAME, food.getName());
-		values.put(DatabaseHandler.FOODLIST_CALORIE, food.getCalorie());
-		values.put(DatabaseHandler.FOODLIST_SERVINGUNIT, food.getServingUnit());
-		values.put(DatabaseHandler.FOODLIST_SERVINGSIZE, food.getServingSize());
-		values.put(DatabaseHandler.FOODLIST_RESTAURANTID,
-				food.getRestaurantID());
-		values.put(DatabaseHandler.FOODLIST_FROMFATSECRET,
-				food.getFromFatsecret());
-
-		db.insert(DatabaseHandler.TABLE_FOODLIST, null, values);
-	}
-
-	@Override
-	public Boolean foodListEntryExists(SQLiteDatabase db, Food food)
-			throws DataAccessException {
-		Boolean bool = false;
-		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_FOODLIST
-				+ " WHERE " + DatabaseHandler.FOODLIST_ID + " = "
-				+ food.getEntryID();
-
-		Cursor cursor = db.rawQuery(selectQuery, null);
-
-		if (cursor.moveToFirst())
-			bool = true;
-
-		return bool;
-	}
-
-	@Override
-	public ArrayList<Food> getAllFoodListEntry() throws DataAccessException {
-		ArrayList<Food> foodList = new ArrayList<Food>();
-		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_FOODLIST;
-
-		SQLiteDatabase db = DatabaseHandler.getDBHandler()
-				.getWritableDatabase();
-		Cursor cursor = db.rawQuery(selectQuery, null);
-
-		if (cursor.moveToFirst()) {
-			do {
-				Boolean bool = cursor.getInt(5) != 0;
-				Food food = new Food(cursor.getString(0), cursor.getDouble(1),
-						cursor.getString(2), cursor.getDouble(3),
-						cursor.getInt(4), bool);
-				foodList.add(food);
-			} while (cursor.moveToNext());
-		}
-
-		db.close();
-		return foodList;
-	}
-
-	@Override
-	public Food getFoodListEntry(SQLiteDatabase db, Integer foodListEntryID)
-			throws DataAccessException {
-		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_FOODLIST
-				+ " WHERE " + DatabaseHandler.FOODLIST_ID + " = "
-				+ foodListEntryID;
-
-		Cursor cursor = db.rawQuery(selectQuery, null);
-
-		if (cursor.moveToFirst()) {
-			Boolean bool = cursor.getInt(5) != 0;
-			Food food = new Food(cursor.getString(0), cursor.getDouble(1),
-					cursor.getString(2), cursor.getDouble(3), cursor.getInt(4),
-					bool);
-			return food;
-		}
-
-		return null;
-	}
-
-	@Override
-	public FoodTrackerEntry getLatest() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
