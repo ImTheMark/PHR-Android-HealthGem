@@ -47,6 +47,8 @@ import com.example.phr.mobile.models.ActivityTrackerEntry;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.mobile.models.BloodSugar;
 import com.example.phr.mobile.models.CheckUp;
+import com.example.phr.mobile.models.Food;
+import com.example.phr.mobile.models.FoodTrackerEntry;
 import com.example.phr.mobile.models.Note;
 import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.mobile.models.PHRImageType;
@@ -55,12 +57,14 @@ import com.example.phr.service.ActivityTrackerService;
 import com.example.phr.service.BloodPressureTrackerService;
 import com.example.phr.service.BloodSugarTrackerService;
 import com.example.phr.service.CheckUpTrackerService;
+import com.example.phr.service.FoodTrackerService;
 import com.example.phr.service.NoteTrackerService;
 import com.example.phr.service.WeightTrackerService;
 import com.example.phr.serviceimpl.ActivityTrackerServiceImpl;
 import com.example.phr.serviceimpl.BloodPressureTrackerServiceImpl;
 import com.example.phr.serviceimpl.BloodSugarTrackerServiceImpl;
 import com.example.phr.serviceimpl.CheckUpTrackerServiceImpl;
+import com.example.phr.serviceimpl.FoodTrackerServiceImpl;
 import com.example.phr.serviceimpl.NoteTrackerServiceImpl;
 import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
 import com.example.phr.tools.DecodeImage;
@@ -131,6 +135,8 @@ public class NewStatusActivity extends Activity {
 	CheckUp editCheckup;
 	ActivitySingle chosenActivity;
 	ActivitySingle addActivity;
+	Food chosenFood;
+	Food addFood;
 	private static final int CAMERA_REQUEST = 1888;
 	ImageView statusImage;
 	Bitmap photo;
@@ -272,6 +278,14 @@ public class NewStatusActivity extends Activity {
 						.toString());
 			}
 		});
+		txtActivity.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(),
+						ActivitiesSearchListActivity.class);
+				startActivityForResult(intent, 3);
+			}
+		});
 
 		// food post
 		txtFood = (TextView) findViewById(R.id.food);
@@ -282,6 +296,34 @@ public class NewStatusActivity extends Activity {
 		txtFoodCarbs = (TextView) findViewById(R.id.txtfoodCarbs);
 		txtFoodFat = (TextView) findViewById(R.id.txtfoodFat);
 		txtFoodProtein = (TextView) findViewById(R.id.txtfoodProtein);
+		txtFoodQuantity.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String text = txtFoodQuantity.toString();
+				double num = 1.0;
+				try {
+					int temp = Integer.parseInt(text);
+				} catch (NumberFormatException e) {
+					Log.i("", text + "is not a number");
+				}
+				try {
+					num = Double.parseDouble(text);
+
+				} catch (NumberFormatException e) {
+					Log.i("", text + "is not a number");
+				}
+
+				callFoodServingInput(chosenFood, num);
+			}
+		});
+		txtFood.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(),
+						foodSearchListActivity.class);
+				startActivityForResult(intent, 4);
+			}
+		});
 
 		imageTemplate = (RelativeLayout) findViewById(R.id.imageHolder);
 		mBtnImageDelete = (ImageButton) findViewById(R.id.imageDelete);
@@ -383,14 +425,14 @@ public class NewStatusActivity extends Activity {
 			} else if (from.equals("new food")) {
 				currentTracker = TrackerInputType.FOOD;
 				kind = "new";
-				/*
-				 * setFoodTemplate(extras.getString("food_name"),
-				 * extras.getString("food_cal"),
-				 * extras.getString("food_protein"),
-				 * extras.getString("food_carbs"), extras.getString("food_fat"),
-				 * extras.getString("food_serving"),
-				 * extras.getString("food_unit"), "");
-				 */
+				addFood = (Food) in.getExtras().getSerializable("food added");
+				setFoodTemplate(addFood.getName(), String.valueOf(addFood
+						.getCalorie()), String.valueOf(addFood.getProtein()),
+						String.valueOf(addFood.getCarbohydrate()),
+						String.valueOf(addFood.getFat()),
+						String.valueOf(addFood.getServingSize()),
+						String.valueOf(addFood.getServingUnit()), notesStatus
+								.getText().toString());
 
 			}
 		} else if (extras != null && in.hasExtra("edit")) {
@@ -599,14 +641,9 @@ public class NewStatusActivity extends Activity {
 			callActivityDurationInput(1, "hr");
 		} else if (requestCode == 4) {
 			kind = "old";
-			String food = data.getStringExtra("food chosen");
-			String serving = data.getStringExtra("serving");
-			double cal = data.getDoubleExtra("cal", 0.0);
-			double protein = data.getDoubleExtra("protein", 0.0);
-			double carbs = data.getDoubleExtra("carbs", 0.0);
-			double fat = data.getDoubleExtra("fat", 0.0);
+			chosenFood = (Food) data.getExtras().getSerializable("food chosen");
 			currentTracker = TrackerInputType.FOOD;
-			callFoodServingInput(food, serving, cal, protein, carbs, fat);
+			callFoodServingInput(chosenFood, 1.0);
 		} else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
 			photo = (Bitmap) data.getExtras().get("data");
 			// photo = scaleBitmap(photo, 500, 500);
@@ -625,9 +662,7 @@ public class NewStatusActivity extends Activity {
 		}
 	}
 
-	private void callFoodServingInput(final String food, final String serving,
-			final double cal, final double protein, final double carbs,
-			final double fat) {
+	private void callFoodServingInput(final Food food, final double serving) {
 		// TODO Auto-generated method stub
 
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
@@ -639,19 +674,22 @@ public class NewStatusActivity extends Activity {
 				context);
 		alertDialogBuilder.setView(foodView);
 		txtFoodSize = (EditText) foodView.findViewById(R.id.txtFoodServingSize);
+		txtFoodSize.setText(String.valueOf(serving));
 		txtFoodUnit = (TextView) foodView.findViewById(R.id.foodUnit);
-		txtFoodUnit.setText(serving);
+		txtFoodUnit.setText(food.getServingUnit());
 		alertDialogBuilder
 				.setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						// set activity cal -- get from database
-						setFoodTemplate(food, String.valueOf(cal),
-								String.valueOf(protein), String.valueOf(carbs),
-								String.valueOf(fat),
-								String.valueOf(txtFoodSize.getText()), serving,
-								notesStatus.getText().toString());
+						setFoodTemplate(food.getName(), String.valueOf(food
+								.getCalorie()), String.valueOf(food
+								.getProtein()), String.valueOf(food
+								.getCarbohydrate()), String.valueOf(food
+								.getFat()), String.valueOf(txtFoodSize
+								.getText()), food.getServingUnit(), notesStatus
+								.getText().toString());
 
 					}
 				})
@@ -1056,6 +1094,23 @@ public class NewStatusActivity extends Activity {
 			} else
 				image = null;
 
+			FoodTrackerEntry foodEntry = null;
+			if (kind.equals("new")) {
+				foodEntry = new FoodTrackerEntry(
+						timestamp,
+						notesStatus.getText().toString(),
+						image,
+						chosenFood,
+						Double.parseDouble(txtFoodQuantity.getText().toString()));
+
+				FoodTrackerService foodTrackerService = new FoodTrackerServiceImpl();
+				foodTrackerService.add(foodEntry);
+			} else if (kind.equals("old")) {
+				// add a new food to database
+				// get food entry id
+				// add to foodtrackerentry
+			}
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1110,6 +1165,10 @@ public class NewStatusActivity extends Activity {
 				activityEntry = new ActivityTrackerEntry(timestamp, notesStatus
 						.getText().toString(), image, chosenActivity,
 						Double.parseDouble(txtActivityCal.getText().toString()));
+
+				ActivityTrackerService activityTrackerService = new ActivityTrackerServiceImpl();
+				activityTrackerService.add(activityEntry);
+
 			} else if (kind.equals("old")) {
 				// add a new activity to database
 				// get activity entry id

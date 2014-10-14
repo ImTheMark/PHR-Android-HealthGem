@@ -10,12 +10,13 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.phr.R;
-import com.example.phr.mobile.models.Food;
+import com.example.phr.mobile.models.FoodTrackerEntry;
+import com.example.phr.tools.DateTimeParser;
 
-public class SingleFoodAdapter extends BaseAdapter {
+public class DailyFoodAdapter extends BaseAdapter {
 
 	private final Context mContext;
-	private final List<Food> mListOfFoodSingle;
+	private final List<FoodTrackerEntry> mListOfFoodSingle;
 
 	private static class ViewHolder {
 		TextView fat;
@@ -28,7 +29,8 @@ public class SingleFoodAdapter extends BaseAdapter {
 		TextView servingUnit;
 	}
 
-	public SingleFoodAdapter(Context aContext, List<Food> aListOfFoodSingles) {
+	public DailyFoodAdapter(Context aContext,
+			List<FoodTrackerEntry> aListOfFoodSingles) {
 		mListOfFoodSingle = aListOfFoodSingles;
 		mContext = aContext;
 	}
@@ -80,23 +82,27 @@ public class SingleFoodAdapter extends BaseAdapter {
 
 		viewHolder = (ViewHolder) convertView.getTag();
 		viewHolder.fat.setText(String.valueOf(mListOfFoodSingle.get(position)
-				.getFat()));
+				.getFood().getFat()
+				* mListOfFoodSingle.get(position).getServingCount()));
 		viewHolder.carbs.setText(String.valueOf(mListOfFoodSingle.get(position)
-				.getCarbohydrate()));
-		viewHolder.protein.setText(String.valueOf(mListOfFoodSingle.get(
-				position).getProtein()));
+				.getFood().getCarbohydrate()
+				* mListOfFoodSingle.get(position).getServingCount()));
+		viewHolder.protein.setText(String.valueOf(mListOfFoodSingle
+				.get(position).getFood().getProtein()
+				* mListOfFoodSingle.get(position).getServingCount()));
 
 		viewHolder.cal.setText(String.valueOf(mListOfFoodSingle.get(position)
-				.getCalorie()));
+				.getFood().getCalorie()
+				* mListOfFoodSingle.get(position).getServingCount()));
 
-		viewHolder.food.setText(mListOfFoodSingle.get(position).getName());
-		if ((mListOfFoodSingle.get(position).getFromFatsecret()))
-			viewHolder.time.setText("via Fatsecret");
-		else
-			viewHolder.time.setText("");
+		viewHolder.food.setText(mListOfFoodSingle.get(position).getFood()
+				.getName());
+
+		viewHolder.time.setText(String.valueOf(DateTimeParser
+				.getTime(mListOfFoodSingle.get(position).getTimestamp())));
 
 		viewHolder.servingNumber.setText(String.valueOf(mListOfFoodSingle.get(
-				position).getServingSize()));
+				position).getServingCount()));
 
 		return convertView;
 	}
