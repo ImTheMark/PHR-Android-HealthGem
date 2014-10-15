@@ -153,7 +153,7 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 							cursor.getInt(0), new FBPost(cursor.getInt(7)),
 							timestamp, cursor.getString(5), image,
 							mobileActivityDao.get(cursor.getInt(2)),
-							cursor.getDouble(4));
+							cursor.getDouble(4), cursor.getInt(3));
 					actList.add(act);
 
 				} catch (ParseException e) {
@@ -200,7 +200,7 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 							cursor.getInt(0), new FBPost(cursor.getInt(7)),
 							timestamp, cursor.getString(5), image,
 							mobileActivityDao.get(cursor.getInt(2)),
-							cursor.getDouble(4));
+							cursor.getDouble(4), cursor.getInt(3));
 					actList.add(act);
 
 				} catch (ParseException e) {
@@ -226,8 +226,43 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 	}
 
 	@Override
-	public ActivityTrackerEntry getLatest() {
-		// TODO Auto-generated method stub
+	public ActivityTrackerEntry getLatest() throws DataAccessException {
+		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_ACTIVITY
+				+ " ORDER BY " + DatabaseHandler.ACT_DATEADDED + " DESC LIMIT 1";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			try {
+				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+						.getString(1));
+
+				PHRImage image = new PHRImage();
+
+				if (cursor.getString(6) == null)
+					image = null;
+				else {
+					image.setFileName(cursor.getString(6));
+					Bitmap bitmap = ImageHandler.loadImage(image
+							.getFileName());
+				}
+
+				ActivityTrackerEntry act = new ActivityTrackerEntry(
+						cursor.getInt(0), new FBPost(cursor.getInt(7)),
+						timestamp, cursor.getString(5), image,
+						mobileActivityDao.get(cursor.getInt(2)),
+						cursor.getDouble(4), cursor.getInt(3));
+				return act;
+
+			} catch (ParseException e) {
+				throw new DataAccessException(
+						"Cannot complete operation due to parse failure", e);
+			}
+		}
+
+		db.close();
 		return null;
 	}
 }

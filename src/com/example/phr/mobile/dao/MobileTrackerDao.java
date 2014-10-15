@@ -20,6 +20,6 @@ public interface MobileTrackerDao<T> {
 
 	public List<T> getAllReversed() throws DataAccessException;
 
-	public T getLatest();
+	public T getLatest() throws DataAccessException;
 
 }
