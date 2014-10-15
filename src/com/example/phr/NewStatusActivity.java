@@ -1161,22 +1161,37 @@ public class NewStatusActivity extends Activity {
 			} else
 				image = null;
 			ActivityTrackerEntry activityEntry = null;
-			if (kind.equals("new")) {
-				activityEntry = new ActivityTrackerEntry(timestamp, notesStatus
-						.getText().toString(), image, chosenActivity,
-						Double.parseDouble(txtActivityCal.getText().toString()));
+			int sec = 0;
+			if (String.valueOf(activityUnitSpinner.getSelectedItem()).equals(
+					"hr"))
+				sec = Integer.parseInt(activityDuration.toString()) * 3600;
+			else if (String.valueOf(activityUnitSpinner.getSelectedItem())
+					.equals("min"))
+				sec = Integer.parseInt(activityDuration.toString()) * 60;
+
+			if (kind.equals("old")) {
+				activityEntry = new ActivityTrackerEntry(
+						timestamp,
+						notesStatus.getText().toString(),
+						image,
+						chosenActivity,
+						Double.parseDouble(txtActivityCal.getText().toString()),
+						sec);
 
 				ActivityTrackerService activityTrackerService = new ActivityTrackerServiceImpl();
 				activityTrackerService.add(activityEntry);
 
-			} else if (kind.equals("old")) {
-				// add a new activity to database
-				// get activity entry id
-				// add to activitytrackerentry
+			} else if (kind.equals("new")) {
+
+				activityEntry = new ActivityTrackerEntry(
+						timestamp,
+						notesStatus.getText().toString(),
+						image,
+						addActivity,
+						Double.parseDouble(txtActivityCal.getText().toString()),
+						sec);
+
 			}
-			// reference for calling
-			// txtActivityDurationUnit.setText(unit);
-			// txtActivityDuration.setText(duration);
 
 			ActivityTrackerService activityTrackerService = new ActivityTrackerServiceImpl();
 			activityTrackerService.add(activityEntry);
