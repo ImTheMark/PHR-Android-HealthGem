@@ -202,8 +202,40 @@ public class MobileCheckupTrackerDaoImpl implements MobileCheckupTrackerDao {
 	}
 
 	@Override
-	public CheckUp getLatest() {
-		// TODO Auto-generated method stub
+	public CheckUp getLatest() throws DataAccessException {
+		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_CHECKUP
+				+ " ORDER BY " + DatabaseHandler.CU_DATEADDED + " DESC LIMIT 1";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			Timestamp timestamp;
+			try {
+				timestamp = DateTimeParser
+						.getTimestamp(cursor.getString(1));
+			} catch (ParseException e) {
+				throw new DataAccessException(
+						"Cannot complete operation due to parse failure", e);
+			}
+			PHRImage image = new PHRImage();
+
+			if (cursor.getString(6) == null)
+				image = null;
+			else {
+				image.setFileName(cursor.getString(6));
+				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+			}
+
+			CheckUp cu = new CheckUp(cursor.getInt(0), new FBPost(
+					cursor.getInt(7)), timestamp, cursor.getString(5),
+					image, cursor.getString(2), cursor.getString(3),
+					cursor.getString(4));
+			return cu;
+		}
+
+		db.close();
 		return null;
 	}
 }

@@ -260,8 +260,40 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 	}
 
 	@Override
-	public Weight getLatest() {
-		// TODO Auto-generated method stub
+	public Weight getLatest() throws DataAccessException {
+		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_WEIGHT
+				+ " ORDER BY " + DatabaseHandler.WEIGHT_DATEADDED + " DESC LIMIT 1";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			Timestamp timestamp;
+			try {
+				timestamp = DateTimeParser
+						.getTimestamp(cursor.getString(1));
+			} catch (ParseException e) {
+				throw new DataAccessException(
+						"Cannot complete operation due to parse failure", e);
+			}
+			PHRImage image = new PHRImage();
+
+			if (cursor.getString(4) == null)
+				image = null;
+			else {
+				image.setFileName(cursor.getString(4));
+				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+				String encoded = ImageHandler.encodeImageToBase64(bitmap);
+				image.setEncodedImage(encoded);
+			}
+
+			Weight weight = new Weight(cursor.getInt(0), new FBPost(
+					cursor.getInt(5)), timestamp, cursor.getString(3),
+					image, cursor.getDouble(2));
+			return weight;
+		}
+		db.close();
 		return null;
 	}
 }

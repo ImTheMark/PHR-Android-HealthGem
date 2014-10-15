@@ -195,8 +195,39 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 	}
 
 	@Override
-	public Note getLatest() {
-		// TODO Auto-generated method stub
+	public Note getLatest() throws DataAccessException {
+		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_NOTES
+				+ " ORDER BY " + DatabaseHandler.NOTES_DATEADDED + " DESC LIMIT 1";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			Timestamp timestamp;
+			try {
+				timestamp = DateTimeParser
+						.getTimestamp(cursor.getString(1));
+			} catch (ParseException e) {
+				throw new DataAccessException(
+						"Cannot complete operation due to parse failure", e);
+			}
+			PHRImage image = new PHRImage();
+
+			if (cursor.getString(4) == null)
+				image = null;
+			else {
+				image.setFileName(cursor.getString(4));
+				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+			}
+
+			Note note = new Note(cursor.getInt(0), new FBPost(
+					cursor.getInt(5)), timestamp, cursor.getString(3),
+					image, cursor.getString(2));
+			return note;
+		}
+
+		db.close();
 		return null;
 	}
 }

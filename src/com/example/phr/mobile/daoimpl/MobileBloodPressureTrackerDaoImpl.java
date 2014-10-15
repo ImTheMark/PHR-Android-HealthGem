@@ -195,8 +195,39 @@ public class MobileBloodPressureTrackerDaoImpl implements
 	}
 
 	@Override
-	public BloodPressure getLatest() {
-		// TODO Auto-generated method stub
+	public BloodPressure getLatest() throws DataAccessException {
+		String selectQuery = "SELECT  * FROM "
+				+ DatabaseHandler.TABLE_BLOODPRESSURE + " ORDER BY "
+				+ DatabaseHandler.BP_DATEADDED + " DESC LIMIT 1";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			Timestamp timestamp;
+			try {
+				timestamp = DateTimeParser
+						.getTimestamp(cursor.getString(1));
+			} catch (ParseException e) {
+				throw new DataAccessException(
+						"An error has occured while trying to access data",
+						e);
+			}
+			PHRImage image = new PHRImage();
+			if (cursor.getString(5) == null)
+				image = null;
+			else {
+				image.setFileName(cursor.getString(5));
+				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+			}
+			BloodPressure bp = new BloodPressure(cursor.getInt(0),
+					timestamp, cursor.getString(4), image,
+					cursor.getInt(2), cursor.getInt(3));
+			return bp;
+		}
+
+		db.close();
 		return null;
 	}
 }

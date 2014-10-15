@@ -216,8 +216,41 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 	}
 
 	@Override
-	public FoodTrackerEntry getLatest() {
-		// TODO Auto-generated method stub
+	public FoodTrackerEntry getLatest() throws DataAccessException {
+		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_FOOD
+				+ " ORDER BY " + DatabaseHandler.FOOD_DATEADDED + " DESC LIMIT 1";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			try {
+				Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+						.getString(1));
+				PHRImage image = new PHRImage();
+
+				if (cursor.getString(5) == null)
+					image = null;
+				else {
+					image.setFileName(cursor.getString(5));
+					Bitmap bitmap = ImageHandler.loadImage(image
+							.getFileName());
+				}
+
+				FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
+						cursor.getInt(0), new FBPost(cursor.getInt(6)),
+						timestamp, cursor.getString(4), image,
+						mobileFoodDao.get(cursor.getInt(2)),
+						cursor.getDouble(3));
+				return foodTrackerEntry;
+			} catch (ParseException e) {
+				throw new DataAccessException(
+						"Cannot complete operation due to parse failure", e);
+			}
+		}
+
+		db.close();
 		return null;
 	}
 

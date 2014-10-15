@@ -207,8 +207,41 @@ public class MobileBloodSugarTrackerDaoImpl implements
 	}
 
 	@Override
-	public BloodSugar getLatest() {
-		// TODO Auto-generated method stub
+	public BloodSugar getLatest() throws DataAccessException {
+		String selectQuery = "SELECT  * FROM "
+				+ DatabaseHandler.TABLE_BLOODSUGAR + " ORDER BY "
+				+ DatabaseHandler.BS_DATEADDED + " DESC LIMIT 1";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			Timestamp timestamp;
+			try {
+				timestamp = DateTimeParser
+						.getTimestamp(cursor.getString(1));
+			} catch (ParseException e) {
+				throw new DataAccessException(
+						"Cannot complete operation due to parse failure", e);
+			}
+
+			PHRImage image = new PHRImage();
+
+			if (cursor.getString(5) == null)
+				image = null;
+			else {
+				image.setFileName(cursor.getString(5));
+				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+			}
+
+			BloodSugar bs = new BloodSugar(cursor.getInt(0), new FBPost(
+					cursor.getInt(6)), timestamp, cursor.getString(4),
+					image, cursor.getDouble(2), cursor.getString(3));
+			return bs;
+		}
+
+		db.close();
 		return null;
 	}
 
