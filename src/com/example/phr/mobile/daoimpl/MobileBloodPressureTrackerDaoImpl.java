@@ -130,8 +130,6 @@ public class MobileBloodPressureTrackerDaoImpl implements
 				else {
 					image.setFileName(cursor.getString(5));
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
-					String encoded = ImageHandler.encodeImageToBase64(bitmap);
-					image.setEncodedImage(encoded);
 				}
 				BloodPressure bp = new BloodPressure(cursor.getInt(0),
 						timestamp, cursor.getString(4), image,
@@ -183,8 +181,6 @@ public class MobileBloodPressureTrackerDaoImpl implements
 				else {
 					image.setFileName(cursor.getString(5));
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
-					String encoded = ImageHandler.encodeImageToBase64(bitmap);
-					image.setEncodedImage(encoded);
 				}
 				BloodPressure bp = new BloodPressure(cursor.getInt(0),
 						timestamp, cursor.getString(4), image,

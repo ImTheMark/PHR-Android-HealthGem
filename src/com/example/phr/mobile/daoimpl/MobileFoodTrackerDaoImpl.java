@@ -138,9 +138,6 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 						image.setFileName(cursor.getString(5));
 						Bitmap bitmap = ImageHandler.loadImage(image
 								.getFileName());
-						String encoded = ImageHandler
-								.encodeImageToBase64(bitmap);
-						image.setEncodedImage(encoded);
 					}
 
 					FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
@@ -186,9 +183,6 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 						image.setFileName(cursor.getString(5));
 						Bitmap bitmap = ImageHandler.loadImage(image
 								.getFileName());
-						String encoded = ImageHandler
-								.encodeImageToBase64(bitmap);
-						image.setEncodedImage(encoded);
 					}
 
 					FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(

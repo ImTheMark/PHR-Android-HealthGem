@@ -134,8 +134,6 @@ public class MobileCheckupTrackerDaoImpl implements MobileCheckupTrackerDao {
 				else {
 					image.setFileName(cursor.getString(6));
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
-					String encoded = ImageHandler.encodeImageToBase64(bitmap);
-					image.setEncodedImage(encoded);
 				}
 
 				CheckUp cu = new CheckUp(cursor.getInt(0), new FBPost(
@@ -188,8 +186,6 @@ public class MobileCheckupTrackerDaoImpl implements MobileCheckupTrackerDao {
 				else {
 					image.setFileName(cursor.getString(6));
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
-					String encoded = ImageHandler.encodeImageToBase64(bitmap);
-					image.setEncodedImage(encoded);
 				}
 
 				CheckUp cu = new CheckUp(cursor.getInt(0), new FBPost(

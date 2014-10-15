@@ -147,9 +147,6 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 						image.setFileName(cursor.getString(6));
 						Bitmap bitmap = ImageHandler.loadImage(image
 								.getFileName());
-						String encoded = ImageHandler
-								.encodeImageToBase64(bitmap);
-						image.setEncodedImage(encoded);
 					}
 
 					ActivityTrackerEntry act = new ActivityTrackerEntry(
@@ -197,9 +194,6 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 						image.setFileName(cursor.getString(6));
 						Bitmap bitmap = ImageHandler.loadImage(image
 								.getFileName());
-						String encoded = ImageHandler
-								.encodeImageToBase64(bitmap);
-						image.setEncodedImage(encoded);
 					}
 
 					ActivityTrackerEntry act = new ActivityTrackerEntry(

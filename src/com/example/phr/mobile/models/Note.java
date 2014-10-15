@@ -1,8 +1,9 @@
 package com.example.phr.mobile.models;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Note extends TrackerEntry {
+public class Note extends TrackerEntry implements Serializable {
 
 	String note;
 
@@ -24,8 +25,7 @@ public class Note extends TrackerEntry {
 		this.note = note;
 	}
 
-	public Note(Timestamp timestamp, String status, PHRImage image,
-			 String note) {
+	public Note(Timestamp timestamp, String status, PHRImage image, String note) {
 		super(timestamp, status, image);
 		this.note = note;
 	}

@@ -1,8 +1,9 @@
 package com.example.phr.mobile.models;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class CheckUp extends TrackerEntry {
+public class CheckUp extends TrackerEntry implements Serializable {
 
 	String purpose;
 	String doctorsName;
@@ -17,9 +18,8 @@ public class CheckUp extends TrackerEntry {
 		this.notes = notes;
 	}
 
-	public CheckUp(Integer entryID, Timestamp timestamp,
-			String status, PHRImage image, String purpose, String doctorsName,
-			String notes) {
+	public CheckUp(Integer entryID, Timestamp timestamp, String status,
+			PHRImage image, String purpose, String doctorsName, String notes) {
 		super(entryID, timestamp, status, image);
 		this.purpose = purpose;
 		this.doctorsName = doctorsName;
@@ -27,8 +27,7 @@ public class CheckUp extends TrackerEntry {
 	}
 
 	public CheckUp(FBPost fbPost, Timestamp timestamp, String status,
-			PHRImage image, String purpose, String doctorsName,
-			String notes) {
+			PHRImage image, String purpose, String doctorsName, String notes) {
 		super(fbPost, timestamp, status, image);
 		this.purpose = purpose;
 		this.doctorsName = doctorsName;

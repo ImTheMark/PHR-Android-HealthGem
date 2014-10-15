@@ -129,8 +129,6 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 				else {
 					image.setFileName(cursor.getString(4));
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
-					String encoded = ImageHandler.encodeImageToBase64(bitmap);
-					image.setEncodedImage(encoded);
 				}
 				Note note = new Note(cursor.getInt(0), new FBPost(
 						cursor.getInt(5)), timestamp, cursor.getString(3),
@@ -182,8 +180,6 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 				else {
 					image.setFileName(cursor.getString(4));
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
-					String encoded = ImageHandler.encodeImageToBase64(bitmap);
-					image.setEncodedImage(encoded);
 				}
 
 				Note note = new Note(cursor.getInt(0), new FBPost(

@@ -17,6 +17,7 @@ import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.Note;
 import com.example.phr.serviceimpl.NoteTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
+import com.example.phr.tools.ImageHandler;
 
 public class NoteReadModeActivity extends Activity {
 
@@ -42,20 +43,19 @@ public class NoteReadModeActivity extends Activity {
 		time = (TextView) findViewById(R.id.textViewNoteReadTime);
 		note = (TextView) findViewById(R.id.txtFullNotes);
 		image = (ImageView) findViewById(R.id.imageViewNoteReadHolder);
-
+		System.out.println("PASOK");
 		note.setText(chosenItem.getNote());
 		date.setText(String.valueOf(DateTimeParser.getDate(chosenItem
 				.getTimestamp())));
 		time.setText(String.valueOf(DateTimeParser.getTime(chosenItem
 				.getTimestamp())));
 
-		/*
-		 * if (chosenItem.getImage() != null) {
-		 * 
-		 * Log.e("img", chosenItem.getImage().getFileName());
-		 * image.setImageBitmap(ImageHandler.loadImage(chosenItem.getImage()
-		 * .getFileName())); }
-		 */
+		if (chosenItem.getImage() != null) {
+
+			Log.e("img", chosenItem.getImage().getFileName());
+			image.setImageBitmap(ImageHandler.loadImage(chosenItem.getImage()
+					.getFileName()));
+		}
 
 	}
 
