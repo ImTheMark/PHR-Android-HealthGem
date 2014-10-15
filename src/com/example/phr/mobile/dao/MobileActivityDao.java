@@ -6,7 +6,7 @@ import com.example.phr.mobile.models.ActivitySingle;
 
 public interface MobileActivityDao {
 
-	public int addReturnsEntryId(ActivitySingle activity);
+	public void addReturnsEntryId(ActivitySingle activity);
 
 	public List<ActivitySingle> getAll();
 
