@@ -2,6 +2,7 @@ package com.example.phr.serviceimpl;
 
 import java.util.List;
 
+import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.dao.MobileActivityTrackerDao;
@@ -60,7 +61,12 @@ public class ActivityTrackerServiceImpl implements ActivityTrackerService {
 	}
 
 	@Override
-	public ActivityTrackerEntry getLatest() {
-		return mobileActivityTrackerDao.getLatest();
+	public ActivityTrackerEntry getLatest() throws ServiceException{
+		try {
+			return mobileActivityTrackerDao.getLatest();
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest actTracker from local db", e);
+		}
 	}
 }

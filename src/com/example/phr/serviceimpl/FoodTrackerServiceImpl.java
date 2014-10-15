@@ -2,6 +2,7 @@ package com.example.phr.serviceimpl;
 
 import java.util.List;
 
+import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
@@ -48,7 +49,12 @@ public class FoodTrackerServiceImpl implements FoodTrackerService {
 	}
 
 	@Override
-	public FoodTrackerEntry getLatest() {
-		return mobileFoodTrackerDao.getLatest();
+	public FoodTrackerEntry getLatest() throws ServiceException{
+		try {
+			return mobileFoodTrackerDao.getLatest();
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest foodTracker from local db", e);
+		}
 	}
 }

@@ -92,8 +92,13 @@ public class CheckUpTrackerServiceImpl implements CheckUpTrackerService {
 	}
 
 	@Override
-	public CheckUp getLatest() {
-		return mobileCheckUpTrackerDao.getLatest();
+	public CheckUp getLatest() throws ServiceException{
+		try {
+			return mobileCheckUpTrackerDao.getLatest();
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest checkup from local db", e);
+		}
 	}
 
 }

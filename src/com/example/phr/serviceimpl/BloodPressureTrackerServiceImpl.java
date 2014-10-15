@@ -95,8 +95,13 @@ public class BloodPressureTrackerServiceImpl implements
 	}
 
 	@Override
-	public BloodPressure getLatest() {
-		return mobileBloodPressureTrackerDao.getLatest();
+	public BloodPressure getLatest() throws ServiceException{
+		try {
+			return mobileBloodPressureTrackerDao.getLatest();
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest bp from local db", e);
+		}
 	}
 
 }

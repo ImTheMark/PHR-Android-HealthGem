@@ -19,7 +19,7 @@ public interface TrackerService<T> {
 
 	public List<T> getAll() throws ServiceException;
 
-	public T get(int entryID);
+	public T get(int entryID) throws ServiceException;
 
-	public T getLatest();
+	public T getLatest() throws ServiceException;
 }

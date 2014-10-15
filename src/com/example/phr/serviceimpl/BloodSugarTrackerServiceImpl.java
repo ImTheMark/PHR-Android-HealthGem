@@ -89,8 +89,13 @@ public class BloodSugarTrackerServiceImpl implements BloodSugarTrackerService {
 	}
 
 	@Override
-	public BloodSugar getLatest() {
-		return mobileBloodSugarTrackerDao.getLatest();
+	public BloodSugar getLatest() throws ServiceException{
+		try {
+			return mobileBloodSugarTrackerDao.getLatest();
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest bloodsugar from local db", e);
+		}
 	}
 
 }

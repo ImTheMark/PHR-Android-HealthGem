@@ -88,8 +88,13 @@ public class WeightTrackerServiceImpl implements WeightTrackerService {
 	}
 
 	@Override
-	public Weight getLatest() {
-		return mobileWeightTrackerDao.getLatest();
+	public Weight getLatest()throws ServiceException{
+		try {
+			return mobileWeightTrackerDao.getLatest();
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest weight from local db", e);
+		}
 	}
 
 }

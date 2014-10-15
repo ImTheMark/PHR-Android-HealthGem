@@ -88,8 +88,13 @@ public class NoteTrackerServiceImpl implements NoteTrackerService {
 	}
 
 	@Override
-	public Note getLatest() {
-		return mobileNoteTrackerDao.getLatest();
+	public Note getLatest() throws ServiceException{
+		try {
+			return mobileNoteTrackerDao.getLatest();
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest note from local db", e);
+		}
 	}
 
 }
