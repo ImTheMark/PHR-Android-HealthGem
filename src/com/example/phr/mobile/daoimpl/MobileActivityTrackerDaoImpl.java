@@ -49,7 +49,7 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 		// values.put(DatabaseHandler.ACT_DURATION,
 		// activity.getCalorisBurnedPerHour());
 		values.put(DatabaseHandler.ACT_CALORIEBURNED,
-				activity.getCalorisBurnedPerHour());
+				activity.getCaloriesBurnedPerHour());
 		values.put(DatabaseHandler.ACT_STATUS, activity.getStatus());
 
 		try {
@@ -95,7 +95,7 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 		// values.put(DatabaseHandler.ACT_DURATION,
 		// activity.getCalorisBurnedPerHour());
 		values.put(DatabaseHandler.ACT_CALORIEBURNED,
-				activity.getCalorisBurnedPerHour());
+				activity.getCaloriesBurnedPerHour());
 		values.put(DatabaseHandler.ACT_STATUS, activity.getStatus());
 
 		try {
