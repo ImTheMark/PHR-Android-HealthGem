@@ -17,6 +17,7 @@ import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.CheckUp;
 import com.example.phr.serviceimpl.CheckUpTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
+import com.example.phr.tools.ImageHandler;
 
 public class CheckupTrackerReadModeActivity extends Activity {
 
@@ -55,13 +56,12 @@ public class CheckupTrackerReadModeActivity extends Activity {
 		time.setText(String.valueOf(DateTimeParser.getTime(chosenItem
 				.getTimestamp())));
 
-		/*
-		 * if (chosenItem.getImage() != null) { //
-		 * image.setImageBitmap(DecodeImage.decodeFile(chosenItem.getImage() //
-		 * .getFileName())); Log.e("img", chosenItem.getImage().getFileName());
-		 * image.setImageBitmap(ImageHandler.loadImage(chosenItem.getImage()
-		 * .getFileName())); }
-		 */
+		if (chosenItem.getImage() != null) {
+
+			Log.e("img", chosenItem.getImage().getFileName());
+			image.setImageBitmap(ImageHandler.loadImage(chosenItem.getImage()
+					.getFileName()));
+		}
 
 	}
 

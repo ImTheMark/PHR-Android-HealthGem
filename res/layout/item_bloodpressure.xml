@@ -30,8 +30,8 @@
         android:layout_height="match_parent"
         android:layout_weight="3.5"
         android:orientation="vertical"
-        android:layout_marginLeft="5dp" 
-        android:layout_marginTop="5dp">
+        android:padding="2dp" 
+     >
 
        <LinearLayout
            		android:id="@+id/dateholder"

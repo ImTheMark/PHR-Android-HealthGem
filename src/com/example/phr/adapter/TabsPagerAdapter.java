@@ -1,13 +1,13 @@
 package com.example.phr.adapter;
 
-import com.example.phr.AboutMeFragment;
-import com.example.phr.JournalFragment;
-import com.example.phr.HealthTrackerFragment;
-import com.example.phr.SummaryReportFragment;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.example.phr.AboutMeFragment;
+import com.example.phr.HealthTrackerFragment;
+import com.example.phr.StatusFeedFragment;
+import com.example.phr.SummaryReportFragment;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
@@ -24,7 +24,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 			return new SummaryReportFragment();
 		case 1:
 			// Games fragment activity
-			return new JournalFragment();
+			return new StatusFeedFragment();
 		case 2:
 			// Movies fragment activity
 			return new HealthTrackerFragment();

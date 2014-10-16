@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/bloodsugarQuantityDivider"
             android:padding="15dp"
+            android:gravity="center"
             android:background="@drawable/underline_background">
 
             <com.example.phr.NumberPicker
@@ -40,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp" 
-                android:gravity="center">
+                >
             </com.example.phr.NumberPicker>
 
             

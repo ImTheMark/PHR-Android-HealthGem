@@ -14,16 +14,25 @@
     <application
         android:name="com.example.phr.application.HealthGem"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/heart_gem"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" 
         android:allowClearUserData="true"
         android:debuggable="true"
         android:vmSafeMode="true"       
         android:hardwareAccelerated="true">
+        
+        
+		<meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
+        
         <activity
             android:name="com.example.phr.LoginActivity"
             android:label="@string/app_name" >
+        </activity>
+        
+        <activity android:name="com.example.phr.RegisterFBLoginActivity" 
+            android:configChanges="orientation|keyboardHidden"
+  	 		android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,8 +40,14 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="com.example.phr.RegisterActivity" />
-        <activity android:name="com.example.phr.MainActivity" />
+        <activity android:name="com.facebook.LoginActivity"/>
+        
+        <activity android:name="com.example.phr.RegisterActivity" 
+            android:configChanges="orientation|keyboardHidden"
+  	 		android:screenOrientation="portrait"/>
+        <activity android:name="com.example.phr.MainActivity" 
+            android:configChanges="orientation|keyboardHidden"
+  	 		android:screenOrientation="portrait"/>
         <activity android:name="com.example.phr.ActivitiesTrackerActivity" />
         <activity android:name="com.example.phr.AddActionActivity" />
         <activity android:name="com.example.phr.BloodPressureTrackerActivity" />
@@ -44,7 +59,12 @@
         <activity android:name="com.example.phr.CheckupTrackerReadModeActivity" />
         <activity android:name="com.example.phr.FoodTrackerDailyActivity" />
         <activity android:name="com.example.phr.GroupedFoodTrackerActivity" />
-        <activity android:name="com.example.phr.NewStatusActivity" />
+        <activity 
+            android:name="com.example.phr.NewStatusActivity" 
+            android:configChanges="orientation|keyboardHidden"
+  	 		android:screenOrientation="portrait"
+            />
+        
         <activity android:name="com.example.phr.NoteReadModeActivity" />
         <activity android:name="com.example.phr.NoteTrackerActivity" />
         <activity android:name="com.example.phr.RetrieveActivity" />

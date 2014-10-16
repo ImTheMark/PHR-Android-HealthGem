@@ -2,23 +2,20 @@ package com.example.phr.adapter;
 
 import java.util.List;
 
-import com.example.phr.R;
-import com.example.phr.StatusFeedActivity;
-import com.example.phr.model.DailyJournal;
-
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.phr.R;
+import com.example.phr.model.DailyJournal;
+
 public class JournalAdapter extends BaseAdapter {
 
-	private Context mContext;
-	private List<DailyJournal> mListOfJournals;
+	private final Context mContext;
+	private final List<DailyJournal> mListOfJournals;
 	private int positionSelected;
 
 	private static class ViewHolder {
@@ -55,8 +52,8 @@ public class JournalAdapter extends BaseAdapter {
 
 		if (convertView == null) {
 			LayoutInflater inflater = LayoutInflater.from(mContext);
-			convertView = inflater.inflate(R.layout.item_journal_by_date, parent,
-					false);
+			convertView = inflater.inflate(R.layout.item_journal_by_date,
+					parent, false);
 
 			viewHolder = new ViewHolder();
 			viewHolder.weight = (TextView) convertView
@@ -66,9 +63,10 @@ public class JournalAdapter extends BaseAdapter {
 			viewHolder.activities = (TextView) convertView
 					.findViewById(R.id.txtActivities);
 			viewHolder.day = (TextView) convertView.findViewById(R.id.txtDay);
-			viewHolder.month = (TextView) convertView.findViewById(R.id.txtMonth);
-		//	viewHolder.img = (ImageView) convertView
-			//		.findViewById(R.id.imgDailyGemLevel);
+			viewHolder.month = (TextView) convertView
+					.findViewById(R.id.txtMonth);
+			// viewHolder.img = (ImageView) convertView
+			// .findViewById(R.id.imgDailyGemLevel);
 
 			convertView.setTag(viewHolder);
 		}
@@ -84,18 +82,17 @@ public class JournalAdapter extends BaseAdapter {
 				.toString());
 		viewHolder.month.setText(mListOfJournals.get(position).getMonth()
 				.toString());
-		//viewHolder.img.setImageDrawable(mListOfJournals.get(position)
-			//	.getImgUrl());
+		// viewHolder.img.setImageDrawable(mListOfJournals.get(position)
+		// .getImgUrl());
 
-		convertView.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(mContext,
-						StatusFeedActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);;
-				v.getContext().startActivity(intent);
-			}
-		});
+		/*
+		 * convertView.setOnClickListener(new OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) { Intent intent = new
+		 * Intent(mContext,
+		 * StatusFeedActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);;
+		 * v.getContext().startActivity(intent); } });
+		 */
 		return convertView;
 	}
 

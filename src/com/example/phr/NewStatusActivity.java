@@ -153,6 +153,7 @@ public class NewStatusActivity extends Activity {
 				.permitAll().build();
 
 		StrictMode.setThreadPolicy(policy);
+		Log.e("in", "ew status");
 
 		/*
 		 * mBtnTagFriend = (ImageButton)findViewById(R.id.btnTagFriend);
@@ -437,45 +438,68 @@ public class NewStatusActivity extends Activity {
 			}
 		} else if (extras != null && in.hasExtra("edit")) {
 			String editTracker = extras.getString("edit");
+			Bitmap temp = null;
+			mode = "edit";
+
 			if (editTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
 				editBs = (BloodSugar) in.getExtras().getSerializable("object");
-				mode = "edit";
 				currentTracker = TrackerInputType.BLOOD_SUGAR;
+				if (editBs.getImage() != null)
+					temp = ImageHandler.loadImage(editBs.getImage()
+							.getFileName());
 				Log.e("editbsobject", String.valueOf(editBs.getEntryID()));
 				setBloodSugarTemplate(String.valueOf(editBs.getBloodSugar()),
-						editBs.getType(), editBs.getStatus());
+						editBs.getType(), editBs.getStatus(), temp);
 
 			} else if (editTracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
 				editBp = (BloodPressure) in.getExtras().getSerializable(
 						"object");
-				mode = "edit";
 				currentTracker = TrackerInputType.BLOOD_PRESSURE;
 				Log.e("editbsobject", String.valueOf(editBp.getEntryID()));
+				if (editBp.getImage() != null)
+					temp = ImageHandler.loadImage(editBp.getImage()
+							.getFileName());
+
 				setBloodPressureTemplate(String.valueOf(editBp.getSystolic()),
 						String.valueOf(editBp.getDiastolic()),
-						editBp.getStatus());
+						editBp.getStatus(), temp);
+
 			} else if (editTracker.equals(TrackerInputType.CHECKUP)) {
 				editCheckup = (CheckUp) in.getExtras()
 						.getSerializable("object");
-				mode = "edit";
 				currentTracker = TrackerInputType.CHECKUP;
 				Log.e("editbsobject", String.valueOf(editCheckup.getEntryID()));
+				if (editCheckup.getImage() != null)
+					temp = ImageHandler.loadImage(editCheckup.getImage()
+							.getFileName());
+
 				setCheckupTemplate(editCheckup.getDoctorsName(),
-						editCheckup.getPurpose(), editCheckup.getNotes());
+						editCheckup.getPurpose(), editCheckup.getNotes(), temp);
+
 			} else if (editTracker.equals(TrackerInputType.NOTES)) {
 				editNote = (Note) in.getExtras().getSerializable("object");
-				mode = "edit";
 				currentTracker = TrackerInputType.NOTES;
 				Log.e("editbsobject", String.valueOf(editNote.getEntryID()));
-				setNoteTemplate(editNote.getNote());
+				if (editNote.getImage() != null)
+					temp = ImageHandler.loadImage(editNote.getImage()
+							.getFileName());
+
+				setNoteTemplate(editNote.getNote(), temp);
+
 			} else if (editTracker.equals(TrackerInputType.WEIGHT)) {
 				editWeight = (Weight) in.getExtras().getSerializable("object");
-				mode = "edit";
 				currentTracker = TrackerInputType.WEIGHT;
+				if (editWeight.getImage() != null)
+					temp = ImageHandler.loadImage(editWeight.getImage()
+							.getFileName());
 				Log.e("editbsobject", String.valueOf(editWeight.getEntryID()));
 				setWeightTemplate(
 						String.valueOf(editWeight.getWeightInPounds()), "lb",
-						editWeight.getStatus());
+						editWeight.getStatus(), temp);
+			} else if (editTracker.equals(TrackerInputType.FOOD)) {
+
+			} else if (editTracker.equals(TrackerInputType.ACTIVITY)) {
+
 			}
 		}
 	}
@@ -533,11 +557,18 @@ public class NewStatusActivity extends Activity {
 		}
 	}
 
-	private void setCheckupTemplate(String doctor, String purpose, String status) {
+	private void setCheckupTemplate(String doctor, String purpose,
+			String status, Bitmap image) {
 		setAllTemplateGone();
 		checkupTemplate.setVisibility(View.VISIBLE);
 		txtDoctor.setText(doctor);
 		txtPurpose.setText(purpose);
+		if (image != null) {
+			Log.e("in", "set check up template");
+			imageTemplate.setVisibility(View.VISIBLE);
+			photo = image;
+			statusImage.setImageBitmap(image);
+		}
 		if (mode.equals("add")) {
 			notesStatus.setHint("how you feel? ");
 			setAddTemplate();
@@ -547,11 +578,18 @@ public class NewStatusActivity extends Activity {
 		}
 	}
 
-	private void setWeightTemplate(String weight, String unit, String status) {
+	private void setWeightTemplate(String weight, String unit, String status,
+			Bitmap image) {
 		setAllTemplateGone();
 		weightTemplate.setVisibility(View.VISIBLE);
 		txtWeight.setText(weight);
 		txtWeightUnit.setText(unit);
+		if (image != null) {
+			Log.e("in", "set check up template");
+			imageTemplate.setVisibility(View.VISIBLE);
+			photo = image;
+			statusImage.setImageBitmap(image);
+		}
 		if (mode.equals("add")) {
 			notesStatus.setHint("how you feel? ");
 			setAddTemplate();
@@ -562,11 +600,17 @@ public class NewStatusActivity extends Activity {
 	}
 
 	private void setBloodSugarTemplate(String bloodsugar,
-			String bloodsugartype, String status) {
+			String bloodsugartype, String status, Bitmap image) {
 		setAllTemplateGone();
 		bsTemplate.setVisibility(View.VISIBLE);
 		txtSugar.setText(bloodsugar);
 		txtSugarType.setText(bloodsugartype);
+		if (image != null) {
+			Log.e("in", "set check up template");
+			imageTemplate.setVisibility(View.VISIBLE);
+			photo = image;
+			statusImage.setImageBitmap(image);
+		}
 		if (mode.equals("add")) {
 			notesStatus.setHint("how you feel? ");
 			setAddTemplate();
@@ -577,11 +621,17 @@ public class NewStatusActivity extends Activity {
 	}
 
 	private void setBloodPressureTemplate(String systolic, String diastolic,
-			String status) {
+			String status, Bitmap image) {
 		setAllTemplateGone();
 		bpTemplate.setVisibility(View.VISIBLE);
 		txtSystolic.setText(systolic);
 		txtDiastolic.setText(diastolic);
+		if (image != null) {
+			Log.e("in", "set check up template");
+			imageTemplate.setVisibility(View.VISIBLE);
+			photo = image;
+			statusImage.setImageBitmap(image);
+		}
 		if (mode.equals("add")) {
 			notesStatus.setHint("how you feel? ");
 			setAddTemplate();
@@ -591,8 +641,14 @@ public class NewStatusActivity extends Activity {
 		}
 	}
 
-	private void setNoteTemplate(String note) {
+	private void setNoteTemplate(String note, Bitmap image) {
 		setAllTemplateGone();
+		if (image != null) {
+			Log.e("in", "set check up template");
+			imageTemplate.setVisibility(View.VISIBLE);
+			photo = image;
+			statusImage.setImageBitmap(image);
+		}
 		if (mode.equals("add")) {
 			notesStatus.setHint("how you feel? ");
 			setAddTemplate();
@@ -644,12 +700,6 @@ public class NewStatusActivity extends Activity {
 			chosenFood = (Food) data.getExtras().getSerializable("food chosen");
 			currentTracker = TrackerInputType.FOOD;
 			callFoodServingInput(chosenFood, 1.0);
-		} else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-			photo = (Bitmap) data.getExtras().get("data");
-			// photo = scaleBitmap(photo, 500, 500);
-			statusImage.setImageBitmap(photo);
-			setImage = true;
-			imageTemplate.setVisibility(View.VISIBLE);
 
 		} else if (requestCode == CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE) {
 			// Get our saved file into a bitmap object:
@@ -790,7 +840,7 @@ public class NewStatusActivity extends Activity {
 
 						setCheckupTemplate(doctor.getText().toString(), purpose
 								.getText().toString(), notesStatus.getText()
-								.toString());
+								.toString(), photo);
 					}
 				})
 				.setNegativeButton("Cancel",
@@ -816,7 +866,7 @@ public class NewStatusActivity extends Activity {
 
 	private void callNotesInput() {
 		// TODO Auto-generated method stub
-		setNoteTemplate(notesStatus.getText().toString());
+		setNoteTemplate(notesStatus.getText().toString(), photo);
 	}
 
 	private void callWeightInput(String txtWeight, String txtUnit) {
@@ -848,7 +898,7 @@ public class NewStatusActivity extends Activity {
 
 						setWeightTemplate(weight.getText().toString(), String
 								.valueOf(weightUnitSpinner.getSelectedItem()),
-								notesStatus.getText().toString());
+								notesStatus.getText().toString(), photo);
 
 					}
 				})
@@ -896,7 +946,7 @@ public class NewStatusActivity extends Activity {
 						setBloodSugarTemplate(Integer.toString(sugarPicker
 								.getCurrent()), String.valueOf(sugarTypeSpinner
 								.getSelectedItem()), notesStatus.getText()
-								.toString());
+								.toString(), photo);
 					}
 				})
 				.setNegativeButton("Cancel",
@@ -940,7 +990,7 @@ public class NewStatusActivity extends Activity {
 						setBloodPressureTemplate(
 								Integer.toString(systolicPicker.getCurrent()),
 								Integer.toString(diastolicPicker.getCurrent()),
-								notesStatus.getText().toString());
+								notesStatus.getText().toString(), photo);
 
 					}
 				})
@@ -1100,15 +1150,21 @@ public class NewStatusActivity extends Activity {
 						timestamp,
 						notesStatus.getText().toString(),
 						image,
-						chosenFood,
+						addFood,
 						Double.parseDouble(txtFoodQuantity.getText().toString()));
 
 				FoodTrackerService foodTrackerService = new FoodTrackerServiceImpl();
 				foodTrackerService.add(foodEntry);
 			} else if (kind.equals("old")) {
-				// add a new food to database
-				// get food entry id
-				// add to foodtrackerentry
+				foodEntry = new FoodTrackerEntry(
+						timestamp,
+						notesStatus.getText().toString(),
+						image,
+						chosenFood,
+						Double.parseDouble(txtFoodQuantity.getText().toString()));
+
+				FoodTrackerService foodTrackerService = new FoodTrackerServiceImpl();
+				foodTrackerService.add(foodEntry);
 			}
 
 		} catch (ParseException e) {
@@ -1162,11 +1218,9 @@ public class NewStatusActivity extends Activity {
 				image = null;
 			ActivityTrackerEntry activityEntry = null;
 			int sec = 0;
-			if (String.valueOf(activityUnitSpinner.getSelectedItem()).equals(
-					"hr"))
-				sec = Integer.parseInt(activityDuration.toString()) * 3600;
-			else if (String.valueOf(activityUnitSpinner.getSelectedItem())
-					.equals("min"))
+			if (txtActivityDurationUnit.toString().equals("hr"))
+				sec = Integer.parseInt(txtActivityDuration.toString()) * 3600;
+			else if (txtActivityDurationUnit.toString().equals("min"))
 				sec = Integer.parseInt(activityDuration.toString()) * 60;
 
 			if (kind.equals("old")) {
@@ -1433,8 +1487,14 @@ public class NewStatusActivity extends Activity {
 
 		try {
 			Log.e("in", "edit");
+			PHRImage image;
+			if (setImage == true) {
+				String encodedImage = ImageHandler.encodeImageToBase64(photo);
+				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
+			} else
+				image = null;
 			CheckUp checkup = new CheckUp(editCheckup.getEntryID(),
-					editCheckup.getTimestamp(), null, null, txtPurpose
+					editCheckup.getTimestamp(), null, image, txtPurpose
 							.getText().toString(), txtDoctor.getText()
 							.toString(), notesStatus.getText().toString());
 
