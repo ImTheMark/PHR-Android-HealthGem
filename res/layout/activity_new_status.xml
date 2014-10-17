@@ -297,6 +297,13 @@
 	                android:layout_alignParentRight="true"/>
 
 	        </RelativeLayout>
+
+	        <TextView
+	            android:id="@+id/txtCurrentTracker"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text=""
+	            android:visibility="gone"  />
             
         </LinearLayout>
     </ScrollView>

@@ -27,52 +27,94 @@
         
         <activity
             android:name="com.example.phr.LoginActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait" >
         </activity>
         
         <activity android:name="com.example.phr.RegisterFBLoginActivity" 
-            android:configChanges="orientation|keyboardHidden"
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait"/>
+        
+        <activity android:name="com.facebook.LoginActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait"/>
+        
+        <activity android:name="com.example.phr.RegisterActivity" 
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait"/>
+        <activity android:name="com.example.phr.MainActivity" 
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
   	 		android:screenOrientation="portrait">
+  	 		
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        <activity android:name="com.facebook.LoginActivity"/>
-        
-        <activity android:name="com.example.phr.RegisterActivity" 
-            android:configChanges="orientation|keyboardHidden"
+        <activity android:name="com.example.phr.ActivitiesTrackerActivity" 
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
   	 		android:screenOrientation="portrait"/>
-        <activity android:name="com.example.phr.MainActivity" 
-            android:configChanges="orientation|keyboardHidden"
+        <activity android:name="com.example.phr.AddActionActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait" />
+        <activity android:name="com.example.phr.BloodPressureTrackerActivity" 
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
   	 		android:screenOrientation="portrait"/>
-        <activity android:name="com.example.phr.ActivitiesTrackerActivity" />
-        <activity android:name="com.example.phr.AddActionActivity" />
-        <activity android:name="com.example.phr.BloodPressureTrackerActivity" />
-        <activity android:name="com.example.phr.BloodPressurePostActivity" />
-        <activity android:name="com.example.phr.BloodSugarTrackerActivity" />
-        <activity android:name="com.example.phr.CalorieBreakdownTrackerActivity" />
-        <activity android:name="com.example.phr.CalorieTrackerActivity" />
-        <activity android:name="com.example.phr.CheckupTrackerActivity" />
-        <activity android:name="com.example.phr.CheckupTrackerReadModeActivity" />
-        <activity android:name="com.example.phr.FoodTrackerDailyActivity" />
-        <activity android:name="com.example.phr.GroupedFoodTrackerActivity" />
+        <activity android:name="com.example.phr.BloodPressurePostActivity" 
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait"/>
+        <activity android:name="com.example.phr.BloodSugarTrackerActivity" 
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait"/>
+        <activity android:name="com.example.phr.CalorieBreakdownTrackerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait" />
+        <activity android:name="com.example.phr.CalorieTrackerActivity" 
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait"/>
+        <activity android:name="com.example.phr.CheckupTrackerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait" />
+        <activity android:name="com.example.phr.CheckupTrackerReadModeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait" />
+        <activity android:name="com.example.phr.FoodTrackerDailyActivity" 
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait"/>
+        <activity android:name="com.example.phr.GroupedFoodTrackerActivity" 
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait"/>
         <activity 
             android:name="com.example.phr.NewStatusActivity" 
-            android:configChanges="orientation|keyboardHidden"
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
   	 		android:screenOrientation="portrait"
             />
         
-        <activity android:name="com.example.phr.NoteReadModeActivity" />
-        <activity android:name="com.example.phr.NoteTrackerActivity" />
-        <activity android:name="com.example.phr.RetrieveActivity" />
-        <activity android:name="com.example.phr.SettingsActivity" />
-        <activity android:name="com.example.phr.StatusFeedActivity" />
-        <activity android:name="com.example.phr.WeightTrackerActivity" />
-        <activity android:name="com.example.phr.foodSearchListActivity" />
-        <activity android:name="com.example.phr.ActivitiesSearchListActivity" />
+        <activity android:name="com.example.phr.NoteReadModeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait" />
+        <activity android:name="com.example.phr.NoteTrackerActivity" 
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait"/>
+        <activity android:name="com.example.phr.RetrieveActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait" />
+        <activity android:name="com.example.phr.SettingsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait" />
+        <activity android:name="com.example.phr.StatusFeedActivity" 
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait"/>
+        <activity android:name="com.example.phr.WeightTrackerActivity" 
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait"/>
+        <activity android:name="com.example.phr.foodSearchListActivity"
+             android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait"/>
+        <activity android:name="com.example.phr.ActivitiesSearchListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait" />
     </application>
 
 </manifest>

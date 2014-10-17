@@ -141,6 +141,7 @@ public class NewStatusActivity extends Activity {
 	ImageView statusImage;
 	Bitmap photo;
 	Boolean setImage;
+	TextView txtCurrentTracker;
 	public static final int CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE = 1777;
 
 	@SuppressLint("NewApi")
@@ -175,9 +176,11 @@ public class NewStatusActivity extends Activity {
 		timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
 		fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss", Locale.ENGLISH);
 		calobj = Calendar.getInstance();
+		txtCurrentTracker = (TextView) findViewById(R.id.txtCurrentTracker);
 
 		setImage = false;
 		currentTracker = TrackerInputType.NOTES;
+		// txtCurrentTracker.setText(TrackerInputType.NOTES);
 		// templates
 		bsTemplate = (LinearLayout) findViewById(R.id.bloodsugar_template);
 		bpTemplate = (LinearLayout) findViewById(R.id.bloodpressure_template);
@@ -348,6 +351,7 @@ public class NewStatusActivity extends Activity {
 				Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
 				File file = new File(Environment.getExternalStorageDirectory()
 						+ File.separator + "image.jpg");
+
 				intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
 				startActivityForResult(intent,
 						CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE);
@@ -390,23 +394,30 @@ public class NewStatusActivity extends Activity {
 
 			if (tracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
 				currentTracker = TrackerInputType.BLOOD_PRESSURE;
+				txtCurrentTracker.setText(TrackerInputType.BLOOD_PRESSURE);
 				callBloodPressureInput(120, 80);
 			} else if (tracker.equals(TrackerInputType.BLOOD_SUGAR)) {
 				currentTracker = TrackerInputType.BLOOD_SUGAR;
+				txtCurrentTracker.setText(TrackerInputType.BLOOD_SUGAR);
 				callBloodSugarInput(120, "before meal");
 			} else if (tracker.equals(TrackerInputType.NOTES)) {
+				txtCurrentTracker.setText(TrackerInputType.NOTES);
 				currentTracker = TrackerInputType.NOTES;
 				callNotesInput();
 			} else if (tracker.equals(TrackerInputType.WEIGHT)) {
+				txtCurrentTracker.setText(TrackerInputType.WEIGHT);
 				currentTracker = TrackerInputType.WEIGHT;
 				callWeightInput("100", "lb");
 			} else if (tracker.equals(TrackerInputType.FOOD)) {
+				txtCurrentTracker.setText(TrackerInputType.FOOD);
 				currentTracker = TrackerInputType.FOOD;
 				callFoodInput();
 			} else if (tracker.equals(TrackerInputType.CHECKUP)) {
+				txtCurrentTracker.setText(TrackerInputType.CHECKUP);
 				currentTracker = TrackerInputType.CHECKUP;
 				callCheckUpInput("", "");
 			} else if (tracker.equals(TrackerInputType.ACTIVITY)) {
+				txtCurrentTracker.setText(TrackerInputType.ACTIVITY);
 				currentTracker = TrackerInputType.ACTIVITY;
 				callActivityInput();
 			}
@@ -415,6 +426,7 @@ public class NewStatusActivity extends Activity {
 
 			if (from.equals("new activity")) {
 				currentTracker = TrackerInputType.ACTIVITY;
+				txtCurrentTracker.setText(TrackerInputType.ACTIVITY);
 				kind = "new";
 				addActivity = (ActivitySingle) in.getExtras().getSerializable(
 						"activity added");
@@ -425,6 +437,7 @@ public class NewStatusActivity extends Activity {
 
 			} else if (from.equals("new food")) {
 				currentTracker = TrackerInputType.FOOD;
+				txtCurrentTracker.setText(TrackerInputType.FOOD);
 				kind = "new";
 				addFood = (Food) in.getExtras().getSerializable("food added");
 				setFoodTemplate(addFood.getName(), String.valueOf(addFood
@@ -444,6 +457,7 @@ public class NewStatusActivity extends Activity {
 			if (editTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
 				editBs = (BloodSugar) in.getExtras().getSerializable("object");
 				currentTracker = TrackerInputType.BLOOD_SUGAR;
+				txtCurrentTracker.setText(TrackerInputType.BLOOD_SUGAR);
 				if (editBs.getImage() != null)
 					temp = ImageHandler.loadImage(editBs.getImage()
 							.getFileName());
@@ -452,6 +466,7 @@ public class NewStatusActivity extends Activity {
 						editBs.getType(), editBs.getStatus(), temp);
 
 			} else if (editTracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
+				txtCurrentTracker.setText(TrackerInputType.BLOOD_PRESSURE);
 				editBp = (BloodPressure) in.getExtras().getSerializable(
 						"object");
 				currentTracker = TrackerInputType.BLOOD_PRESSURE;
@@ -465,6 +480,7 @@ public class NewStatusActivity extends Activity {
 						editBp.getStatus(), temp);
 
 			} else if (editTracker.equals(TrackerInputType.CHECKUP)) {
+				txtCurrentTracker.setText(TrackerInputType.CHECKUP);
 				editCheckup = (CheckUp) in.getExtras()
 						.getSerializable("object");
 				currentTracker = TrackerInputType.CHECKUP;
@@ -477,6 +493,7 @@ public class NewStatusActivity extends Activity {
 						editCheckup.getPurpose(), editCheckup.getNotes(), temp);
 
 			} else if (editTracker.equals(TrackerInputType.NOTES)) {
+				txtCurrentTracker.setText(TrackerInputType.NOTES);
 				editNote = (Note) in.getExtras().getSerializable("object");
 				currentTracker = TrackerInputType.NOTES;
 				Log.e("editbsobject", String.valueOf(editNote.getEntryID()));
@@ -487,6 +504,7 @@ public class NewStatusActivity extends Activity {
 				setNoteTemplate(editNote.getNote(), temp);
 
 			} else if (editTracker.equals(TrackerInputType.WEIGHT)) {
+				txtCurrentTracker.setText(TrackerInputType.WEIGHT);
 				editWeight = (Weight) in.getExtras().getSerializable("object");
 				currentTracker = TrackerInputType.WEIGHT;
 				if (editWeight.getImage() != null)
@@ -497,8 +515,10 @@ public class NewStatusActivity extends Activity {
 						String.valueOf(editWeight.getWeightInPounds()), "lb",
 						editWeight.getStatus(), temp);
 			} else if (editTracker.equals(TrackerInputType.FOOD)) {
+				txtCurrentTracker.setText(TrackerInputType.FOOD);
 
 			} else if (editTracker.equals(TrackerInputType.ACTIVITY)) {
+				txtCurrentTracker.setText(TrackerInputType.ACTIVITY);
 
 			}
 		}
@@ -668,23 +688,31 @@ public class NewStatusActivity extends Activity {
 			Log.e("itemValue = ", item);
 			if (item.equals(TrackerInputType.BLOOD_PRESSURE)) {
 				currentTracker = TrackerInputType.BLOOD_PRESSURE;
+				txtCurrentTracker.setText(TrackerInputType.BLOOD_PRESSURE);
 				callBloodPressureInput(120, 80);
 			} else if (item.equals(TrackerInputType.BLOOD_SUGAR)) {
+				txtCurrentTracker.setText(TrackerInputType.BLOOD_SUGAR);
+				Log.e("txtCuurent", txtCurrentTracker.getText().toString());
 				currentTracker = TrackerInputType.BLOOD_SUGAR;
 				callBloodSugarInput(120, "before meal");
 			} else if (item.equals(TrackerInputType.NOTES)) {
+				txtCurrentTracker.setText(TrackerInputType.NOTES);
 				currentTracker = TrackerInputType.NOTES;
 				callNotesInput();
 			} else if (item.equals(TrackerInputType.WEIGHT)) {
+				txtCurrentTracker.setText(TrackerInputType.WEIGHT);
 				currentTracker = TrackerInputType.WEIGHT;
 				callWeightInput("100", "lb");
 			} else if (item.equals(TrackerInputType.FOOD)) {
+				txtCurrentTracker.setText(TrackerInputType.FOOD);
 				currentTracker = TrackerInputType.FOOD;
 				callFoodInput();
 			} else if (item.equals(TrackerInputType.CHECKUP)) {
+				txtCurrentTracker.setText(TrackerInputType.CHECKUP);
 				currentTracker = TrackerInputType.CHECKUP;
 				callCheckUpInput("", "");
 			} else if (item.equals(TrackerInputType.ACTIVITY)) {
+				txtCurrentTracker.setText(TrackerInputType.ACTIVITY);
 				currentTracker = TrackerInputType.ACTIVITY;
 				callActivityInput();
 			}
@@ -694,10 +722,12 @@ public class NewStatusActivity extends Activity {
 					"activity chosen");
 			kind = "old";
 			currentTracker = TrackerInputType.ACTIVITY;
+			txtCurrentTracker.setText(TrackerInputType.ACTIVITY);
 			callActivityDurationInput(1, "hr");
 		} else if (requestCode == 4) {
 			kind = "old";
 			chosenFood = (Food) data.getExtras().getSerializable("food chosen");
+			txtCurrentTracker.setText(TrackerInputType.FOOD);
 			currentTracker = TrackerInputType.FOOD;
 			callFoodServingInput(chosenFood, 1.0);
 
@@ -705,6 +735,7 @@ public class NewStatusActivity extends Activity {
 			// Get our saved file into a bitmap object:
 			File file = new File(Environment.getExternalStorageDirectory()
 					+ File.separator + "image.jpg");
+
 			photo = DecodeImage.decodeFile(file.getAbsolutePath());
 			statusImage.setImageBitmap(photo);
 			setImage = true;
@@ -1555,4 +1586,54 @@ public class NewStatusActivity extends Activity {
 		}
 
 	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onRestoreInstanceState(savedInstanceState);
+
+		/*
+		 * String stateSaved = savedInstanceState.getString("saved_state");
+		 * Log.e("txtCuurent camera back",
+		 * txtCurrentTracker.getText().toString()); if (stateSaved != null) {
+		 * 
+		 * if (stateSaved.equals(TrackerInputType.FOOD)) {
+		 * foodTemplate.setVisibility(View.VISIBLE); currentTracker =
+		 * TrackerInputType.FOOD; } else if
+		 * (txtCurrentTracker.getText().toString()
+		 * .equals(TrackerInputType.ACTIVITY)) {
+		 * activityTemplate.setVisibility(View.VISIBLE); currentTracker =
+		 * TrackerInputType.ACTIVITY; } else if
+		 * (txtCurrentTracker.getText().toString()
+		 * .equals(TrackerInputType.BLOOD_PRESSURE)) {
+		 * bpTemplate.setVisibility(View.VISIBLE); currentTracker =
+		 * TrackerInputType.BLOOD_PRESSURE; } else if
+		 * (stateSaved.equals(TrackerInputType.BLOOD_SUGAR)) { Log.e("bs",
+		 * "camera"); bsTemplate.setVisibility(View.VISIBLE); currentTracker =
+		 * TrackerInputType.BLOOD_SUGAR; } else if
+		 * (txtCurrentTracker.getText().toString()
+		 * .equals(TrackerInputType.WEIGHT)) {
+		 * weightTemplate.setVisibility(View.VISIBLE); currentTracker =
+		 * TrackerInputType.WEIGHT; } else if
+		 * (txtCurrentTracker.getText().toString()
+		 * .equals(TrackerInputType.CHECKUP)) {
+		 * checkupTemplate.setVisibility(View.VISIBLE); currentTracker =
+		 * TrackerInputType.CHECKUP; }
+		 * 
+		 * }
+		 */
+
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+
+		/*
+		 * String stateToSave = txtCurrentTracker.getText().toString();
+		 * Log.e("stateToSave", stateToSave);
+		 */
+	}
+
 }
