@@ -3,6 +3,7 @@ package com.example.phr.serviceimpl;
 import java.util.List;
 
 import com.example.phr.exceptions.DataAccessException;
+import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.exceptions.WebServerException;
@@ -40,21 +41,37 @@ public class ActivityTrackerServiceImpl implements ActivityTrackerService {
 	}
 
 	@Override
-	public void edit(ActivityTrackerEntry activity) {
-		// TODO Auto-generated method stub
-
+	public void edit(ActivityTrackerEntry activity) throws ServiceException, OutdatedAccessTokenException, EntryNotFoundException {
+		try {
+			webActivityTrackerDao.edit(activity);
+			mobileActivityTrackerDao.edit(activity);
+		} catch (WebServerException e) {
+			throw new ServiceException("Error", e);
+		} catch (DataAccessException e) {
+			throw new ServiceException("Error", e);
+		}
+		
 	}
 
 	@Override
-	public void delete(ActivityTrackerEntry activity) {
-		// TODO Auto-generated method stub
-
+	public void delete(ActivityTrackerEntry activity) throws OutdatedAccessTokenException, EntryNotFoundException, ServiceException {
+		try {
+			webActivityTrackerDao.delete(activity);
+			mobileActivityTrackerDao.delete(activity);
+		} catch (WebServerException e) {
+			throw new ServiceException("Error", e);
+		} catch (DataAccessException e) {
+			throw new ServiceException("Error", e);
+		}
 	}
 
 	@Override
-	public List<ActivityTrackerEntry> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ActivityTrackerEntry> getAll() throws ServiceException {
+		try {
+			return mobileActivityTrackerDao.getAllReversed();
+		} catch (DataAccessException e) {
+			throw new ServiceException("Error", e);
+		}
 	}
 
 	@Override

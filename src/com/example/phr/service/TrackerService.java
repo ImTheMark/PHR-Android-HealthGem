@@ -9,7 +9,7 @@ import com.example.phr.exceptions.ServiceException;
 public interface TrackerService<T> {
 
 	public void add(T object) throws ServiceException,
-			OutdatedAccessTokenException, ServiceException;
+			OutdatedAccessTokenException;
 
 	public void edit(T object) throws OutdatedAccessTokenException,
 			EntryNotFoundException, ServiceException;
