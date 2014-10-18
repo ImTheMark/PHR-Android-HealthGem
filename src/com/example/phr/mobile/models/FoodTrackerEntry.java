@@ -7,10 +7,10 @@ public class FoodTrackerEntry extends TrackerEntry {
 	Food food;
 	double servingCount;
 	
-	public FoodTrackerEntry(Integer entryID, FBPost fbPost,
+	public FoodTrackerEntry(Integer entryID, String facebookID,
 			Timestamp timestamp, String status, PHRImage image, Food food,
 			double servingCount) {
-		super(entryID, fbPost, timestamp, status, image);
+		super(entryID, facebookID, timestamp, status, image);
 		this.food = food;
 		this.servingCount = servingCount;
 	}
@@ -22,9 +22,9 @@ public class FoodTrackerEntry extends TrackerEntry {
 		this.servingCount = servingCount;
 	}
 	
-	public FoodTrackerEntry(FBPost fbPost, Timestamp timestamp, String status,
+	public FoodTrackerEntry(String facebookID, Timestamp timestamp, String status,
 			PHRImage image, Food food, double servingCount) {
-		super(fbPost, timestamp, status, image);
+		super(facebookID, timestamp, status, image);
 		this.food = food;
 		this.servingCount = servingCount;
 	}

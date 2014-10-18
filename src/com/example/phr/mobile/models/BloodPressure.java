@@ -7,16 +7,16 @@ public class BloodPressure extends TrackerEntry {
 	int systolic;
 	int diastolic;
 
-	public BloodPressure(Integer entryID, FBPost fbPost, Timestamp timestamp,
+	public BloodPressure(Integer entryID, String facebookID, Timestamp timestamp,
 			String status, PHRImage image, int systolic, int diastolic) {
-		super(entryID, fbPost, timestamp, status, image);
+		super(entryID, facebookID, timestamp, status, image);
 		this.systolic = systolic;
 		this.diastolic = diastolic;
 	}
 
-	public BloodPressure(FBPost fbPost, Timestamp timestamp, String status,
+	public BloodPressure(String facebookID, Timestamp timestamp, String status,
 			PHRImage image, int systolic, int diastolic) {
-		super(fbPost, timestamp, status, image);
+		super(facebookID, timestamp, status, image);
 		this.systolic = systolic;
 		this.diastolic = diastolic;
 	}

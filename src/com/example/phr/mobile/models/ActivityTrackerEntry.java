@@ -8,11 +8,11 @@ public class ActivityTrackerEntry extends TrackerEntry {
 	double caloriesBurnedPerHour;
 	int durationInSeconds;
 
-	public ActivityTrackerEntry(Integer entryID, FBPost fbPost,
+	public ActivityTrackerEntry(Integer entryID, String facebookID,
 			Timestamp timestamp, String status, PHRImage image,
 			ActivitySingle activity, double caloriesBurnedPerHour,
 			int durationInSeconds) {
-		super(entryID, fbPost, timestamp, status, image);
+		super(entryID, facebookID, timestamp, status, image);
 		this.activity = activity;
 		this.caloriesBurnedPerHour = caloriesBurnedPerHour;
 	}
@@ -25,10 +25,10 @@ public class ActivityTrackerEntry extends TrackerEntry {
 		this.caloriesBurnedPerHour = caloriesBurnedPerHour;
 	}
 
-	public ActivityTrackerEntry(FBPost fbPost, Timestamp timestamp,
+	public ActivityTrackerEntry(String facebookID, Timestamp timestamp,
 			String status, PHRImage image, ActivitySingle activity,
 			double caloriesBurnedPerHour, int durationInSeconds) {
-		super(fbPost, timestamp, status, image);
+		super(facebookID, timestamp, status, image);
 		this.activity = activity;
 		this.caloriesBurnedPerHour = caloriesBurnedPerHour;
 	}

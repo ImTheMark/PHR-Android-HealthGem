@@ -8,25 +8,25 @@ import com.example.phr.model.User;
 public abstract class TrackerEntry implements Serializable {
 
 	Integer entryID;
-	FBPost fbPost;
+	String facebookID;
 	Timestamp timestamp;
 	String status;
 	PHRImage image;
 
-	public TrackerEntry(Integer entryID, FBPost fbPost, Timestamp timestamp,
+	public TrackerEntry(Integer entryID, String facebookID, Timestamp timestamp,
 			String status, PHRImage image) {
 		super();
 		this.entryID = entryID;
-		this.fbPost = fbPost;
+		this.facebookID = facebookID;
 		this.timestamp = timestamp;
 		this.status = status;
 		this.image = image;
 	}
 
-	public TrackerEntry(FBPost fbPost, Timestamp timestamp, String status,
+	public TrackerEntry(String facebookID, Timestamp timestamp, String status,
 			PHRImage image) {
 		super();
-		this.fbPost = fbPost;
+		this.facebookID = facebookID;
 		this.timestamp = timestamp;
 		this.status = status;
 		this.image = image;
@@ -48,7 +48,7 @@ public abstract class TrackerEntry implements Serializable {
 		this.image = image;
 	}
 
-	public TrackerEntry(User user, FBPost fbPost2, Timestamp timestamp2,
+	public TrackerEntry(User user, String facebookID, Timestamp timestamp2,
 			String status2, PHRImage image2) {
 		// TODO Auto-generated constructor stub
 	}
@@ -61,12 +61,12 @@ public abstract class TrackerEntry implements Serializable {
 		this.entryID = entryID;
 	}
 
-	public FBPost getFbPost() {
-		return fbPost;
+	public String getFbPost() {
+		return facebookID;
 	}
 
-	public void setFbPost(FBPost fbPost) {
-		this.fbPost = fbPost;
+	public void setFbPost(String facebookID) {
+		this.facebookID = facebookID;
 	}
 
 	public Timestamp getTimestamp() {

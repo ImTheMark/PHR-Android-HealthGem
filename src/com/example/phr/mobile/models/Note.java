@@ -7,9 +7,9 @@ public class Note extends TrackerEntry implements Serializable {
 
 	String note;
 
-	public Note(Integer entryID, FBPost fbPost, Timestamp timestamp,
+	public Note(Integer entryID, String facebookID, Timestamp timestamp,
 			String status, PHRImage image, String note) {
-		super(entryID, fbPost, timestamp, status, image);
+		super(entryID, facebookID, timestamp, status, image);
 		this.note = note;
 	}
 
@@ -19,9 +19,9 @@ public class Note extends TrackerEntry implements Serializable {
 		this.note = note;
 	}
 
-	public Note(FBPost fbPost, Timestamp timestamp, String status,
+	public Note(String facebookID, Timestamp timestamp, String status,
 			PHRImage image, String note) {
-		super(fbPost, timestamp, status, image);
+		super(facebookID, timestamp, status, image);
 		this.note = note;
 	}
 

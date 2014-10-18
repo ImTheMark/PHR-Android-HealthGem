@@ -9,10 +9,10 @@ public class CheckUp extends TrackerEntry implements Serializable {
 	String doctorsName;
 	String notes;
 
-	public CheckUp(Integer entryID, FBPost fbPost, Timestamp timestamp,
+	public CheckUp(Integer entryID, String facebookID, Timestamp timestamp,
 			String status, PHRImage image, String purpose, String doctorsName,
 			String notes) {
-		super(entryID, fbPost, timestamp, status, image);
+		super(entryID, facebookID, timestamp, status, image);
 		this.purpose = purpose;
 		this.doctorsName = doctorsName;
 		this.notes = notes;
@@ -26,9 +26,9 @@ public class CheckUp extends TrackerEntry implements Serializable {
 		this.notes = notes;
 	}
 
-	public CheckUp(FBPost fbPost, Timestamp timestamp, String status,
+	public CheckUp(String facebookID, Timestamp timestamp, String status,
 			PHRImage image, String purpose, String doctorsName, String notes) {
-		super(fbPost, timestamp, status, image);
+		super(facebookID, timestamp, status, image);
 		this.purpose = purpose;
 		this.doctorsName = doctorsName;
 		this.notes = notes;
