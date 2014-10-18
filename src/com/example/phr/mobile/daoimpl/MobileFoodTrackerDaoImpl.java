@@ -42,9 +42,11 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 		values.put(DatabaseHandler.FOOD_DATEADDED,
 				fmt.format(food.getTimestamp()));
 
-		int foodEntryId = mobileFoodDao.addReturnsEntryId(food.getFood());
+		if(!mobileFoodDao.exists(food.getFood())){
+			mobileFoodDao.add(food.getFood());
+		}
 
-		values.put(DatabaseHandler.FOOD_FOODID, foodEntryId);
+		values.put(DatabaseHandler.FOOD_FOODID, food.getFood().getEntryID());
 		values.put(DatabaseHandler.FOOD_SERVINGCOUNT, food.getServingCount());
 		values.put(DatabaseHandler.FOOD_STATUS, food.getStatus());
 
@@ -86,9 +88,12 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 		values.put(DatabaseHandler.FOOD_DATEADDED,
 				fmt.format(food.getTimestamp()));
 
-		int foodEntryId = mobileFoodDao.addReturnsEntryId(food.getFood());
 
-		values.put(DatabaseHandler.FOOD_FOODID, foodEntryId);
+		if(!mobileFoodDao.exists(food.getFood())){
+			mobileFoodDao.add(food.getFood());
+		}
+
+		values.put(DatabaseHandler.FOOD_FOODID, food.getFood().getEntryID());
 		values.put(DatabaseHandler.FOOD_SERVINGCOUNT, food.getServingCount());
 		values.put(DatabaseHandler.FOOD_STATUS, food.getStatus());
 

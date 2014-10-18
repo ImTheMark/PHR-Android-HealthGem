@@ -34,7 +34,8 @@ public class MobileFoodDaoImpl implements MobileFoodDao {
 		db.close();
 	}
 
-	private boolean exists(Food food) {
+	@Override
+	public boolean exists(Food food) {
 		Boolean bool = false; 
 		
 		String selectQuery = "SELECT  * FROM " +
