@@ -61,11 +61,11 @@ public abstract class TrackerEntry implements Serializable {
 		this.entryID = entryID;
 	}
 
-	public String getFbPost() {
+	public String getFacebookID() {
 		return facebookID;
 	}
 
-	public void setFbPost(String facebookID) {
+	public void setFacebookID(String facebookID) {
 		this.facebookID = facebookID;
 	}
 

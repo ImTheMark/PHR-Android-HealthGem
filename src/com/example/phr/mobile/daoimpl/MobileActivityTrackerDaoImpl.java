@@ -68,9 +68,8 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (activity.getFbPost() != null)
-			values.put(DatabaseHandler.ACT_FBPOSTID, activity.getFbPost()
-					.getId());
+		if (activity.getFacebookID() != null)
+			values.put(DatabaseHandler.ACT_FBPOSTID, activity.getFacebookID());
 
 		db.insert(DatabaseHandler.TABLE_ACTIVITY, null, values);
 		db.close();
@@ -114,9 +113,8 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (activity.getFbPost() != null)
-			values.put(DatabaseHandler.ACT_FBPOSTID, activity.getFbPost()
-					.getId());
+		if (activity.getFacebookID() != null)
+			values.put(DatabaseHandler.ACT_FBPOSTID, activity.getFacebookID());
 
 		db.update(DatabaseHandler.TABLE_ACTIVITY, values,
 				DatabaseHandler.ACT_ID + "=" + activity.getEntryID(), null);
@@ -150,7 +148,7 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 					}
 
 					ActivityTrackerEntry act = new ActivityTrackerEntry(
-							cursor.getInt(0), new FBPost(cursor.getString(7)),
+							cursor.getInt(0),cursor.getString(7),
 							timestamp, cursor.getString(5), image,
 							mobileActivityDao.get(cursor.getInt(2)),
 							cursor.getDouble(4), cursor.getInt(3));
@@ -197,7 +195,7 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 					}
 
 					ActivityTrackerEntry act = new ActivityTrackerEntry(
-							cursor.getInt(0), new FBPost(cursor.getString(7)),
+							cursor.getInt(0), cursor.getString(7),
 							timestamp, cursor.getString(5), image,
 							mobileActivityDao.get(cursor.getInt(2)),
 							cursor.getDouble(4), cursor.getInt(3));
@@ -250,7 +248,7 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 				}
 
 				ActivityTrackerEntry act = new ActivityTrackerEntry(
-						cursor.getInt(0), new FBPost(cursor.getString(7)),
+						cursor.getInt(0), cursor.getString(7),
 						timestamp, cursor.getString(5), image,
 						mobileActivityDao.get(cursor.getInt(2)),
 						cursor.getDouble(4), cursor.getInt(3));

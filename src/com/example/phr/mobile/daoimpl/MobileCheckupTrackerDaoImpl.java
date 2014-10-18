@@ -59,8 +59,8 @@ public class MobileCheckupTrackerDaoImpl implements MobileCheckupTrackerDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (checkUp.getFbPost() != null)
-			values.put(DatabaseHandler.CU_FBPOSTID, checkUp.getFbPost().getId());
+		if (checkUp.getFacebookID() != null)
+			values.put(DatabaseHandler.CU_FBPOSTID, checkUp.getFacebookID());
 
 		db.insert(DatabaseHandler.TABLE_CHECKUP, null, values);
 		db.close();
@@ -100,8 +100,8 @@ public class MobileCheckupTrackerDaoImpl implements MobileCheckupTrackerDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (checkUp.getFbPost() != null)
-			values.put(DatabaseHandler.CU_FBPOSTID, checkUp.getFbPost().getId());
+		if (checkUp.getFacebookID() != null)
+			values.put(DatabaseHandler.CU_FBPOSTID, checkUp.getFacebookID());
 
 		db.update(DatabaseHandler.TABLE_CHECKUP, values, DatabaseHandler.CU_ID
 				+ "=" + checkUp.getEntryID(), null);
@@ -136,8 +136,7 @@ public class MobileCheckupTrackerDaoImpl implements MobileCheckupTrackerDao {
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 				}
 
-				CheckUp cu = new CheckUp(cursor.getInt(0), new FBPost(
-						cursor.getString(7)), timestamp, cursor.getString(5),
+				CheckUp cu = new CheckUp(cursor.getInt(0), cursor.getString(7), timestamp, cursor.getString(5),
 						image, cursor.getString(2), cursor.getString(3),
 						cursor.getString(4));
 
@@ -188,8 +187,7 @@ public class MobileCheckupTrackerDaoImpl implements MobileCheckupTrackerDao {
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 				}
 
-				CheckUp cu = new CheckUp(cursor.getInt(0), new FBPost(
-						cursor.getString(7)), timestamp, cursor.getString(5),
+				CheckUp cu = new CheckUp(cursor.getInt(0), cursor.getString(7), timestamp, cursor.getString(5),
 						image, cursor.getString(2), cursor.getString(3),
 						cursor.getString(4));
 
@@ -228,8 +226,7 @@ public class MobileCheckupTrackerDaoImpl implements MobileCheckupTrackerDao {
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 			}
 
-			CheckUp cu = new CheckUp(cursor.getInt(0), new FBPost(
-					cursor.getString(7)), timestamp, cursor.getString(5),
+			CheckUp cu = new CheckUp(cursor.getInt(0), cursor.getString(7), timestamp, cursor.getString(5),
 					image, cursor.getString(2), cursor.getString(3),
 					cursor.getString(4));
 			return cu;

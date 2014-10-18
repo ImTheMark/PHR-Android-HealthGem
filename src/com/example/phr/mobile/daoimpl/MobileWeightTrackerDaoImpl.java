@@ -57,9 +57,8 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (weight.getFbPost() != null)
-			values.put(DatabaseHandler.WEIGHT_FBPOSTID, weight.getFbPost()
-					.getId());
+		if (weight.getFacebookID() != null)
+			values.put(DatabaseHandler.WEIGHT_FBPOSTID, weight.getFacebookID());
 
 		db.insert(DatabaseHandler.TABLE_WEIGHT, null, values);
 		db.close();
@@ -96,9 +95,8 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (weight.getFbPost() != null)
-			values.put(DatabaseHandler.WEIGHT_FBPOSTID, weight.getFbPost()
-					.getId());
+		if (weight.getFacebookID() != null)
+			values.put(DatabaseHandler.WEIGHT_FBPOSTID, weight.getFacebookID());
 
 		db.update(DatabaseHandler.TABLE_WEIGHT, values,
 				DatabaseHandler.WEIGHT_ID + "=" + weight.getEntryID(), null);
@@ -134,8 +132,7 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 					String encoded = ImageHandler.encodeImageToBase64(bitmap);
 					image.setEncodedImage(encoded);
 				}
-				Weight weight = new Weight(cursor.getInt(0), new FBPost(
-						cursor.getString(5)), timestamp, cursor.getString(3),
+				Weight weight = new Weight(cursor.getInt(0), cursor.getString(5), timestamp, cursor.getString(3),
 						image, cursor.getDouble(2));
 
 				weightList.add(weight);
@@ -187,8 +184,7 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 					image.setEncodedImage(encoded);
 				}
 
-				Weight weight = new Weight(cursor.getInt(0), new FBPost(
-						cursor.getString(5)), timestamp, cursor.getString(3),
+				Weight weight = new Weight(cursor.getInt(0), cursor.getString(5), timestamp, cursor.getString(3),
 						image, cursor.getDouble(2));
 
 				weightList.add(weight);
@@ -232,8 +228,7 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 					image.setEncodedImage(encoded);
 				}
 
-				Weight weight = new Weight(cursor.getInt(0), new FBPost(
-						cursor.getString(5)), timestamp, cursor.getString(3),
+				Weight weight = new Weight(cursor.getInt(0), cursor.getString(5), timestamp, cursor.getString(3),
 						image, cursor.getDouble(2));
 
 				weightList.add(weight);
@@ -288,8 +283,7 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 				image.setEncodedImage(encoded);
 			}
 
-			Weight weight = new Weight(cursor.getInt(0), new FBPost(
-					cursor.getString(5)), timestamp, cursor.getString(3),
+			Weight weight = new Weight(cursor.getInt(0), cursor.getString(5), timestamp, cursor.getString(3),
 					image, cursor.getDouble(2));
 			return weight;
 		}

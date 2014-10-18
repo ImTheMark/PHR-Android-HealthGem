@@ -57,8 +57,8 @@ public class MobileBloodPressureTrackerDaoImpl implements
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (bp.getFbPost() != null)
-			values.put(DatabaseHandler.BP_FBPOSTID, bp.getFbPost().getId());
+		if (bp.getFacebookID() != null)
+			values.put(DatabaseHandler.BP_FBPOSTID, bp.getFacebookID());
 
 		db.insert(DatabaseHandler.TABLE_BLOODPRESSURE, null, values);
 		db.close();
@@ -95,8 +95,8 @@ public class MobileBloodPressureTrackerDaoImpl implements
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (bp.getFbPost() != null)
-			values.put(DatabaseHandler.BP_FBPOSTID, bp.getFbPost().getId());
+		if (bp.getFacebookID() != null)
+			values.put(DatabaseHandler.BP_FBPOSTID, bp.getFacebookID());
 
 		db.update(DatabaseHandler.TABLE_BLOODPRESSURE, values,
 				DatabaseHandler.BP_ID + "=" + bp.getEntryID(), null);

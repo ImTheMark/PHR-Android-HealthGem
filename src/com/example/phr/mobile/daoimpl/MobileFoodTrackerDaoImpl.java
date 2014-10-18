@@ -64,8 +64,8 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (food.getFbPost() != null)
-			values.put(DatabaseHandler.FOOD_FBPOSTID, food.getFbPost().getId());
+		if (food.getFacebookID() != null)
+			values.put(DatabaseHandler.FOOD_FBPOSTID, food.getFacebookID());
 
 		db.insert(DatabaseHandler.TABLE_FOOD, null, values);
 		db.close();
@@ -108,8 +108,8 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (food.getFbPost() != null)
-			values.put(DatabaseHandler.FOOD_FBPOSTID, food.getFbPost().getId());
+		if (food.getFacebookID() != null)
+			values.put(DatabaseHandler.FOOD_FBPOSTID, food.getFacebookID());
 
 		db.update(DatabaseHandler.TABLE_FOOD, values, DatabaseHandler.FOOD_ID
 				+ "=" + food.getEntryID(), null);
@@ -141,7 +141,7 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 					}
 
 					FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
-							cursor.getInt(0), new FBPost(cursor.getString(6)),
+							cursor.getInt(0), cursor.getString(6),
 							timestamp, cursor.getString(4), image,
 							mobileFoodDao.get(cursor.getInt(2)),
 							cursor.getDouble(3));
@@ -186,7 +186,7 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 					}
 
 					FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
-							cursor.getInt(0), new FBPost(cursor.getString(6)),
+							cursor.getInt(0), cursor.getString(6),
 							timestamp, cursor.getString(4), image,
 							mobileFoodDao.get(cursor.getInt(2)),
 							cursor.getDouble(3));
@@ -239,7 +239,7 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 				}
 
 				FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
-						cursor.getInt(0), new FBPost(cursor.getString(6)),
+						cursor.getInt(0), cursor.getString(6),
 						timestamp, cursor.getString(4), image,
 						mobileFoodDao.get(cursor.getInt(2)),
 						cursor.getDouble(3));

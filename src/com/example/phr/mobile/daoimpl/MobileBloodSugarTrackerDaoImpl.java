@@ -60,9 +60,8 @@ public class MobileBloodSugarTrackerDaoImpl implements
 					e);
 		}
 
-		if (bloodSugar.getFbPost() != null)
-			values.put(DatabaseHandler.BS_FBPOSTID, bloodSugar.getFbPost()
-					.getId());
+		if (bloodSugar.getFacebookID() != null)
+			values.put(DatabaseHandler.BS_FBPOSTID, bloodSugar.getFacebookID());
 
 		db.insert(DatabaseHandler.TABLE_BLOODSUGAR, null, values);
 		db.close();
@@ -101,9 +100,8 @@ public class MobileBloodSugarTrackerDaoImpl implements
 					e);
 		}
 
-		if (bloodSugar.getFbPost() != null)
-			values.put(DatabaseHandler.BS_FBPOSTID, bloodSugar.getFbPost()
-					.getId());
+		if (bloodSugar.getFacebookID() != null)
+			values.put(DatabaseHandler.BS_FBPOSTID, bloodSugar.getFacebookID());
 
 		db.update(DatabaseHandler.TABLE_BLOODSUGAR, values,
 				DatabaseHandler.BS_ID + "=" + bloodSugar.getEntryID(), null);
@@ -141,8 +139,7 @@ public class MobileBloodSugarTrackerDaoImpl implements
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 				}
 
-				BloodSugar bs = new BloodSugar(cursor.getInt(0), new FBPost(
-						cursor.getString(6)), timestamp, cursor.getString(4),
+				BloodSugar bs = new BloodSugar(cursor.getInt(0), cursor.getString(6), timestamp, cursor.getString(4),
 						image, cursor.getDouble(2), cursor.getString(3));
 
 				bsList.add(bs);
@@ -194,8 +191,7 @@ public class MobileBloodSugarTrackerDaoImpl implements
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 				}
 
-				BloodSugar bs = new BloodSugar(cursor.getInt(0), new FBPost(
-						cursor.getString(6)), timestamp, cursor.getString(4),
+				BloodSugar bs = new BloodSugar(cursor.getInt(0), cursor.getString(6), timestamp, cursor.getString(4),
 						image, cursor.getDouble(2), cursor.getString(3));
 
 				bsList.add(bs);
@@ -235,8 +231,7 @@ public class MobileBloodSugarTrackerDaoImpl implements
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 			}
 
-			BloodSugar bs = new BloodSugar(cursor.getInt(0), new FBPost(
-					cursor.getString(6)), timestamp, cursor.getString(4),
+			BloodSugar bs = new BloodSugar(cursor.getInt(0), cursor.getString(6), timestamp, cursor.getString(4),
 					image, cursor.getDouble(2), cursor.getString(3));
 			return bs;
 		}

@@ -57,8 +57,8 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (note.getFbPost() != null)
-			values.put(DatabaseHandler.NOTES_FBPOSTID, note.getFbPost().getId());
+		if (note.getFacebookID() != null)
+			values.put(DatabaseHandler.NOTES_FBPOSTID, note.getFacebookID());
 
 		db.insert(DatabaseHandler.TABLE_NOTES, null, values);
 		db.close();
@@ -95,8 +95,8 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);
 		}
-		if (note.getFbPost() != null)
-			values.put(DatabaseHandler.NOTES_FBPOSTID, note.getFbPost().getId());
+		if (note.getFacebookID() != null)
+			values.put(DatabaseHandler.NOTES_FBPOSTID, note.getFacebookID());
 
 		db.update(DatabaseHandler.TABLE_NOTES, values, DatabaseHandler.NOTES_ID
 				+ "=" + note.getEntryID(), null);
@@ -130,8 +130,7 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 					image.setFileName(cursor.getString(4));
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 				}
-				Note note = new Note(cursor.getInt(0), new FBPost(
-						cursor.getString(5)), timestamp, cursor.getString(3),
+				Note note = new Note(cursor.getInt(0), cursor.getString(5), timestamp, cursor.getString(3),
 						image, cursor.getString(2));
 
 				noteList.add(note);
@@ -182,8 +181,7 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 				}
 
-				Note note = new Note(cursor.getInt(0), new FBPost(
-						cursor.getString(5)), timestamp, cursor.getString(3),
+				Note note = new Note(cursor.getInt(0), cursor.getString(5), timestamp, cursor.getString(3),
 						image, cursor.getString(2));
 
 				noteList.add(note);
@@ -221,8 +219,7 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 			}
 
-			Note note = new Note(cursor.getInt(0), new FBPost(
-					cursor.getString(5)), timestamp, cursor.getString(3),
+			Note note = new Note(cursor.getInt(0), cursor.getString(5), timestamp, cursor.getString(3),
 					image, cursor.getString(2));
 			return note;
 		}
