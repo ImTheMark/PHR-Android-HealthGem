@@ -83,6 +83,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public static final String FOODLIST_SERVINGSIZE = "servingSize";
 	public static final String FOODLIST_RESTAURANTID = "restaurantID";
 	public static final String FOODLIST_FROMFATSECRET = "fromFatSecret";
+	public static final String FOODLIST_PROTEIN = "protein";
+	public static final String FOODLIST_FAT = "fat";
+	public static final String FOODLIST_CARBOHYDRATE = "carbohydrate";
 	
 	// RESTAURANT LIST DATABASE
 	public static final String TABLE_RESTAURANTLIST = "restaurantlist";
@@ -203,7 +206,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ FOODLIST_SERVINGUNIT + " TEXT," 
 				+ FOODLIST_SERVINGSIZE + " REAL,"
 				+ FOODLIST_RESTAURANTID + " INTEGER,"  
-				+ FOODLIST_FROMFATSECRET + " INTEGER"  
+				+ FOODLIST_FROMFATSECRET + " INTEGER,"  
+				+ FOODLIST_PROTEIN + " REAL,"  
+				+ FOODLIST_FAT + " REAL,"  
+				+ FOODLIST_CARBOHYDRATE + " REAL"  
 				+ ")";
 		
 		

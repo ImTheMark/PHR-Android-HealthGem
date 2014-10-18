@@ -1,45 +1,99 @@
 package com.example.phr.mobile.daoimpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileFoodDao;
 import com.example.phr.mobile.models.Food;
 
 public class MobileFoodDaoImpl implements MobileFoodDao {
 
 	@Override
-	public int addReturnsEntryId(Food food) {
-		// check if exists, return id if it does
-		// add otherwise, return id
-		return -1;
+	public void add(Food food) {
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(DatabaseHandler.FOODLIST_ID, food.getEntryID());
+		values.put(DatabaseHandler.FOODLIST_NAME, food.getName());
+		values.put(DatabaseHandler.FOODLIST_CALORIE, food.getCalorie());
+		values.put(DatabaseHandler.FOODLIST_SERVINGUNIT, food.getServingUnit());
+		values.put(DatabaseHandler.FOODLIST_SERVINGSIZE, food.getServingSize());
+		values.put(DatabaseHandler.FOODLIST_RESTAURANTID, food.getRestaurantID());
+		values.put(DatabaseHandler.FOODLIST_FROMFATSECRET, food.getFromFatsecret());
+		values.put(DatabaseHandler.FOODLIST_PROTEIN, food.getProtein());
+		values.put(DatabaseHandler.FOODLIST_FAT, food.getFat());
+		values.put(DatabaseHandler.FOODLIST_CARBOHYDRATE, food.getCarbohydrate());
+
+		db.insert(DatabaseHandler.TABLE_FOODLIST, null, values);
+		db.close();
 	}
 
 	private boolean exists(Food food) {
-		// check using id
-		return true;
-		// Old code
-		/*
-		 * Boolean bool = false; String selectQuery = "SELECT  * FROM " +
-		 * DatabaseHandler.TABLE_FOODLIST + " WHERE " +
-		 * DatabaseHandler.FOODLIST_ID + " = " + food.getEntryID();
-		 * 
-		 * Cursor cursor = db.rawQuery(selectQuery, null);
-		 * 
-		 * if (cursor.moveToFirst()) bool = true;
-		 * 
-		 * return bool;
-		 */
+		Boolean bool = false; 
+		
+		String selectQuery = "SELECT  * FROM " +
+				DatabaseHandler.TABLE_FOODLIST + " WHERE " +
+				DatabaseHandler.FOODLIST_ID + " = " + food.getEntryID();
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+		
+		if (cursor.moveToFirst()) 
+			bool = true;
+		
+		return bool;
 	}
 
 	@Override
 	public List<Food> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Food> list = new ArrayList<Food>();
+		String selectQuery = "SELECT  * FROM " +
+				DatabaseHandler.TABLE_FOODLIST;
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+		
+		if (cursor.moveToFirst()) {
+			do {
+				Boolean bool = cursor.getInt(6) != 0;
+				Food food = new Food(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2), cursor.getDouble(7),
+						cursor.getDouble(8), cursor.getDouble(9), cursor.getString(3),
+						cursor.getDouble(4), cursor.getInt(5), bool);
+				list.add(food);
+			} while (cursor.moveToNext());
+		}
+
+		db.close();
+		return list;
 	}
 
 	@Override
 	public Food get(int id) {
-		// TODO Auto-generated method stub
+		String selectQuery = "SELECT  * FROM " +
+				DatabaseHandler.TABLE_FOODLIST
+				+ " WHERE " +	DatabaseHandler.FOODLIST_ID + " = " + id;
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+		
+		if (cursor.moveToFirst()) {
+			Boolean bool = cursor.getInt(6) != 0;
+			Food food = new Food(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2), cursor.getDouble(7),
+					cursor.getDouble(8), cursor.getDouble(9), cursor.getString(3),
+					cursor.getDouble(4), cursor.getInt(5), bool);
+			return food;
+		}
+
+		db.close();
 		return null;
 	}
 
