@@ -137,7 +137,7 @@ public class MobileCheckupTrackerDaoImpl implements MobileCheckupTrackerDao {
 				}
 
 				CheckUp cu = new CheckUp(cursor.getInt(0), new FBPost(
-						cursor.getInt(7)), timestamp, cursor.getString(5),
+						cursor.getString(7)), timestamp, cursor.getString(5),
 						image, cursor.getString(2), cursor.getString(3),
 						cursor.getString(4));
 
@@ -189,7 +189,7 @@ public class MobileCheckupTrackerDaoImpl implements MobileCheckupTrackerDao {
 				}
 
 				CheckUp cu = new CheckUp(cursor.getInt(0), new FBPost(
-						cursor.getInt(7)), timestamp, cursor.getString(5),
+						cursor.getString(7)), timestamp, cursor.getString(5),
 						image, cursor.getString(2), cursor.getString(3),
 						cursor.getString(4));
 
@@ -229,7 +229,7 @@ public class MobileCheckupTrackerDaoImpl implements MobileCheckupTrackerDao {
 			}
 
 			CheckUp cu = new CheckUp(cursor.getInt(0), new FBPost(
-					cursor.getInt(7)), timestamp, cursor.getString(5),
+					cursor.getString(7)), timestamp, cursor.getString(5),
 					image, cursor.getString(2), cursor.getString(3),
 					cursor.getString(4));
 			return cu;

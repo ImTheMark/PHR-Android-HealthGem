@@ -5,19 +5,19 @@ import java.util.Date;
 
 public class FBPost implements Serializable {
 
-	public Integer id;
+	public String id;
 	public String status;
 	public Date datetime;
 	public FBPostType postType;
 	public PHRImage image;
 	public String[] extractedWords;
 
-	public FBPost(Integer id) {
+	public FBPost(String id) {
 		super();
 		this.id = id;
 	}
 
-	public FBPost(Integer id, String status, Date datetime,
+	public FBPost(String id, String status, Date datetime,
 			FBPostType postType, PHRImage image, String[] extractedWords) {
 		super();
 		this.id = id;
@@ -38,11 +38,11 @@ public class FBPost implements Serializable {
 		this.extractedWords = extractedWords;
 	}
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

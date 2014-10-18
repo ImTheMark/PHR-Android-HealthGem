@@ -141,7 +141,7 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 					}
 
 					FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
-							cursor.getInt(0), new FBPost(cursor.getInt(6)),
+							cursor.getInt(0), new FBPost(cursor.getString(6)),
 							timestamp, cursor.getString(4), image,
 							mobileFoodDao.get(cursor.getInt(2)),
 							cursor.getDouble(3));
@@ -186,7 +186,7 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 					}
 
 					FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
-							cursor.getInt(0), new FBPost(cursor.getInt(6)),
+							cursor.getInt(0), new FBPost(cursor.getString(6)),
 							timestamp, cursor.getString(4), image,
 							mobileFoodDao.get(cursor.getInt(2)),
 							cursor.getDouble(3));
@@ -239,7 +239,7 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 				}
 
 				FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
-						cursor.getInt(0), new FBPost(cursor.getInt(6)),
+						cursor.getInt(0), new FBPost(cursor.getString(6)),
 						timestamp, cursor.getString(4), image,
 						mobileFoodDao.get(cursor.getInt(2)),
 						cursor.getDouble(3));

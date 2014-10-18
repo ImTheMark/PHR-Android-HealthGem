@@ -142,7 +142,7 @@ public class MobileBloodSugarTrackerDaoImpl implements
 				}
 
 				BloodSugar bs = new BloodSugar(cursor.getInt(0), new FBPost(
-						cursor.getInt(6)), timestamp, cursor.getString(4),
+						cursor.getString(6)), timestamp, cursor.getString(4),
 						image, cursor.getDouble(2), cursor.getString(3));
 
 				bsList.add(bs);
@@ -195,7 +195,7 @@ public class MobileBloodSugarTrackerDaoImpl implements
 				}
 
 				BloodSugar bs = new BloodSugar(cursor.getInt(0), new FBPost(
-						cursor.getInt(6)), timestamp, cursor.getString(4),
+						cursor.getString(6)), timestamp, cursor.getString(4),
 						image, cursor.getDouble(2), cursor.getString(3));
 
 				bsList.add(bs);
@@ -236,7 +236,7 @@ public class MobileBloodSugarTrackerDaoImpl implements
 			}
 
 			BloodSugar bs = new BloodSugar(cursor.getInt(0), new FBPost(
-					cursor.getInt(6)), timestamp, cursor.getString(4),
+					cursor.getString(6)), timestamp, cursor.getString(4),
 					image, cursor.getDouble(2), cursor.getString(3));
 			return bs;
 		}

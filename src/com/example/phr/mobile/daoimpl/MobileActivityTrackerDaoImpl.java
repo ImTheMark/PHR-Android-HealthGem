@@ -150,7 +150,7 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 					}
 
 					ActivityTrackerEntry act = new ActivityTrackerEntry(
-							cursor.getInt(0), new FBPost(cursor.getInt(7)),
+							cursor.getInt(0), new FBPost(cursor.getString(7)),
 							timestamp, cursor.getString(5), image,
 							mobileActivityDao.get(cursor.getInt(2)),
 							cursor.getDouble(4), cursor.getInt(3));
@@ -197,7 +197,7 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 					}
 
 					ActivityTrackerEntry act = new ActivityTrackerEntry(
-							cursor.getInt(0), new FBPost(cursor.getInt(7)),
+							cursor.getInt(0), new FBPost(cursor.getString(7)),
 							timestamp, cursor.getString(5), image,
 							mobileActivityDao.get(cursor.getInt(2)),
 							cursor.getDouble(4), cursor.getInt(3));
@@ -250,7 +250,7 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 				}
 
 				ActivityTrackerEntry act = new ActivityTrackerEntry(
-						cursor.getInt(0), new FBPost(cursor.getInt(7)),
+						cursor.getInt(0), new FBPost(cursor.getString(7)),
 						timestamp, cursor.getString(5), image,
 						mobileActivityDao.get(cursor.getInt(2)),
 						cursor.getDouble(4), cursor.getInt(3));

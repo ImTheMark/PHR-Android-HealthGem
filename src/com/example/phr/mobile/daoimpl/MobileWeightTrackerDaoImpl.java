@@ -135,7 +135,7 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 					image.setEncodedImage(encoded);
 				}
 				Weight weight = new Weight(cursor.getInt(0), new FBPost(
-						cursor.getInt(5)), timestamp, cursor.getString(3),
+						cursor.getString(5)), timestamp, cursor.getString(3),
 						image, cursor.getDouble(2));
 
 				weightList.add(weight);
@@ -188,7 +188,7 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 				}
 
 				Weight weight = new Weight(cursor.getInt(0), new FBPost(
-						cursor.getInt(5)), timestamp, cursor.getString(3),
+						cursor.getString(5)), timestamp, cursor.getString(3),
 						image, cursor.getDouble(2));
 
 				weightList.add(weight);
@@ -233,7 +233,7 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 				}
 
 				Weight weight = new Weight(cursor.getInt(0), new FBPost(
-						cursor.getInt(5)), timestamp, cursor.getString(3),
+						cursor.getString(5)), timestamp, cursor.getString(3),
 						image, cursor.getDouble(2));
 
 				weightList.add(weight);
@@ -289,7 +289,7 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 			}
 
 			Weight weight = new Weight(cursor.getInt(0), new FBPost(
-					cursor.getInt(5)), timestamp, cursor.getString(3),
+					cursor.getString(5)), timestamp, cursor.getString(3),
 					image, cursor.getDouble(2));
 			return weight;
 		}

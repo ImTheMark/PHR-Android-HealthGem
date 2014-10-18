@@ -154,7 +154,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ ACT_CALORIEBURNED + " INTEGER," 
 				+ ACT_STATUS + " TEXT,"
 				+ ACT_PHOTO + " TEXT,"  
-				+ ACT_FBPOSTID + " INTEGER"  
+				+ ACT_FBPOSTID + " TEXT"  
 				+ ")";
 		
 		
@@ -166,7 +166,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ BP_DIASTOLIC + " INTEGER," 
 				+ BP_STATUS + " TEXT,"
 				+ BP_PHOTO + " TEXT,"  
-				+ BP_FBPOSTID + " INTEGER"  
+				+ BP_FBPOSTID + " TEXT"  
 				+ ")";
 		
 		
@@ -178,7 +178,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ BS_TYPE + " TEXT," 
 				+ BS_STATUS + " TEXT,"
 				+ BS_PHOTO + " TEXT,"  
-				+ BS_FBPOSTID + " INTEGER"  
+				+ BS_FBPOSTID + " TEXT"  
 				+ ")";
 		
 		
@@ -191,7 +191,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ CU_NOTES + " TEXT," 
 				+ CU_STATUS + " TEXT,"
 				+ CU_PHOTO + " TEXT,"  
-				+ CU_FBPOSTID + " INTEGER"  
+				+ CU_FBPOSTID + " TEXT"  
 				+ ")";
 		
 		
@@ -215,7 +215,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ FOOD_SERVINGCOUNT + " INTEGER," 
 				+ FOOD_STATUS + " TEXT,"
 				+ FOOD_PHOTO + " TEXT,"  
-				+ FOOD_FBPOSTID + " INTEGER"  
+				+ FOOD_FBPOSTID + " TEXT"  
 				+ ")";
 		
 		
@@ -226,7 +226,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ NOTES_NOTE + " TEXT," 
 				+ NOTES_STATUS + " TEXT,"
 				+ NOTES_PHOTO + " TEXT,"  
-				+ NOTES_FBPOSTID + " INTEGER"  
+				+ NOTES_FBPOSTID + " TEXT"  
 				+ ")";
 		
 		
@@ -237,7 +237,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ WEIGHT_POUNDS + " REAL," 
 				+ WEIGHT_STATUS + " TEXT,"
 				+ WEIGHT_PHOTO + " TEXT,"  
-				+ WEIGHT_FBPOSTID + " INTEGER"  
+				+ WEIGHT_FBPOSTID + " TEXT"  
 				+ ")";
 		
 		db.execSQL(CREATE_ACCESSTOKEN_TABLE);

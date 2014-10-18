@@ -131,7 +131,7 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 				}
 				Note note = new Note(cursor.getInt(0), new FBPost(
-						cursor.getInt(5)), timestamp, cursor.getString(3),
+						cursor.getString(5)), timestamp, cursor.getString(3),
 						image, cursor.getString(2));
 
 				noteList.add(note);
@@ -183,7 +183,7 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 				}
 
 				Note note = new Note(cursor.getInt(0), new FBPost(
-						cursor.getInt(5)), timestamp, cursor.getString(3),
+						cursor.getString(5)), timestamp, cursor.getString(3),
 						image, cursor.getString(2));
 
 				noteList.add(note);
@@ -222,7 +222,7 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 			}
 
 			Note note = new Note(cursor.getInt(0), new FBPost(
-					cursor.getInt(5)), timestamp, cursor.getString(3),
+					cursor.getString(5)), timestamp, cursor.getString(3),
 					image, cursor.getString(2));
 			return note;
 		}
