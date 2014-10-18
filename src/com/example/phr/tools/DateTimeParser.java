@@ -18,6 +18,13 @@ public class DateTimeParser {
 	}
 
 	@SuppressLint("SimpleDateFormat")
+	public static String getDateTime(Timestamp date) {
+		SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy HH:mm",
+				Locale.ENGLISH);
+		return formatter.format(date);
+	}
+
+	@SuppressLint("SimpleDateFormat")
 	public static String getTime(Timestamp date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm",
 				Locale.ENGLISH);

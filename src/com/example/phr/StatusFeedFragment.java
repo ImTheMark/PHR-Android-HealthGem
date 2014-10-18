@@ -14,12 +14,17 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.example.phr.adapter.StatusAdapter;
+import com.example.phr.exceptions.ServiceException;
+import com.example.phr.mobile.models.TrackerEntry;
 import com.example.phr.model.Status;
+import com.example.phr.service.TimelineService;
+import com.example.phr.serviceimpl.TimelineServiceImpl;
 
 public class StatusFeedFragment extends Fragment {
 
 	StatusAdapter statusAdapter;
 	ListView mSatusFeedList;
+	TimelineService timelineService;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,9 +34,19 @@ public class StatusFeedFragment extends Fragment {
 				container, false);
 
 		mSatusFeedList = (ListView) rootView.findViewById(R.id.statusFeedList);
+		
+		timelineService = new TimelineServiceImpl();
 
+		List<TrackerEntry> list = new ArrayList<TrackerEntry>();
+		
+		try {
+			list = timelineService.getAll();
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+		
 		statusAdapter = new StatusAdapter(this.getActivity()
-				.getApplicationContext(), generateData());
+				.getApplicationContext(), list);
 		mSatusFeedList.setAdapter(statusAdapter);
 		mSatusFeedList.setOnItemClickListener(new OnItemClickListener() {
 			@Override

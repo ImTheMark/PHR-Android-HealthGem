@@ -23,9 +23,9 @@ public class StatusFeedActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-		setContentView(R.layout.activity_status_feed);
+		setContentView(R.layout.activity_status_feed);/*
 		statusAdapter = new StatusAdapter(getApplicationContext(), generateData());
-		setListAdapter(statusAdapter);
+		setListAdapter(statusAdapter);*/
 		
 	}
 	
