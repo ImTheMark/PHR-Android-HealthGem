@@ -18,7 +18,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.example.phr.exceptions.OutdatedAccessTokenException;
+import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.ActivitySingle;
+import com.example.phr.service.ActivityService;
+import com.example.phr.serviceimpl.ActivityServiceImpl;
 
 public class ActivitiesSearchListActivity extends Activity {
 	EditText searchWord;
@@ -43,19 +47,34 @@ public class ActivitiesSearchListActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
+				/*
+				 * result = new ArrayList<ActivitySingle>(); result.add(new
+				 * ActivitySingle(1, "jogging", 150.5)); result.add(new
+				 * ActivitySingle(2, "running", 200.5));
+				 */
+				ActivityService service = new ActivityServiceImpl();
+				Log.e("search word", searchWord.getText().toString());
 				result = new ArrayList<ActivitySingle>();
-				result.add(new ActivitySingle(1, "jogging", 150.5));
-				result.add(new ActivitySingle(2, "running", 200.5));
-
+				try {
+					result = (ArrayList<ActivitySingle>) service
+							.search(searchWord.getText().toString());
+				} catch (ServiceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (OutdatedAccessTokenException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				resultName = new ArrayList<String>();
+				if (result != null) {
+					for (int i = 0; i < result.size(); i++)
+						resultName.add(result.get(i).getName());
 
-				for (int i = 0; i < result.size(); i++)
-					resultName.add(result.get(i).getName());
+					adapter = new ArrayAdapter<String>(getApplicationContext(),
+							R.layout.item_custom_listview, resultName);
 
-				adapter = new ArrayAdapter<String>(getApplicationContext(),
-						R.layout.item_custom_listview, resultName);
-
-				searchList.setAdapter(adapter);
+					searchList.setAdapter(adapter);
+				}
 			}
 		});
 

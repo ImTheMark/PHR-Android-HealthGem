@@ -61,51 +61,11 @@ public class BloodSugarTrackerActivity extends Activity {
 		mBloodSugarList = (ListView) findViewById(R.id.listView_bloodsugar);
 		list = new ArrayList<BloodSugar>();
 
-		// FAKE DATA
-		/*
-		 * BloodSugar data1 = new BloodSugar(1, 7.5, "Post prandial" ,""
-		 * ,"Jul 12, 2014", "3:40pm",
-		 * getResources().getDrawable(R.drawable.bloodsugar_normal));
-		 * 
-		 * BloodSugar data2 = new BloodSugar(2, 9, "Post prandial" ,""
-		 * ,"Jul 05, 2014", "5:40pm",
-		 * getResources().getDrawable(R.drawable.bloodsugar_warning));
-		 * 
-		 * BloodSugar data3 = new BloodSugar(3, 7.4, "Post prandial" ,""
-		 * ,"Jun 28, 2014", "8:40pm",
-		 * getResources().getDrawable(R.drawable.bloodsugar_normal));
-		 * 
-		 * BloodSugar data4 = new BloodSugar(4, 9, "Post prandial" ,""
-		 * ,"Jun 21, 2014", "3:40pm",
-		 * getResources().getDrawable(R.drawable.bloodsugar_warning));
-		 * 
-		 * BloodSugar data5 = new BloodSugar(2, 9, "Post prandial" ,""
-		 * ,"Jun 14, 2014", "5:40pm",
-		 * getResources().getDrawable(R.drawable.bloodsugar_warning));
-		 * 
-		 * BloodSugar data6 = new BloodSugar(3, 7.4, "Post prandial" ,""
-		 * ,"Jun 07, 2014", "8:40pm",
-		 * getResources().getDrawable(R.drawable.bloodsugar_normal));
-		 * 
-		 * BloodSugar data7 = new BloodSugar(4, 9, "Post prandial" ,""
-		 * ,"May 31, 2014", "3:40pm",
-		 * getResources().getDrawable(R.drawable.bloodsugar_warning));
-		 * 
-		 * list.add(data1); list.add(data2); list.add(data3); list.add(data4);
-		 * list.add(data5); list.add(data6); list.add(data7);
-		 */
-
-		// MobileBloodSugarDaoImpl bsDaoImpl = new MobileBloodSugarDaoImpl();
 		bsServiceImpl = new BloodSugarTrackerServiceImpl();
 		try {
-			// list = bsDaoImpl.getAllReversed();
-			// list = bsDaoImpl.getAll();
+		
 			list = bsServiceImpl.getAll();
 
-			/*
-			 * } catch (DataAccessException e) { // TODO Auto-generated catch
-			 * block e.printStackTrace();
-			 */
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -119,11 +79,7 @@ public class BloodSugarTrackerActivity extends Activity {
 					long arg3) {
 				Log.e("bloodsugar",
 						String.valueOf(list.get(arg2).getBloodSugar()));
-				/*
-				 * Intent i = new Intent(); Bundle b = new Bundle();
-				 * b.putParcelable("bs", list.get); i.putExtras(b);
-				 * i.setClass(this, NewStatusActivity.class); startActivity(i);
-				 */
+			
 				chosenItem = (BloodSugar) arg0.getAdapter().getItem(arg2);
 				mode = "";
 				names = new ArrayList<String>();
@@ -139,8 +95,8 @@ public class BloodSugarTrackerActivity extends Activity {
 				ListView lv = (ListView) convertView
 						.findViewById(R.id.dialogList);
 				ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-						getApplicationContext(),
-						android.R.layout.simple_list_item_1, names);
+						getApplicationContext(), R.layout.item_custom_listview,
+						names);
 				lv.setAdapter(adapter);
 
 				lv.setOnItemClickListener(new OnItemClickListener() {

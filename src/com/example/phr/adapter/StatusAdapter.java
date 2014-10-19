@@ -11,7 +11,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.phr.ActivitiesTrackerActivity;
 import com.example.phr.R;
 import com.example.phr.mobile.models.ActivityTrackerEntry;
 import com.example.phr.mobile.models.BloodPressure;
@@ -88,66 +87,72 @@ public class StatusAdapter extends BaseAdapter {
 		}
 
 		viewHolder = (ViewHolder) convertView.getTag();
-		
-		viewHolder.datettime.setText(DateTimeParser.getDateTime(mListOfStatus.get(position).getTimestamp()));
-		
+
+		viewHolder.datettime.setText(DateTimeParser.getDateTime(mListOfStatus
+				.get(position).getTimestamp()));
+
 		viewHolder.status.setText(mListOfStatus.get(position).getStatus());
-		
-		viewHolder.imgPostVia.setImageResource(R.drawable.activitystatusfeed_heart_gem_supersmall);
-		
-/*		if(mListOfStatus.get(position).getFbPost().getId() != null)
-			viewHolder.imgPostVia.setImageDrawable();
-		else
-			viewHolder.imgPostVia.setImageDrawable(mListOfStatus.get(position)
-					.getPostViaImgUrl());
-		
-		*/
-		if(mListOfStatus.get(position).getClass().equals(ActivityTrackerEntry.class)){
+
+		viewHolder.imgPostVia
+				.setImageResource(R.drawable.activitystatusfeed_heart_gem_supersmall);
+
+		/*
+		 * if(mListOfStatus.get(position).getFbPost().getId() != null)
+		 * viewHolder.imgPostVia.setImageDrawable(); else
+		 * viewHolder.imgPostVia.setImageDrawable(mListOfStatus.get(position)
+		 * .getPostViaImgUrl());
+		 */
+		if (mListOfStatus.get(position).getClass()
+				.equals(ActivityTrackerEntry.class)) {
 			viewHolder.actionHolder.setText("Doing ");
-			viewHolder.actionName.setText(((ActivityTrackerEntry) mListOfStatus.get(position)).getActivity().getName());
+			viewHolder.actionName.setText(((ActivityTrackerEntry) mListOfStatus
+					.get(position)).getActivity().getName());
 			viewHolder.imgAction.setImageResource(R.drawable.icon_activity);
-		}
-		else if(mListOfStatus.get(position).getClass().equals(BloodPressure.class)){
+		} else if (mListOfStatus.get(position).getClass()
+				.equals(BloodPressure.class)) {
 			viewHolder.actionHolder.setText("Blood Pressure at ");
-			viewHolder.actionName.setText(((BloodPressure)mListOfStatus.get(position)).getSystolic() + "/" + ((BloodPressure)mListOfStatus.get(position)).getDiastolic());
-			viewHolder.imgAction.setImageResource(R.drawable.icon_blood_pressure);
-		}
-		else if(mListOfStatus.get(position).getClass().equals(BloodSugar.class)){
+			viewHolder.actionName.setText(((BloodPressure) mListOfStatus
+					.get(position)).getSystolic()
+					+ "/"
+					+ ((BloodPressure) mListOfStatus.get(position))
+							.getDiastolic());
+			viewHolder.imgAction
+					.setImageResource(R.drawable.icon_blood_pressure);
+		} else if (mListOfStatus.get(position).getClass()
+				.equals(BloodSugar.class)) {
 			viewHolder.actionHolder.setText("Blood Sugar at ");
-			viewHolder.actionName.setText(((BloodSugar)mListOfStatus.get(position)).getBloodSugar()+"");
+			viewHolder.actionName.setText(((BloodSugar) mListOfStatus
+					.get(position)).getBloodSugar() + "");
 			viewHolder.imgAction.setImageResource(R.drawable.icon_blood_sugar);
-		}
-		else if(mListOfStatus.get(position).getClass().equals(CheckUp.class)){
+		} else if (mListOfStatus.get(position).getClass().equals(CheckUp.class)) {
 			viewHolder.actionHolder.setText("Checkup for  ");
-			viewHolder.actionName.setText(((CheckUp)mListOfStatus.get(position)).getPurpose());
+			viewHolder.actionName.setText(((CheckUp) mListOfStatus
+					.get(position)).getPurpose());
 			viewHolder.imgAction.setImageResource(R.drawable.icon_checkup);
-		}
-		else if(mListOfStatus.get(position).getClass().equals(FoodTrackerEntry.class)){
+		} else if (mListOfStatus.get(position).getClass()
+				.equals(FoodTrackerEntry.class)) {
 			viewHolder.actionHolder.setText("Eating ");
-			viewHolder.actionName.setText(((FoodTrackerEntry)mListOfStatus.get(position)).getFood().getName());
+			viewHolder.actionName.setText(((FoodTrackerEntry) mListOfStatus
+					.get(position)).getFood().getName());
 			viewHolder.imgAction.setImageResource(R.drawable.icon_food);
-		}
-		else if(mListOfStatus.get(position).getClass().equals(Note.class)){
+		} else if (mListOfStatus.get(position).getClass().equals(Note.class)) {
 			viewHolder.actionHolder.setText("Note ");
-			viewHolder.actionName.setText(((Note)mListOfStatus.get(position)).getStatus());
+			viewHolder.actionName.setText(((Note) mListOfStatus.get(position))
+					.getStatus());
 			viewHolder.imgAction.setImageResource(R.drawable.icon_note);
-		}
-		else if(mListOfStatus.get(position).getClass().equals(Weight.class)){
+		} else if (mListOfStatus.get(position).getClass().equals(Weight.class)) {
 			viewHolder.actionHolder.setText("Weight at ");
-			viewHolder.actionName.setText(((Weight)mListOfStatus.get(position)).getWeightInKilograms()+"");
+			viewHolder.actionName
+					.setText(((Weight) mListOfStatus.get(position))
+							.getWeightInKilograms() + "");
 			viewHolder.imgAction.setImageResource(R.drawable.icon_weight);
 		}
-		
-		
-		
-		if (mListOfStatus.get(position).getImage().getFileName() != null) {
-			
-			viewHolder.statusImg.setImageDrawable(
-					new BitmapDrawable(
-							mContext.getResources(), 
-							ImageHandler.loadImage(mListOfStatus.get(position).getImage().getFileName())
-							)
-			);
+
+		if (mListOfStatus.get(position).getImage() != null) {
+
+			viewHolder.statusImg.setImageDrawable(new BitmapDrawable(mContext
+					.getResources(), ImageHandler.loadImage(mListOfStatus
+					.get(position).getImage().getFileName())));
 			viewHolder.statusImg.setVisibility(View.VISIBLE);
 
 		} else {

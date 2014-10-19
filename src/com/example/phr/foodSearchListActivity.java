@@ -20,6 +20,8 @@ import android.widget.ListView;
 
 import com.example.phr.adapter.SingleFoodAdapter;
 import com.example.phr.mobile.models.Food;
+import com.example.phr.service.FoodService;
+import com.example.phr.serviceimpl.FoodServiceImpl;
 
 public class foodSearchListActivity extends Activity {
 
@@ -44,22 +46,15 @@ public class foodSearchListActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				// FAKE DATA
+				FoodService service = new FoodServiceImpl();
+				Log.e("search word", searchWord.getText().toString());
 				list = new ArrayList<Food>();
-				Food data1 = new Food("Sinigang", 2.0, 3.0, 5.3, 10.4, "cup",
-						1.0, 1, true);
-				Food data2 = new Food("Bacon", 3.0, 5.0, 2.3, 9.4, "slice",
-						1.0, 1, true);
-				Food data3 = new Food("Hashbrown", 1.0, 5.0, 8.3, 9.4, "piece",
-						1.0, 1, true);
-
-				list.add(data3);
-				list.add(data2);
-				list.add(data1);
-
-				foodsingleAdapter = new SingleFoodAdapter(
-						getApplicationContext(), list);
-				searchList.setAdapter(foodsingleAdapter);
+				list = service.search(searchWord.getText().toString());
+				if (list != null) {
+					foodsingleAdapter = new SingleFoodAdapter(
+							getApplicationContext(), list);
+					searchList.setAdapter(foodsingleAdapter);
+				}
 			}
 		});
 

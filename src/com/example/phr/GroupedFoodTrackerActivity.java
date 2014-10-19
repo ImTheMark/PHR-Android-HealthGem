@@ -12,11 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.example.phr.adapter.GroupedFoodAdapter;
+import com.example.phr.enums.TrackerInputType;
 import com.example.phr.model.GroupedFood;
 
 public class GroupedFoodTrackerActivity extends Activity {
@@ -24,27 +25,28 @@ public class GroupedFoodTrackerActivity extends Activity {
 	ListView mGroupedFoodList;
 	GroupedFoodAdapter groupedfoodAdapter;
 	ImageView mBtnGroupedFoodPost;
-	
+
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_groupedfood_tracker);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		setTitle("Food Tracker");
 		mGroupedFoodList = (ListView) findViewById(R.id.listView_groupedfood);
-				
+
 		// FAKE DATA
 		List<GroupedFood> list = new ArrayList<GroupedFood>();
-		GroupedFood data1 = new GroupedFood("Jul","12",459,20.41,24.89,43.07);
-		
-		GroupedFood data2 = new GroupedFood("Jul","11",679,30.3,18,50);
-		GroupedFood data3 = new GroupedFood("Jul","10",152,883,23,344);
+		GroupedFood data1 = new GroupedFood("Jul", "12", 459, 20.41, 24.89,
+				43.07);
 
-		GroupedFood data4 = new GroupedFood("Jul","8",1100,30.3,18,50);
-		GroupedFood data5 = new GroupedFood("Jul","7",400,883,23,344);
-		GroupedFood data6 = new GroupedFood("Jul","6",598,30.3,18,50);
-		GroupedFood data7 = new GroupedFood("Jul","4",152,883,23,344);
+		GroupedFood data2 = new GroupedFood("Jul", "11", 679, 30.3, 18, 50);
+		GroupedFood data3 = new GroupedFood("Jul", "10", 152, 883, 23, 344);
+
+		GroupedFood data4 = new GroupedFood("Jul", "8", 1100, 30.3, 18, 50);
+		GroupedFood data5 = new GroupedFood("Jul", "7", 400, 883, 23, 344);
+		GroupedFood data6 = new GroupedFood("Jul", "6", 598, 30.3, 18, 50);
+		GroupedFood data7 = new GroupedFood("Jul", "4", 152, 883, 23, 344);
 
 		list.add(data1);
 		list.add(data2);
@@ -54,9 +56,8 @@ public class GroupedFoodTrackerActivity extends Activity {
 		list.add(data6);
 		list.add(data7);
 
-		
-
-		groupedfoodAdapter = new GroupedFoodAdapter(getApplicationContext(), list);
+		groupedfoodAdapter = new GroupedFoodAdapter(getApplicationContext(),
+				list);
 		mGroupedFoodList.setAdapter(groupedfoodAdapter);
 		mGroupedFoodList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -65,30 +66,29 @@ public class GroupedFoodTrackerActivity extends Activity {
 				Log.e("groupedfood", "CLICKED!");
 			}
 		});
-		
-		mBtnGroupedFoodPost = (ImageView) findViewById(R.id.foodBanner);
+
+		mBtnGroupedFoodPost = (ImageView) findViewById(R.id.foodBanner_post);
 		mBtnGroupedFoodPost.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {/*
+			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(),
-						FoodTrackerPostActivity.class);
-				startActivity(intent);*/
+						NewStatusActivity.class);
+				intent.putExtra("tracker", TrackerInputType.FOOD);
+				startActivity(intent);
 			}
 		});
 	}
-	
+
 	@Override
-    public boolean onOptionsItemSelected(MenuItem item) 
-    {
-        switch (item.getItemId()) 
-        {
-        case android.R.id.home: 
-            onBackPressed();
-            break;
-        default:
-            return super.onOptionsItemSelected(item);
-        }
-        return true;
-    }
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			onBackPressed();
+			break;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+		return true;
+	}
 
 }

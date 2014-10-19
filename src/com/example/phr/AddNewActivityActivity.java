@@ -3,6 +3,7 @@ package com.example.phr;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -45,8 +46,9 @@ public class AddNewActivityActivity extends Activity {
 			Double computedMet = 100.0;
 			ActivitySingle addActivity = new ActivitySingle(newActivity
 					.getText().toString(), computedMet);
+			Log.e("new", addActivity.getName());
 			i.putExtra("from", "new activity");
-			i.putExtra("activity addded", addActivity);
+			i.putExtra("activity added", addActivity);
 			i.putExtra("activity_duration", newActivityDuration.getText()
 					.toString());
 			i.putExtra("activity_unit",

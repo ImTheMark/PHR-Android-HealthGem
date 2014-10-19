@@ -42,26 +42,7 @@ public class CheckupTrackerActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		setTitle("Checkup Tracker");
 		mCheckupList = (ListView) findViewById(R.id.listView_checkup);
-		/*
-		 * // FAKE DATA List<Checkup> list = new ArrayList<Checkup>();
-		 * 
-		 * Checkup data1 = new
-		 * Checkup("Cold and Cough Checkup","Dr. Maria Rosario"
-		 * ,"The Angel's Clinic Place","23","July", null);
-		 * 
-		 * Checkup data2 = new
-		 * Checkup("General Checkup","Dr. Michael Lee","UST hospital","4","May",
-		 * null);
-		 * 
-		 * Checkup data3 = new
-		 * Checkup("Braces","Dra. Maria Anton","Ortigas","5","Aug", null);
-		 * 
-		 * Checkup data4 = new
-		 * Checkup("Nutrition check","Dr. Michael Lee","UST hospital"
-		 * ,"15","Mar",null);
-		 * 
-		 * list.add(data1); list.add(data2); list.add(data3); list.add(data4);
-		 */
+
 		list = new ArrayList<CheckUp>();
 		checkupServiceImpl = new CheckUpTrackerServiceImpl();
 		try {

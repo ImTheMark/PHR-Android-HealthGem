@@ -1,6 +1,5 @@
 package com.example.phr;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,14 +27,17 @@ import android.widget.ListView;
 
 import com.example.phr.adapter.DailyFoodAdapter;
 import com.example.phr.enums.TrackerInputType;
-import com.example.phr.mobile.models.Food;
+import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.FoodTrackerEntry;
+import com.example.phr.service.FoodTrackerService;
+import com.example.phr.serviceimpl.FoodTrackerServiceImpl;
 
 public class FoodTrackerDailyActivity extends Activity {
 
 	ListView mFoodSingleList;
 	DailyFoodAdapter foodsingleAdapter;
 	ImageView mBtnFoodSinglePost;
+	FoodTrackerService foodService;
 
 	// --------------------------------------------------------
 
@@ -50,29 +52,37 @@ public class FoodTrackerDailyActivity extends Activity {
 		mFoodSingleList = (ListView) findViewById(R.id.listView_food_single);
 
 		// FAKE DATA
-		Food food1 = new Food("Sinigang", 2.0, 3.0, 5.3, 10.4, "cup", 1.0, 1,
-				true);
-		Food food2 = new Food("Bacon", 3.0, 5.0, 2.3, 9.4, "slice", 1.0, 1,
-				true);
-		Food food3 = new Food("Hashbrown", 1.0, 5.0, 8.3, 9.4, "piece", 1.0, 1,
-				true);
-
+		/*
+		 * Food food1 = new Food("Sinigang", 2.0, 3.0, 5.3, 10.4, "cup", 1.0, 1,
+		 * true); Food food2 = new Food("Bacon", 3.0, 5.0, 2.3, 9.4, "slice",
+		 * 1.0, 1, true); Food food3 = new Food("Hashbrown", 1.0, 5.0, 8.3, 9.4,
+		 * "piece", 1.0, 1, true);
+		 * 
+		 * List<FoodTrackerEntry> list = new ArrayList<FoodTrackerEntry>();
+		 * FoodTrackerEntry data1 = new FoodTrackerEntry(
+		 * Timestamp.valueOf("2011-10-02 18:48:05.123456"), "status", null,
+		 * food1, 1.0);
+		 * 
+		 * FoodTrackerEntry data2 = new FoodTrackerEntry(
+		 * Timestamp.valueOf("2011-10-02 12:48:05.123456"), "status", null,
+		 * food2, 1.0);
+		 * 
+		 * FoodTrackerEntry data3 = new FoodTrackerEntry(
+		 * Timestamp.valueOf("2011-10-4 15:48:05.123456"), "status", null,
+		 * food3, 1.0);
+		 * 
+		 * list.add(data3); list.add(data2); list.add(data1);
+		 */
 		List<FoodTrackerEntry> list = new ArrayList<FoodTrackerEntry>();
-		FoodTrackerEntry data1 = new FoodTrackerEntry(
-				Timestamp.valueOf("2011-10-02 18:48:05.123456"), "status",
-				null, food1, 1.0);
+		foodService = new FoodTrackerServiceImpl();
+		try {
+			list = foodService.getAll();
 
-		FoodTrackerEntry data2 = new FoodTrackerEntry(
-				Timestamp.valueOf("2011-10-02 12:48:05.123456"), "status",
-				null, food2, 1.0);
-
-		FoodTrackerEntry data3 = new FoodTrackerEntry(
-				Timestamp.valueOf("2011-10-4 15:48:05.123456"), "status", null,
-				food3, 1.0);
-
-		list.add(data3);
-		list.add(data2);
-		list.add(data1);
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Log.e(String.valueOf(list.size()), "size");
 
 		foodsingleAdapter = new DailyFoodAdapter(getApplicationContext(), list);
 		mFoodSingleList.setAdapter(foodsingleAdapter);

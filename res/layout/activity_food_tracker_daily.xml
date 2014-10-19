@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/bloodpressurePost"
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -17,7 +17,7 @@
             android:layout_height="fill_parent"
             android:src="@drawable/food_banner" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/foodGraph"

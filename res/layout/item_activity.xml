@@ -72,7 +72,13 @@
                         android:id="@+id/txtActivityDuration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1 Hour 50 Mins" />
+                        android:text="1" />
+                    
+                     <TextView
+                        android:id="@+id/txtActivityDurationUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" Hour" />
                 </LinearLayout>
             </LinearLayout>
 

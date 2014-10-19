@@ -2,23 +2,21 @@ package com.example.phr.adapter;
 
 import java.util.List;
 
-import com.example.phr.R;
-import com.example.phr.model.Activity;
-import com.example.phr.model.StatusAction;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.phr.R;
+import com.example.phr.mobile.models.ActivityTrackerEntry;
+import com.example.phr.tools.DateTimeParser;
 
 public class ActivityAdapter extends BaseAdapter {
 
-	private Context mContext;
-	private List<Activity> mListOfActivity;
+	private final Context mContext;
+	private final List<ActivityTrackerEntry> mListOfActivity;
 	private int positionSelected;
 
 	private static class ViewHolder {
@@ -29,7 +27,8 @@ public class ActivityAdapter extends BaseAdapter {
 		TextView calBurned;
 	}
 
-	public ActivityAdapter(Context aContext, List<Activity> aListOfJournals) {
+	public ActivityAdapter(Context aContext,
+			List<ActivityTrackerEntry> aListOfJournals) {
 		mListOfActivity = aListOfJournals;
 		mContext = aContext;
 	}
@@ -59,33 +58,32 @@ public class ActivityAdapter extends BaseAdapter {
 					false);
 
 			viewHolder = new ViewHolder();
-			viewHolder.action = (TextView) convertView.findViewById(R.id.txtActivityDone);
-			viewHolder.date = (TextView) convertView.findViewById(R.id.txtActivityDate);
-			viewHolder.time = (TextView) convertView.findViewById(R.id.txtActivityTime);
-			viewHolder.duration = (TextView) convertView.findViewById(R.id.txtActivityDuration);
-			viewHolder.calBurned = (TextView) convertView.findViewById(R.id.txtActivityCalBurned);
+			viewHolder.action = (TextView) convertView
+					.findViewById(R.id.txtActivityDone);
+			viewHolder.date = (TextView) convertView
+					.findViewById(R.id.txtActivityDate);
+			viewHolder.time = (TextView) convertView
+					.findViewById(R.id.txtActivityTime);
+			viewHolder.duration = (TextView) convertView
+					.findViewById(R.id.txtActivityDuration);
+			viewHolder.calBurned = (TextView) convertView
+					.findViewById(R.id.txtActivityCalBurned);
 
 			convertView.setTag(viewHolder);
 		}
 
 		viewHolder = (ViewHolder) convertView.getTag();
-		viewHolder.action.setText(mListOfActivity.get(position).getAction()
-				.toString());
-		viewHolder.date.setText(mListOfActivity.get(position).getDate()
-				.toString());
-		viewHolder.time.setText(mListOfActivity.get(position).getTime()
-				.toString());
-		viewHolder.duration.setText(mListOfActivity.get(position).getDuration()
-				.toString());
-		viewHolder.calBurned.setText(mListOfActivity.get(position).getCalBurned()
-				.toString());
-		convertView.setOnClickListener(new OnClickListener() {
+		viewHolder.action.setText(mListOfActivity.get(position).getActivity()
+				.getName().toString());
+		viewHolder.date.setText(String.valueOf(DateTimeParser
+				.getDate(mListOfActivity.get(position).getTimestamp())));
+		viewHolder.time.setText(String.valueOf(DateTimeParser
+				.getTime(mListOfActivity.get(position).getTimestamp())));
+		double hr = mListOfActivity.get(position).getDurationInSeconds() / 3600;
+		viewHolder.duration.setText(String.valueOf(hr));
+		viewHolder.calBurned.setText(String.valueOf(mListOfActivity.get(
+				position).getCaloriesBurnedPerHour()));
 
-			@Override
-			public void onClick(View v) {
-
-			}
-		});
 		return convertView;
 	}
 

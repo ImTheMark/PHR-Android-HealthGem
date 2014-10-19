@@ -5,28 +5,43 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.phr.adapter.ActivityAdapter;
-import com.example.phr.adapter.StatusAdapter;
 import com.example.phr.enums.TrackerInputType;
-import com.example.phr.model.Status;
+import com.example.phr.exceptions.EntryNotFoundException;
+import com.example.phr.exceptions.OutdatedAccessTokenException;
+import com.example.phr.exceptions.ServiceException;
+import com.example.phr.mobile.models.ActivityTrackerEntry;
+import com.example.phr.serviceimpl.ActivityTrackerServiceImpl;
 
 public class ActivitiesTrackerActivity extends Activity {
-	
+
 	ActivityAdapter activityAdapter;
 	ListView mActivityList;
 	ImageView mBtnAddActivity;
-	
+	List<ActivityTrackerEntry> activityList;
+	ActivityTrackerServiceImpl activityServiceImpl;
+	AlertDialog.Builder alertDialog;
+	ArrayList<String> names;
+	String mode;
+	AlertDialog alertD;
+	ActivityTrackerEntry chosenItem;
+
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,156 +49,126 @@ public class ActivitiesTrackerActivity extends Activity {
 		setContentView(R.layout.activity_activities_tracker);
 		setTitle("Activity Tracker");
 		mActivityList = (ListView) findViewById(R.id.listViewActivityTracker);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-		activityAdapter = new ActivityAdapter(getApplicationContext(), generateData());
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+
+		activityList = new ArrayList<ActivityTrackerEntry>();
+		activityServiceImpl = new ActivityTrackerServiceImpl();
+		try {
+			activityList = activityServiceImpl.getAll();
+
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Log.e(String.valueOf(activityList.size()), "size");
+
+		activityAdapter = new ActivityAdapter(getApplicationContext(),
+				activityList);
 		mActivityList.setAdapter(activityAdapter);
-		
+
+		mActivityList.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				Log.e("activity", "CLICKED!");
+				chosenItem = (ActivityTrackerEntry) arg0.getAdapter().getItem(
+						arg2);
+				mode = "";
+				names = new ArrayList<String>();
+				names.add("Edit");
+				names.add("Delete");
+				alertDialog = new AlertDialog.Builder(
+						ActivitiesTrackerActivity.this);
+				LayoutInflater inflater = getLayoutInflater();
+				View convertView = inflater.inflate(R.layout.item_dialogbox,
+						null);
+				alertDialog.setView(convertView);
+				alertDialog.setTitle("What to do?");
+				ListView lv = (ListView) convertView
+						.findViewById(R.id.dialogList);
+				ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+						getApplicationContext(), R.layout.item_custom_listview,
+						names);
+				lv.setAdapter(adapter);
+
+				lv.setOnItemClickListener(new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1,
+							int arg2, long arg3) {
+						// TODO Auto-generated method stub
+						mode = names.get(arg2);
+						alertD.dismiss();
+						Log.e("mode", names.get(arg2));
+
+						if (mode.equals("Edit")) {
+
+							Intent i = new Intent(getApplicationContext(),
+									NewStatusActivity.class);
+							i.putExtra("edit", TrackerInputType.ACTIVITY);
+							i.putExtra("object", chosenItem);
+							startActivity(i);
+						} else if (mode.equals("Delete")) {
+
+							try {
+								Log.e("activity", "del");
+								activityServiceImpl.delete(chosenItem);
+								Log.e("activity", "del_done");
+							} catch (ServiceException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (OutdatedAccessTokenException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (EntryNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
+							Intent i = new Intent(getApplicationContext(),
+									ActivitiesTrackerActivity.class);
+							startActivity(i);
+						}
+					}
+
+				});
+				alertD = alertDialog.create();
+				alertD.show();
+				Log.e("in", "in");
+
+			}
+		});
+
 		mBtnAddActivity = (ImageView) findViewById(R.id.btnAddActivity);
 		mBtnAddActivity.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
-				Intent i = new Intent(getApplicationContext(), NewStatusActivity.class);
-				i.putExtra("tracker",TrackerInputType.ACTIVITY);
+				Intent i = new Intent(getApplicationContext(),
+						NewStatusActivity.class);
+				i.putExtra("tracker", TrackerInputType.ACTIVITY);
 				startActivity(i);
 			}
 		});
 	}
 
-	private List<com.example.phr.model.Activity> generateData() {
-		List<com.example.phr.model.Activity> list = new ArrayList<com.example.phr.model.Activity>();
-		
-		com.example.phr.model.Activity activity1 = new com.example.phr.model.Activity();
-		activity1.setAction("Stationary cycling");
-		activity1.setCalBurned("246");
-		activity1.setDate("Jul 12, 2012");
-		activity1.setTime("4:55 PM");
-		activity1.setDuration("30 Mins");
-		
-		com.example.phr.model.Activity activity2 = new com.example.phr.model.Activity();
-		activity2.setAction("Weight lifting ");
-		activity2.setCalBurned("211");
-		activity2.setDate("Jul 10, 2012");
-		activity2.setTime("5:50 PM");
-		activity2.setDuration("30 Mins");
-		
-		com.example.phr.model.Activity activity3= new com.example.phr.model.Activity();
-		activity3.setAction("Jogging");
-		activity3.setCalBurned("563");
-		activity3.setDate("Jul 19, 2012");
-		activity3.setTime("8:00 AM");
-		activity3.setDuration("1 hr");
-		
-		com.example.phr.model.Activity activity4= new com.example.phr.model.Activity();
-		activity4.setAction("Swimming");
-		activity4.setCalBurned("493");
-		activity4.setDate("Jun 20, 2012");
-		activity4.setTime("5:55PM");
-		activity4.setDuration("1 hr");
-		
-		com.example.phr.model.Activity activity5= new com.example.phr.model.Activity();
-		activity5.setAction("Jogging");
-		activity5.setCalBurned("563");
-		activity5.setDate("Jun 05, 2012");
-		activity5.setTime("6:55 PM");
-		activity5.setDuration("1 hr");
-		
-		com.example.phr.model.Activity activity6= new com.example.phr.model.Activity();
-		activity6.setAction("Jogging");
-		activity6.setCalBurned("563");
-		activity6.setDate("Jun 02, 2012");
-		activity6.setTime("5:55 sPM");
-		activity6.setDuration("1 hr");
-		
-		list.add(activity1);
-		list.add(activity2);
-		list.add(activity3);
-		list.add(activity4);
-		list.add(activity5);
-		list.add(activity6);
-		
-		/*		Status activity1 = new Status();
-		activity1.setActionHolder("Doing");
-		activity1.setActionName("swimming");
-		activity1.setDatettime("January 12, 2014 12:34AM");
-		activity1.setStatus("YUM YUM YUM :)))");
-		activity1.setActionImgUrl(getResources().getDrawable(R.drawable.icon_activity));
-		activity1.setPostViaImgUrl(getResources().getDrawable(R.drawable.icon_small_facebook));
-		list.add(activity1);
-		
-		Status activity2 = new Status();
-		activity2.setActionHolder("Doing");
-		activity2.setActionName("reading a book");
-		activity2.setDatettime("January 12, 2014 12:34AM");
-		activity2.setStatus("weeeeeeeeeeeeeee");
-		activity2.setActionImgUrl(getResources().getDrawable(R.drawable.icon_activity));
-		activity2.setPostViaImgUrl(getResources().getDrawable(R.drawable.icon_small_facebook));
-		list.add(activity2);
-		
-		Status activity3 = new Status();
-		activity3.setActionHolder("Doing");
-		activity3.setActionName("fishing");
-		activity3.setDatettime("January 12, 2014 12:34AM");
-		activity3.setStatus("eat today die tom");
-		activity3.setActionImgUrl(getResources().getDrawable(R.drawable.icon_activity));
-		activity3.setPostViaImgUrl(getResources().getDrawable(R.drawable.icon_small_facebook));
-		list.add(activity3);
-		
-		Status activity4 = new Status();
-		activity4.setActionHolder("hatching an egg");
-		activity4.setActionName("coffee");
-		activity4.setDatettime("January 12, 2014 12:34AM");
-		activity4.setStatus("good morning!");
-		activity4.setActionImgUrl(getResources().getDrawable(R.drawable.icon_activity));
-		activity4.setPostViaImgUrl(getResources().getDrawable(R.drawable.icon_small_facebook));
-		list.add(activity4);
-		
-
-		list.add(activity1);
-		list.add(activity2);
-		list.add(activity3);
-		list.add(activity4);
-		list.add(activity1);
-		list.add(activity2);
-		list.add(activity3);
-		list.add(activity4);
-		list.add(activity1);
-		list.add(activity2);
-		list.add(activity3);
-		list.add(activity4);
-		list.add(activity1);
-		list.add(activity2);
-		list.add(activity3);
-		list.add(activity4);
-		list.add(activity1);
-		list.add(activity2);
-		list.add(activity3);
-		list.add(activity4);*/
-		
-		return list;
-	}
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    // Inflate the menu items for use in the action bar
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.menu_tracker_help, menu);
-	    return super.onCreateOptionsMenu(menu);
+		// Inflate the menu items for use in the action bar
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_tracker_help, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	@Override
-    public boolean onOptionsItemSelected(MenuItem item) 
-    {
-        switch (item.getItemId()) 
-        {
-        case android.R.id.home: 
-            onBackPressed();
-            break;
-        default:
-            return super.onOptionsItemSelected(item);
-        }
-        return true;
-    }
-	
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			onBackPressed();
+			break;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+		return true;
+	}
 
 }

@@ -68,40 +68,6 @@ public class BloodPressureTrackerActivity extends Activity {
 		// FAKE DATA
 		list = new ArrayList<BloodPressure>();
 		reverselist = new ArrayList<BloodPressure>();
-		/*
-		 * BloodPressure data7 = new
-		 * BloodPressure(1,140,90,"May 31, 2014","3:40pm"
-		 * ,null,getResources().getDrawable(R.drawable.bloodpressure_warning));
-		 * 
-		 * BloodPressure data6 = new
-		 * BloodPressure(2,134,90,"Jun 07, 2014","1:40pm"
-		 * ,null,getResources().getDrawable(R.drawable.bloodpressure_warning));
-		 * 
-		 * BloodPressure data5 = new
-		 * BloodPressure(3,110,80,"Jun 14, 2014","2:40pm"
-		 * ,null,getResources().getDrawable(R.drawable.bloodpressure_normal));
-		 * 
-		 * BloodPressure data4 = new
-		 * BloodPressure(4,114,80,"Jun 21, 2014","2:50pm"
-		 * ,null,getResources().getDrawable(R.drawable.bloodpressure_normal));
-		 * 
-		 * BloodPressure data3 = new
-		 * BloodPressure(5,118,85,"Jun 28, 2014","1:40pm"
-		 * ,null,getResources().getDrawable(R.drawable.bloodpressure_warning));
-		 * 
-		 * BloodPressure data2 = new
-		 * BloodPressure(6,114,80,"Jul 05, 2014","2:40pm"
-		 * ,null,getResources().getDrawable(R.drawable.bloodpressure_normal));
-		 * 
-		 * BloodPressure data1 = new
-		 * BloodPressure(7,110,80,"Jul 12, 2014","2:50pm"
-		 * ,null,getResources().getDrawable(R.drawable.bloodpressure_normal));
-		 * list.add(data1); list.add(data2); list.add(data3); list.add(data4);
-		 * list.add(data5); list.add(data6); list.add(data7);
-		 */
-
-		// MobileBloodPressureTrackerDaoImpl bpDaoImpl = new
-		// MobileBloodPressureTrackerDaoImpl();
 
 		bpServiceImpl = new BloodPressureTrackerServiceImpl();
 		try {
@@ -139,8 +105,8 @@ public class BloodPressureTrackerActivity extends Activity {
 				ListView lv = (ListView) convertView
 						.findViewById(R.id.dialogList);
 				ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-						getApplicationContext(),
-						android.R.layout.simple_list_item_1, names);
+						getApplicationContext(), R.layout.item_custom_listview,
+						names);
 				lv.setAdapter(adapter);
 
 				lv.setOnItemClickListener(new OnItemClickListener() {

@@ -126,7 +126,6 @@ public class NewStatusActivity extends Activity {
 	DateFormat fmt;
 	Calendar calobj;
 	String mode;
-	String kind;
 	final Context context = this;
 	BloodSugar editBs;
 	BloodPressure editBp;
@@ -134,10 +133,7 @@ public class NewStatusActivity extends Activity {
 	Note editNote;
 	CheckUp editCheckup;
 	ActivitySingle chosenActivity;
-	ActivitySingle addActivity;
 	Food chosenFood;
-	Food addFood;
-	private static final int CAMERA_REQUEST = 1888;
 	ImageView statusImage;
 	Bitmap photo;
 	Boolean setImage;
@@ -303,21 +299,9 @@ public class NewStatusActivity extends Activity {
 		txtFoodQuantity.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String text = txtFoodQuantity.toString();
-				double num = 1.0;
-				try {
-					int temp = Integer.parseInt(text);
-				} catch (NumberFormatException e) {
-					Log.i("", text + "is not a number");
-				}
-				try {
-					num = Double.parseDouble(text);
 
-				} catch (NumberFormatException e) {
-					Log.i("", text + "is not a number");
-				}
-
-				callFoodServingInput(chosenFood, num);
+				callFoodServingInput(chosenFood, Double
+						.parseDouble(txtFoodQuantity.getText().toString()));
 			}
 		});
 		txtFood.setOnClickListener(new OnClickListener() {
@@ -427,26 +411,29 @@ public class NewStatusActivity extends Activity {
 			if (from.equals("new activity")) {
 				currentTracker = TrackerInputType.ACTIVITY;
 				txtCurrentTracker.setText(TrackerInputType.ACTIVITY);
-				kind = "new";
-				addActivity = (ActivitySingle) in.getExtras().getSerializable(
-						"activity added");
-				setActivityTemplate(extras.getString("activity_name"),
-						addActivity.getMET(),
+
+				chosenActivity = (ActivitySingle) in.getExtras()
+						.getSerializable("activity added");
+				Log.e("new activity", chosenActivity.getName());
+				setActivityTemplate(chosenActivity.getName(),
+						chosenActivity.getMET(),
 						extras.getString("activity_duration"),
 						extras.getString("activity_unit"), "");
 
 			} else if (from.equals("new food")) {
 				currentTracker = TrackerInputType.FOOD;
 				txtCurrentTracker.setText(TrackerInputType.FOOD);
-				kind = "new";
-				addFood = (Food) in.getExtras().getSerializable("food added");
-				setFoodTemplate(addFood.getName(), String.valueOf(addFood
-						.getCalorie()), String.valueOf(addFood.getProtein()),
-						String.valueOf(addFood.getCarbohydrate()),
-						String.valueOf(addFood.getFat()),
-						String.valueOf(addFood.getServingSize()),
-						String.valueOf(addFood.getServingUnit()), notesStatus
-								.getText().toString());
+
+				chosenFood = (Food) in.getExtras()
+						.getSerializable("food added");
+				setFoodTemplate(chosenFood.getName(),
+						String.valueOf(chosenFood.getCalorie()),
+						String.valueOf(chosenFood.getProtein()),
+						String.valueOf(chosenFood.getCarbohydrate()),
+						String.valueOf(chosenFood.getFat()),
+						String.valueOf(chosenFood.getServingSize()),
+						String.valueOf(chosenFood.getServingUnit()),
+						notesStatus.getText().toString());
 
 			}
 		} else if (extras != null && in.hasExtra("edit")) {
@@ -720,12 +707,10 @@ public class NewStatusActivity extends Activity {
 			// String activity = data.getStringExtra("activity chosen");
 			chosenActivity = (ActivitySingle) data.getExtras().getSerializable(
 					"activity chosen");
-			kind = "old";
 			currentTracker = TrackerInputType.ACTIVITY;
 			txtCurrentTracker.setText(TrackerInputType.ACTIVITY);
 			callActivityDurationInput(1, "hr");
 		} else if (requestCode == 4) {
-			kind = "old";
 			chosenFood = (Food) data.getExtras().getSerializable("food chosen");
 			txtCurrentTracker.setText(TrackerInputType.FOOD);
 			currentTracker = TrackerInputType.FOOD;
@@ -763,14 +748,16 @@ public class NewStatusActivity extends Activity {
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
-						// set activity cal -- get from database
+
 						setFoodTemplate(food.getName(), String.valueOf(food
 								.getCalorie()), String.valueOf(food
 								.getProtein()), String.valueOf(food
 								.getCarbohydrate()), String.valueOf(food
-								.getFat()), String.valueOf(txtFoodSize
-								.getText()), food.getServingUnit(), notesStatus
-								.getText().toString());
+								.getFat()),
+								String.valueOf(Double.parseDouble(txtFoodSize
+										.getText().toString())), food
+										.getServingUnit(), notesStatus
+										.getText().toString());
 
 					}
 				})
@@ -1176,27 +1163,12 @@ public class NewStatusActivity extends Activity {
 				image = null;
 
 			FoodTrackerEntry foodEntry = null;
-			if (kind.equals("new")) {
-				foodEntry = new FoodTrackerEntry(
-						timestamp,
-						notesStatus.getText().toString(),
-						image,
-						addFood,
-						Double.parseDouble(txtFoodQuantity.getText().toString()));
+			foodEntry = new FoodTrackerEntry(timestamp, notesStatus.getText()
+					.toString(), image, chosenFood,
+					Double.parseDouble(txtFoodQuantity.getText().toString()));
 
-				FoodTrackerService foodTrackerService = new FoodTrackerServiceImpl();
-				foodTrackerService.add(foodEntry);
-			} else if (kind.equals("old")) {
-				foodEntry = new FoodTrackerEntry(
-						timestamp,
-						notesStatus.getText().toString(),
-						image,
-						chosenFood,
-						Double.parseDouble(txtFoodQuantity.getText().toString()));
-
-				FoodTrackerService foodTrackerService = new FoodTrackerServiceImpl();
-				foodTrackerService.add(foodEntry);
-			}
+			FoodTrackerService foodTrackerService = new FoodTrackerServiceImpl();
+			foodTrackerService.add(foodEntry);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -1254,29 +1226,10 @@ public class NewStatusActivity extends Activity {
 			else if (txtActivityDurationUnit.toString().equals("min"))
 				sec = Integer.parseInt(activityDuration.toString()) * 60;
 
-			if (kind.equals("old")) {
-				activityEntry = new ActivityTrackerEntry(
-						timestamp,
-						notesStatus.getText().toString(),
-						image,
-						chosenActivity,
-						Double.parseDouble(txtActivityCal.getText().toString()),
-						sec);
-
-				ActivityTrackerService activityTrackerService = new ActivityTrackerServiceImpl();
-				activityTrackerService.add(activityEntry);
-
-			} else if (kind.equals("new")) {
-
-				activityEntry = new ActivityTrackerEntry(
-						timestamp,
-						notesStatus.getText().toString(),
-						image,
-						addActivity,
-						Double.parseDouble(txtActivityCal.getText().toString()),
-						sec);
-
-			}
+			activityEntry = new ActivityTrackerEntry(timestamp, notesStatus
+					.getText().toString(), image, chosenActivity,
+					Double.parseDouble(txtActivityCal.getText().toString()),
+					sec);
 
 			ActivityTrackerService activityTrackerService = new ActivityTrackerServiceImpl();
 			activityTrackerService.add(activityEntry);

@@ -1,8 +1,9 @@
 package com.example.phr.mobile.models;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class ActivityTrackerEntry extends TrackerEntry {
+public class ActivityTrackerEntry extends TrackerEntry implements Serializable {
 
 	ActivitySingle activity;
 	double caloriesBurnedPerHour;
