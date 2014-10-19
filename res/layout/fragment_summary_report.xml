@@ -479,40 +479,53 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/recordHolder"
+            android:id="@+id/bsHomeRecordHolder"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:orientation="vertical" >
+            android:orientation="vertical" 
+             android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:weightSum="5" >
+                >
 
-                <com.example.phr.AutoResizeTextView
-                    android:id="@+id/txtHomeBsDate"
-                    android:layout_width="0dp"
+                
+                <TextView
+                    android:id="@+id/txtHomeBsAs"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="3.5"
                     android:maxLines="1"
-                    android:text="As of Jul 12, 2014"
+                    android:text="As of "
                     android:textColor="#9e9898"
-                    android:textSize="15sp" />
+                    android:textSize="12sp"
+                   />
+                
+                <TextView
+                    android:id="@+id/txtHomeBsDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    
+                    android:maxLines="1"
+                    android:text="Jul 12, 2014"
+                    android:textColor="#9e9898"
+                    android:textSize="12sp"/>
 
-                <com.example.phr.AutoResizeTextView
+                <TextView
                     android:id="@+id/txtHomeBsTime"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/textView4"
-                    android:layout_weight="1.5"
+                    android:layout_toRightOf="@id/txtHomeBsDate"
+                    
                     android:maxLines="1"
                     android:text="2:40 pm"
                     android:textColor="#9e9898"
-                    android:textSize="15sp" />
+                   android:textSize="12sp" />
             </LinearLayout>
 
             <RelativeLayout
@@ -535,19 +548,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/txtHomeBsNumber"
-                    android:text="   "
-                    android:textSize="18sp"
+                    android:text=" "
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txtHomeBsType"
                     android:layout_width="wrap_content"
-                    android:layout_height="18sp"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginTop="3dp"
+                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/textView2"
                     android:text="Post prandial"
-                    android:gravity="center_vertical"
+                    
                     android:textSize="15sp" />
             </RelativeLayout>
         </LinearLayout>
@@ -563,7 +574,7 @@
             android:orientation="vertical" >
 
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/imgHomeBs"
                 android:layout_width="fill_parent"
                 android:layout_height="60dp"
                 android:layout_marginRight="5dp"

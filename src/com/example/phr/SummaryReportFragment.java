@@ -21,8 +21,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.example.phr.exceptions.ServiceException;
+import com.example.phr.mobile.models.BloodSugar;
+import com.example.phr.service.BloodSugarTrackerService;
+import com.example.phr.serviceimpl.BloodSugarTrackerServiceImpl;
+import com.example.phr.tools.DateTimeParser;
 
 public class SummaryReportFragment extends Fragment {
 
@@ -32,6 +40,23 @@ public class SummaryReportFragment extends Fragment {
 	Button mBtnRetrieve;
 	Button mBtnWrite;
 	Button mBtnStatus;
+	TextView txtBsDate;
+	TextView txtBsTime;
+	TextView txtBsSugarLvl;
+	TextView txtBsType;
+	ImageView imgBs;
+	TextView txtBpDate;
+	TextView txtBpTime;
+	TextView txtBpSystolic;
+	TextView txtBpDiastolic;
+	ImageView imgBp;
+	TextView txtWeight;
+	TextView txtBmi;
+	TextView txtWeightUnit;
+	TextView txtWeightStatus;
+	ImageView imgWeight;
+	BloodSugar bs;
+	LinearLayout bsHomeRecordHolder;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,6 +64,35 @@ public class SummaryReportFragment extends Fragment {
 
 		View rootView = inflater.inflate(R.layout.fragment_summary_report,
 				container, false);
+
+		// blood sugar
+		txtBsDate = (TextView) rootView.findViewById(R.id.txtHomeBsDate);
+		txtBsTime = (TextView) rootView.findViewById(R.id.txtHomeBsTime);
+		txtBsSugarLvl = (TextView) rootView.findViewById(R.id.txtHomeBsNumber);
+		txtBsType = (TextView) rootView.findViewById(R.id.txtHomeBsType);
+		imgBs = (ImageView) rootView.findViewById(R.id.imgHomeBs);
+		bsHomeRecordHolder = (LinearLayout) rootView
+				.findViewById(R.id.bsHomeRecordHolder);
+
+		BloodSugarTrackerService bsService = new BloodSugarTrackerServiceImpl();
+		try {
+			bs = bsService.getLatest();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (bs != null) {
+			bsHomeRecordHolder.setVisibility(View.VISIBLE);
+			txtBsDate.setText(String.valueOf(DateTimeParser.getDate(bs
+					.getTimestamp())));
+			txtBsTime.setText(String.valueOf(DateTimeParser.getTime(bs
+					.getTimestamp())));
+			txtBsSugarLvl.setText(String.valueOf(bs.getBloodSugar()));
+			txtBsType.setText(bs.getType());
+		}
+		// blood pressure
+
+		// Weight
 
 		cProgress = (ProgressBar) rootView.findViewById(R.id.progressBar2);
 		Drawable draw = getResources()
