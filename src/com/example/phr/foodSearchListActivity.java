@@ -19,6 +19,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.phr.adapter.SingleFoodAdapter;
+import com.example.phr.exceptions.OutdatedAccessTokenException;
+import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.Food;
 import com.example.phr.service.FoodService;
 import com.example.phr.serviceimpl.FoodServiceImpl;
@@ -49,7 +51,15 @@ public class foodSearchListActivity extends Activity {
 				FoodService service = new FoodServiceImpl();
 				Log.e("search word", searchWord.getText().toString());
 				list = new ArrayList<Food>();
-				list = service.search(searchWord.getText().toString());
+				try {
+					list = service.search(searchWord.getText().toString());
+				} catch (ServiceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (OutdatedAccessTokenException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				if (list != null) {
 					foodsingleAdapter = new SingleFoodAdapter(
 							getApplicationContext(), list);

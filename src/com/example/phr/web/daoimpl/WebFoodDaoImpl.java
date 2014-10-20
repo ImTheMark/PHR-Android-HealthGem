@@ -29,9 +29,12 @@ public class WebFoodDaoImpl extends GenericListsFetcherDaoImpl<Food> implements
 	}
 
 	@Override
-	public List<Food> search(String query) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Food> search(String query) throws WebServerException,
+			OutdatedAccessTokenException {
+		String command = "/foodlist/search";
+		Type type = new TypeToken<List<Food>>() {
+		}.getType();
+		return searchUsingHttp(command, type, query);
 	}
 
 }

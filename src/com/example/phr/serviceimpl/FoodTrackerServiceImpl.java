@@ -10,16 +10,19 @@ import com.example.phr.exceptions.WebServerException;
 import com.example.phr.mobile.dao.MobileFoodTrackerDao;
 import com.example.phr.mobile.daoimpl.MobileFoodTrackerDaoImpl;
 import com.example.phr.mobile.models.FoodTrackerEntry;
+import com.example.phr.service.FoodService;
 import com.example.phr.service.FoodTrackerService;
 import com.example.phr.web.dao.WebFoodTrackerDao;
 import com.example.phr.web.daoimpl.WebFoodTrackerDaoImpl;
 
 public class FoodTrackerServiceImpl implements FoodTrackerService {
 
+	FoodService foodService;
 	WebFoodTrackerDao webFoodTrackerDao;
 	MobileFoodTrackerDao mobileFoodTrackerDao;
-	
-	public FoodTrackerServiceImpl(){
+
+	public FoodTrackerServiceImpl() {
+		foodService = new FoodServiceImpl();
 		webFoodTrackerDao = new WebFoodTrackerDaoImpl();
 		mobileFoodTrackerDao = new MobileFoodTrackerDaoImpl();
 	}
@@ -28,6 +31,8 @@ public class FoodTrackerServiceImpl implements FoodTrackerService {
 	public void add(FoodTrackerEntry foodTrackerEntry) throws ServiceException,
 			OutdatedAccessTokenException {
 		try {
+			int foodId = foodService.add(foodTrackerEntry.getFood());
+			foodTrackerEntry.getFood().setEntryID(foodId);
 			webFoodTrackerDao.add_ReturnEntryIdInWeb(foodTrackerEntry);
 			mobileFoodTrackerDao.add(foodTrackerEntry);
 		} catch (WebServerException e) {
@@ -39,8 +44,9 @@ public class FoodTrackerServiceImpl implements FoodTrackerService {
 	}
 
 	@Override
-	public void edit(FoodTrackerEntry foodTrackerEntry) throws ServiceException,
-			OutdatedAccessTokenException, EntryNotFoundException {
+	public void edit(FoodTrackerEntry foodTrackerEntry)
+			throws ServiceException, OutdatedAccessTokenException,
+			EntryNotFoundException {
 		try {
 			webFoodTrackerDao.edit(foodTrackerEntry);
 			mobileFoodTrackerDao.edit(foodTrackerEntry);
@@ -52,8 +58,8 @@ public class FoodTrackerServiceImpl implements FoodTrackerService {
 	}
 
 	@Override
-	public void delete(FoodTrackerEntry foodTrackerEntry) throws ServiceException,
-			OutdatedAccessTokenException {
+	public void delete(FoodTrackerEntry foodTrackerEntry)
+			throws ServiceException, OutdatedAccessTokenException {
 		try {
 			webFoodTrackerDao.delete(foodTrackerEntry);
 			mobileFoodTrackerDao.delete(foodTrackerEntry);
@@ -83,12 +89,13 @@ public class FoodTrackerServiceImpl implements FoodTrackerService {
 	}
 
 	@Override
-	public FoodTrackerEntry getLatest() throws ServiceException{
+	public FoodTrackerEntry getLatest() throws ServiceException {
 		try {
 			return mobileFoodTrackerDao.getLatest();
 		} catch (DataAccessException e) {
 			throw new ServiceException(
-					"An error occured while trying to get latest foodTracker from local db", e);
+					"An error occured while trying to get latest foodTracker from local db",
+					e);
 		}
 	}
 }
