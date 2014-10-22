@@ -10,7 +10,9 @@
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-feature android:name="android.hardware.camera"
-                  android:required="true" />
+                  android:required="true" 
+                   android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait"/>
     <application
         android:name="com.example.phr.application.HealthGem"
         android:allowBackup="true"
@@ -20,7 +22,9 @@
         android:allowClearUserData="true"
         android:debuggable="true"
         android:vmSafeMode="true"       
-        android:hardwareAccelerated="true">
+        android:hardwareAccelerated="true"
+        android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 	android:screenOrientation="portrait">
         
         
 		<meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
@@ -117,12 +121,14 @@
         <activity android:name="com.example.phr.WeightTrackerActivity" 
             android:configChanges="orientation|keyboardHidden|screenSize|locale"
   	 		android:screenOrientation="portrait"/>
-        <activity android:name="com.example.phr.foodSearchListActivity"
+        <activity android:name="com.example.phr.FoodSearchListActivity"
              android:configChanges="orientation|keyboardHidden|screenSize|locale"
   	 		android:screenOrientation="portrait"/>
         <activity android:name="com.example.phr.ActivitiesSearchListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|locale"
   	 		android:screenOrientation="portrait" />
+        
+        <receiver android:name="com.example.phr.AlarmReceiver" android:process=":remote" />
     </application>
 
 </manifest>

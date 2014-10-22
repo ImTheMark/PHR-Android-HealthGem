@@ -308,7 +308,7 @@ public class NewStatusActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(),
-						foodSearchListActivity.class);
+						FoodSearchListActivity.class);
 				startActivityForResult(intent, 4);
 			}
 		});
@@ -878,7 +878,7 @@ public class NewStatusActivity extends Activity {
 		// TODO Auto-generated method stub
 
 		Intent intent = new Intent(getApplicationContext(),
-				foodSearchListActivity.class);
+				FoodSearchListActivity.class);
 		startActivityForResult(intent, 4);
 	}
 

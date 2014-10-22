@@ -25,7 +25,7 @@ import com.example.phr.mobile.models.Food;
 import com.example.phr.service.FoodService;
 import com.example.phr.serviceimpl.FoodServiceImpl;
 
-public class foodSearchListActivity extends Activity {
+public class FoodSearchListActivity extends Activity {
 
 	EditText searchWord;
 	ImageButton searchButton;

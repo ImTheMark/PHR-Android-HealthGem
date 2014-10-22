@@ -16,6 +16,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,10 +27,17 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.ServiceException;
+import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.mobile.models.BloodSugar;
+import com.example.phr.mobile.models.Weight;
+import com.example.phr.service.BloodPressureTrackerService;
 import com.example.phr.service.BloodSugarTrackerService;
+import com.example.phr.service.WeightTrackerService;
+import com.example.phr.serviceimpl.BloodPressureTrackerServiceImpl;
 import com.example.phr.serviceimpl.BloodSugarTrackerServiceImpl;
+import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
 
 public class SummaryReportFragment extends Fragment {
@@ -56,7 +64,18 @@ public class SummaryReportFragment extends Fragment {
 	TextView txtWeightStatus;
 	ImageView imgWeight;
 	BloodSugar bs;
+	BloodPressure bp;
+	Weight weight;
+	LinearLayout weightHomeRecordHolder;
 	LinearLayout bsHomeRecordHolder;
+	LinearLayout bsHomeRecordHolderNull;
+	LinearLayout bpHomeRecordHolder;
+	LinearLayout bpHomeRecordHolderNull;
+	TextView txtBigTotalCalRequire;
+	TextView txtSmallTotalCalRequire;
+	TextView txtTotalFoodCal;
+	TextView txtTotalActivityCal;
+	TextView txtTotalCal;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,6 +92,8 @@ public class SummaryReportFragment extends Fragment {
 		imgBs = (ImageView) rootView.findViewById(R.id.imgHomeBs);
 		bsHomeRecordHolder = (LinearLayout) rootView
 				.findViewById(R.id.bsHomeRecordHolder);
+		bsHomeRecordHolderNull = (LinearLayout) rootView
+				.findViewById(R.id.bsHomeRecordHolderNull);
 
 		BloodSugarTrackerService bsService = new BloodSugarTrackerServiceImpl();
 		try {
@@ -82,6 +103,8 @@ public class SummaryReportFragment extends Fragment {
 			e.printStackTrace();
 		}
 		if (bs != null) {
+			Log.e("home bs", "not null");
+			bsHomeRecordHolderNull.setVisibility(View.GONE);
 			bsHomeRecordHolder.setVisibility(View.VISIBLE);
 			txtBsDate.setText(String.valueOf(DateTimeParser.getDate(bs
 					.getTimestamp())));
@@ -90,9 +113,122 @@ public class SummaryReportFragment extends Fragment {
 			txtBsSugarLvl.setText(String.valueOf(bs.getBloodSugar()));
 			txtBsType.setText(bs.getType());
 		}
+
+		bsHomeRecordHolderNull.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getActivity(), NewStatusActivity.class);
+				i.putExtra("tracker", TrackerInputType.BLOOD_SUGAR);
+				startActivity(i);
+			}
+		});
+		bsHomeRecordHolder.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getActivity(), NewStatusActivity.class);
+				i.putExtra("tracker", TrackerInputType.BLOOD_SUGAR);
+				startActivity(i);
+			}
+		});
 		// blood pressure
+		txtBpDate = (TextView) rootView.findViewById(R.id.txtHomeBpDate);
+		txtBpTime = (TextView) rootView.findViewById(R.id.txtHomeBpTime);
+		txtBpDiastolic = (TextView) rootView
+				.findViewById(R.id.txtHomeDiastolic);
+		txtBpSystolic = (TextView) rootView
+				.findViewById(R.id.txtHomeSystolicNum);
+		imgBp = (ImageView) rootView.findViewById(R.id.imgHomeBp);
+		bpHomeRecordHolder = (LinearLayout) rootView
+				.findViewById(R.id.bpHomeRecordHolder);
+		bpHomeRecordHolderNull = (LinearLayout) rootView
+				.findViewById(R.id.bpHomeRecordHolderNull);
+
+		BloodPressureTrackerService bpService = new BloodPressureTrackerServiceImpl();
+		try {
+			bp = bpService.getLatest();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (bp != null) {
+			Log.e("home bp", "not null");
+			bpHomeRecordHolderNull.setVisibility(View.GONE);
+			bpHomeRecordHolder.setVisibility(View.VISIBLE);
+			txtBpDate.setText(String.valueOf(DateTimeParser.getDate(bp
+					.getTimestamp())));
+			txtBpTime.setText(String.valueOf(DateTimeParser.getTime(bp
+					.getTimestamp())));
+			txtBpDiastolic.setText(String.valueOf(bp.getDiastolic()));
+			Log.e("dia", "pass");
+			txtBpSystolic.setText(String.valueOf((bp.getSystolic())));
+			Log.e("sys", "pass");
+		}
+
+		bpHomeRecordHolderNull.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getActivity(), NewStatusActivity.class);
+				i.putExtra("tracker", TrackerInputType.BLOOD_PRESSURE);
+				startActivity(i);
+			}
+		});
+		bpHomeRecordHolder.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getActivity(), NewStatusActivity.class);
+				i.putExtra("tracker", TrackerInputType.BLOOD_PRESSURE);
+				startActivity(i);
+			}
+		});
 
 		// Weight
+		txtWeight = (TextView) rootView.findViewById(R.id.txtHomeWeight);
+		txtBmi = (TextView) rootView.findViewById(R.id.txtHomeBmi);
+		txtWeightUnit = (TextView) rootView
+				.findViewById(R.id.txtHomeWeightUnit);
+		txtWeightStatus = (TextView) rootView
+				.findViewById(R.id.txtHomeWeightStatus);
+		imgWeight = (ImageView) rootView.findViewById(R.id.imgHomeWeight);
+		weightHomeRecordHolder = (LinearLayout) rootView
+				.findViewById(R.id.weightRecordHolder);
+
+		WeightTrackerService weightService = new WeightTrackerServiceImpl();
+		try {
+			weight = weightService.getLatest();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (weight != null) {
+			Log.e("home weight", "not null");
+			txtWeight.setText(String.valueOf(weight.getWeightInPounds()));
+			// txtBmi.setText(String.valueOf()));
+			// txtWeightUnit.setText();
+			// txtWeightStatus.setText(weight.);
+
+		}
+		weightHomeRecordHolder.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getActivity(), NewStatusActivity.class);
+				i.putExtra("tracker", TrackerInputType.WEIGHT);
+				startActivity(i);
+			}
+		});
+
+		// calorie
+
+		txtBigTotalCalRequire = (TextView) rootView
+				.findViewById(R.id.txtHomeCalRequire);
+		txtSmallTotalCalRequire = (TextView) rootView
+				.findViewById(R.id.txtHomeTotalReqCal);
+		txtTotalFoodCal = (TextView) rootView
+				.findViewById(R.id.txtTotalFoodCal);
+		txtTotalActivityCal = (TextView) rootView
+				.findViewById(R.id.txtTotalActivityCal);
+		txtTotalCal = (TextView) rootView.findViewById(R.id.txtHomeTotalCal);
+
+		// set calorie
 
 		cProgress = (ProgressBar) rootView.findViewById(R.id.progressBar2);
 		Drawable draw = getResources()
@@ -183,7 +319,7 @@ public class SummaryReportFragment extends Fragment {
 		multiRenderer.setXLabels(0);
 		multiRenderer.setChartTitle("My Daily Nutritional Value Chart \n\n\n");
 		multiRenderer.setAxisTitleTextSize(20);
-		multiRenderer.setXTitle("\n\n\n Year 2012");
+		multiRenderer.setXTitle("\n\n\n Year 2014");
 		multiRenderer.setYTitle("");
 		multiRenderer.setZoomButtonsVisible(false);
 		multiRenderer.setZoomEnabled(false);
