@@ -114,7 +114,8 @@ public class FoodTrackerDailyActivity extends Activity {
 		View dailyChart;
 
 		int[] x = { 0, 1, 2 };
-		double[] intake = { 20.41, 24.89, 43.07 };
+		double[] intake = { chosenItem.getProtein(), chosenItem.getFat(),
+				chosenItem.getCarbohydrates() };
 		double[] recommended = { 41.25, 53.63, 247.5 };
 
 		String[] mMonth = new String[] { "Protein", "Fats", "Carbohydrates" };
