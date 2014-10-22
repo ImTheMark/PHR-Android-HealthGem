@@ -98,17 +98,16 @@
                     android:layout_height="1dp"
                     android:layout_below="@id/textViewRegistrationBirthDateTitle"
                     android:background="#000000" />
-
-                <TextView
-                    android:id="@+id/textViewRegistrationBirthDate"
+                
+                <EditText
+                    android:id="@+id/editTextRegistrationBirthDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/RegistrationBirthDateDivider"
                     android:background="@drawable/underline_background"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="06/19/1966"
-                    android:textStyle="bold" />
+                    android:hint="06/19/1966"
+                    android:inputType="date"
+                    android:padding="5dp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -131,8 +130,9 @@
                     android:layout_height="1dp"
                     android:layout_below="@id/textViewRegistrationGenderTitle"
                     android:background="#000000" />
-
-                <TextView
+                
+               
+                <Spinner
                     android:id="@+id/textViewRegistrationGender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -140,8 +140,8 @@
                     android:background="@drawable/underline_background"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="M"
-                    android:textStyle="bold" />
+                    android:entries="@array/gender" />
+                
             </RelativeLayout>
         </LinearLayout>
 

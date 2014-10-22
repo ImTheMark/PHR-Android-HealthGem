@@ -1,7 +1,8 @@
 int array foodUnit 0x7f090001
+int array gender 0x7f090004
 int array heightUnit 0x7f090003
 int array sugarType 0x7f090000
-int array timeUnit 0x7f090004
+int array timeUnit 0x7f090005
 int array weightUnit 0x7f090002
 int attr confirm_logout 0x7f01000c
 int attr done_button_background 0x7f010006
@@ -359,6 +360,7 @@ int id doctor 0x7f04006d
 int id doctorPlaceholder 0x7f040185
 int id dropdownRegistrationHeight 0x7f0400a2
 int id dropdownRegistrationWeight 0x7f0400a7
+int id editTextRegistrationBirthDate 0x7f040099
 int id editTextRegistrationFirstName 0x7f040094
 int id editTextRegistrationLastName 0x7f040093
 int id editTextRegistrationMiddleName 0x7f040095
@@ -515,7 +517,6 @@ int id textViewNoteReadLabel 0x7f040080
 int id textViewNoteReadTime 0x7f040082
 int id textViewPasswordStrength 0x7f04008b
 int id textViewQuantityTitle 0x7f04001c
-int id textViewRegistrationBirthDate 0x7f040099
 int id textViewRegistrationBirthDateTitle 0x7f040097
 int id textViewRegistrationFBTitle 0x7f04008e
 int id textViewRegistrationGender 0x7f04009d
