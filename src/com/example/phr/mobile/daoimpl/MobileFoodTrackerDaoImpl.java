@@ -19,10 +19,9 @@ import com.example.phr.exceptions.ImageHandlerException;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileFoodDao;
 import com.example.phr.mobile.dao.MobileFoodTrackerDao;
-import com.example.phr.mobile.models.FBPost;
 import com.example.phr.mobile.models.FoodTrackerEntry;
+import com.example.phr.mobile.models.GroupedFood;
 import com.example.phr.mobile.models.PHRImage;
-import com.example.phr.mobile.models.Weight;
 import com.example.phr.tools.DateTimeParser;
 import com.example.phr.tools.ImageHandler;
 
@@ -43,7 +42,7 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 		values.put(DatabaseHandler.FOOD_DATEADDED,
 				fmt.format(food.getTimestamp()));
 
-		if(!mobileFoodDao.exists(food.getFood())){
+		if (!mobileFoodDao.exists(food.getFood())) {
 			mobileFoodDao.add(food.getFood());
 		}
 
@@ -89,8 +88,7 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 		values.put(DatabaseHandler.FOOD_DATEADDED,
 				fmt.format(food.getTimestamp()));
 
-
-		if(!mobileFoodDao.exists(food.getFood())){
+		if (!mobileFoodDao.exists(food.getFood())) {
 			mobileFoodDao.add(food.getFood());
 		}
 
@@ -147,8 +145,8 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 					}
 
 					FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
-							cursor.getInt(0), cursor.getString(6),
-							timestamp, cursor.getString(4), image,
+							cursor.getInt(0), cursor.getString(6), timestamp,
+							cursor.getString(4), image,
 							mobileFoodDao.get(cursor.getInt(2)),
 							cursor.getDouble(3));
 
@@ -192,8 +190,8 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 					}
 
 					FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
-							cursor.getInt(0), cursor.getString(6),
-							timestamp, cursor.getString(4), image,
+							cursor.getInt(0), cursor.getString(6), timestamp,
+							cursor.getString(4), image,
 							mobileFoodDao.get(cursor.getInt(2)),
 							cursor.getDouble(3));
 
@@ -224,7 +222,8 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 	@Override
 	public FoodTrackerEntry getLatest() throws DataAccessException {
 		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_FOOD
-				+ " ORDER BY " + DatabaseHandler.FOOD_DATEADDED + " DESC LIMIT 1";
+				+ " ORDER BY " + DatabaseHandler.FOOD_DATEADDED
+				+ " DESC LIMIT 1";
 
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
@@ -240,15 +239,13 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 					image = null;
 				else {
 					image.setFileName(cursor.getString(5));
-					Bitmap bitmap = ImageHandler.loadImage(image
-							.getFileName());
+					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 				}
 
 				FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
-						cursor.getInt(0), cursor.getString(6),
-						timestamp, cursor.getString(4), image,
-						mobileFoodDao.get(cursor.getInt(2)),
-						cursor.getDouble(3));
+						cursor.getInt(0), cursor.getString(6), timestamp,
+						cursor.getString(4), image, mobileFoodDao.get(cursor
+								.getInt(2)), cursor.getDouble(3));
 				return foodTrackerEntry;
 			} catch (ParseException e) {
 				throw new DataAccessException(
@@ -288,8 +285,8 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 					}
 
 					FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
-							cursor.getInt(0), cursor.getString(6),
-							timestamp, cursor.getString(4), image,
+							cursor.getInt(0), cursor.getString(6), timestamp,
+							cursor.getString(4), image,
 							mobileFoodDao.get(cursor.getInt(2)),
 							cursor.getDouble(3));
 
@@ -304,8 +301,6 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 		}
 
 		db.close();
-		
-
 
 		while (foodList.size() != 0) {
 			List<FoodTrackerEntry> foodListPerDay = new ArrayList<FoodTrackerEntry>();
@@ -316,15 +311,12 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 				FoodTrackerEntry f = foodList.remove(0);
 				foodListPerDay.add(f);
 			} while (foodList.size() != 0
-					&& monthDay.equals(DateTimeParser.getMonthDay(foodList
-							.get(0).getTimestamp())));
+					&& monthDay.equals(DateTimeParser.getMonthDay(foodList.get(
+							0).getTimestamp())));
 
 			groupedFoodList.add(foodListPerDay);
 		}
-		
-		
-		
-		
+
 		return groupedFoodList;
 	}
 
@@ -356,8 +348,8 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 					}
 
 					FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
-							cursor.getInt(0), cursor.getString(6),
-							timestamp, cursor.getString(4), image,
+							cursor.getInt(0), cursor.getString(6), timestamp,
+							cursor.getString(4), image,
 							mobileFoodDao.get(cursor.getInt(2)),
 							cursor.getDouble(3));
 
@@ -377,14 +369,94 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 
 		while (foodList.size() != 0 || !dateHasPassedFromGivenDate) {
 			FoodTrackerEntry food = foodList.remove(0);
-			if(foodList.get(0).getTimestamp().equals(date))
+			// if (foodList.get(0).getTimestamp().equals(date))
+			if (String.valueOf(
+					DateTimeParser.getMonth(foodList.get(0).getTimestamp()))
+					.equals(String.valueOf(DateTimeParser.getMonth(date)))
+					&& String.valueOf(
+							DateTimeParser.getDay(foodList.get(0)
+									.getTimestamp())).equals(
+							String.valueOf(DateTimeParser.getDay(date))))
 				foodListFromDate.add(food);
-			else if(foodList.get(0).getTimestamp().after(date))
+			else if (foodList.get(0).getTimestamp().after(date))
 				dateHasPassedFromGivenDate = true;
 		}
-		
-		
+
 		return foodListFromDate;
 	}
 
+	@Override
+	public List<GroupedFood> getAllGroupedByDateCalculated()
+			throws DataAccessException {
+		List<GroupedFood> calGroupedFood = new ArrayList<GroupedFood>();
+		List<FoodTrackerEntry> foodList = new ArrayList<FoodTrackerEntry>();
+		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_FOOD
+				+ " ORDER BY " + DatabaseHandler.FOOD_DATEADDED + " DESC";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+				try {
+					Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+					PHRImage image = new PHRImage();
+
+					if (cursor.getString(5) == null)
+						image = null;
+					else {
+						image.setFileName(cursor.getString(5));
+						Bitmap bitmap = ImageHandler.loadImage(image
+								.getFileName());
+					}
+
+					FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
+							cursor.getInt(0), cursor.getString(6), timestamp,
+							cursor.getString(4), image,
+							mobileFoodDao.get(cursor.getInt(2)),
+							cursor.getDouble(3));
+
+					foodList.add(foodTrackerEntry);
+
+				} catch (ParseException e) {
+					throw new DataAccessException(
+							"Cannot complete operation due to parse failure", e);
+				}
+
+			} while (cursor.moveToNext());
+		}
+
+		db.close();
+
+		while (foodList.size() != 0) {
+			List<FoodTrackerEntry> foodListPerDay = new ArrayList<FoodTrackerEntry>();
+			String monthDay = DateTimeParser.getMonthDay(foodList.get(0)
+					.getTimestamp());
+
+			double groupedProtein = 0;
+			double groupedCalorie = 0;
+			double groupedCarb = 0;
+			double groupedFat = 0;
+
+			do {
+				FoodTrackerEntry f = foodList.remove(0);
+				groupedProtein += f.getFood().getProtein();
+				groupedCalorie += f.getFood().getCalorie();
+				groupedCarb += f.getFood().getCarbohydrate();
+				groupedFat += f.getFood().getFat();
+				foodListPerDay.add(f);
+			} while (foodList.size() != 0
+					&& monthDay.equals(DateTimeParser.getMonthDay(foodList.get(
+							0).getTimestamp())));
+
+			calGroupedFood.add(new GroupedFood(foodListPerDay.get(0)
+					.getTimestamp(), groupedCalorie, groupedProtein,
+					groupedFat, groupedCarb));
+
+		}
+
+		return calGroupedFood;
+	}
 }

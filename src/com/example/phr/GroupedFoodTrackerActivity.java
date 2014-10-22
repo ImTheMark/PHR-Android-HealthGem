@@ -18,13 +18,17 @@ import android.widget.ListView;
 
 import com.example.phr.adapter.GroupedFoodAdapter;
 import com.example.phr.enums.TrackerInputType;
-import com.example.phr.model.GroupedFood;
+import com.example.phr.exceptions.DataAccessException;
+import com.example.phr.mobile.dao.MobileFoodTrackerDao;
+import com.example.phr.mobile.daoimpl.MobileFoodTrackerDaoImpl;
+import com.example.phr.mobile.models.GroupedFood;
 
 public class GroupedFoodTrackerActivity extends Activity {
 
 	ListView mGroupedFoodList;
 	GroupedFoodAdapter groupedfoodAdapter;
 	ImageView mBtnGroupedFoodPost;
+	GroupedFood chosenItem;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -34,28 +38,31 @@ public class GroupedFoodTrackerActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		setTitle("Food Tracker");
 		mGroupedFoodList = (ListView) findViewById(R.id.listView_groupedfood);
-
-		// FAKE DATA
 		List<GroupedFood> list = new ArrayList<GroupedFood>();
-		GroupedFood data1 = new GroupedFood("Jul", "12", 459, 20.41, 24.89,
-				43.07);
+		// FAKE DATA
+		/*
+		 * List<GroupedFood> list = new ArrayList<GroupedFood>(); GroupedFood
+		 * data1 = new GroupedFood(null, 459, 20.41, 24.89, 43.07);
+		 * 
+		 * GroupedFood data2 = new GroupedFood(null, 679, 30.3, 18, 50);
+		 * GroupedFood data3 = new GroupedFood(null, 152, 883, 23, 344);
+		 * 
+		 * GroupedFood data4 = new GroupedFood(null, 1100, 30.3, 18, 50);
+		 * GroupedFood data5 = new GroupedFood(null, 400, 883, 23, 344);
+		 * GroupedFood data6 = new GroupedFood(null, 598, 30.3, 18, 50);
+		 * GroupedFood data7 = new GroupedFood(null, 152, 883, 23, 344);
+		 * 
+		 * list.add(data1); list.add(data2); list.add(data3); list.add(data4);
+		 * list.add(data5); list.add(data6); list.add(data7);
+		 */
 
-		GroupedFood data2 = new GroupedFood("Jul", "11", 679, 30.3, 18, 50);
-		GroupedFood data3 = new GroupedFood("Jul", "10", 152, 883, 23, 344);
-
-		GroupedFood data4 = new GroupedFood("Jul", "8", 1100, 30.3, 18, 50);
-		GroupedFood data5 = new GroupedFood("Jul", "7", 400, 883, 23, 344);
-		GroupedFood data6 = new GroupedFood("Jul", "6", 598, 30.3, 18, 50);
-		GroupedFood data7 = new GroupedFood("Jul", "4", 152, 883, 23, 344);
-
-		list.add(data1);
-		list.add(data2);
-		list.add(data3);
-		list.add(data4);
-		list.add(data5);
-		list.add(data6);
-		list.add(data7);
-
+		MobileFoodTrackerDao foodTrackerDao = new MobileFoodTrackerDaoImpl();
+		try {
+			list = foodTrackerDao.getAllGroupedByDateCalculated();
+		} catch (DataAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		groupedfoodAdapter = new GroupedFoodAdapter(getApplicationContext(),
 				list);
 		mGroupedFoodList.setAdapter(groupedfoodAdapter);
@@ -64,6 +71,11 @@ public class GroupedFoodTrackerActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				Log.e("groupedfood", "CLICKED!");
+				Intent i = new Intent(getApplicationContext(),
+						FoodTrackerDailyActivity.class);
+				chosenItem = (GroupedFood) arg0.getAdapter().getItem(arg2);
+				i.putExtra("object", chosenItem);
+				startActivity(i);
 			}
 		});
 

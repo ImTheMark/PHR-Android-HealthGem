@@ -27,17 +27,19 @@ import android.widget.ListView;
 
 import com.example.phr.adapter.DailyFoodAdapter;
 import com.example.phr.enums.TrackerInputType;
-import com.example.phr.exceptions.ServiceException;
+import com.example.phr.exceptions.DataAccessException;
+import com.example.phr.mobile.dao.MobileFoodTrackerDao;
+import com.example.phr.mobile.daoimpl.MobileFoodTrackerDaoImpl;
 import com.example.phr.mobile.models.FoodTrackerEntry;
-import com.example.phr.service.FoodTrackerService;
-import com.example.phr.serviceimpl.FoodTrackerServiceImpl;
+import com.example.phr.mobile.models.GroupedFood;
 
 public class FoodTrackerDailyActivity extends Activity {
 
 	ListView mFoodSingleList;
 	DailyFoodAdapter foodsingleAdapter;
 	ImageView mBtnFoodSinglePost;
-	FoodTrackerService foodService;
+	MobileFoodTrackerDao foodDao;
+	GroupedFood chosenItem;
 
 	// --------------------------------------------------------
 
@@ -48,6 +50,9 @@ public class FoodTrackerDailyActivity extends Activity {
 		setContentView(R.layout.activity_food_tracker_daily);
 		setTitle("Daily Food Tracker");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+
+		Intent in = getIntent();
+		chosenItem = (GroupedFood) in.getExtras().getSerializable("object");
 
 		mFoodSingleList = (ListView) findViewById(R.id.listView_food_single);
 
@@ -74,14 +79,14 @@ public class FoodTrackerDailyActivity extends Activity {
 		 * list.add(data3); list.add(data2); list.add(data1);
 		 */
 		List<FoodTrackerEntry> list = new ArrayList<FoodTrackerEntry>();
-		foodService = new FoodTrackerServiceImpl();
+		foodDao = new MobileFoodTrackerDaoImpl();
 		try {
-			list = foodService.getAll();
-
-		} catch (ServiceException e) {
+			list = foodDao.getAllFromDate(chosenItem.getDate());
+		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		Log.e(String.valueOf(list.size()), "size");
 
 		foodsingleAdapter = new DailyFoodAdapter(getApplicationContext(), list);

@@ -66,11 +66,10 @@ public class CheckupAdapter extends BaseAdapter {
 
 			viewHolder.time = (TextView) convertView
 					.findViewById(R.id.txtCheckuptime);
-			// viewHolder.day = (TextView)
-			// convertView.findViewById(R.id.txtDay);
+			viewHolder.day = (TextView) convertView.findViewById(R.id.txtDay);
 
-			// viewHolder.month = (TextView) convertView
-			// .findViewById(R.id.txtMonth);
+			viewHolder.month = (TextView) convertView
+					.findViewById(R.id.txtMonth);
 
 			convertView.setTag(viewHolder);
 		}
@@ -81,11 +80,11 @@ public class CheckupAdapter extends BaseAdapter {
 		viewHolder.doctor.setText(mListOfCheckup.get(position).getDoctorsName()
 				.toString());
 
-		// viewHolder.day.setText(String.valueOf(DateTimeParser
-		// .getDate(mListOfCheckup.get(position).getTimestamp())));
-		//
-		// viewHolder.month.setText(String.valueOf(DateTimeParser
-		// .getDate(mListOfCheckup.get(position).getTimestamp())));
+		viewHolder.day.setText(String.valueOf(DateTimeParser
+				.getDay(mListOfCheckup.get(position).getTimestamp())));
+
+		viewHolder.month.setText(String.valueOf(DateTimeParser
+				.getMonth(mListOfCheckup.get(position).getTimestamp())));
 
 		viewHolder.date.setText(String.valueOf(DateTimeParser
 				.getDate(mListOfCheckup.get(position).getTimestamp())));

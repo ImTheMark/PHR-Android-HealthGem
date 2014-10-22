@@ -1,62 +1,64 @@
-package com.example.phr.model;
+package com.example.phr.mobile.models;
 
-public class GroupedFood {
+import java.io.Serializable;
+import java.sql.Timestamp;
 
-	String month;
-	String day;
+public class GroupedFood implements Serializable {
+
+	Timestamp date;
 	double calorie;
 	double protein;
 	double fat;
 	double carbohydrates;
-	
-	
-	public GroupedFood(String month, String day, double calorie,
-			double protein, double fat, double carbohydrates) {
+
+	public GroupedFood(Timestamp date, double calorie, double protein,
+			double fat, double carbohydrates) {
 		super();
-		this.month = month;
-		this.day = day;
+		this.date = date;
 		this.calorie = calorie;
 		this.protein = protein;
 		this.fat = fat;
 		this.carbohydrates = carbohydrates;
 	}
-	public String getMonth() {
-		return month;
+
+	public Timestamp getDate() {
+		return date;
 	}
-	public void setMonth(String month) {
-		this.month = month;
+
+	public void setDate(Timestamp date) {
+		this.date = date;
 	}
-	public String getDay() {
-		return day;
-	}
-	public void setDay(String day) {
-		this.day = day;
-	}
+
 	public double getCalorie() {
 		return calorie;
 	}
+
 	public void setCalorie(double calorie) {
 		this.calorie = calorie;
 	}
+
 	public double getProtein() {
 		return protein;
 	}
+
 	public void setProtein(double protein) {
 		this.protein = protein;
 	}
+
 	public double getFat() {
 		return fat;
 	}
+
 	public void setFat(double fat) {
 		this.fat = fat;
 	}
+
 	public double getCarbohydrates() {
 		return carbohydrates;
 	}
+
 	public void setCarbohydrates(double carbohydrates) {
 		this.carbohydrates = carbohydrates;
 	}
-	
-	
-	
+
 }
