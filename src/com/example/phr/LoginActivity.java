@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.local_db.SPreference;
@@ -53,8 +54,7 @@ public class LoginActivity extends Activity {
 		userService = new UserServiceImpl();
 
 		
-		 final SPreference sp = new SPreference(this.getApplicationContext());
-		 formUsername.setText(sp.loadPreferences("id"));
+		 formUsername.setText(HealthGem.getSharedPreferences().loadPreferences("id"));
 		 
 
 		mBtnLogin.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +64,7 @@ public class LoginActivity extends Activity {
 				username = formUsername.getText().toString();
 				password = formPassword.getText().toString();
 
-				sp.savePreferences("id", username);
+				HealthGem.getSharedPreferences().savePreferences("id", username);
 
 				if (password.length() > 0 && username.length() > 0) {
 					try {

@@ -10,9 +10,10 @@ package com.example.phr;
 public final class R {
     public static final class array {
         public static final int foodUnit=0x7f090001;
+        public static final int gender=0x7f090004;
         public static final int heightUnit=0x7f090003;
         public static final int sugarType=0x7f090000;
-        public static final int timeUnit=0x7f090004;
+        public static final int timeUnit=0x7f090005;
         public static final int weightUnit=0x7f090002;
     }
     public static final class attr {
@@ -512,6 +513,7 @@ containing a value of this type.
         public static final int doctorPlaceholder=0x7f040190;
         public static final int dropdownRegistrationHeight=0x7f0400a2;
         public static final int dropdownRegistrationWeight=0x7f0400a7;
+        public static final int editTextRegistrationBirthDate=0x7f040099;
         public static final int editTextRegistrationFirstName=0x7f040094;
         public static final int editTextRegistrationLastName=0x7f040093;
         public static final int editTextRegistrationMiddleName=0x7f040095;
@@ -660,7 +662,6 @@ containing a value of this type.
         public static final int textViewNoteReadTime=0x7f040082;
         public static final int textViewPasswordStrength=0x7f04008b;
         public static final int textViewQuantityTitle=0x7f04001c;
-        public static final int textViewRegistrationBirthDate=0x7f040099;
         public static final int textViewRegistrationBirthDateTitle=0x7f040097;
         public static final int textViewRegistrationFBTitle=0x7f04008e;
         public static final int textViewRegistrationGender=0x7f04009d;

@@ -22,6 +22,7 @@ import com.example.phr.mobile.dao.MobileFoodTrackerDao;
 import com.example.phr.mobile.models.FBPost;
 import com.example.phr.mobile.models.FoodTrackerEntry;
 import com.example.phr.mobile.models.PHRImage;
+import com.example.phr.mobile.models.Weight;
 import com.example.phr.tools.DateTimeParser;
 import com.example.phr.tools.ImageHandler;
 
@@ -257,6 +258,133 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 
 		db.close();
 		return null;
+	}
+
+	@Override
+	public List<List<FoodTrackerEntry>> getAllGroupedByDate()
+			throws DataAccessException {
+		List<List<FoodTrackerEntry>> groupedFoodList = new ArrayList<List<FoodTrackerEntry>>();
+		List<FoodTrackerEntry> foodList = new ArrayList<FoodTrackerEntry>();
+		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_FOOD
+				+ " ORDER BY " + DatabaseHandler.FOOD_DATEADDED + " DESC";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+				try {
+					Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+					PHRImage image = new PHRImage();
+
+					if (cursor.getString(5) == null)
+						image = null;
+					else {
+						image.setFileName(cursor.getString(5));
+						Bitmap bitmap = ImageHandler.loadImage(image
+								.getFileName());
+					}
+
+					FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
+							cursor.getInt(0), cursor.getString(6),
+							timestamp, cursor.getString(4), image,
+							mobileFoodDao.get(cursor.getInt(2)),
+							cursor.getDouble(3));
+
+					foodList.add(foodTrackerEntry);
+
+				} catch (ParseException e) {
+					throw new DataAccessException(
+							"Cannot complete operation due to parse failure", e);
+				}
+
+			} while (cursor.moveToNext());
+		}
+
+		db.close();
+		
+
+
+		while (foodList.size() != 0) {
+			List<FoodTrackerEntry> foodListPerDay = new ArrayList<FoodTrackerEntry>();
+			String monthDay = DateTimeParser.getMonthDay(foodList.get(0)
+					.getTimestamp());
+
+			do {
+				FoodTrackerEntry f = foodList.remove(0);
+				foodListPerDay.add(f);
+			} while (foodList.size() != 0
+					&& monthDay.equals(DateTimeParser.getMonthDay(foodList
+							.get(0).getTimestamp())));
+
+			groupedFoodList.add(foodListPerDay);
+		}
+		
+		
+		
+		
+		return groupedFoodList;
+	}
+
+	@Override
+	public List<FoodTrackerEntry> getAllFromDate(Timestamp date)
+			throws DataAccessException {
+		List<FoodTrackerEntry> foodList = new ArrayList<FoodTrackerEntry>();
+		List<FoodTrackerEntry> foodListFromDate = new ArrayList<FoodTrackerEntry>();
+		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_FOOD
+				+ " ORDER BY " + DatabaseHandler.FOOD_DATEADDED + " DESC";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+				try {
+					Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+					PHRImage image = new PHRImage();
+
+					if (cursor.getString(5) == null)
+						image = null;
+					else {
+						image.setFileName(cursor.getString(5));
+						Bitmap bitmap = ImageHandler.loadImage(image
+								.getFileName());
+					}
+
+					FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
+							cursor.getInt(0), cursor.getString(6),
+							timestamp, cursor.getString(4), image,
+							mobileFoodDao.get(cursor.getInt(2)),
+							cursor.getDouble(3));
+
+					foodList.add(foodTrackerEntry);
+
+				} catch (ParseException e) {
+					throw new DataAccessException(
+							"Cannot complete operation due to parse failure", e);
+				}
+
+			} while (cursor.moveToNext());
+		}
+
+		db.close();
+
+		Boolean dateHasPassedFromGivenDate = false;
+
+		while (foodList.size() != 0 || !dateHasPassedFromGivenDate) {
+			FoodTrackerEntry food = foodList.remove(0);
+			if(foodList.get(0).getTimestamp().equals(date))
+				foodListFromDate.add(food);
+			else if(foodList.get(0).getTimestamp().after(date))
+				dateHasPassedFromGivenDate = true;
+		}
+		
+		
+		return foodListFromDate;
 	}
 
 }

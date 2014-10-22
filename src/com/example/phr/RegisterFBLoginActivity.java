@@ -36,6 +36,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.phr.application.HealthGem;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
@@ -88,7 +89,7 @@ public class RegisterFBLoginActivity extends Activity {
 					userID = user.getUsername();
 
 					Session s = Session.getActiveSession();
-					try {
+/*					try {
 						facebookRequest(user.getId(), s.getAccessToken());
 					} catch (ClientProtocolException e) {
 						// TODO Auto-generated catch block
@@ -96,7 +97,7 @@ public class RegisterFBLoginActivity extends Activity {
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}
+					}*/
 
 					// LoadFbProfilePicture(profilePictureView).execute(user.getId());
 				} else {
@@ -181,6 +182,7 @@ public class RegisterFBLoginActivity extends Activity {
 		case R.id.menu_item_next:
 			Intent intent = new Intent(getApplicationContext(),
 					MainActivity.class);
+			HealthGem.getSharedPreferences().registerUser();
 			startActivity(intent);
 			return true;
 		default:

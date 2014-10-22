@@ -11,8 +11,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.exceptions.UserAlreadyExistsException;
+import com.example.phr.local_db.SPreference;
 import com.example.phr.model.User;
 import com.example.phr.service.UserService;
 import com.example.phr.serviceimpl.UserServiceImpl;
@@ -44,6 +46,10 @@ public class RegisterActivity extends Activity {
 		formPassword = (EditText) findViewById(R.id.txtPasswordReg);
 		formConfirmPassword = (EditText) findViewById(R.id.confirmPasswordReg);
 		passwordValidator = new PasswordValidator();
+		
+		
+		formUsername.setText(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_USERNAME));
+		
 		formPassword.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -91,6 +97,7 @@ public class RegisterActivity extends Activity {
 							userService.registerUser(user);
 							Intent intent = new Intent(getApplicationContext(),
 									MainActivity.class);
+							HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_USERNAME, username);
 							startActivity(intent);
 						} catch (ServiceException e) {
 							mTextValid
@@ -109,5 +116,13 @@ public class RegisterActivity extends Activity {
 
 			}
 		});
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		
+		HealthGem.getSharedPreferences().clearRegisterInformation();
 	}
 }
