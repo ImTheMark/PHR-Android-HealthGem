@@ -328,4 +328,63 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 		return groupedFoodList;
 	}
 
+	@Override
+	public List<FoodTrackerEntry> getAllFromDate(Timestamp date)
+			throws DataAccessException {
+		List<FoodTrackerEntry> foodList = new ArrayList<FoodTrackerEntry>();
+		List<FoodTrackerEntry> foodListFromDate = new ArrayList<FoodTrackerEntry>();
+		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_FOOD
+				+ " ORDER BY " + DatabaseHandler.FOOD_DATEADDED + " DESC";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+				try {
+					Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+					PHRImage image = new PHRImage();
+
+					if (cursor.getString(5) == null)
+						image = null;
+					else {
+						image.setFileName(cursor.getString(5));
+						Bitmap bitmap = ImageHandler.loadImage(image
+								.getFileName());
+					}
+
+					FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
+							cursor.getInt(0), cursor.getString(6),
+							timestamp, cursor.getString(4), image,
+							mobileFoodDao.get(cursor.getInt(2)),
+							cursor.getDouble(3));
+
+					foodList.add(foodTrackerEntry);
+
+				} catch (ParseException e) {
+					throw new DataAccessException(
+							"Cannot complete operation due to parse failure", e);
+				}
+
+			} while (cursor.moveToNext());
+		}
+
+		db.close();
+
+		Boolean dateHasPassedFromGivenDate = false;
+
+		while (foodList.size() != 0 || !dateHasPassedFromGivenDate) {
+			FoodTrackerEntry food = foodList.remove(0);
+			if(foodList.get(0).getTimestamp().equals(date))
+				foodListFromDate.add(food);
+			else if(foodList.get(0).getTimestamp().after(date))
+				dateHasPassedFromGivenDate = true;
+		}
+		
+		
+		return foodListFromDate;
+	}
+
 }
