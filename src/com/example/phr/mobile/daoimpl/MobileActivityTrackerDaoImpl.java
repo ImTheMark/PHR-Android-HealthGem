@@ -20,8 +20,7 @@ import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileActivityDao;
 import com.example.phr.mobile.dao.MobileActivityTrackerDao;
 import com.example.phr.mobile.models.ActivityTrackerEntry;
-import com.example.phr.mobile.models.FBPost;
-import com.example.phr.mobile.models.FoodTrackerEntry;
+import com.example.phr.mobile.models.GroupedActivity;
 import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.tools.DateTimeParser;
 import com.example.phr.tools.ImageHandler;
@@ -149,8 +148,8 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 					}
 
 					ActivityTrackerEntry act = new ActivityTrackerEntry(
-							cursor.getInt(0),cursor.getString(7),
-							timestamp, cursor.getString(5), image,
+							cursor.getInt(0), cursor.getString(7), timestamp,
+							cursor.getString(5), image,
 							mobileActivityDao.get(cursor.getInt(2)),
 							cursor.getDouble(4), cursor.getInt(3));
 					actList.add(act);
@@ -196,8 +195,8 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 					}
 
 					ActivityTrackerEntry act = new ActivityTrackerEntry(
-							cursor.getInt(0), cursor.getString(7),
-							timestamp, cursor.getString(5), image,
+							cursor.getInt(0), cursor.getString(7), timestamp,
+							cursor.getString(5), image,
 							mobileActivityDao.get(cursor.getInt(2)),
 							cursor.getDouble(4), cursor.getInt(3));
 					actList.add(act);
@@ -227,7 +226,8 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 	@Override
 	public ActivityTrackerEntry getLatest() throws DataAccessException {
 		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_ACTIVITY
-				+ " ORDER BY " + DatabaseHandler.ACT_DATEADDED + " DESC LIMIT 1";
+				+ " ORDER BY " + DatabaseHandler.ACT_DATEADDED
+				+ " DESC LIMIT 1";
 
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
@@ -244,13 +244,12 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 					image = null;
 				else {
 					image.setFileName(cursor.getString(6));
-					Bitmap bitmap = ImageHandler.loadImage(image
-							.getFileName());
+					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 				}
 
 				ActivityTrackerEntry act = new ActivityTrackerEntry(
-						cursor.getInt(0), cursor.getString(7),
-						timestamp, cursor.getString(5), image,
+						cursor.getInt(0), cursor.getString(7), timestamp,
+						cursor.getString(5), image,
 						mobileActivityDao.get(cursor.getInt(2)),
 						cursor.getDouble(4), cursor.getInt(3));
 				return act;
@@ -295,8 +294,8 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 					}
 
 					ActivityTrackerEntry act = new ActivityTrackerEntry(
-							cursor.getInt(0), cursor.getString(7),
-							timestamp, cursor.getString(5), image,
+							cursor.getInt(0), cursor.getString(7), timestamp,
+							cursor.getString(5), image,
 							mobileActivityDao.get(cursor.getInt(2)),
 							cursor.getDouble(4), cursor.getInt(3));
 					actList.add(act);
@@ -310,9 +309,6 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 		}
 
 		db.close();
-		
-
-
 
 		while (actList.size() != 0) {
 			List<ActivityTrackerEntry> actListPerDay = new ArrayList<ActivityTrackerEntry>();
@@ -328,9 +324,148 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 
 			groupedActivityList.add(actListPerDay);
 		}
-		
-		
-		
+
 		return groupedActivityList;
+	}
+
+	@Override
+	public List<ActivityTrackerEntry> getAllFromDate(Timestamp date)
+			throws DataAccessException {
+		List<ActivityTrackerEntry> actListFromDate = new ArrayList<ActivityTrackerEntry>();
+		List<ActivityTrackerEntry> actList = new ArrayList<ActivityTrackerEntry>();
+		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_ACTIVITY
+				+ " ORDER BY " + DatabaseHandler.ACT_DATEADDED + " DESC";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+
+				try {
+					Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+
+					PHRImage image = new PHRImage();
+
+					if (cursor.getString(6) == null)
+						image = null;
+					else {
+						image.setFileName(cursor.getString(6));
+						Bitmap bitmap = ImageHandler.loadImage(image
+								.getFileName());
+					}
+
+					ActivityTrackerEntry act = new ActivityTrackerEntry(
+							cursor.getInt(0), cursor.getString(7), timestamp,
+							cursor.getString(5), image,
+							mobileActivityDao.get(cursor.getInt(2)),
+							cursor.getDouble(4), cursor.getInt(3));
+					actList.add(act);
+
+				} catch (ParseException e) {
+					throw new DataAccessException(
+							"Cannot complete operation due to parse failure", e);
+				}
+
+			} while (cursor.moveToNext());
+		}
+
+		db.close();
+
+		Boolean dateHasPassedFromGivenDate = false;
+
+		while (actList.size() != 0 || !dateHasPassedFromGivenDate) {
+			ActivityTrackerEntry activity = actList.remove(0);
+
+			if (String.valueOf(
+					DateTimeParser.getMonth(actList.get(0).getTimestamp()))
+					.equals(String.valueOf(DateTimeParser.getMonth(date)))
+					&& String
+							.valueOf(
+									DateTimeParser.getDay(actList.get(0)
+											.getTimestamp()))
+							.equals(String.valueOf(DateTimeParser.getDay(date))))
+				actListFromDate.add(activity);
+			else if (actList.get(0).getTimestamp().after(date))
+				dateHasPassedFromGivenDate = true;
+		}
+
+		return actListFromDate;
+	}
+
+	@Override
+	public GroupedActivity getFromDateCalculated(Timestamp date)
+			throws DataAccessException {
+		List<ActivityTrackerEntry> actListFromDate = new ArrayList<ActivityTrackerEntry>();
+		List<ActivityTrackerEntry> actList = new ArrayList<ActivityTrackerEntry>();
+		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_ACTIVITY
+				+ " ORDER BY " + DatabaseHandler.ACT_DATEADDED + " DESC";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+
+				try {
+					Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+
+					PHRImage image = new PHRImage();
+
+					if (cursor.getString(6) == null)
+						image = null;
+					else {
+						image.setFileName(cursor.getString(6));
+						Bitmap bitmap = ImageHandler.loadImage(image
+								.getFileName());
+					}
+
+					ActivityTrackerEntry act = new ActivityTrackerEntry(
+							cursor.getInt(0), cursor.getString(7), timestamp,
+							cursor.getString(5), image,
+							mobileActivityDao.get(cursor.getInt(2)),
+							cursor.getDouble(4), cursor.getInt(3));
+					actList.add(act);
+
+				} catch (ParseException e) {
+					throw new DataAccessException(
+							"Cannot complete operation due to parse failure", e);
+				}
+
+			} while (cursor.moveToNext());
+		}
+
+		db.close();
+
+		Boolean dateHasPassedFromGivenDate = false;
+		double calBurned = 0;
+		Timestamp groupedDate = null;
+		while (actList.size() != 0 || !dateHasPassedFromGivenDate) {
+			ActivityTrackerEntry activity = actList.remove(0);
+
+			if (String.valueOf(
+					DateTimeParser.getMonth(actList.get(0).getTimestamp()))
+					.equals(String.valueOf(DateTimeParser.getMonth(date)))
+					&& String
+							.valueOf(
+									DateTimeParser.getDay(actList.get(0)
+											.getTimestamp()))
+							.equals(String.valueOf(DateTimeParser.getDay(date)))) {
+				actListFromDate.add(activity);
+				calBurned += activity.getCaloriesBurnedPerHour()
+						* (activity.getDurationInSeconds() / 3600);
+				// not sure
+				groupedDate = activity.getTimestamp();
+			} else if (actList.get(0).getTimestamp().after(date))
+				dateHasPassedFromGivenDate = true;
+		}
+
+		GroupedActivity groupedActivity = new GroupedActivity(groupedDate,
+				calBurned);
+		return groupedActivity;
 	}
 }

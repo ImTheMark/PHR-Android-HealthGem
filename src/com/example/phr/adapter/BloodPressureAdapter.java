@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.phr.R;
@@ -23,7 +24,7 @@ public class BloodPressureAdapter extends BaseAdapter {
 		TextView dia;
 		TextView date;
 		TextView time;
-		// ImageView image;
+		ImageView image;
 	}
 
 	public BloodPressureAdapter(Context aContext,
@@ -65,8 +66,8 @@ public class BloodPressureAdapter extends BaseAdapter {
 			viewHolder.time = (TextView) convertView
 					.findViewById(R.id.txtBptime);
 
-			// viewHolder.image = (ImageView) convertView
-			// .findViewById(R.id.image);
+			viewHolder.image = (ImageView) convertView
+					.findViewById(R.id.imageBp);
 
 			convertView.setTag(viewHolder);
 		}
@@ -82,10 +83,14 @@ public class BloodPressureAdapter extends BaseAdapter {
 		viewHolder.time.setText(String.valueOf(DateTimeParser
 				.getTime(mListOfBloodPressure.get(position).getTimestamp())));
 
-		/*
-		 * viewHolder.image.setImageDrawable(mListOfBloodPressure.get(position)
-		 * .getImage());
-		 */
+		if (mListOfBloodPressure.get(position).getSystolic() > 90
+				&& mListOfBloodPressure.get(position).getSystolic() < 120
+				&& mListOfBloodPressure.get(position).getDiastolic() > 60
+				&& mListOfBloodPressure.get(position).getDiastolic() < 80)
+			viewHolder.image.setImageResource(R.drawable.bloodpressure_normal);
+
+		else
+			viewHolder.image.setImageResource(R.drawable.bloodpressure_warning);
 
 		return convertView;
 	}

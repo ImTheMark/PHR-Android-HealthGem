@@ -68,7 +68,7 @@ public class BloodSugarAdapter extends BaseAdapter {
 					.findViewById(R.id.txtglucosetime);
 
 			viewHolder.image = (ImageView) convertView
-					.findViewById(R.id.glucoseimage);
+					.findViewById(R.id.imageBs);
 
 			convertView.setTag(viewHolder);
 		}
@@ -84,8 +84,15 @@ public class BloodSugarAdapter extends BaseAdapter {
 		viewHolder.time.setText(String.valueOf(DateTimeParser
 				.getTime(mListOfBloodSugar.get(position).getTimestamp())));
 
-		// viewHolder.image.setImageDrawable(mListOfBloodSugar.get(position)
-		// .getImage());
+		if (mListOfBloodSugar.get(position).getType().equals("Before meal")
+				&& mListOfBloodSugar.get(position).getBloodSugar() >= 4.0
+				&& mListOfBloodSugar.get(position).getBloodSugar() <= 5.9)
+			viewHolder.image.setImageResource(R.drawable.bloodsugar_normal);
+		else if (mListOfBloodSugar.get(position).getType().equals("After meal")
+				&& mListOfBloodSugar.get(position).getBloodSugar() < 7.8)
+			viewHolder.image.setImageResource(R.drawable.bloodsugar_normal);
+		else
+			viewHolder.image.setImageResource(R.drawable.bloodsugar_warning);
 
 		return convertView;
 	}

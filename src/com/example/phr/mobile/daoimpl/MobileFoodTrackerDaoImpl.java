@@ -386,6 +386,82 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 	}
 
 	@Override
+	public GroupedFood getFromDateCalculated(Timestamp date)
+			throws DataAccessException {
+		List<FoodTrackerEntry> foodList = new ArrayList<FoodTrackerEntry>();
+		List<FoodTrackerEntry> foodListFromDate = new ArrayList<FoodTrackerEntry>();
+		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_FOOD
+				+ " ORDER BY " + DatabaseHandler.FOOD_DATEADDED + " DESC";
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+				try {
+					Timestamp timestamp = DateTimeParser.getTimestamp(cursor
+							.getString(1));
+					PHRImage image = new PHRImage();
+
+					if (cursor.getString(5) == null)
+						image = null;
+					else {
+						image.setFileName(cursor.getString(5));
+						Bitmap bitmap = ImageHandler.loadImage(image
+								.getFileName());
+					}
+
+					FoodTrackerEntry foodTrackerEntry = new FoodTrackerEntry(
+							cursor.getInt(0), cursor.getString(6), timestamp,
+							cursor.getString(4), image,
+							mobileFoodDao.get(cursor.getInt(2)),
+							cursor.getDouble(3));
+
+					foodList.add(foodTrackerEntry);
+
+				} catch (ParseException e) {
+					throw new DataAccessException(
+							"Cannot complete operation due to parse failure", e);
+				}
+
+			} while (cursor.moveToNext());
+		}
+
+		db.close();
+
+		Boolean dateHasPassedFromGivenDate = false;
+		double groupedProtein = 0;
+		double groupedCalorie = 0;
+		double groupedCarb = 0;
+		double groupedFat = 0;
+		Timestamp groupedDate = null;
+
+		while (foodList.size() != 0 || !dateHasPassedFromGivenDate) {
+			FoodTrackerEntry food = foodList.remove(0);
+
+			if (String.valueOf(
+					DateTimeParser.getMonth(foodList.get(0).getTimestamp()))
+					.equals(String.valueOf(DateTimeParser.getMonth(date)))
+					&& String.valueOf(
+							DateTimeParser.getDay(foodList.get(0)
+									.getTimestamp())).equals(
+							String.valueOf(DateTimeParser.getDay(date)))) {
+				foodListFromDate.add(food);
+				groupedProtein += food.getFood().getProtein();
+				groupedCalorie += food.getFood().getCalorie();
+				groupedCarb += food.getFood().getCarbohydrate();
+				groupedFat += food.getFood().getFat();
+				groupedDate = food.getTimestamp();
+			} else if (foodList.get(0).getTimestamp().after(date))
+				dateHasPassedFromGivenDate = true;
+		}
+		GroupedFood groupedFood = new GroupedFood(groupedDate, groupedCalorie,
+				groupedProtein, groupedFat, groupedCarb);
+		return groupedFood;
+	}
+
+	@Override
 	public List<GroupedFood> getAllGroupedByDateCalculated()
 			throws DataAccessException {
 		List<GroupedFood> calGroupedFood = new ArrayList<GroupedFood>();

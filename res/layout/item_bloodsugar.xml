@@ -18,7 +18,7 @@
         android:layout_marginBottom="3dp" >
 
         <ImageView
-            android:id="@+id/glucoseimage"
+            android:id="@+id/imageBs"
             android:layout_width="fill_parent"
             android:layout_height="70dp"
             android:src="@drawable/activitybloodsugar_smileygood" />
@@ -85,6 +85,13 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/lblGlucose"
                 android:text="4.5" />
+            
+             <TextView
+                android:id="@+id/txtGlucoseUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/txtGlucose"
+                android:text=" mmol/L" />
         </RelativeLayout>
         
         <RelativeLayout

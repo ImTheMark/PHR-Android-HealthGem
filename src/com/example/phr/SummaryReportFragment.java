@@ -1,6 +1,13 @@
 package com.example.phr;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.chart.BarChart.Type;
@@ -28,9 +35,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.phr.enums.TrackerInputType;
+import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.ServiceException;
+import com.example.phr.mobile.dao.MobileActivityTrackerDao;
+import com.example.phr.mobile.dao.MobileFoodTrackerDao;
+import com.example.phr.mobile.daoimpl.MobileActivityTrackerDaoImpl;
+import com.example.phr.mobile.daoimpl.MobileFoodTrackerDaoImpl;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.mobile.models.BloodSugar;
+import com.example.phr.mobile.models.GroupedActivity;
+import com.example.phr.mobile.models.GroupedFood;
 import com.example.phr.mobile.models.Weight;
 import com.example.phr.service.BloodPressureTrackerService;
 import com.example.phr.service.BloodSugarTrackerService;
@@ -44,7 +58,6 @@ public class SummaryReportFragment extends Fragment {
 
 	ProgressBar cProgress;
 
-	int cProgressStatus = 13;
 	Button mBtnRetrieve;
 	Button mBtnWrite;
 	Button mBtnStatus;
@@ -76,6 +89,12 @@ public class SummaryReportFragment extends Fragment {
 	TextView txtTotalFoodCal;
 	TextView txtTotalActivityCal;
 	TextView txtTotalCal;
+	GroupedFood groupedFood;
+	GroupedActivity groupedActivity;
+	DateFormat dateFormat;
+	DateFormat timeFormat;
+	DateFormat fmt;
+	Calendar calobj;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -112,6 +131,14 @@ public class SummaryReportFragment extends Fragment {
 					.getTimestamp())));
 			txtBsSugarLvl.setText(String.valueOf(bs.getBloodSugar()));
 			txtBsType.setText(bs.getType());
+			if (bs.getType().equals("Before meal") && bs.getBloodSugar() >= 4.0
+					&& bs.getBloodSugar() <= 5.9)
+				imgBs.setImageResource(R.drawable.bloodsugar_normal);
+			else if (bs.getType().equals("After meal")
+					&& bs.getBloodSugar() < 7.8)
+				imgBs.setImageResource(R.drawable.bloodsugar_normal);
+			else
+				imgBs.setImageResource(R.drawable.bloodsugar_warning);
 		}
 
 		bsHomeRecordHolderNull.setOnClickListener(new OnClickListener() {
@@ -162,6 +189,12 @@ public class SummaryReportFragment extends Fragment {
 			Log.e("dia", "pass");
 			txtBpSystolic.setText(String.valueOf((bp.getSystolic())));
 			Log.e("sys", "pass");
+
+			if (bp.getSystolic() > 90 && bp.getSystolic() < 120
+					&& bp.getDiastolic() > 60 && bp.getDiastolic() < 80)
+				imgBp.setImageResource(R.drawable.bloodpressure_normal);
+			else
+				imgBp.setImageResource(R.drawable.bloodpressure_warning);
 		}
 
 		bpHomeRecordHolderNull.setOnClickListener(new OnClickListener() {
@@ -202,9 +235,31 @@ public class SummaryReportFragment extends Fragment {
 		if (weight != null) {
 			Log.e("home weight", "not null");
 			txtWeight.setText(String.valueOf(weight.getWeightInPounds()));
-			// txtBmi.setText(String.valueOf()));
-			// txtWeightUnit.setText();
-			// txtWeightStatus.setText(weight.);
+			double heightInMeter = 1.75;
+			double bmi = weight.getWeightInKilograms()
+					/ (heightInMeter * heightInMeter);
+			txtBmi.setText(String.valueOf(bmi));
+			txtWeightUnit.setText("lbs");
+			String weightStatus;
+			if (bmi < 18.5)
+				weightStatus = "Underweight";
+			else if (bmi >= 18.5 && bmi < 24.9)
+				weightStatus = "Normal weight";
+			else if (bmi >= 25 && bmi < 29.9)
+				weightStatus = "Overweight";
+			else
+				weightStatus = "Obesity";
+			txtWeightStatus.setText(weightStatus);
+
+			// if(weightStatus.equals("Overweight")
+			// ||weightStatus.equals("Obesity"))
+			// imgWeight.setImageResource(R.drawable.fatweight);
+			/*
+			 * else if (weightStatus.equals("Normal weight"))
+			 * imgWeight.setImageResource(R.drawable.normalweight); else if
+			 * (weightStatus.equals("Underweight"))
+			 * imgWeight.setImageResource(R.drawable.underweight);
+			 */
 
 		}
 		weightHomeRecordHolder.setOnClickListener(new OnClickListener() {
@@ -217,7 +272,10 @@ public class SummaryReportFragment extends Fragment {
 		});
 
 		// calorie
-
+		cProgress = (ProgressBar) rootView.findViewById(R.id.progressBar2);
+		Drawable draw = getResources()
+				.getDrawable(R.drawable.customprogressbar);
+		cProgress.setProgressDrawable(draw);
 		txtBigTotalCalRequire = (TextView) rootView
 				.findViewById(R.id.txtHomeCalRequire);
 		txtSmallTotalCalRequire = (TextView) rootView
@@ -227,13 +285,52 @@ public class SummaryReportFragment extends Fragment {
 		txtTotalActivityCal = (TextView) rootView
 				.findViewById(R.id.txtTotalActivityCal);
 		txtTotalCal = (TextView) rootView.findViewById(R.id.txtHomeTotalCal);
+		// current date
+		dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
+		timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+		fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss", Locale.ENGLISH);
+		calobj = Calendar.getInstance();
+		Date date = null;
+		try {
+			date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
+					+ timeFormat.format(calobj.getTime()));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Timestamp timestamp = new Timestamp(date.getTime());
+
+		MobileFoodTrackerDao foodDao = new MobileFoodTrackerDaoImpl();
+		MobileActivityTrackerDao activityDao = new MobileActivityTrackerDaoImpl();
+		try {
+			groupedFood = foodDao.getFromDateCalculated(timestamp);
+			groupedActivity = activityDao.getFromDateCalculated(timestamp);
+		} catch (DataAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// set calorie
 
-		cProgress = (ProgressBar) rootView.findViewById(R.id.progressBar2);
-		Drawable draw = getResources()
-				.getDrawable(R.drawable.customprogressbar);
-		cProgress.setProgressDrawable(draw);
+		txtTotalFoodCal.setText(String.valueOf(groupedFood.getCalorie()));
+		txtTotalActivityCal.setText(String.valueOf(groupedActivity
+				.getCalorieBurned()));
+		double total = groupedFood.getCalorie()
+				- groupedActivity.getCalorieBurned();
+		txtTotalCal.setText(String.valueOf(total));
+
+		// Women: BMR = 655 + ( 4.35 x weight in pounds ) + ( 4.7 x height in
+		// inches ) - ( 4.7 x age in years )
+		// Men: BMR = 66 + ( 6.23 x weight in pounds ) + ( 12.7 x height in
+		// inches ) - ( 6.8 x age in year )
+
+		double bmr = 1500; // compute
+		txtBigTotalCalRequire.setText(String.valueOf(bmr));
+		txtSmallTotalCalRequire.setText(String.valueOf(bmr));
+
+		int cProgressStatus = (int) (total / 1500); // compute
+		if (cProgressStatus > 100)
+			cProgressStatus = 100;
 		cProgress.setProgress(cProgressStatus);
 		cProgress.setMax(100);
 
@@ -274,7 +371,8 @@ public class SummaryReportFragment extends Fragment {
 		View dailyChart;
 
 		int[] x = { 0, 1, 2 };
-		double[] intake = { 20.41, 24.89, 43.07 };
+		double[] intake = { groupedFood.getProtein(), groupedFood.getFat(),
+				groupedFood.getCarbohydrates() };
 		double[] recommeded = { 41.25, 53.63, 247.5 };
 
 		String[] mMonth = new String[] { "Protein", "Fats", "Carbohydrates" };

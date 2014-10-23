@@ -18,10 +18,10 @@
         android:layout_marginBottom="3dp" >
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/imageBp"
             android:layout_width="fill_parent"
             android:layout_height="70dp"
-            android:src="@drawable/activitybloodpressure_heart" />
+            android:src="@drawable/bloodpressure_normal" />
 
     </LinearLayout>
 

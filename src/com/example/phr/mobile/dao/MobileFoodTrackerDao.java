@@ -19,4 +19,7 @@ public interface MobileFoodTrackerDao extends
 	List<GroupedFood> getAllGroupedByDateCalculated()
 			throws DataAccessException;
 
+	GroupedFood getFromDateCalculated(Timestamp date)
+			throws DataAccessException;
+
 }
