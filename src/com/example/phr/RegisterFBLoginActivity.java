@@ -49,7 +49,7 @@ public class RegisterFBLoginActivity extends Activity {
 	private LoginButton btnLogin;
 	private UiLifecycleHelper uiHelper;
 	private static final List<String> PERMISSIONS = Arrays.asList(
-			"user_birthday", "email", "read_stream", "publish_actions");
+			"user_birthday", "email", "read_stream");
 	private TextView userName;
 	public static GraphUser user;
 	public static String userID;
@@ -80,6 +80,7 @@ public class RegisterFBLoginActivity extends Activity {
 
 		userName = (TextView) findViewById(R.id.textViewRegistrationFBTitle);
 		btnLogin = (LoginButton) findViewById(R.id.fb_login_button);
+		btnLogin.setReadPermissions(PERMISSIONS);
 		btnLogin.setUserInfoChangedCallback(new UserInfoChangedCallback() {
 			@Override
 			public void onUserInfoFetched(GraphUser user) {
