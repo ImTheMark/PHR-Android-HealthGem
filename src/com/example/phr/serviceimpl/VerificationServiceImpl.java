@@ -14,8 +14,7 @@ public class VerificationServiceImpl implements VerificationService {
 
 	@Override
 	public void updateListOfUnverifiedPosts() throws ServiceException {
-		// TODO Auto-generated method stub
-
+		// Get FB Access Token from Shared Prefs
 	}
 
 	@Override
