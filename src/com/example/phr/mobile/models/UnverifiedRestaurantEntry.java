@@ -1,4 +1,4 @@
-package phr.models;
+package com.example.phr.mobile.models;
 
 import java.sql.Timestamp;
 
