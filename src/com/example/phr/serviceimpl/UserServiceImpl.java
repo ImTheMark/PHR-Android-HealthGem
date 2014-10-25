@@ -1,9 +1,11 @@
 package com.example.phr.serviceimpl;
 
+import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.exceptions.UserAlreadyExistsException;
 import com.example.phr.exceptions.WebServerException;
+import com.example.phr.local_db.SPreference;
 import com.example.phr.mobile.models.User;
 import com.example.phr.service.UserService;
 import com.example.phr.web.dao.UserDao;
@@ -52,5 +54,23 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean usernameAlreadyExists(String username) {
 		return usernameAlreadyExists(username);
+	}
+
+	@Override
+	public User getUser() {
+		User user = new User();
+		user.setAllergies(HealthGem.getSharedPreferences().loadPreferences(SPreference.ALLERGIES));
+		user.setContactNumber(HealthGem.getSharedPreferences().loadPreferences(SPreference.NUMBER));
+		user.setDateOfBirth(HealthGem.getSharedPreferences().loadPreferences(SPreference.BIRTHDATE));
+		user.setEmail(HealthGem.getSharedPreferences().loadPreferences(SPreference.EMAIL));
+		user.setEmergencyContactNumber(HealthGem.getSharedPreferences().loadPreferences(SPreference.CONTACTPERSONNUMBER));
+		user.setEmergencyPerson(HealthGem.getSharedPreferences().loadPreferences(SPreference.CONTACTPERSON));
+		user.setGender(HealthGem.getSharedPreferences().loadPreferences(SPreference.GENDER));
+		user.setHeight(Double.parseDouble(HealthGem.getSharedPreferences().loadPreferences(SPreference.HEIGHT)));
+		user.setKnownHealthProblems(HealthGem.getSharedPreferences().loadPreferences(SPreference.KNOWNHEALTHPROBLEMS));
+		user.setName(HealthGem.getSharedPreferences().loadPreferences(SPreference.NAME));
+		user.setUsername(HealthGem.getSharedPreferences().loadPreferences(SPreference.USERNAME));
+		user.setWeight(Double.parseDouble(HealthGem.getSharedPreferences().loadPreferences(SPreference.WEIGHT)));
+		return user;
 	}
 }
