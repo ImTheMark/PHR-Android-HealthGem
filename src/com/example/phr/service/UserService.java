@@ -20,4 +20,6 @@ public interface UserService {
 
 	public void edit(User user) throws ServiceException,
 			OutdatedAccessTokenException;
+
+	public User getUser();
 }

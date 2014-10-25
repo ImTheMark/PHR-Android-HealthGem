@@ -182,12 +182,12 @@ public class RegisterFBLoginActivity extends Activity {
 					MainActivity.class);
 			try {
 				User newUser = new User();
-				newUser.setAllergies(HealthGem.getSharedPreferences().loadPreferences(SPreference.ALLERGIES));
+				newUser.setAllergies(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_ALLERGIES));
 				newUser.setContactNumber(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_CONTACTNUMBER));
 				newUser.setDateOfBirth(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_BIRTHDATE));
 				newUser.setEmail(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_EMAIL));
-				newUser.setEmergencyContactNumber(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_CONTACTNUMBER));
-				newUser.setEmergencyPerson(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_CONTACTPERSONNUMBER));
+				newUser.setEmergencyContactNumber(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_CONTACTPERSONNUMBER));
+				newUser.setEmergencyPerson(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_CONTACTPERSON));
 				newUser.setGender(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_GENDER));
 				newUser.setHeight(Double.parseDouble(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_HEIGHT)));
 				newUser.setKnownHealthProblems(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_KNOWNHEALTHPROBLEMS));
