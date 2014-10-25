@@ -35,8 +35,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.phr.application.HealthGem;
+import com.example.phr.exceptions.ServiceException;
+import com.example.phr.exceptions.UserAlreadyExistsException;
+import com.example.phr.local_db.SPreference;
+import com.example.phr.mobile.models.User;
+import com.example.phr.service.UserService;
+import com.example.phr.serviceimpl.UserServiceImpl;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
@@ -53,6 +60,7 @@ public class RegisterFBLoginActivity extends Activity {
 	private TextView userName;
 	public static GraphUser user;
 	public static String userID;
+	private UserService userService;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,19 +96,8 @@ public class RegisterFBLoginActivity extends Activity {
 				if (user != null) {
 					userName.setText("Hello, " + user.getName());
 					userID = user.getUsername();
-
 					Session s = Session.getActiveSession();
-/*					try {
-						facebookRequest(user.getId(), s.getAccessToken());
-					} catch (ClientProtocolException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}*/
-
-					// LoadFbProfilePicture(profilePictureView).execute(user.getId());
+					HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_FBACCESSTOKEN, s.getAccessToken());
 				} else {
 					Log.e("onUserInfoFetched", "user is null");
 					userName.setText("You are not logged right now");
@@ -183,35 +180,40 @@ public class RegisterFBLoginActivity extends Activity {
 		case R.id.menu_item_next:
 			Intent intent = new Intent(getApplicationContext(),
 					MainActivity.class);
-			HealthGem.getSharedPreferences().registerUser();
-			startActivity(intent);
+			try {
+				User newUser = new User();
+				newUser.setAllergies(HealthGem.getSharedPreferences().loadPreferences(SPreference.ALLERGIES));
+				newUser.setContactNumber(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_CONTACTNUMBER));
+				newUser.setDateOfBirth(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_BIRTHDATE));
+				newUser.setEmail(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_EMAIL));
+				newUser.setEmergencyContactNumber(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_CONTACTNUMBER));
+				newUser.setEmergencyPerson(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_CONTACTPERSONNUMBER));
+				newUser.setGender(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_GENDER));
+				newUser.setHeight(Double.parseDouble(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_HEIGHT)));
+				newUser.setKnownHealthProblems(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_KNOWNHEALTHPROBLEMS));
+				newUser.setName(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_NAME));
+				newUser.setPassword(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_PASSWORD));
+				newUser.setUsername(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_USERNAME));
+				newUser.setWeight(Double.parseDouble(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_WEIGHT)));
+				if(user != null)
+					newUser.setFbAccessToken(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_FBACCESSTOKEN));
+				userService = new UserServiceImpl();
+				userService.registerUser(newUser);
+				HealthGem.getSharedPreferences().registerUser();
+
+				startActivity(intent);
+			} catch (ServiceException e) {
+				Toast.makeText(HealthGem.getContext(), "An error has occured, cannot perform action!", Toast.LENGTH_LONG).show();
+			} catch (UserAlreadyExistsException e) {
+				e.printStackTrace();
+			}
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 
 	}
-
-	// Request to our java server.
-	private void facebookRequest(String userId, String token)
-			throws ClientProtocolException, IOException {
-		String address = "http://10.0.2.2:8080/JSONTestServer/FacebookRequestServlet";
-		HttpClient client = new DefaultHttpClient();
-		HttpPost post = new HttpPost(address);
-
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-		nameValuePairs.add(new BasicNameValuePair("userId", userId));
-		nameValuePairs.add(new BasicNameValuePair("accessToken", token));
-		post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-		HttpResponse response = client.execute(post);
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		response.getEntity().writeTo(out);
-		out.close();
-		String responseString = out.toString();
-		System.out.println(responseString);
-	}
-
+/*
 	private class LoadFbProfilePicture extends AsyncTask<String, Void, Bitmap> {
 		ImageView bmImage;
 
@@ -246,5 +248,5 @@ public class RegisterFBLoginActivity extends Activity {
 		protected void onPostExecute(Bitmap result) {
 			bmImage.setImageBitmap(result);
 		}
-	}
+	}*/
 }

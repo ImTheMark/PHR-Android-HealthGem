@@ -7,9 +7,10 @@ import android.util.Log;
 public class SPreference {
 	
 	public static final String REGISTER_USERNAME = "rUsername";
-	public static final String REGISTER_FIRSTNAME = "rFirst";
-	public static final String REGISTER_MIDDLENAME = "rMiddle";
-	public static final String REGISTER_LASTNAME = "rLast";
+	public static final String REGISTER_PASSWORD = "rPassword";
+	public static final String REGISTER_NAME = "rName";
+	public static final String REGISTER_CONTACTNUMBER = "rNumber";
+	public static final String REGISTER_EMAIL = "rEmail";
 	public static final String REGISTER_BIRTHDATE = "rBirthdate";
 	public static final String REGISTER_GENDER = "rGender";
 	public static final String REGISTER_HEIGHT = "rHeight";
@@ -22,9 +23,9 @@ public class SPreference {
 	public static final String REGISTER_FBACCESSTOKEN = "rFBAccessToken";
 	
 	public static final String USERNAME = "Username";
-	public static final String FIRSTNAME = "First";
-	public static final String MIDDLENAME = "Middle";
-	public static final String LASTNAME = "Last";
+	public static final String NAME = "Name";
+	public static final String NUMBER = "Number";
+	public static final String EMAIL = "Email";
 	public static final String BIRTHDATE = "Birthdate";
 	public static final String GENDER = "Gender";
 	public static final String HEIGHT = "Height";
@@ -92,13 +93,14 @@ public class SPreference {
 		savePreferences(REGISTER_CONTACTPERSONNUMBER,"");
 		savePreferences(REGISTER_FBACCESSTOKEN,"");
 		savePreferences(REGISTER_FBUSERNAME,"");
-		savePreferences(REGISTER_FIRSTNAME,"");
+		savePreferences(REGISTER_NAME,"");
 		savePreferences(REGISTER_GENDER,"");
 		savePreferences(REGISTER_HEIGHT,"");
 		savePreferences(REGISTER_KNOWNHEALTHPROBLEMS,"");
-		savePreferences(REGISTER_LASTNAME,"");
-		savePreferences(REGISTER_MIDDLENAME,"");
+		savePreferences(REGISTER_EMAIL,"");
+		savePreferences(REGISTER_CONTACTNUMBER,"");
 		savePreferences(REGISTER_USERNAME,"");
+		savePreferences(REGISTER_PASSWORD,"");
 		savePreferences(REGISTER_WEIGHT,"");
 	}
 
@@ -109,12 +111,12 @@ public class SPreference {
 		savePreferences(CONTACTPERSONNUMBER, loadPreferences(REGISTER_CONTACTPERSONNUMBER));
 		savePreferences(FBACCESSTOKEN, loadPreferences(REGISTER_FBACCESSTOKEN));
 		savePreferences(FBUSERNAME, loadPreferences(REGISTER_FBUSERNAME));
-		savePreferences(FIRSTNAME, loadPreferences(REGISTER_FIRSTNAME));
+		savePreferences(NAME, loadPreferences(REGISTER_NAME));
 		savePreferences(GENDER, loadPreferences(REGISTER_GENDER));
 		savePreferences(HEIGHT, loadPreferences(REGISTER_HEIGHT));
 		savePreferences(KNOWNHEALTHPROBLEMS, loadPreferences(REGISTER_KNOWNHEALTHPROBLEMS));
-		savePreferences(LASTNAME, loadPreferences(REGISTER_LASTNAME));
-		savePreferences(MIDDLENAME, loadPreferences(REGISTER_MIDDLENAME));
+		savePreferences(EMAIL, loadPreferences(REGISTER_EMAIL));
+		savePreferences(NUMBER, loadPreferences(REGISTER_CONTACTNUMBER));
 		savePreferences(USERNAME, loadPreferences(REGISTER_USERNAME));
 		savePreferences(WEIGHT, loadPreferences(REGISTER_WEIGHT));
 		

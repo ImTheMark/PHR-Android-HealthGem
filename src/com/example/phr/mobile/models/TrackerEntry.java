@@ -3,7 +3,6 @@ package com.example.phr.mobile.models;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import com.example.phr.model.User;
 
 public abstract class TrackerEntry implements Serializable {
 

@@ -4,7 +4,7 @@ import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.exceptions.UserAlreadyExistsException;
 import com.example.phr.exceptions.WebServerException;
-import com.example.phr.model.User;
+import com.example.phr.mobile.models.User;
 import com.example.phr.service.UserService;
 import com.example.phr.web.dao.UserDao;
 import com.example.phr.web.daoimpl.UserDaoImpl;

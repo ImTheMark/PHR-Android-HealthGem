@@ -258,19 +258,11 @@ int id WeightPhotoHolder 0x7f0400d4
 int id actPlaceholder 0x7f040183
 int id actionImage 0x7f040187
 int id actionList 0x7f040005
-<<<<<<< HEAD
 int id actionName 0x7f040189
-int id action_help 0x7f0401c6
-int id action_notifications 0x7f0401c8
-int id action_settings 0x7f0401c7
+int id action_help 0x7f0401cf
+int id action_notifications 0x7f0401d1
+int id action_settings 0x7f0401d0
 int id activitiesPlaceholder 0x7f0401a9
-=======
-int id actionName 0x7f040188
-int id action_help 0x7f0401ce
-int id action_notifications 0x7f0401d0
-int id action_settings 0x7f0401cf
-int id activitiesPlaceholder 0x7f0401a8
->>>>>>> origin/master
 int id activity 0x7f040069
 int id activityCal 0x7f04007d
 int id activityDuration 0x7f04006a
@@ -363,11 +355,7 @@ int id com_facebook_usersettingsfragment_profile_name 0x7f040106
 int id confirmPasswordReg 0x7f04008c
 int id container 0x7f040051
 int id dateholder 0x7f040164
-<<<<<<< HEAD
-int id decrement 0x7f0401c4
-=======
-int id decrement 0x7f0401cc
->>>>>>> origin/master
+int id decrement 0x7f0401cd
 int id diaPlaceholder 0x7f04016a
 int id dialogList 0x7f040196
 int id diastolic 0x7f040061
@@ -377,9 +365,9 @@ int id doctorPlaceholder 0x7f040191
 int id dropdownRegistrationHeight 0x7f0400a2
 int id dropdownRegistrationWeight 0x7f0400a7
 int id editTextRegistrationBirthDate 0x7f040099
-int id editTextRegistrationFirstName 0x7f040094
-int id editTextRegistrationLastName 0x7f040093
-int id editTextRegistrationMiddleName 0x7f040095
+int id editTextRegistrationContactNumber 0x7f040094
+int id editTextRegistrationEmailAddress 0x7f040095
+int id editTextRegistrationFullName 0x7f040093
 int id fbOtherStatus 0x7f0401b1
 int id fbStatus 0x7f0400c2
 int id fb_login_button 0x7f04008f
@@ -426,11 +414,7 @@ int id imageViewViaPosted 0x7f0401b7
 int id imgHomeBp 0x7f04014b
 int id imgHomeBs 0x7f040154
 int id imgHomeWeight 0x7f04013b
-<<<<<<< HEAD
-int id increment 0x7f0401c2
-=======
-int id increment 0x7f0401ca
->>>>>>> origin/master
+int id increment 0x7f0401cb
 int id journalTabsPlaceholder 0x7f040155
 int id large 0x7f040002
 int id lblAct 0x7f040184
@@ -459,33 +443,19 @@ int id listView_food_single 0x7f04004e
 int id listView_groupedfood 0x7f040050
 int id listView_notes 0x7f040088
 int id listview_calorie 0x7f04003a
-<<<<<<< HEAD
-int id menu_add_activity 0x7f0401ca
-int id menu_delete 0x7f0401cd
-int id menu_edit 0x7f0401cc
-int id menu_item_add_new_activity 0x7f0401cb
-int id menu_item_next 0x7f0401cf
-int id menu_item_status_edit 0x7f0401ce
-int id menu_item_status_post 0x7f0401c9
-=======
-int id menu_add_activity 0x7f0401d2
-int id menu_delete 0x7f0401d5
-int id menu_edit 0x7f0401d4
-int id menu_item_add_new_activity 0x7f0401d3
-int id menu_item_next 0x7f0401d7
-int id menu_item_status_edit 0x7f0401d6
-int id menu_item_status_post 0x7f0401d1
->>>>>>> origin/master
+int id menu_add_activity 0x7f0401d3
+int id menu_delete 0x7f0401d6
+int id menu_edit 0x7f0401d5
+int id menu_item_add_new_activity 0x7f0401d4
+int id menu_item_next 0x7f0401d8
+int id menu_item_status_edit 0x7f0401d7
+int id menu_item_status_post 0x7f0401d2
 int id normal 0x7f040001
 int id noteBanner 0x7f040087
 int id pager 0x7f040057
 int id picker_subtitle 0x7f0400fd
 int id piegraph 0x7f04013f
-<<<<<<< HEAD
-int id pref_num_picker 0x7f0401c5
-=======
-int id pref_num_picker 0x7f0401cd
->>>>>>> origin/master
+int id pref_num_picker 0x7f0401ce
 int id progressBar2 0x7f040130
 int id purpose 0x7f04006e
 int id quantity 0x7f0400c5
@@ -559,13 +529,8 @@ int id textViewStatusTitle 0x7f040022
 int id textViewbloodpressureLocation 0x7f040028
 int id textViewbloodpressureStatus 0x7f040024
 int id thirdRowHolder 0x7f04011b
-<<<<<<< HEAD
 int id time 0x7f04019d
-int id timepicker_input 0x7f0401c3
-=======
-int id time 0x7f04019c
-int id timepicker_input 0x7f0401cb
->>>>>>> origin/master
+int id timepicker_input 0x7f0401cc
 int id titleHolder 0x7f040140
 int id togglebuttonActivitySharing 0x7f0400e6
 int id togglebuttonBloodPressureSharing 0x7f040031
@@ -668,15 +633,15 @@ int id txttime 0x7f040188
 int id typePlaceholder 0x7f040175
 int id unit 0x7f04018a
 int id valid 0x7f04008d
-int id verification_confirm 0x7f0401c6
-int id verification_date 0x7f0401c0
-int id verification_edit 0x7f0401c7
-int id verification_extracted_amount 0x7f0401c5
-int id verification_extracted_word 0x7f0401c4
-int id verification_ignore 0x7f0401c8
-int id verification_question 0x7f0401c3
-int id verification_status 0x7f0401c2
-int id verification_time 0x7f0401c1
+int id verification_confirm 0x7f0401c7
+int id verification_date 0x7f0401c1
+int id verification_edit 0x7f0401c8
+int id verification_extracted_amount 0x7f0401c6
+int id verification_extracted_word 0x7f0401c5
+int id verification_ignore 0x7f0401c9
+int id verification_question 0x7f0401c4
+int id verification_status 0x7f0401c3
+int id verification_time 0x7f0401c2
 int id viewDisplay 0x7f04012a
 int id weight 0x7f040066
 int id weightGraph 0x7f0400ec
@@ -684,11 +649,7 @@ int id weightPlaceholder 0x7f0401a2
 int id weightPost 0x7f0400ea
 int id weightQuantityDivider 0x7f04015f
 int id weightRecordHolder 0x7f040138
-<<<<<<< HEAD
-int id weightUnitSpinner 0x7f0401c1
-=======
-int id weightUnitSpinner 0x7f0401c9
->>>>>>> origin/master
+int id weightUnitSpinner 0x7f0401ca
 int id weight_template 0x7f040065
 int id what 0x7f0400c4
 int layout activity_activities_tracker 0x7f030000

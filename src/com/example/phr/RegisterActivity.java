@@ -15,7 +15,7 @@ import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.exceptions.UserAlreadyExistsException;
 import com.example.phr.local_db.SPreference;
-import com.example.phr.model.User;
+import com.example.phr.mobile.models.User;
 import com.example.phr.service.UserService;
 import com.example.phr.serviceimpl.UserServiceImpl;
 import com.example.phr.tools.PasswordValidator;
@@ -32,7 +32,6 @@ public class RegisterActivity extends Activity {
 	private EditText formConfirmPassword;
 	private TextView mTextValid;
 	private TextView textViewPasswordStrength;
-	private UserService userService;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,21 +90,10 @@ public class RegisterActivity extends Activity {
 				if (password.equals(confirmPassword)) {
 					Log.e("tama1", "tama2");
 					if (password.length() > 7) {
-						User user = new User(username, password);
-						try {
-							userService = new UserServiceImpl();
-							userService.registerUser(user);
 							Intent intent = new Intent(getApplicationContext(),
 									MainActivity.class);
 							HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_USERNAME, username);
 							startActivity(intent);
-						} catch (ServiceException e) {
-							mTextValid
-									.setText("An error has occured, cannot perform action!");
-						} catch (UserAlreadyExistsException e) {
-							mTextValid
-									.setText("Username already exists, cannot complete registration");
-						}
 					} else
 						mTextValid
 								.setText("password length must be at least 8 characters");

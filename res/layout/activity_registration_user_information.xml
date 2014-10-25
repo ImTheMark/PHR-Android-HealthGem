@@ -32,7 +32,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/textview_style"
-                    android:text="Name" />
+                    android:text="About me" />
 
                 <View
                     android:id="@+id/RegistrationNameDivider"
@@ -42,32 +42,32 @@
                     android:background="#000000" />
 
                 <EditText
-                    android:id="@+id/editTextRegistrationLastName"
+                    android:id="@+id/editTextRegistrationFullName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/RegistrationNameDivider"
                     android:background="@drawable/underline_background"
-                    android:hint="Last"
+                    android:hint="Full Name"
                     android:inputType="textPersonName"
                     android:padding="5dp" />
 
                 <EditText
-                    android:id="@+id/editTextRegistrationFirstName"
+                    android:id="@+id/editTextRegistrationContactNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/editTextRegistrationLastName"
+                    android:layout_below="@id/editTextRegistrationFullName"
                     android:background="@drawable/underline_background"
-                    android:hint="First"
+                    android:hint="Contact Number"
                     android:inputType="textPersonName"
                     android:padding="5dp" />
 
                 <EditText
-                    android:id="@+id/editTextRegistrationMiddleName"
+                    android:id="@+id/editTextRegistrationEmailAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/editTextRegistrationFirstName"
+                    android:layout_below="@id/editTextRegistrationContactNumber"
                     android:background="@drawable/underline_background"
-                    android:hint="Middle"
+                    android:hint="Email Address"
                     android:inputType="textPersonName"
                     android:padding="5dp" />
             </RelativeLayout>

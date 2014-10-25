@@ -12,12 +12,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class RegisterUserInformationActivity extends Activity {
 	
-	EditText lastName;
-	EditText firstName;
-	EditText middleName;
+	EditText fullName;
+	EditText contactNumber;
+	EditText email;
 	EditText height;
 	EditText weight;
 	EditText contactPerson;
@@ -32,9 +33,9 @@ public class RegisterUserInformationActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_registration_user_information);
 		
-		lastName = (EditText) findViewById(R.id.editTextRegistrationLastName);
-		firstName = (EditText) findViewById(R.id.editTextRegistrationFirstName);
-		middleName = (EditText) findViewById(R.id.editTextRegistrationMiddleName);
+		fullName = (EditText) findViewById(R.id.editTextRegistrationFullName);
+		contactNumber = (EditText) findViewById(R.id.editTextRegistrationContactNumber);
+		email = (EditText) findViewById(R.id.editTextRegistrationEmailAddress);
 		height = (EditText) findViewById(R.id.txtRegistrationHeightInput);
 		weight = (EditText) findViewById(R.id.txtRegistrationWeightInput);
 		contactPerson = (EditText) findViewById(R.id.EditTextRegistrationEmergencyContactPerson);
@@ -44,9 +45,9 @@ public class RegisterUserInformationActivity extends Activity {
 		gender = (Spinner) findViewById(R.id.textViewRegistrationGender);
 		birthdate = (EditText) findViewById(R.id.editTextRegistrationBirthDate);
 		
-		lastName.setText(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_LASTNAME));
-		firstName.setText(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_FIRSTNAME));
-		middleName.setText(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_MIDDLENAME));
+		fullName.setText(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_NAME));
+		contactNumber.setText(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_CONTACTNUMBER));
+		email.setText(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_EMAIL));
 		height.setText(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_HEIGHT));
 		weight.setText(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_WEIGHT));
 		contactPerson.setText(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_CONTACTPERSON));
@@ -67,19 +68,33 @@ public class RegisterUserInformationActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_item_next:
-			HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_LASTNAME, lastName.getText().toString());
-			HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_FIRSTNAME, firstName.getText().toString());
-			HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_MIDDLENAME, middleName.getText().toString());
-			HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_HEIGHT, height.getText().toString());
-			HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_WEIGHT, weight.getText().toString());
-			HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_CONTACTPERSON, contactPerson.getText().toString());
-			HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_CONTACTPERSONNUMBER, contactPersonNumber.getText().toString());
-			HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_ALLERGIES, allergies.getText().toString());
-			HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_KNOWNHEALTHPROBLEMS, knownHealthProblems.getText().toString());
-			HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_GENDER, gender.getSelectedItem().toString());
-			HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_BIRTHDATE, birthdate.getText().toString());
-			Intent intent = new Intent(getApplicationContext(), RegisterFBLoginActivity.class);
-			startActivity(intent);
+			if(fullName.getText().toString().equals("") ||
+					contactNumber.getText().toString().equals("") ||
+					email.getText().toString().equals("") ||
+					height.getText().toString().equals("") ||
+					weight.getText().toString().equals("") ||
+					contactPerson.getText().toString().equals("") ||
+					contactPersonNumber.getText().toString().equals("") ||
+					allergies.getText().toString().equals("") ||
+					knownHealthProblems.getText().toString().equals("") ||
+					birthdate.getText().toString().equals("")){
+				Toast.makeText(HealthGem.getContext(), "Please complete the missing fields.", Toast.LENGTH_LONG).show();	
+			}
+			else{
+				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_NAME, fullName.getText().toString());
+				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_CONTACTNUMBER, contactNumber.getText().toString());
+				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_EMAIL, email.getText().toString());
+				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_HEIGHT, height.getText().toString());
+				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_WEIGHT, weight.getText().toString());
+				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_CONTACTPERSON, contactPerson.getText().toString());
+				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_CONTACTPERSONNUMBER, contactPersonNumber.getText().toString());
+				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_ALLERGIES, allergies.getText().toString());
+				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_KNOWNHEALTHPROBLEMS, knownHealthProblems.getText().toString());
+				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_GENDER, gender.getSelectedItem().toString());
+				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_BIRTHDATE, birthdate.getText().toString());
+				Intent intent = new Intent(getApplicationContext(), RegisterFBLoginActivity.class);
+				startActivity(intent);
+			}			
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
