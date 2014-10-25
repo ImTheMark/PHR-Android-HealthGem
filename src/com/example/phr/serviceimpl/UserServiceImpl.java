@@ -53,4 +53,15 @@ public class UserServiceImpl implements UserService {
 	public boolean usernameAlreadyExists(String username) {
 		return usernameAlreadyExists(username);
 	}
+
+	@Override
+	public void edit(User user) throws ServiceException,
+			OutdatedAccessTokenException {
+		try {
+			userDao.edit(user);
+		} catch (WebServerException e) {
+			throw new ServiceException("An error occured in the user service",
+					e);
+		}
+	}
 }
