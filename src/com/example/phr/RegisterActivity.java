@@ -32,6 +32,7 @@ public class RegisterActivity extends Activity {
 	private EditText formConfirmPassword;
 	private TextView mTextValid;
 	private TextView textViewPasswordStrength;
+	private UserService userService;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,10 +91,15 @@ public class RegisterActivity extends Activity {
 				if (password.equals(confirmPassword)) {
 					Log.e("tama1", "tama2");
 					if (password.length() > 7) {
-							Intent intent = new Intent(getApplicationContext(),
-									MainActivity.class);
-							HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_USERNAME, username);
-							startActivity(intent);
+							if(!userService.usernameAlreadyExists(username)){
+								Intent intent = new Intent(getApplicationContext(),
+										MainActivity.class);
+								HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_USERNAME, username);
+								startActivity(intent);
+							}
+							else
+								mTextValid
+								.setText("Username already exists!");
 					} else
 						mTextValid
 								.setText("password length must be at least 8 characters");
