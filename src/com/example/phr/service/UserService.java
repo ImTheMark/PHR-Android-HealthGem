@@ -1,5 +1,6 @@
 package com.example.phr.service;
 
+import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.exceptions.UserAlreadyExistsException;
 import com.example.phr.model.User;
@@ -12,5 +13,8 @@ public interface UserService {
 	public boolean validateUser(String username, String hashedPassword)
 			throws ServiceException;
 
-	public User getUserGivenUsername(String username) throws ServiceException;
+	public User getUserGivenUsername(String username) throws ServiceException,
+			OutdatedAccessTokenException;
+
+	public boolean usernameAlreadyExists(String username);
 }

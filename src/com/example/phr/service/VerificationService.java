@@ -11,19 +11,20 @@ import com.example.phr.mobile.models.UnverifiedRestaurantEntry;
 import com.example.phr.mobile.models.UnverifiedSportsEstablishmentEntry;
 
 public interface VerificationService {
-	public void updateListOfUnverifiedPosts() throws ServiceException;
+	public void updateListOfUnverifiedPosts() throws ServiceException,
+			OutdatedAccessTokenException;
 
 	public List<UnverifiedFoodEntry> getAllUnverifiedFoodPosts()
-			throws ServiceException;
+			throws ServiceException, OutdatedAccessTokenException;
 
 	public List<UnverifiedActivityEntry> getAllUnverifiedActivityPosts()
-			throws ServiceException;
+			throws ServiceException, OutdatedAccessTokenException;
 
 	public List<UnverifiedRestaurantEntry> getAllUnverifiedRestaurantPosts()
-			throws ServiceException;
+			throws ServiceException, OutdatedAccessTokenException;
 
 	public List<UnverifiedSportsEstablishmentEntry> getAllUnverifiedSportsEstablishmentPosts()
-			throws ServiceException;
+			throws ServiceException, OutdatedAccessTokenException;
 
 	public void delete(UnverifiedFoodEntry entry)
 			throws EntryNotFoundException, ServiceException,

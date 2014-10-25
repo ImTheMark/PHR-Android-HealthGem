@@ -19,32 +19,54 @@ public class VerificationServiceImpl implements VerificationService {
 	WebVerificationDao webVerificationDao = new WebVerificationDaoImpl();
 
 	@Override
-	public void updateListOfUnverifiedPosts() throws ServiceException {
-		webVerificationDao.updateListOfUnverifiedPosts();
+	public void updateListOfUnverifiedPosts() throws ServiceException,
+			OutdatedAccessTokenException {
+		try {
+			webVerificationDao.updateListOfUnverifiedPosts();
+		} catch (WebServerException e) {
+			throw new ServiceException("Error", e);
+		}
 	}
 
 	@Override
 	public List<UnverifiedFoodEntry> getAllUnverifiedFoodPosts()
-			throws ServiceException {
-		return webVerificationDao.getAllUnverifiedFoodPosts();
+			throws ServiceException, OutdatedAccessTokenException {
+		try {
+			return webVerificationDao.getAllUnverifiedFoodPosts();
+		} catch (WebServerException e) {
+			throw new ServiceException("Error", e);
+		}
 	}
 
 	@Override
 	public List<UnverifiedActivityEntry> getAllUnverifiedActivityPosts()
-			throws ServiceException {
-		return webVerificationDao.getAllUnverifiedActivityPosts();
+			throws ServiceException, OutdatedAccessTokenException {
+		try {
+			return webVerificationDao.getAllUnverifiedActivityPosts();
+		} catch (WebServerException e) {
+			throw new ServiceException("Error", e);
+		}
 	}
 
 	@Override
 	public List<UnverifiedRestaurantEntry> getAllUnverifiedRestaurantPosts()
-			throws ServiceException {
-		return webVerificationDao.getAllUnverifiedRestaurantPosts();
+			throws ServiceException, OutdatedAccessTokenException {
+		try {
+			return webVerificationDao.getAllUnverifiedRestaurantPosts();
+		} catch (WebServerException e) {
+			throw new ServiceException("Error", e);
+		}
 	}
 
 	@Override
 	public List<UnverifiedSportsEstablishmentEntry> getAllUnverifiedSportsEstablishmentPosts()
-			throws ServiceException {
-		return webVerificationDao.getAllUnverifiedSportsEstablishmentPosts();
+			throws ServiceException, OutdatedAccessTokenException {
+		try {
+			return webVerificationDao
+					.getAllUnverifiedSportsEstablishmentPosts();
+		} catch (WebServerException e) {
+			throw new ServiceException("Error", e);
+		}
 	}
 
 	@Override
