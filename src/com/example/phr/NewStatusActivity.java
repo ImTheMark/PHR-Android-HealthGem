@@ -111,6 +111,10 @@ public class NewStatusActivity extends Activity {
 	EditText activityDuration;
 	EditText purpose;
 	EditText doctor;
+	EditText editFoodCal;
+	EditText editFoodCarbs;
+	EditText editFoodProtein;
+	EditText editFoodFats;
 	LinearLayout bpTemplate;
 	LinearLayout bsTemplate;
 	LinearLayout weightTemplate;
@@ -292,6 +296,13 @@ public class NewStatusActivity extends Activity {
 		txtFoodQuantityUnit = (TextView) findViewById(R.id.foodQuantityUnit);
 		txtFoodQuantity = (TextView) findViewById(R.id.foodQuantitySize);
 		foodCal = (LinearLayout) findViewById(R.id.foodCal);
+		foodCal.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				callFoodInfoEdit();
+			}
+		});
 		txtFoodCal = (TextView) findViewById(R.id.txtfoodCal);
 		txtFoodCarbs = (TextView) findViewById(R.id.txtfoodCarbs);
 		txtFoodFat = (TextView) findViewById(R.id.txtfoodFat);
@@ -426,13 +437,7 @@ public class NewStatusActivity extends Activity {
 
 				chosenFood = (Food) in.getExtras()
 						.getSerializable("food added");
-				setFoodTemplate(chosenFood.getName(),
-						String.valueOf(chosenFood.getCalorie()),
-						String.valueOf(chosenFood.getProtein()),
-						String.valueOf(chosenFood.getCarbohydrate()),
-						String.valueOf(chosenFood.getFat()),
-						String.valueOf(chosenFood.getServingSize()),
-						String.valueOf(chosenFood.getServingUnit()),
+				setFoodTemplate(chosenFood.getServingSize(), chosenFood,
 						notesStatus.getText().toString());
 
 			}
@@ -521,19 +526,25 @@ public class NewStatusActivity extends Activity {
 		mBtnFb.setVisibility(View.VISIBLE);
 	}
 
-	private void setFoodTemplate(String food, String cal, String protein,
-			String carbs, String fat, String serving, String unit, String status) {
+	private void setFoodTemplate(double serving, Food food, String status) {
 		// TODO Auto-generated method stub
 		setAllTemplateGone();
 		foodTemplate.setVisibility(View.VISIBLE);
 		foodCal.setVisibility(View.VISIBLE);
-		txtFoodCal.setText(cal);
-		txtFoodProtein.setText(protein);
-		txtFoodCarbs.setText(carbs);
-		txtFoodFat.setText(fat);
-		txtFood.setText(food);
-		txtFoodQuantityUnit.setText(unit);
-		txtFoodQuantity.setText(serving);
+
+		double cal = (serving / food.getServingSize()) * food.getCalorie();
+		double protein = (serving / food.getServingSize()) * food.getProtein();
+		double carbs = (serving / food.getServingSize())
+				* food.getCarbohydrate();
+		double fats = (serving / food.getServingSize()) * food.getFat();
+		txtFoodCal.setText(String.valueOf(cal));
+		txtFoodProtein.setText(String.valueOf(protein));
+		txtFoodCarbs.setText(String.valueOf(carbs));
+		txtFoodFat.setText(String.valueOf(fats));
+		txtFood.setText(food.getName());
+		txtFoodQuantityUnit.setText(food.getServingUnit());
+
+		txtFoodQuantity.setText(String.valueOf(serving));
 		if (mode.equals("add")) {
 			notesStatus.setHint("how you feel? ");
 			setAddTemplate();
@@ -749,15 +760,9 @@ public class NewStatusActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 
-						setFoodTemplate(food.getName(), String.valueOf(food
-								.getCalorie()), String.valueOf(food
-								.getProtein()), String.valueOf(food
-								.getCarbohydrate()), String.valueOf(food
-								.getFat()),
-								String.valueOf(Double.parseDouble(txtFoodSize
-										.getText().toString())), food
-										.getServingUnit(), notesStatus
-										.getText().toString());
+						setFoodTemplate(Double.parseDouble(txtFoodSize
+								.getText().toString()), food, notesStatus
+								.getText().toString());
 
 					}
 				})
@@ -773,6 +778,55 @@ public class NewStatusActivity extends Activity {
 		AlertDialog alertD = alertDialogBuilder.create();
 		alertD.show();
 
+	}
+
+	private void callFoodInfoEdit() {
+		LayoutInflater layoutInflater = LayoutInflater.from(context);
+
+		View foodInfoView = layoutInflater.inflate(
+				R.layout.item_food_info_edit, null);
+
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				context);
+		alertDialogBuilder.setView(foodInfoView);
+
+		chosenFood.setEntryID(null); // to change to new food entry
+		editFoodCal = (EditText) foodInfoView.findViewById(R.id.txtEditFoodCal);
+		editFoodCal.setText(String.valueOf(chosenFood.getCalorie()));
+		editFoodProtein = (EditText) foodInfoView
+				.findViewById(R.id.txtEditFoodProtein);
+		editFoodProtein.setText(String.valueOf(chosenFood.getProtein()));
+		editFoodCarbs = (EditText) foodInfoView
+				.findViewById(R.id.txtEditFoodCarbs);
+		editFoodCarbs.setText(String.valueOf(chosenFood.getCarbohydrate()));
+		editFoodFats = (EditText) foodInfoView
+				.findViewById(R.id.txtEditFoodFat);
+		editFoodFats.setText(String.valueOf(chosenFood.getFat()));
+
+		alertDialogBuilder
+				.setCancelable(false)
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						// set activity met -- get from database
+						chosenFood.setCalorie(Double.parseDouble(editFoodCal
+								.getText().toString()));
+						setFoodTemplate(Double.parseDouble(txtFoodSize
+								.getText().toString()), chosenFood, notesStatus
+								.getText().toString());
+					}
+				})
+				.setNegativeButton("Cancel",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.cancel();
+							}
+						});
+
+		// create an alert dialog
+		AlertDialog alertD = alertDialogBuilder.create();
+		alertD.show();
 	}
 
 	private void callActivityDurationInput(int number, String unit) {
