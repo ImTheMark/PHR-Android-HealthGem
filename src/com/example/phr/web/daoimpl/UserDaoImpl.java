@@ -6,6 +6,7 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.UserAlreadyExistsException;
 import com.example.phr.exceptions.WebServerException;
 import com.example.phr.mobile.dao.MobileAccessDao;
@@ -18,8 +19,8 @@ import com.example.phr.web.dao.UserDao;
 
 public class UserDaoImpl extends BasicDaoImpl implements UserDao {
 
-	private JSONRequestCreator jsonRequestCreator;
-	private MobileAccessDao accessDao;
+	private final JSONRequestCreator jsonRequestCreator;
+	private final MobileAccessDao accessDao;
 
 	public UserDaoImpl() {
 		jsonRequestCreator = new JSONRequestCreator();
@@ -117,8 +118,72 @@ public class UserDaoImpl extends BasicDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User getUserGivenUsername(String username) throws WebServerException {
-		return null;
+	public User getUserGivenUsername(String username)
+			throws WebServerException, OutdatedAccessTokenException {
+		String command = "user/get";
+		try {
+			JSONObject data = new JSONObject();
+			data.put("accessToken", accessDao.getAccessToken().getAccessToken());
+			data.put("username", accessDao.getAccessToken().getUserName());
+			String jsonToSend = jsonRequestCreator
+					.createJSONRequest(data, null);
+			System.out.println("" + "JSON Request Sent: " + jsonToSend);
+			JSONObject response = performHttpRequest_JSON(command, jsonToSend);
+			System.out.println("JSON Response Received: " + response);
+
+			if (response.getJSONObject("data").has("isValidAccessToken")
+					&& response.getJSONObject("data")
+							.getString("isValidAccessToken").equals("false")) {
+				throw new OutdatedAccessTokenException(
+						"The access token used in the request is outdated, please ask the user to log in again.");
+			} else if (response.get("status").equals("success")) {
+				String jsonString = response.getJSONObject("data").getString(
+						"user");
+				User user = GSONConverter.getGSONObjectGivenJsonString(
+						jsonString, User.class);
+				return user;
+			} else {
+				throw new WebServerException(
+						"An error has occurred while communicating"
+								+ "with the web server.");
+			}
+
+		} catch (JSONException e) {
+			throw new WebServerException(
+					"An error has occurred while communicating"
+							+ "with the web server.");
+		}
 	}
 
+	@Override
+	public boolean usernameAlreadyExists(String username)
+			throws WebServerException {
+		String command = "user/checkIfUsernameExists";
+		try {
+			JSONObject data = new JSONObject();
+			data.put("username", username);
+			String jsonToSend = jsonRequestCreator
+					.createJSONRequest(data, null);
+			System.out.println("" + "JSON Request Sent: " + jsonToSend);
+			JSONObject response = performHttpRequest_JSON(command, jsonToSend);
+			System.out.println("JSON Response Received: " + response);
+
+			if (response.get("status").equals("success")) {
+				if (response.getJSONObject("data").getString("exists")
+						.equals("true"))
+					return true;
+				else
+					return false;
+			} else {
+				throw new WebServerException(
+						"An error has occurred while communicating"
+								+ "with the web server.");
+			}
+
+		} catch (JSONException e) {
+			throw new WebServerException(
+					"An error has occurred while communicating"
+							+ "with the web server.");
+		}
+	}
 }
