@@ -2,59 +2,30 @@ package com.example.phr.mobile.models;
 
 import java.sql.Timestamp;
 
-public class UnverifiedActivityEntry {
+public class UnverifiedActivityEntry extends TrackerEntry {
 
-	Integer entryID;
-	Timestamp timestamp;
 	String activityName;
 	int durationInSeconds;
 	Double calorieBurnedPerHour;
-	String status;
-	PHRImage image;
-	String fbPostID;
 
-	public UnverifiedActivityEntry(Integer entryID, Timestamp timestamp,
+	public UnverifiedActivityEntry(Integer entryID,
+			String facebookID, Timestamp timestamp, String status,
+			PHRImage image, String activityName, int durationInSeconds,
+			Double calorieBurnedPerHour) {
+		super(entryID, facebookID, timestamp, status, image);
+		this.activityName = activityName;
+		this.durationInSeconds = durationInSeconds;
+		this.calorieBurnedPerHour = calorieBurnedPerHour;
+	}
+
+	public UnverifiedActivityEntry(User user, String facebookID,
+			Timestamp timestamp, String status, PHRImage image,
 			String activityName, int durationInSeconds,
-			Double calorieBurnedPerHour, String status, PHRImage image,
-			String fbPostID) {
-		super();
-		this.entryID = entryID;
-		this.timestamp = timestamp;
+			Double calorieBurnedPerHour) {
+		super(user, facebookID, timestamp, status, image);
 		this.activityName = activityName;
 		this.durationInSeconds = durationInSeconds;
 		this.calorieBurnedPerHour = calorieBurnedPerHour;
-		this.status = status;
-		this.image = image;
-		this.fbPostID = fbPostID;
-	}
-
-	public UnverifiedActivityEntry(Timestamp timestamp, String activityName,
-			int durationInSeconds, Double calorieBurnedPerHour, String status,
-			PHRImage image, String fbPostID) {
-		super();
-		this.timestamp = timestamp;
-		this.activityName = activityName;
-		this.durationInSeconds = durationInSeconds;
-		this.calorieBurnedPerHour = calorieBurnedPerHour;
-		this.status = status;
-		this.image = image;
-		this.fbPostID = fbPostID;
-	}
-
-	public Integer getEntryID() {
-		return entryID;
-	}
-
-	public void setEntryID(Integer entryID) {
-		this.entryID = entryID;
-	}
-
-	public Timestamp getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(Timestamp timestamp) {
-		this.timestamp = timestamp;
 	}
 
 	public String getActivityName() {
@@ -79,30 +50,6 @@ public class UnverifiedActivityEntry {
 
 	public void setCalorieBurnedPerHour(Double calorieBurnedPerHour) {
 		this.calorieBurnedPerHour = calorieBurnedPerHour;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public PHRImage getImage() {
-		return image;
-	}
-
-	public void setImage(PHRImage image) {
-		this.image = image;
-	}
-
-	public String getFbPostID() {
-		return fbPostID;
-	}
-
-	public void setFbPostID(String fbPostID) {
-		this.fbPostID = fbPostID;
 	}
 
 }

@@ -2,10 +2,8 @@ package com.example.phr.mobile.models;
 
 import java.sql.Timestamp;
 
-public class UnverifiedFoodEntry {
+public class UnverifiedFoodEntry extends TrackerEntry {
 
-	Integer entryID;
-	Timestamp timestamp;
 	String foodName;
 	Double calorie;
 	Double protein;
@@ -13,17 +11,12 @@ public class UnverifiedFoodEntry {
 	Double carbohydrate;
 	String servingUnit;
 	Double servingSize;
-	String status;
-	PHRImage image;
-	String fbPostID;
 
-	public UnverifiedFoodEntry(Integer entryID, Timestamp timestamp,
+	public UnverifiedFoodEntry(Integer entryID, String facebookID,
+			Timestamp timestamp, String status, PHRImage image,
 			String foodName, Double calorie, Double protein, Double fat,
-			Double carbohydrate, String servingUnit, Double servingSize,
-			String status, PHRImage image, String fbPostID) {
-		super();
-		this.entryID = entryID;
-		this.timestamp = timestamp;
+			Double carbohydrate, String servingUnit, Double servingSize) {
+		super(entryID, facebookID, timestamp, status, image);
 		this.foodName = foodName;
 		this.calorie = calorie;
 		this.protein = protein;
@@ -31,17 +24,13 @@ public class UnverifiedFoodEntry {
 		this.carbohydrate = carbohydrate;
 		this.servingUnit = servingUnit;
 		this.servingSize = servingSize;
-		this.status = status;
-		this.image = image;
-		this.fbPostID = fbPostID;
 	}
 
-	public UnverifiedFoodEntry(Timestamp timestamp, String foodName,
-			Double calorie, Double protein, Double fat, Double carbohydrate,
-			String servingUnit, Double servingSize, String status,
-			PHRImage image, String fbPostID) {
-		super();
-		this.timestamp = timestamp;
+	public UnverifiedFoodEntry(User user, String facebookID,
+			Timestamp timestamp, String status, PHRImage image,
+			String foodName, Double calorie, Double protein, Double fat,
+			Double carbohydrate, String servingUnit, Double servingSize) {
+		super(user, facebookID, timestamp, status, image);
 		this.foodName = foodName;
 		this.calorie = calorie;
 		this.protein = protein;
@@ -49,25 +38,6 @@ public class UnverifiedFoodEntry {
 		this.carbohydrate = carbohydrate;
 		this.servingUnit = servingUnit;
 		this.servingSize = servingSize;
-		this.status = status;
-		this.image = image;
-		this.fbPostID = fbPostID;
-	}
-
-	public Integer getEntryID() {
-		return entryID;
-	}
-
-	public void setEntryID(Integer entryID) {
-		this.entryID = entryID;
-	}
-
-	public Timestamp getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(Timestamp timestamp) {
-		this.timestamp = timestamp;
 	}
 
 	public String getFoodName() {
@@ -125,29 +95,4 @@ public class UnverifiedFoodEntry {
 	public void setServingSize(Double servingSize) {
 		this.servingSize = servingSize;
 	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public PHRImage getImage() {
-		return image;
-	}
-
-	public void setImage(PHRImage image) {
-		this.image = image;
-	}
-
-	public String getFbPostID() {
-		return fbPostID;
-	}
-
-	public void setFbPostID(String fbPostID) {
-		this.fbPostID = fbPostID;
-	}
-
 }
