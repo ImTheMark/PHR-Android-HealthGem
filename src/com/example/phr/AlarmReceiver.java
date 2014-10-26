@@ -19,7 +19,9 @@ import android.util.Log;
 
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.ServiceException;
+import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.mobile.models.BloodSugar;
+import com.example.phr.serviceimpl.BloodPressureTrackerServiceImpl;
 import com.example.phr.serviceimpl.BloodSugarTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
 
@@ -69,6 +71,36 @@ public class AlarmReceiver extends BroadcastReceiver {
 			content = "What's your sugar level?";
 			ticker = "It's time to measure sugar level!";
 			showNotification();
+		} else if (tracker.equals(TrackerInputType.BLOOD_PRESSURE)
+				&& showBpNotif(timestamp)) {
+			title = "HealthGem";
+			content = "What's your blood pressure?";
+			ticker = "It's time to measure blood pressure!";
+			showNotification();
+		} else if (tracker.equals(TrackerInputType.CHECKUP)
+				&& showCheckupNotif(timestamp)) {
+			title = "HealthGem";
+			content = "Did you check up between this 6 months?";
+			ticker = "It's time to have a check up!";
+			showNotification();
+		} else if (tracker.equals(TrackerInputType.WEIGHT)
+				&& showWeightNotif(timestamp)) {
+			title = "HealthGem";
+			content = "What's your weight?";
+			ticker = "It's time to measure your weight!";
+			showNotification();
+		} else if (tracker.equals(TrackerInputType.FOOD)
+				&& showFoodNotif(timestamp)) {
+			title = "HealthGem";
+			content = "What did you ate?";
+			ticker = "It's time record the food you ate!";
+			showNotification();
+		} else if (tracker.equals(TrackerInputType.ACTIVITY)
+				&& showActivityNotif(timestamp)) {
+			title = "HealthGem";
+			content = "Did you excercise?";
+			ticker = "It's time to record your activity!";
+			showNotification();
 		}
 
 		/*
@@ -105,11 +137,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 		}
 		// dont show notif
 		if (lastBs != null
-				&& String.valueOf(
-						DateTimeParser.getMonth(lastBs.getTimestamp())).equals(
-						String.valueOf(DateTimeParser.getMonth(current)))
-				&& String.valueOf(DateTimeParser.getDay(lastBs.getTimestamp()))
-						.equals(String.valueOf(DateTimeParser.getDay(current))))
+				&& DateTimeParser.getMonthDay(lastBs.getTimestamp()).equals(
+						DateTimeParser.getMonthDay(current)))
 			notif = false;
 
 		return notif;
@@ -117,6 +146,21 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 	public boolean showBpNotif(Timestamp current) {
 		boolean notif = true; // show notif
+
+		BloodPressureTrackerServiceImpl bpService = new BloodPressureTrackerServiceImpl();
+		Log.e("bpservice", "called");
+		BloodPressure lastBp = null;
+		try {
+			lastBp = bpService.getLatest();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// dont show notif
+		if (lastBp != null
+				&& DateTimeParser.getMonthDay(lastBp.getTimestamp()).equals(
+						DateTimeParser.getMonthDay(current)))
+			notif = false;
 
 		return notif;
 	}
