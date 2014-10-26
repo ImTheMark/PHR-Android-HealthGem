@@ -18,4 +18,7 @@ public interface UserDao {
 
 	public boolean usernameAlreadyExists(String username)
 			throws WebServerException;
+
+	public void edit(User user) throws WebServerException,
+			OutdatedAccessTokenException;
 }

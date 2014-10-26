@@ -186,4 +186,41 @@ public class UserDaoImpl extends BasicDaoImpl implements UserDao {
 							+ "with the web server.");
 		}
 	}
+
+	@Override
+	public void edit(User user) throws WebServerException,
+			OutdatedAccessTokenException {
+		String command = "user/edit";
+		try {
+			JSONObject data = new JSONObject();
+			data.put("accessToken", accessDao.getAccessToken().getAccessToken());
+			data.put("username", accessDao.getAccessToken().getUserName());
+			data.put("user", GSONConverter.convertObjectToJSON(user));
+			String jsonToSend = jsonRequestCreator
+					.createJSONRequest(data, null);
+			System.out.println("JSON Request Sent: " + jsonToSend);
+			JSONObject response = performHttpRequest_JSON(command, jsonToSend);
+			System.out.println("JSON Response Received: " + response);
+
+			if (response.has("data")
+					&& response.getJSONObject("data").has("isValidAccessToken")
+					&& response.getJSONObject("data")
+							.getString("isValidAccessToken").equals("false")) {
+				throw new OutdatedAccessTokenException(
+						"The access token used in the request is outdated, please ask the user to log in again.");
+			} else if (response.getString("status").equals("success")) {
+				System.out.println("Editing successful");
+
+			} else {
+				throw new WebServerException(
+						"An error has occurred while communicating"
+								+ "with the web server.");
+			}
+
+		} catch (JSONException e) {
+			throw new WebServerException(
+					"An error has occurred while communicating"
+							+ "with the web server.");
+		}
+	}
 }
