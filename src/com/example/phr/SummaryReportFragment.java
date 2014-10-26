@@ -2,6 +2,7 @@ package com.example.phr;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -95,6 +96,7 @@ public class SummaryReportFragment extends Fragment {
 	DateFormat timeFormat;
 	DateFormat fmt;
 	Calendar calobj;
+	Timestamp timestamp;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -238,7 +240,9 @@ public class SummaryReportFragment extends Fragment {
 			double heightInMeter = 1.75;
 			double bmi = weight.getWeightInKilograms()
 					/ (heightInMeter * heightInMeter);
-			txtBmi.setText(String.valueOf(bmi));
+			DecimalFormat df = new DecimalFormat("#.00");
+			String formattedBmi = df.format(bmi);
+			txtBmi.setText(formattedBmi);
 			txtWeightUnit.setText("lbs");
 			String weightStatus;
 			if (bmi < 18.5)
@@ -298,7 +302,7 @@ public class SummaryReportFragment extends Fragment {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Timestamp timestamp = new Timestamp(date.getTime());
+		timestamp = new Timestamp(date.getTime());
 
 		MobileFoodTrackerDao foodDao = new MobileFoodTrackerDaoImpl();
 		MobileActivityTrackerDao activityDao = new MobileActivityTrackerDaoImpl();
@@ -458,6 +462,20 @@ public class SummaryReportFragment extends Fragment {
 
 		LinearLayout dailyContainer = (LinearLayout) rootView
 				.findViewById(R.id.piegraph);
+
+		dailyContainer.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getActivity(),
+						FoodTrackerDailyActivity.class);
+				SimpleDateFormat fmt = new SimpleDateFormat(
+						"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+				String txtdate = fmt.format(timestamp);
+				Log.e("home", txtdate);
+				i.putExtra("date", txtdate);
+				startActivity(i);
+			}
+		});
 
 		dailyContainer.addView(dailyChart);
 

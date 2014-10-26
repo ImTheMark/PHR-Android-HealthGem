@@ -1,5 +1,6 @@
 package com.example.phr.adapter;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import android.content.Context;
@@ -142,9 +143,10 @@ public class StatusAdapter extends BaseAdapter {
 			viewHolder.imgAction.setImageResource(R.drawable.icon_note);
 		} else if (mListOfStatus.get(position).getClass().equals(Weight.class)) {
 			viewHolder.actionHolder.setText("Weight at ");
-			viewHolder.actionName
-					.setText(((Weight) mListOfStatus.get(position))
-							.getWeightInKilograms() + "");
+			DecimalFormat df = new DecimalFormat("#.00");
+			String weightFormated = df.format(((Weight) mListOfStatus
+					.get(position)).getWeightInKilograms());
+			viewHolder.actionName.setText(weightFormated + " kg ");
 			viewHolder.imgAction.setImageResource(R.drawable.icon_weight);
 		}
 

@@ -31,8 +31,8 @@ public class CalorieBreakdownAdapter extends BaseAdapter {
 	}
 
 	public CalorieBreakdownAdapter(Context aContext,
-			List<TrackerEntry> aListOfBloodSugar) {
-		mListOfCalorie = aListOfBloodSugar;
+			List<TrackerEntry> aListOfTrackerEntry) {
+		mListOfCalorie = aListOfTrackerEntry;
 		mContext = aContext;
 	}
 
@@ -79,38 +79,39 @@ public class CalorieBreakdownAdapter extends BaseAdapter {
 		}
 
 		viewHolder = (ViewHolder) convertView.getTag();
-		if (mListOfCalorie.getClass().equals(FoodTrackerEntry.class)) {
+		if (mListOfCalorie.get(position).getClass()
+				.equals(FoodTrackerEntry.class)) {
 			viewHolder.calorie.setText(String
-					.valueOf(((FoodTrackerEntry) mListOfCalorie).getFood()
-							.getCalorie()));
-			viewHolder.action.setText(((FoodTrackerEntry) mListOfCalorie)
-					.getFood().getName());
+					.valueOf(((FoodTrackerEntry) mListOfCalorie.get(position))
+							.getFood().getCalorie()));
+			viewHolder.action.setText(((FoodTrackerEntry) mListOfCalorie
+					.get(position)).getFood().getName());
 			viewHolder.servingCount.setText(String
-					.valueOf(((FoodTrackerEntry) mListOfCalorie)
+					.valueOf(((FoodTrackerEntry) mListOfCalorie.get(position))
 							.getServingCount()));
-			viewHolder.unit.setText(((FoodTrackerEntry) mListOfCalorie)
-					.getFood().getServingUnit());
+			viewHolder.unit.setText(((FoodTrackerEntry) mListOfCalorie
+					.get(position)).getFood().getServingUnit());
 
-			viewHolder.time
-					.setText(String.valueOf(DateTimeParser
-							.getTime(((FoodTrackerEntry) mListOfCalorie)
-									.getTimestamp())));
+			viewHolder.time.setText(String.valueOf(DateTimeParser
+					.getTime(((FoodTrackerEntry) mListOfCalorie.get(position))
+							.getTimestamp())));
 
 			viewHolder.image.setImageResource(R.drawable.icon_food);
-		} else if (mListOfCalorie.getClass().equals(ActivityTrackerEntry.class)) {
+		} else if (mListOfCalorie.get(position).getClass()
+				.equals(ActivityTrackerEntry.class)) {
 			viewHolder.calorie.setText(String
-					.valueOf(((ActivityTrackerEntry) mListOfCalorie)
-							.getCaloriesBurnedPerHour()));
-			viewHolder.action.setText(((ActivityTrackerEntry) mListOfCalorie)
-					.getActivity().getName());
-			double hr = ((ActivityTrackerEntry) mListOfCalorie)
+					.valueOf(((ActivityTrackerEntry) mListOfCalorie
+							.get(position)).getCaloriesBurnedPerHour()));
+			viewHolder.action.setText(((ActivityTrackerEntry) mListOfCalorie
+					.get(position)).getActivity().getName());
+			double hr = ((ActivityTrackerEntry) mListOfCalorie.get(position))
 					.getDurationInSeconds() / 3600;
 			viewHolder.servingCount.setText(String.valueOf(hr));
 			viewHolder.unit.setText("hr");
 
 			viewHolder.time.setText(String.valueOf(DateTimeParser
-					.getTime(((ActivityTrackerEntry) mListOfCalorie)
-							.getTimestamp())));
+					.getTime(((ActivityTrackerEntry) mListOfCalorie
+							.get(position)).getTimestamp())));
 
 			viewHolder.image.setImageResource(R.drawable.icon_activity);
 		}

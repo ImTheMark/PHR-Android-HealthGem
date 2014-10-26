@@ -12,6 +12,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.EntryNotFoundException;
@@ -367,18 +368,13 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 
 		Boolean dateHasPassedFromGivenDate = false;
 
-		while (foodList.size() != 0 || !dateHasPassedFromGivenDate) {
+		while (foodList.size() != 0 && !dateHasPassedFromGivenDate) {
 			FoodTrackerEntry food = foodList.remove(0);
 			// if (foodList.get(0).getTimestamp().equals(date))
-			if (String.valueOf(
-					DateTimeParser.getMonth(foodList.get(0).getTimestamp()))
-					.equals(String.valueOf(DateTimeParser.getMonth(date)))
-					&& String.valueOf(
-							DateTimeParser.getDay(foodList.get(0)
-									.getTimestamp())).equals(
-							String.valueOf(DateTimeParser.getDay(date))))
+			if (DateTimeParser.getMonthDay(food.getTimestamp()).equals(
+					DateTimeParser.getMonthDay(date)))
 				foodListFromDate.add(food);
-			else if (foodList.get(0).getTimestamp().after(date))
+			else if (food.getTimestamp().after(date))
 				dateHasPassedFromGivenDate = true;
 		}
 
@@ -437,23 +433,23 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 		double groupedFat = 0;
 		Timestamp groupedDate = null;
 
-		while (foodList.size() != 0 || !dateHasPassedFromGivenDate) {
+		Log.e("foodlistsize", String.valueOf(foodList.size()));
+
+		while (foodList.size() != 0 && !dateHasPassedFromGivenDate) {
 			FoodTrackerEntry food = foodList.remove(0);
 
-			if (String.valueOf(
-					DateTimeParser.getMonth(foodList.get(0).getTimestamp()))
-					.equals(String.valueOf(DateTimeParser.getMonth(date)))
-					&& String.valueOf(
-							DateTimeParser.getDay(foodList.get(0)
-									.getTimestamp())).equals(
-							String.valueOf(DateTimeParser.getDay(date)))) {
+			if (DateTimeParser.getMonthDay(food.getTimestamp()).equals(
+					DateTimeParser.getMonthDay(date))) {
 				foodListFromDate.add(food);
-				groupedProtein += food.getFood().getProtein();
-				groupedCalorie += food.getFood().getCalorie();
-				groupedCarb += food.getFood().getCarbohydrate();
-				groupedFat += food.getFood().getFat();
+				groupedProtein += food.getFood().getProtein()
+						* food.getServingCount();
+				groupedCalorie += food.getFood().getCalorie()
+						* food.getServingCount();
+				groupedCarb += food.getFood().getCarbohydrate()
+						* food.getServingCount();
+				groupedFat += food.getFood().getFat() * food.getServingCount();
 				groupedDate = food.getTimestamp();
-			} else if (foodList.get(0).getTimestamp().after(date))
+			} else if (food.getTimestamp().after(date))
 				dateHasPassedFromGivenDate = true;
 		}
 		GroupedFood groupedFood = new GroupedFood(groupedDate, groupedCalorie,
@@ -515,21 +511,28 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 			double groupedCalorie = 0;
 			double groupedCarb = 0;
 			double groupedFat = 0;
+			FoodTrackerEntry f = foodList.get(0);
+			Timestamp date = null;
+			while (foodList.size() != 0
+					&& monthDay.equals(DateTimeParser.getMonthDay(f
+							.getTimestamp())))
 
-			do {
-				FoodTrackerEntry f = foodList.remove(0);
-				groupedProtein += f.getFood().getProtein();
-				groupedCalorie += f.getFood().getCalorie();
-				groupedCarb += f.getFood().getCarbohydrate();
-				groupedFat += f.getFood().getFat();
+			{
+				date = f.getTimestamp();
+				groupedProtein += f.getFood().getProtein()
+						* f.getServingCount();
+				groupedCalorie += f.getFood().getCalorie()
+						* f.getServingCount();
+				groupedCarb += f.getFood().getCarbohydrate()
+						* f.getServingCount();
+				groupedFat += f.getFood().getFat() * f.getServingCount();
 				foodListPerDay.add(f);
-			} while (foodList.size() != 0
-					&& monthDay.equals(DateTimeParser.getMonthDay(foodList.get(
-							0).getTimestamp())));
-
-			calGroupedFood.add(new GroupedFood(foodListPerDay.get(0)
-					.getTimestamp(), groupedCalorie, groupedProtein,
-					groupedFat, groupedCarb));
+				Log.e("foodlistsize", String.valueOf(foodList.size()));
+				foodList.remove(0);
+			}
+			Log.e("date", String.valueOf(date));
+			calGroupedFood.add(new GroupedFood(date, groupedCalorie,
+					groupedProtein, groupedFat, groupedCarb));
 
 		}
 

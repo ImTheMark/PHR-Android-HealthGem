@@ -1,7 +1,10 @@
 package com.example.phr;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -28,7 +31,8 @@ public class GroupedFoodTrackerActivity extends Activity {
 	ListView mGroupedFoodList;
 	GroupedFoodAdapter groupedfoodAdapter;
 	ImageView mBtnGroupedFoodPost;
-	GroupedFood chosenItem;
+	Timestamp timestamp;
+	GroupedFood groupedFood;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -73,8 +77,12 @@ public class GroupedFoodTrackerActivity extends Activity {
 				Log.e("groupedfood", "CLICKED!");
 				Intent i = new Intent(getApplicationContext(),
 						FoodTrackerDailyActivity.class);
-				chosenItem = (GroupedFood) arg0.getAdapter().getItem(arg2);
-				i.putExtra("object", chosenItem);
+				groupedFood = (GroupedFood) arg0.getAdapter().getItem(arg2);
+				SimpleDateFormat fmt = new SimpleDateFormat(
+						"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+				String txtdate = fmt.format(groupedFood.getDate());
+				Log.e("groupedFoodtracker", txtdate);
+				i.putExtra("date", txtdate);
 				startActivity(i);
 			}
 		});

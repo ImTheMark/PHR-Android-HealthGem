@@ -229,7 +229,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:text="BMI : "
-                    android:textSize="20sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:layout_alignParentLeft="true" />
 
@@ -238,7 +238,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:text="26"
-                    android:textSize="20sp"
+                    android:textSize="14sp"
                     android:textColor="#E05C5C"
                     android:textStyle="bold" 
                     android:layout_toRightOf="@id/textView14"/>

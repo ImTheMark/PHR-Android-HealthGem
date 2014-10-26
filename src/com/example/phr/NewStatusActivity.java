@@ -1362,8 +1362,22 @@ public class NewStatusActivity extends Activity {
 				} else if (currentTracker.equals(TrackerInputType.FOOD)) {
 
 					addFoodToDatabase();
+					Date date = null;
+					try {
+						date = fmt.parse(dateFormat.format(calobj.getTime())
+								+ " " + timeFormat.format(calobj.getTime()));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					Timestamp timestamp = new Timestamp(date.getTime());
+					SimpleDateFormat fmtFood = new SimpleDateFormat(
+							"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+					String txtdate = fmtFood.format(timestamp);
 					Intent intent = new Intent(getApplicationContext(),
 							FoodTrackerDailyActivity.class);
+					Log.e("newstatus", txtdate);
+					intent.putExtra("date", txtdate);
 					startActivity(intent);
 				}
 			} catch (ServiceException e) {

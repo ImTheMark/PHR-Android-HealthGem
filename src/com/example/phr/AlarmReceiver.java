@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.BloodSugar;
 import com.example.phr.serviceimpl.BloodSugarTrackerServiceImpl;
@@ -40,7 +41,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-
+		String tracker = intent.getExtras().getString("tracker");
 		myIntent = new Intent(context, MainActivity.class);
 		pendingIntent = PendingIntent.getActivity(context, 0, myIntent,
 				Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -62,7 +63,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 		Timestamp timestamp = new Timestamp(date.getTime());
 
 		// check condition
-		if (showBsNotif(timestamp)) {
+		if (tracker.equals(TrackerInputType.BLOOD_SUGAR)
+				&& showBsNotif(timestamp)) {
 			title = "HealthGem";
 			content = "What's your sugar level?";
 			ticker = "It's time to measure sugar level!";
@@ -109,6 +111,36 @@ public class AlarmReceiver extends BroadcastReceiver {
 				&& String.valueOf(DateTimeParser.getDay(lastBs.getTimestamp()))
 						.equals(String.valueOf(DateTimeParser.getDay(current))))
 			notif = false;
+
+		return notif;
+	}
+
+	public boolean showBpNotif(Timestamp current) {
+		boolean notif = true; // show notif
+
+		return notif;
+	}
+
+	public boolean showFoodNotif(Timestamp current) {
+		boolean notif = true; // show notif
+
+		return notif;
+	}
+
+	public boolean showActivityNotif(Timestamp current) {
+		boolean notif = true; // show notif
+
+		return notif;
+	}
+
+	public boolean showCheckupNotif(Timestamp current) {
+		boolean notif = true; // show notif
+
+		return notif;
+	}
+
+	public boolean showWeightNotif(Timestamp current) {
+		boolean notif = true; // show notif
 
 		return notif;
 	}

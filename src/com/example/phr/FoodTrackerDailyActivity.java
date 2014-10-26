@@ -1,5 +1,7 @@
 package com.example.phr;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +34,7 @@ import com.example.phr.mobile.dao.MobileFoodTrackerDao;
 import com.example.phr.mobile.daoimpl.MobileFoodTrackerDaoImpl;
 import com.example.phr.mobile.models.FoodTrackerEntry;
 import com.example.phr.mobile.models.GroupedFood;
+import com.example.phr.tools.DateTimeParser;
 
 public class FoodTrackerDailyActivity extends Activity {
 
@@ -39,7 +42,8 @@ public class FoodTrackerDailyActivity extends Activity {
 	DailyFoodAdapter foodsingleAdapter;
 	ImageView mBtnFoodSinglePost;
 	MobileFoodTrackerDao foodDao;
-	GroupedFood chosenItem;
+	Timestamp timestamp;
+	GroupedFood groupedFood;
 
 	// --------------------------------------------------------
 
@@ -52,7 +56,14 @@ public class FoodTrackerDailyActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		Intent in = getIntent();
-		chosenItem = (GroupedFood) in.getExtras().getSerializable("object");
+		String txtDate = in.getExtras().getString("date");
+		Log.e("dailyFoodtracker", txtDate);
+		try {
+			timestamp = DateTimeParser.getTimestamp(txtDate);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		mFoodSingleList = (ListView) findViewById(R.id.listView_food_single);
 
@@ -81,7 +92,8 @@ public class FoodTrackerDailyActivity extends Activity {
 		List<FoodTrackerEntry> list = new ArrayList<FoodTrackerEntry>();
 		foodDao = new MobileFoodTrackerDaoImpl();
 		try {
-			list = foodDao.getAllFromDate(chosenItem.getDate());
+			list = foodDao.getAllFromDate(timestamp);
+			groupedFood = foodDao.getFromDateCalculated(timestamp);
 		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -114,8 +126,8 @@ public class FoodTrackerDailyActivity extends Activity {
 		View dailyChart;
 
 		int[] x = { 0, 1, 2 };
-		double[] intake = { chosenItem.getProtein(), chosenItem.getFat(),
-				chosenItem.getCarbohydrates() };
+		double[] intake = { groupedFood.getProtein(), groupedFood.getFat(),
+				groupedFood.getCarbohydrates() };
 		double[] recommended = { 41.25, 53.63, 247.5 };
 
 		String[] mMonth = new String[] { "Protein", "Fats", "Carbohydrates" };

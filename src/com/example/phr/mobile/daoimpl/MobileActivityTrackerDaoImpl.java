@@ -376,7 +376,7 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 
 		Boolean dateHasPassedFromGivenDate = false;
 
-		while (actList.size() != 0 || !dateHasPassedFromGivenDate) {
+		while (actList.size() != 0 && !dateHasPassedFromGivenDate) {
 			ActivityTrackerEntry activity = actList.remove(0);
 
 			if (String.valueOf(
@@ -444,7 +444,7 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 		Boolean dateHasPassedFromGivenDate = false;
 		double calBurned = 0;
 		Timestamp groupedDate = null;
-		while (actList.size() != 0 || !dateHasPassedFromGivenDate) {
+		while (actList.size() != 0 && !dateHasPassedFromGivenDate) {
 			ActivityTrackerEntry activity = actList.remove(0);
 
 			if (String.valueOf(
