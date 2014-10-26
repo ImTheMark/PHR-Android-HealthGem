@@ -1,5 +1,8 @@
 package com.example.phr.serviceimpl;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
@@ -57,20 +60,60 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public void edit(User user) throws ServiceException,
+			OutdatedAccessTokenException {
+		try {
+			userDao.edit(user);
+		} catch (WebServerException e) {
+			throw new ServiceException("An error occured in the user service",
+					e);
+		}
+	}
+
+	@Override
 	public User getUser() {
 		User user = new User();
-		user.setAllergies(HealthGem.getSharedPreferences().loadPreferences(SPreference.ALLERGIES));
-		user.setContactNumber(HealthGem.getSharedPreferences().loadPreferences(SPreference.NUMBER));
-		user.setDateOfBirth(HealthGem.getSharedPreferences().loadPreferences(SPreference.BIRTHDATE));
-		user.setEmail(HealthGem.getSharedPreferences().loadPreferences(SPreference.EMAIL));
-		user.setEmergencyContactNumber(HealthGem.getSharedPreferences().loadPreferences(SPreference.CONTACTPERSONNUMBER));
-		user.setEmergencyPerson(HealthGem.getSharedPreferences().loadPreferences(SPreference.CONTACTPERSON));
-		user.setGender(HealthGem.getSharedPreferences().loadPreferences(SPreference.GENDER));
-		user.setHeight(Double.parseDouble(HealthGem.getSharedPreferences().loadPreferences(SPreference.HEIGHT)));
-		user.setKnownHealthProblems(HealthGem.getSharedPreferences().loadPreferences(SPreference.KNOWNHEALTHPROBLEMS));
-		user.setName(HealthGem.getSharedPreferences().loadPreferences(SPreference.NAME));
-		user.setUsername(HealthGem.getSharedPreferences().loadPreferences(SPreference.USERNAME));
-		user.setWeight(Double.parseDouble(HealthGem.getSharedPreferences().loadPreferences(SPreference.WEIGHT)));
+		user.setAllergies(HealthGem.getSharedPreferences().loadPreferences(
+				SPreference.ALLERGIES));
+		user.setContactNumber(HealthGem.getSharedPreferences().loadPreferences(
+				SPreference.NUMBER));
+		user.setDateOfBirth(HealthGem.getSharedPreferences().loadPreferences(
+				SPreference.BIRTHDATE));
+		user.setEmail(HealthGem.getSharedPreferences().loadPreferences(
+				SPreference.EMAIL));
+		user.setEmergencyContactNumber(HealthGem.getSharedPreferences()
+				.loadPreferences(SPreference.CONTACTPERSONNUMBER));
+		user.setEmergencyPerson(HealthGem.getSharedPreferences()
+				.loadPreferences(SPreference.CONTACTPERSON));
+		user.setGender(HealthGem.getSharedPreferences().loadPreferences(
+				SPreference.GENDER));
+
+		double height = getDouble(
+				PreferenceManager.getDefaultSharedPreferences(HealthGem
+						.getContext()), SPreference.HEIGHT, 100.0);
+		// user.setHeight(Double.parseDouble(HealthGem.getSharedPreferences()
+		// .loadPreferences(SPreference.HEIGHT)));
+		user.setHeight(height);
+		user.setKnownHealthProblems(HealthGem.getSharedPreferences()
+				.loadPreferences(SPreference.KNOWNHEALTHPROBLEMS));
+		user.setName(HealthGem.getSharedPreferences().loadPreferences(
+				SPreference.NAME));
+		user.setUsername(HealthGem.getSharedPreferences().loadPreferences(
+				SPreference.USERNAME));
+		double weight = getDouble(
+				PreferenceManager.getDefaultSharedPreferences(HealthGem
+						.getContext()), SPreference.WEIGHT, 100.0);
+		// user.setWeight(Double.parseDouble(HealthGem.getSharedPreferences()
+		// .loadPreferences(SPreference.WEIGHT)));
+		user.setWeight(weight);
 		return user;
+	}
+
+	double getDouble(final SharedPreferences prefs, final String key,
+			final double defaultValue) {
+		if (!prefs.contains(key))
+			return defaultValue;
+
+		return Double.longBitsToDouble(prefs.getLong(key, (long) 0d));
 	}
 }

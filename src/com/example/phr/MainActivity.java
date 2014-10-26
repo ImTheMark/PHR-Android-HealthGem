@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.phr.adapter.TabsPagerAdapter;
+import com.example.phr.enums.TrackerInputType;
 
 @SuppressLint("NewApi")
 public class MainActivity extends FragmentActivity implements
@@ -109,12 +110,77 @@ public class MainActivity extends FragmentActivity implements
 			}
 		});
 
-		Calendar c = Calendar.getInstance();
-		c.set(Calendar.HOUR_OF_DAY, 23);
-		c.set(Calendar.MINUTE, 32);
-		c.set(Calendar.SECOND, 0);
+		// check if user post blood sugar today
+		Calendar bsAlarmTime = Calendar.getInstance();
+		bsAlarmTime.set(Calendar.HOUR_OF_DAY, 14);
+		bsAlarmTime.set(Calendar.MINUTE, 0);
+		bsAlarmTime.set(Calendar.SECOND, 0);
+		setAlarm(bsAlarmTime, TrackerInputType.BLOOD_SUGAR);
 
-		setAlarm(c);
+		// check if user post blood pressure today
+		Calendar bpAlarmTime = Calendar.getInstance();
+		bpAlarmTime.set(Calendar.HOUR_OF_DAY, 10);
+		bpAlarmTime.set(Calendar.MINUTE, 0);
+		bpAlarmTime.set(Calendar.SECOND, 0);
+		setAlarm(bpAlarmTime, TrackerInputType.BLOOD_PRESSURE);
+
+		// check if user post food today in fb, if not notif user to post food
+		Calendar foodAlarmTime = Calendar.getInstance();
+		foodAlarmTime.set(Calendar.HOUR_OF_DAY, 20);
+		foodAlarmTime.set(Calendar.MINUTE, 0);
+		foodAlarmTime.set(Calendar.SECOND, 0);
+		setAlarm(foodAlarmTime, TrackerInputType.FOOD);
+
+		// check if user post activty this week at this time
+		Calendar activityAlarmTime = Calendar.getInstance();
+		activityAlarmTime.set(Calendar.HOUR_OF_DAY, 18);
+		activityAlarmTime.set(Calendar.MINUTE, 0);
+		activityAlarmTime.set(Calendar.SECOND, 0);
+		setAlarm(activityAlarmTime, TrackerInputType.ACTIVITY);
+
+		// check if user post weight between this 2 weeks at this time
+		Calendar weightAlarmTime = Calendar.getInstance();
+		weightAlarmTime.set(Calendar.HOUR_OF_DAY, 18);
+		weightAlarmTime.set(Calendar.MINUTE, 0);
+		weightAlarmTime.set(Calendar.SECOND, 0);
+		setAlarm(weightAlarmTime, TrackerInputType.WEIGHT);
+
+		// check if user post weight between this 6 months at this time
+		Calendar checkupAlarmTime = Calendar.getInstance();
+		checkupAlarmTime.set(Calendar.HOUR_OF_DAY, 18);
+		checkupAlarmTime.set(Calendar.MINUTE, 0);
+		checkupAlarmTime.set(Calendar.SECOND, 0);
+		setAlarm(checkupAlarmTime, TrackerInputType.CHECKUP);
+
+	}
+
+	private void setAlarm(Calendar targetCal, String tracker) {
+
+		Intent intent = new Intent(getBaseContext(), AlarmReceiver.class);
+		if (tracker.equals(TrackerInputType.BLOOD_SUGAR))
+			intent.putExtra("tracker", TrackerInputType.BLOOD_SUGAR);
+		else if (tracker.equals(TrackerInputType.BLOOD_PRESSURE))
+			intent.putExtra("tracker", TrackerInputType.BLOOD_PRESSURE);
+		else if (tracker.equals(TrackerInputType.WEIGHT))
+			intent.putExtra("tracker", TrackerInputType.WEIGHT);
+		else if (tracker.equals(TrackerInputType.CHECKUP))
+			intent.putExtra("tracker", TrackerInputType.CHECKUP);
+		else if (tracker.equals(TrackerInputType.FOOD))
+			intent.putExtra("tracker", TrackerInputType.FOOD);
+		else if (tracker.equals(TrackerInputType.ACTIVITY))
+			intent.putExtra("tracker", TrackerInputType.ACTIVITY);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(
+				getBaseContext(), RQS_1, intent, 0);
+		AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+		// alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+		// targetCal.getTimeInMillis(),
+		// AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
+		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
+				targetCal.getTimeInMillis(), AlarmManager.INTERVAL_DAY,
+				pendingIntent);
+		// alarmManager.set(AlarmManager.RTC_WAKEUP,
+		// targetCal.getTimeInMillis(),
+		// pendingIntent);
 	}
 
 	@Override
@@ -160,20 +226,4 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	private void setAlarm(Calendar targetCal) {
-
-		Intent intent = new Intent(getBaseContext(), AlarmReceiver.class);
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(
-				getBaseContext(), RQS_1, intent, 0);
-		AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-				targetCal.getTimeInMillis(),
-				AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
-		// alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-		// targetCal.getTimeInMillis(),
-		// AlarmManager.INTERVAL_DAY, pendingIntent);
-		// alarmManager.set(AlarmManager.RTC_WAKEUP,
-		// targetCal.getTimeInMillis(),
-		// pendingIntent);
-	}
 }

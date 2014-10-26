@@ -79,10 +79,10 @@
 	                android:text="150" />
 	            
 	              <TextView
-	                android:id="@+id/txtBlank"
+	                android:id="@+id/txtBlankLa"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:layout_toRightOf="@id/lblTrackerAverage"
+	                android:layout_toRightOf="@id/txtTrackerAverage"
 	                android:textAppearance="?android:attr/textAppearanceLarge"
 	                android:textColor="#0A090A"
 	                android:text=" " />
@@ -91,7 +91,7 @@
 	                android:id="@+id/txtTrackerAverageUnit"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:layout_toRightOf="@id/lblTrackerAverage"
+	                android:layout_toRightOf="@id/txtBlankLa"
 	                android:textAppearance="?android:attr/textAppearanceLarge"
 	                android:textColor="#0A090A"
 	                android:text="kg" />

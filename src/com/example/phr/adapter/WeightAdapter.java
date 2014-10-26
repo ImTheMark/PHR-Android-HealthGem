@@ -52,6 +52,7 @@ public class WeightAdapter extends BaseAdapter {
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder viewHolder;
+		DecimalFormat df = new DecimalFormat("#.00");
 
 		if (convertView == null) {
 			LayoutInflater inflater = LayoutInflater.from(mContext);
@@ -105,7 +106,7 @@ public class WeightAdapter extends BaseAdapter {
 			// kg for now
 
 			TextView txtWeight = new TextView(mContext);
-			DecimalFormat df = new DecimalFormat("#.00");
+
 			String weightFormated = df.format(status.getWeightInKilograms());
 			txtWeight.setText(weightFormated);
 			RelativeLayout.LayoutParams w = new RelativeLayout.LayoutParams(
@@ -122,7 +123,8 @@ public class WeightAdapter extends BaseAdapter {
 		}
 
 		average /= mListOfGroupedWeightByDate.get(position).size();
-		viewHolder.average.setText(String.valueOf(average));
+		String txtAve = df.format(average);
+		viewHolder.average.setText(txtAve);
 
 		return convertView;
 	}

@@ -3,15 +3,12 @@ package com.example.phr.adapter;
 import java.util.List;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.phr.FoodTrackerDailyActivity;
 import com.example.phr.R;
 import com.example.phr.mobile.models.GroupedFood;
 import com.example.phr.tools.DateTimeParser;
@@ -95,19 +92,6 @@ public class GroupedFoodAdapter extends BaseAdapter {
 		viewHolder.day.setText(String.valueOf(DateTimeParser
 				.getDay(mListOfGroupedFood.get(position).getDate())));
 
-		convertView.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				// FOR STATUS ON CLICK
-				Intent intent = new Intent(mContext,
-						FoodTrackerDailyActivity.class)
-						.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				;
-				v.getContext().startActivity(intent);
-			}
-		});
 		return convertView;
 	}
 
