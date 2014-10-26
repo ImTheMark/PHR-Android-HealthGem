@@ -46,12 +46,15 @@ import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.mobile.models.BloodSugar;
 import com.example.phr.mobile.models.GroupedActivity;
 import com.example.phr.mobile.models.GroupedFood;
+import com.example.phr.mobile.models.User;
 import com.example.phr.mobile.models.Weight;
 import com.example.phr.service.BloodPressureTrackerService;
 import com.example.phr.service.BloodSugarTrackerService;
+import com.example.phr.service.UserService;
 import com.example.phr.service.WeightTrackerService;
 import com.example.phr.serviceimpl.BloodPressureTrackerServiceImpl;
 import com.example.phr.serviceimpl.BloodSugarTrackerServiceImpl;
+import com.example.phr.serviceimpl.UserServiceImpl;
 import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
 
@@ -322,13 +325,32 @@ public class SummaryReportFragment extends Fragment {
 		double total = groupedFood.getCalorie()
 				- groupedActivity.getCalorieBurned();
 		txtTotalCal.setText(String.valueOf(total));
-
+		double bmr = 1500; // compute
 		// Women: BMR = 655 + ( 4.35 x weight in pounds ) + ( 4.7 x height in
 		// inches ) - ( 4.7 x age in years )
 		// Men: BMR = 66 + ( 6.23 x weight in pounds ) + ( 12.7 x height in
 		// inches ) - ( 6.8 x age in year )
 
-		double bmr = 1500; // compute
+		UserService userService = new UserServiceImpl();
+		User user = userService.getUser();
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+				Locale.ENGLISH);
+		/*
+		 * String bdayDate = user.getDateOfBirth(); Timestamp bdaytimestamp =
+		 * null; try { bdaytimestamp = DateTimeParser.getTimestamp(bdayDate); }
+		 * catch (ParseException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); } int age =
+		 * Integer.parseInt(DateTimeParser.getYear(timestamp)) -
+		 * Integer.parseInt(DateTimeParser.getYear(bdaytimestamp));
+		 */
+		int age = 40;
+		if (user.getGender().equals("F"))
+			bmr = 655 + (4.35 * weight.getWeightInPounds())
+					+ (4.7 * user.getHeight()) - (4.7 * age);
+		else if (user.getGender().equals("M"))
+			bmr = 66 + (6.23 * weight.getWeightInPounds())
+					+ (12.7 * user.getHeight()) - (6.8 * age);
+
 		txtBigTotalCalRequire.setText(String.valueOf(bmr));
 		txtSmallTotalCalRequire.setText(String.valueOf(bmr));
 

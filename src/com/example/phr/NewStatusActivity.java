@@ -390,11 +390,11 @@ public class NewStatusActivity extends Activity {
 			if (tracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
 				currentTracker = TrackerInputType.BLOOD_PRESSURE;
 				txtCurrentTracker.setText(TrackerInputType.BLOOD_PRESSURE);
-				callBloodPressureInput(120, 80);
+				callBloodPressureInput(100, 70);
 			} else if (tracker.equals(TrackerInputType.BLOOD_SUGAR)) {
 				currentTracker = TrackerInputType.BLOOD_SUGAR;
 				txtCurrentTracker.setText(TrackerInputType.BLOOD_SUGAR);
-				callBloodSugarInput(120, "before meal");
+				callBloodSugarInput(4, "before meal");
 			} else if (tracker.equals(TrackerInputType.NOTES)) {
 				txtCurrentTracker.setText(TrackerInputType.NOTES);
 				currentTracker = TrackerInputType.NOTES;

@@ -1,5 +1,8 @@
 package com.example.phr.serviceimpl;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
@@ -84,16 +87,33 @@ public class UserServiceImpl implements UserService {
 				.loadPreferences(SPreference.CONTACTPERSON));
 		user.setGender(HealthGem.getSharedPreferences().loadPreferences(
 				SPreference.GENDER));
-		user.setHeight(Double.parseDouble(HealthGem.getSharedPreferences()
-				.loadPreferences(SPreference.HEIGHT)));
+
+		double height = getDouble(
+				PreferenceManager.getDefaultSharedPreferences(HealthGem
+						.getContext()), SPreference.HEIGHT, 100.0);
+		// user.setHeight(Double.parseDouble(HealthGem.getSharedPreferences()
+		// .loadPreferences(SPreference.HEIGHT)));
+		user.setHeight(height);
 		user.setKnownHealthProblems(HealthGem.getSharedPreferences()
 				.loadPreferences(SPreference.KNOWNHEALTHPROBLEMS));
 		user.setName(HealthGem.getSharedPreferences().loadPreferences(
 				SPreference.NAME));
 		user.setUsername(HealthGem.getSharedPreferences().loadPreferences(
 				SPreference.USERNAME));
-		user.setWeight(Double.parseDouble(HealthGem.getSharedPreferences()
-				.loadPreferences(SPreference.WEIGHT)));
+		double weight = getDouble(
+				PreferenceManager.getDefaultSharedPreferences(HealthGem
+						.getContext()), SPreference.WEIGHT, 100.0);
+		// user.setWeight(Double.parseDouble(HealthGem.getSharedPreferences()
+		// .loadPreferences(SPreference.WEIGHT)));
+		user.setWeight(weight);
 		return user;
+	}
+
+	double getDouble(final SharedPreferences prefs, final String key,
+			final double defaultValue) {
+		if (!prefs.contains(key))
+			return defaultValue;
+
+		return Double.longBitsToDouble(prefs.getLong(key, (long) 0d));
 	}
 }
