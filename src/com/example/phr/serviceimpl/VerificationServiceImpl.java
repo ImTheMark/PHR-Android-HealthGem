@@ -1,11 +1,15 @@
 package com.example.phr.serviceimpl;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.exceptions.WebServerException;
+import com.example.phr.mobile.models.TrackerEntry;
 import com.example.phr.mobile.models.UnverifiedActivityEntry;
 import com.example.phr.mobile.models.UnverifiedFoodEntry;
 import com.example.phr.mobile.models.UnverifiedRestaurantEntry;
@@ -111,6 +115,28 @@ public class VerificationServiceImpl implements VerificationService {
 		} catch (WebServerException e) {
 			throw new ServiceException("error", e);
 		}
+	}
+
+	@Override
+	public List<TrackerEntry> getAll() throws ServiceException,
+			OutdatedAccessTokenException {
+		List<TrackerEntry> list = new ArrayList<TrackerEntry>();
+		
+		list.addAll(getAllUnverifiedActivityPosts());
+		list.addAll(getAllUnverifiedFoodPosts());
+		list.addAll(getAllUnverifiedRestaurantPosts());
+		//list.addAll(getAllUnverifiedSportsEstablishmentPosts());
+		
+		Collections.sort(list, new Comparator<TrackerEntry>() {
+			@Override
+			public int compare(TrackerEntry e1, TrackerEntry e2) {
+				return e1.getTimestamp().compareTo(e2.getTimestamp());
+			}
+		});
+
+		Collections.reverse(list);
+		
+		return list;
 	}
 
 }

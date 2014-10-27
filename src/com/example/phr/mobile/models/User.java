@@ -1,5 +1,7 @@
 package com.example.phr.mobile.models;
 
+import java.sql.Timestamp;
+
 
 public class User {
 
@@ -7,7 +9,7 @@ public class User {
 	private String username;
 	private String password;
 	private String name;
-	private String dateOfBirth;
+	private Timestamp dateOfBirth;
 	private String gender;
 	private double height;
 	private double weight;
@@ -29,7 +31,7 @@ public class User {
 		this.password = password;
 	}
 
-	public User(String username, String password, String name, String dateOfBirth) {
+	public User(String username, String password, String name, Timestamp dateOfBirth) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -38,7 +40,7 @@ public class User {
 	}
 
 	public User(int id, String username, String password, String name,
-			String dateOfBirth) {
+			Timestamp dateOfBirth) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -48,7 +50,7 @@ public class User {
 	}
 
 	public User(int id, String username, String password, String name,
-			String dateOfBirth, String gender, double height, double weight,
+			Timestamp dateOfBirth, String gender, double height, double weight,
 			String contactNumber, String email, String emergencyPerson,
 			String emergencyContactNumber, String allergies,
 			String knownHealthProblems) {
@@ -183,11 +185,11 @@ public class User {
 		this.name = name;
 	}
 
-	public String getDateOfBirth() {
+	public Timestamp getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(String dateOfBirth) {
+	public void setDateOfBirth(Timestamp dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 

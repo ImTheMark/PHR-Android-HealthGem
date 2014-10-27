@@ -105,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/RegistrationBirthDateDivider"
                     android:background="@drawable/underline_background"
-                    android:hint="06/19/1966"
+                    android:hint="yyyy-MM-dd"
                     android:inputType="date"
                     android:padding="5dp" />
             </RelativeLayout>

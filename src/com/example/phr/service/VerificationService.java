@@ -5,6 +5,7 @@ import java.util.List;
 import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
+import com.example.phr.mobile.models.TrackerEntry;
 import com.example.phr.mobile.models.UnverifiedActivityEntry;
 import com.example.phr.mobile.models.UnverifiedFoodEntry;
 import com.example.phr.mobile.models.UnverifiedRestaurantEntry;
@@ -12,6 +13,9 @@ import com.example.phr.mobile.models.UnverifiedSportsEstablishmentEntry;
 
 public interface VerificationService {
 	public void updateListOfUnverifiedPosts() throws ServiceException,
+			OutdatedAccessTokenException;
+
+	public List<TrackerEntry> getAll() throws ServiceException,
 			OutdatedAccessTokenException;
 
 	public List<UnverifiedFoodEntry> getAllUnverifiedFoodPosts()
