@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,6 +45,7 @@ import com.example.phr.local_db.SPreference;
 import com.example.phr.mobile.models.User;
 import com.example.phr.service.UserService;
 import com.example.phr.serviceimpl.UserServiceImpl;
+import com.example.phr.tools.DateTimeParser;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
@@ -184,7 +186,12 @@ public class RegisterFBLoginActivity extends Activity {
 				User newUser = new User();
 				newUser.setAllergies(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_ALLERGIES));
 				newUser.setContactNumber(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_CONTACTNUMBER));
-				newUser.setDateOfBirth(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_BIRTHDATE));
+				try {
+					newUser.setDateOfBirth(DateTimeParser.getTimestamp(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_BIRTHDATE)));
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				newUser.setEmail(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_EMAIL));
 				newUser.setEmergencyContactNumber(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_CONTACTPERSONNUMBER));
 				newUser.setEmergencyPerson(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_CONTACTPERSON));
