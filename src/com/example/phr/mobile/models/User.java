@@ -2,7 +2,6 @@ package com.example.phr.mobile.models;
 
 import java.sql.Timestamp;
 
-
 public class User {
 
 	private int id;
@@ -20,9 +19,14 @@ public class User {
 	private String allergies;
 	private String knownHealthProblems;
 	private String fbAccessToken;
+	private PHRImage photo;
 
 	public User() {
 		super();
+	}
+
+	public User(int id) {
+		this.id = id;
 	}
 
 	public User(String username, String password) {
@@ -31,7 +35,8 @@ public class User {
 		this.password = password;
 	}
 
-	public User(String username, String password, String name, Timestamp dateOfBirth) {
+	public User(String username, String password, String name,
+			Timestamp dateOfBirth) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -70,8 +75,31 @@ public class User {
 		this.allergies = allergies;
 		this.knownHealthProblems = knownHealthProblems;
 	}
+
 	
-	
+	public User(int id, String username, String password, String name,
+			Timestamp dateOfBirth, String gender, double height, double weight,
+			String contactNumber, String email, String emergencyPerson,
+			String emergencyContactNumber, String allergies,
+			String knownHealthProblems, String fbAccessToken, PHRImage photo) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.name = name;
+		this.dateOfBirth = dateOfBirth;
+		this.gender = gender;
+		this.height = height;
+		this.weight = weight;
+		this.contactNumber = contactNumber;
+		this.email = email;
+		this.emergencyPerson = emergencyPerson;
+		this.emergencyContactNumber = emergencyContactNumber;
+		this.allergies = allergies;
+		this.knownHealthProblems = knownHealthProblems;
+		this.fbAccessToken = fbAccessToken;
+		this.photo = photo;
+	}
 
 	public String getFbAccessToken() {
 		return fbAccessToken;
@@ -193,4 +221,12 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 	}
 
+	public PHRImage getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(PHRImage photo) {
+		this.photo = photo;
+	}
+	
 }
