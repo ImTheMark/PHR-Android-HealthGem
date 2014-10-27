@@ -122,18 +122,18 @@
                 android:text=" + " />
 
             <TextView
-                android:id="@+id/txtFood"
+                android:id="@+id/txtFoodCal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/txtPosSign"
-                android:text="+1500" />
+                android:text="1500" />
 
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/txtFood"
-                android:text=" cal" />
+                android:layout_toRightOf="@id/txtFoodCal"
+                android:text=" kcal Intake" />
 
         </RelativeLayout>
         
@@ -158,7 +158,7 @@
                 android:text=" - " />
 
             <TextView
-                android:id="@+id/txtAct"
+                android:id="@+id/txtActCal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/txtSign"
@@ -168,8 +168,8 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/txtAct"
-                android:text=" cal" />
+                android:layout_toRightOf="@id/txtActCal"
+                android:text=" kcal burned" />
 
         </RelativeLayout>
     </LinearLayout>

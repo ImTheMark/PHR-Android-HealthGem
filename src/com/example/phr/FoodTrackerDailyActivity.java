@@ -14,15 +14,18 @@ import org.achartengine.renderer.XYSeriesRenderer;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -30,10 +33,13 @@ import android.widget.ListView;
 import com.example.phr.adapter.DailyFoodAdapter;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.DataAccessException;
+import com.example.phr.exceptions.OutdatedAccessTokenException;
+import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.dao.MobileFoodTrackerDao;
 import com.example.phr.mobile.daoimpl.MobileFoodTrackerDaoImpl;
 import com.example.phr.mobile.models.FoodTrackerEntry;
 import com.example.phr.mobile.models.GroupedFood;
+import com.example.phr.serviceimpl.FoodTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
 
 public class FoodTrackerDailyActivity extends Activity {
@@ -44,6 +50,12 @@ public class FoodTrackerDailyActivity extends Activity {
 	MobileFoodTrackerDao foodDao;
 	Timestamp timestamp;
 	GroupedFood groupedFood;
+	AlertDialog.Builder alertDialog;
+	ArrayList<String> names;
+	String mode;
+	FoodTrackerServiceImpl foodServiceImpl;
+	AlertDialog alertD;
+	FoodTrackerEntry chosenItem;
 
 	// --------------------------------------------------------
 
@@ -108,7 +120,68 @@ public class FoodTrackerDailyActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				Log.e("foodsingle", "CLICKED!");
+				chosenItem = (FoodTrackerEntry) arg0.getAdapter().getItem(arg2);
+				mode = "";
+				names = new ArrayList<String>();
+				names.add("Edit");
+				names.add("Delete");
+				alertDialog = new AlertDialog.Builder(
+						FoodTrackerDailyActivity.this);
+				LayoutInflater inflater = getLayoutInflater();
+				View convertView = inflater.inflate(R.layout.item_dialogbox,
+						null);
+				alertDialog.setView(convertView);
+				alertDialog.setTitle("What to do?");
+				ListView lv = (ListView) convertView
+						.findViewById(R.id.dialogList);
+				ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+						getApplicationContext(), R.layout.item_custom_listview,
+						names);
+				lv.setAdapter(adapter);
+
+				lv.setOnItemClickListener(new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1,
+							int arg2, long arg3) {
+						// TODO Auto-generated method stub
+						mode = names.get(arg2);
+						alertD.dismiss();
+						Log.e("mode", names.get(arg2));
+
+						if (mode.equals("Edit")) {
+
+							Intent i = new Intent(getApplicationContext(),
+									NewStatusActivity.class);
+							i.putExtra("edit", TrackerInputType.FOOD);
+							i.putExtra("object", chosenItem);
+							startActivity(i);
+						} else if (mode.equals("Delete")) {
+
+							try {
+								Log.e("food", "del");
+								foodServiceImpl.delete(chosenItem);
+								Log.e("food", "del_done");
+							} catch (ServiceException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (OutdatedAccessTokenException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
+							Intent i = new Intent(getApplicationContext(),
+									FoodTrackerDailyActivity.class);
+							startActivity(i);
+						}
+					}
+
+				});
+				alertD = alertDialog.create();
+				alertD.show();
+				Log.e("in", "in");
+
 			}
+
 		});
 
 		mBtnFoodSinglePost = (ImageView) findViewById(R.id.foodBanner);

@@ -138,6 +138,8 @@ public class NewStatusActivity extends Activity {
 	CheckUp editCheckup;
 	ActivitySingle chosenActivity;
 	Food chosenFood;
+	FoodTrackerEntry editFoodTrackerEntry;
+	ActivityTrackerEntry editActivityTrackerEntry;
 	ImageView statusImage;
 	Bitmap photo;
 	Boolean setImage;
@@ -450,9 +452,11 @@ public class NewStatusActivity extends Activity {
 				editBs = (BloodSugar) in.getExtras().getSerializable("object");
 				currentTracker = TrackerInputType.BLOOD_SUGAR;
 				txtCurrentTracker.setText(TrackerInputType.BLOOD_SUGAR);
-				if (editBs.getImage() != null)
+				if (editBs.getImage() != null) {
 					temp = ImageHandler.loadImage(editBs.getImage()
 							.getFileName());
+					setImage = true;
+				}
 				Log.e("editbsobject", String.valueOf(editBs.getEntryID()));
 				setBloodSugarTemplate(String.valueOf(editBs.getBloodSugar()),
 						editBs.getType(), editBs.getStatus(), temp);
@@ -463,9 +467,11 @@ public class NewStatusActivity extends Activity {
 						"object");
 				currentTracker = TrackerInputType.BLOOD_PRESSURE;
 				Log.e("editbsobject", String.valueOf(editBp.getEntryID()));
-				if (editBp.getImage() != null)
+				if (editBp.getImage() != null) {
 					temp = ImageHandler.loadImage(editBp.getImage()
 							.getFileName());
+					setImage = true;
+				}
 
 				setBloodPressureTemplate(String.valueOf(editBp.getSystolic()),
 						String.valueOf(editBp.getDiastolic()),
@@ -477,10 +483,11 @@ public class NewStatusActivity extends Activity {
 						.getSerializable("object");
 				currentTracker = TrackerInputType.CHECKUP;
 				Log.e("editbsobject", String.valueOf(editCheckup.getEntryID()));
-				if (editCheckup.getImage() != null)
+				if (editCheckup.getImage() != null) {
 					temp = ImageHandler.loadImage(editCheckup.getImage()
 							.getFileName());
-
+					setImage = true;
+				}
 				setCheckupTemplate(editCheckup.getDoctorsName(),
 						editCheckup.getPurpose(), editCheckup.getNotes(), temp);
 
@@ -489,28 +496,60 @@ public class NewStatusActivity extends Activity {
 				editNote = (Note) in.getExtras().getSerializable("object");
 				currentTracker = TrackerInputType.NOTES;
 				Log.e("editbsobject", String.valueOf(editNote.getEntryID()));
-				if (editNote.getImage() != null)
+				if (editNote.getImage() != null) {
 					temp = ImageHandler.loadImage(editNote.getImage()
 							.getFileName());
-
+					setImage = true;
+				}
 				setNoteTemplate(editNote.getNote(), temp);
 
 			} else if (editTracker.equals(TrackerInputType.WEIGHT)) {
 				txtCurrentTracker.setText(TrackerInputType.WEIGHT);
 				editWeight = (Weight) in.getExtras().getSerializable("object");
 				currentTracker = TrackerInputType.WEIGHT;
-				if (editWeight.getImage() != null)
+				if (editWeight.getImage() != null) {
 					temp = ImageHandler.loadImage(editWeight.getImage()
 							.getFileName());
+					setImage = true;
+				}
 				Log.e("editbsobject", String.valueOf(editWeight.getEntryID()));
 				setWeightTemplate(
 						String.valueOf(editWeight.getWeightInPounds()), "lb",
 						editWeight.getStatus(), temp);
 			} else if (editTracker.equals(TrackerInputType.FOOD)) {
 				txtCurrentTracker.setText(TrackerInputType.FOOD);
+				editFoodTrackerEntry = (FoodTrackerEntry) in.getExtras()
+						.getSerializable("object");
+				currentTracker = TrackerInputType.FOOD;
+				if (editFoodTrackerEntry.getImage() != null) {
+					temp = ImageHandler.loadImage(editFoodTrackerEntry
+							.getImage().getFileName());
+					setImage = true;
+				}
+				chosenFood = editFoodTrackerEntry.getFood();
+				Log.e("editbsobject",
+						String.valueOf(editFoodTrackerEntry.getEntryID()));
+				setFoodTemplate(editFoodTrackerEntry.getServingCount(),
+						chosenFood, editFoodTrackerEntry.getStatus());
 
 			} else if (editTracker.equals(TrackerInputType.ACTIVITY)) {
 				txtCurrentTracker.setText(TrackerInputType.ACTIVITY);
+				editActivityTrackerEntry = (ActivityTrackerEntry) in
+						.getExtras().getSerializable("object");
+				currentTracker = TrackerInputType.ACTIVITY;
+				if (editActivityTrackerEntry.getImage() != null) {
+					temp = ImageHandler.loadImage(editActivityTrackerEntry
+							.getImage().getFileName());
+					setImage = true;
+				}
+				chosenActivity = editActivityTrackerEntry.getActivity();
+				Log.e("editbsobject",
+						String.valueOf(editActivityTrackerEntry.getEntryID()));
+				setActivityTemplate(editActivityTrackerEntry.getActivity()
+						.getName(), editActivityTrackerEntry.getActivity()
+						.getMET(), String.valueOf(editActivityTrackerEntry
+						.getDurationInSeconds()), "hr",
+						editActivityTrackerEntry.getStatus());
 
 			}
 		}
@@ -810,6 +849,13 @@ public class NewStatusActivity extends Activity {
 					public void onClick(DialogInterface dialog, int id) {
 						// set activity met -- get from database
 						chosenFood.setCalorie(Double.parseDouble(editFoodCal
+								.getText().toString()));
+						chosenFood.setProtein(Double
+								.parseDouble(editFoodProtein.getText()
+										.toString()));
+						chosenFood.setCarbohydrate(Double
+								.parseDouble(editFoodCarbs.getText().toString()));
+						chosenFood.setFat(Double.parseDouble(editFoodFats
 								.getText().toString()));
 						setFoodTemplate(Double.parseDouble(txtFoodSize
 								.getText().toString()), chosenFood, notesStatus
@@ -1468,9 +1514,15 @@ public class NewStatusActivity extends Activity {
 
 		try {
 			Log.e("in", "edit");
+			PHRImage image;
+			if (setImage == true) {
+				String encodedImage = ImageHandler.encodeImageToBase64(photo);
+				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
+			} else
+				image = null;
 			BloodSugar bs = new BloodSugar(editBs.getEntryID(),
 					editBs.getTimestamp(), notesStatus.getText().toString(),
-					null, Double.parseDouble(txtSugar.getText().toString()),
+					image, Double.parseDouble(txtSugar.getText().toString()),
 					txtSugarType.getText().toString());
 			BloodSugarTrackerService bsTrackerService = new BloodSugarTrackerServiceImpl();
 			bsTrackerService.edit(bs);
@@ -1489,9 +1541,15 @@ public class NewStatusActivity extends Activity {
 
 		try {
 			Log.e("edit", "bloodpressure");
+			PHRImage image;
+			if (setImage == true) {
+				String encodedImage = ImageHandler.encodeImageToBase64(photo);
+				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
+			} else
+				image = null;
 			BloodPressure bp = new BloodPressure(editBp.getEntryID(),
 					editBp.getTimestamp(), notesStatus.getText().toString(),
-					null, Integer.parseInt(txtSystolic.getText().toString()),
+					image, Integer.parseInt(txtSystolic.getText().toString()),
 					Integer.parseInt(txtDiastolic.getText().toString()));
 
 			BloodPressureTrackerService bpTrackerService = new BloodPressureTrackerServiceImpl();
@@ -1520,9 +1578,16 @@ public class NewStatusActivity extends Activity {
 				newWeight = Double.parseDouble(String.valueOf(txtWeight
 						.getText()));
 			}
+
+			PHRImage image;
+			if (setImage == true) {
+				String encodedImage = ImageHandler.encodeImageToBase64(photo);
+				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
+			} else
+				image = null;
 			Weight weight = new Weight(editWeight.getEntryID(),
 					editWeight.getTimestamp(),
-					notesStatus.getText().toString(), null, newWeight);
+					notesStatus.getText().toString(), image, newWeight);
 
 			WeightTrackerService weightTrackerService = new WeightTrackerServiceImpl();
 			weightTrackerService.edit(weight);
@@ -1566,8 +1631,14 @@ public class NewStatusActivity extends Activity {
 
 		try {
 			Log.e("in", "edit");
+			PHRImage image;
+			if (setImage == true) {
+				String encodedImage = ImageHandler.encodeImageToBase64(photo);
+				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
+			} else
+				image = null;
 			Note note = new Note(editNote.getEntryID(),
-					editNote.getTimestamp(), null, null, notesStatus.getText()
+					editNote.getTimestamp(), null, image, notesStatus.getText()
 							.toString());
 
 			NoteTrackerService noteTrackerService = new NoteTrackerServiceImpl();
@@ -1586,6 +1657,20 @@ public class NewStatusActivity extends Activity {
 
 		try {
 			Log.e("in", "edit");
+			PHRImage image;
+			if (setImage == true) {
+				String encodedImage = ImageHandler.encodeImageToBase64(photo);
+				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
+			} else
+				image = null;
+			FoodTrackerEntry foodEntry = null;
+			foodEntry = new FoodTrackerEntry(editFoodTrackerEntry.getEntryID(),
+					editFoodTrackerEntry.getTimestamp(), notesStatus.getText()
+							.toString(), image, chosenFood,
+					Double.parseDouble(txtFoodQuantity.getText().toString()));
+
+			FoodTrackerService foodTrackerService = new FoodTrackerServiceImpl();
+			foodTrackerService.edit(foodEntry);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -1600,6 +1685,12 @@ public class NewStatusActivity extends Activity {
 
 		try {
 			Log.e("in", "edit");
+			PHRImage image;
+			if (setImage == true) {
+				String encodedImage = ImageHandler.encodeImageToBase64(photo);
+				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
+			} else
+				image = null;
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
