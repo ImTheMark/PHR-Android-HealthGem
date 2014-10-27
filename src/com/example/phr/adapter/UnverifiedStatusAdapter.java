@@ -200,7 +200,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 								unverified.getTimestamp(),
 								unverified.getStatus(), 
 								unverified.getImage(), 
-								unverified.getFood, 
+								unverified.getFood(), 
 								unverified.getServingSize());
 						
 						foodService.add(food);*/

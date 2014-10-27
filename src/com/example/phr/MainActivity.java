@@ -218,7 +218,7 @@ public class MainActivity extends FragmentActivity implements
 			return true;
 		case R.id.action_notifications:
 			Intent intent2 = new Intent(getApplicationContext(),
-					RetrieveActivity.class);
+					VerificationActivity.class);
 			startActivity(intent2);
 			return true;
 		default:

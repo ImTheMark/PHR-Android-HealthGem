@@ -114,9 +114,12 @@
         <activity android:name="com.example.phr.NoteTrackerActivity" 
             android:configChanges="orientation|keyboardHidden|screenSize|locale"
   	 		android:screenOrientation="portrait"/>
-        <activity android:name="com.example.phr.RetrieveActivity"
+        
+        <activity android:name="com.example.phr.VerificationActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|locale"
   	 		android:screenOrientation="portrait" />
+        
+        
         <activity android:name="com.example.phr.SettingsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|locale"
   	 		android:screenOrientation="portrait" />
