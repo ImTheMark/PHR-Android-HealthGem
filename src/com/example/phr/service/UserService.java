@@ -16,7 +16,8 @@ public interface UserService {
 	public User getUserGivenUsername(String username) throws ServiceException,
 			OutdatedAccessTokenException;
 
-	public boolean usernameAlreadyExists(String username);
+	public boolean usernameAlreadyExists(String username)
+			throws ServiceException;
 
 	public void edit(User user) throws ServiceException,
 			OutdatedAccessTokenException;

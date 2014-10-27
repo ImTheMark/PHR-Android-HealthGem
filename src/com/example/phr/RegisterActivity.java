@@ -13,9 +13,7 @@ import android.widget.TextView;
 
 import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.ServiceException;
-import com.example.phr.exceptions.UserAlreadyExistsException;
 import com.example.phr.local_db.SPreference;
-import com.example.phr.mobile.models.User;
 import com.example.phr.service.UserService;
 import com.example.phr.serviceimpl.UserServiceImpl;
 import com.example.phr.tools.PasswordValidator;
@@ -38,6 +36,9 @@ public class RegisterActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
+
+		userService = new UserServiceImpl();
+
 		mBtnRegister = (ImageButton) findViewById(R.id.btnRegister);
 		mTextValid = (TextView) findViewById(R.id.valid);
 		textViewPasswordStrength = (TextView) findViewById(R.id.textViewPasswordStrength);
@@ -46,10 +47,10 @@ public class RegisterActivity extends Activity {
 		formPassword = (EditText) findViewById(R.id.txtPasswordReg);
 		formConfirmPassword = (EditText) findViewById(R.id.confirmPasswordReg);
 		passwordValidator = new PasswordValidator();
-		
-		
-		formUsername.setText(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_USERNAME));
-		
+
+		formUsername.setText(HealthGem.getSharedPreferences().loadPreferences(
+				SPreference.REGISTER_USERNAME));
+
 		formPassword.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -88,35 +89,48 @@ public class RegisterActivity extends Activity {
 
 				boolean valid = passwordValidator.validate(password);
 
-				if (password.equals(confirmPassword)) {
-					Log.e("tama1", "tama2");
-					if (password.length() > 7) {
-							if(!userService.usernameAlreadyExists(username)){
-								Intent intent = new Intent(getApplicationContext(),
-										MainActivity.class);
-								HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_USERNAME, username);
+				try {
+					if (password.equals(confirmPassword)) {
+						Log.e("tama1", "tama2");
+						if (password.length() > 7) {
+							Log.e("USERNAME REG", username);
+							if (!userService.usernameAlreadyExists(username)) {
+								Intent intent = new Intent(
+										getApplicationContext(),
+										RegisterUserInformationActivity.class);
+								HealthGem.getSharedPreferences()
+										.savePreferences(
+												SPreference.REGISTER_USERNAME,
+												username);
+								HealthGem.getSharedPreferences()
+										.savePreferences(
+												SPreference.REGISTER_PASSWORD,
+												password);
 								startActivity(intent);
-							}
-							else
-								mTextValid
-								.setText("Username already exists!");
-					} else
-						mTextValid
-								.setText("password length must be at least 8 characters");
-				} else {
-					mTextValid.setText("passwords does not match");
-					Log.e("mali1", "mali2");
+							} else
+								mTextValid.setText("Username already exists!");
+
+						} else
+							mTextValid
+									.setText("password length must be at least 8 characters");
+					} else {
+						mTextValid.setText("passwords does not match");
+						Log.e("mali1", "mali2");
+					}
+				} catch (ServiceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 
 			}
 		});
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
-		
+
 		HealthGem.getSharedPreferences().clearRegisterInformation();
 	}
 }

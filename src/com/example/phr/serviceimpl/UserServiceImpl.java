@@ -58,8 +58,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean usernameAlreadyExists(String username) {
-		return usernameAlreadyExists(username);
+	public boolean usernameAlreadyExists(String username)
+			throws ServiceException {
+		try {
+			return userDao.usernameAlreadyExists(username);
+		} catch (WebServerException e) {
+			throw new ServiceException("An error occured in the user service",
+					e);
+		}
 	}
 
 	@Override
@@ -81,8 +87,9 @@ public class UserServiceImpl implements UserService {
 		user.setContactNumber(HealthGem.getSharedPreferences().loadPreferences(
 				SPreference.NUMBER));
 		try {
-			user.setDateOfBirth(DateTimeParser.getTimestamp(HealthGem.getSharedPreferences().loadPreferences(
-					SPreference.BIRTHDATE)));
+			user.setDateOfBirth(DateTimeParser.getTimestamp(HealthGem
+					.getSharedPreferences().loadPreferences(
+							SPreference.BIRTHDATE)));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

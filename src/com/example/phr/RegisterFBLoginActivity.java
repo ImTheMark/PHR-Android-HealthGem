@@ -1,24 +1,12 @@
 package com.example.phr;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -26,25 +14,25 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.phr.application.HealthGem;
+import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.exceptions.UserAlreadyExistsException;
 import com.example.phr.local_db.SPreference;
 import com.example.phr.mobile.models.User;
+import com.example.phr.mobile.models.Weight;
 import com.example.phr.service.UserService;
+import com.example.phr.service.WeightTrackerService;
 import com.example.phr.serviceimpl.UserServiceImpl;
+import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
 import com.facebook.Session;
 import com.facebook.SessionState;
@@ -63,10 +51,13 @@ public class RegisterFBLoginActivity extends Activity {
 	public static GraphUser user;
 	public static String userID;
 	private UserService userService;
+	private WeightTrackerService weightService;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		weightService = new WeightTrackerServiceImpl();
 
 		try {
 			PackageInfo info = getPackageManager().getPackageInfo(
@@ -99,7 +90,9 @@ public class RegisterFBLoginActivity extends Activity {
 					userName.setText("Hello, " + user.getName());
 					userID = user.getUsername();
 					Session s = Session.getActiveSession();
-					HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_FBACCESSTOKEN, s.getAccessToken());
+					HealthGem.getSharedPreferences().savePreferences(
+							SPreference.REGISTER_FBACCESSTOKEN,
+							s.getAccessToken());
 				} else {
 					Log.e("onUserInfoFetched", "user is null");
 					userName.setText("You are not logged right now");
@@ -184,33 +177,66 @@ public class RegisterFBLoginActivity extends Activity {
 					MainActivity.class);
 			try {
 				User newUser = new User();
-				newUser.setAllergies(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_ALLERGIES));
-				newUser.setContactNumber(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_CONTACTNUMBER));
+				newUser.setAllergies(HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_ALLERGIES));
+				newUser.setContactNumber(HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_CONTACTNUMBER));
 				try {
-					newUser.setDateOfBirth(DateTimeParser.getTimestamp(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_BIRTHDATE)));
+					newUser.setDateOfBirth(DateTimeParser
+							.getTimestamp(HealthGem.getSharedPreferences()
+									.loadPreferences(
+											SPreference.REGISTER_BIRTHDATE)));
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				newUser.setEmail(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_EMAIL));
-				newUser.setEmergencyContactNumber(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_CONTACTPERSONNUMBER));
-				newUser.setEmergencyPerson(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_CONTACTPERSON));
-				newUser.setGender(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_GENDER));
-				newUser.setHeight(Double.parseDouble(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_HEIGHT)));
-				newUser.setKnownHealthProblems(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_KNOWNHEALTHPROBLEMS));
-				newUser.setName(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_NAME));
-				newUser.setPassword(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_PASSWORD));
-				newUser.setUsername(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_USERNAME));
-				newUser.setWeight(Double.parseDouble(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_WEIGHT)));
-				if(user != null)
-					newUser.setFbAccessToken(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_FBACCESSTOKEN));
+				newUser.setEmail(HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_EMAIL));
+				newUser.setEmergencyContactNumber(HealthGem
+						.getSharedPreferences().loadPreferences(
+								SPreference.REGISTER_CONTACTPERSONNUMBER));
+				newUser.setEmergencyPerson(HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_CONTACTPERSON));
+				newUser.setGender(HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_GENDER));
+				newUser.setHeight(Double.parseDouble(HealthGem
+						.getSharedPreferences().loadPreferences(
+								SPreference.REGISTER_HEIGHT)));
+				newUser.setKnownHealthProblems(HealthGem.getSharedPreferences()
+						.loadPreferences(
+								SPreference.REGISTER_KNOWNHEALTHPROBLEMS));
+				newUser.setName(HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_NAME));
+				newUser.setPassword(HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_PASSWORD));
+				newUser.setUsername(HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_USERNAME));
+				newUser.setWeight(Double.parseDouble(HealthGem
+						.getSharedPreferences().loadPreferences(
+								SPreference.REGISTER_WEIGHT)));
+				if (user != null)
+					newUser.setFbAccessToken(HealthGem
+							.getSharedPreferences()
+							.loadPreferences(SPreference.REGISTER_FBACCESSTOKEN));
 				userService = new UserServiceImpl();
 				userService.registerUser(newUser);
 				HealthGem.getSharedPreferences().registerUser();
+				Date date = new Date();
+				Timestamp timestamp = new Timestamp(date.getTime());
+				Weight weight = new Weight(timestamp, "", null,
+						newUser.getWeight());
+				try {
+					weightService.add(weight);
+				} catch (OutdatedAccessTokenException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 				startActivity(intent);
 			} catch (ServiceException e) {
-				Toast.makeText(HealthGem.getContext(), "An error has occured, cannot perform action!", Toast.LENGTH_LONG).show();
+				Toast.makeText(HealthGem.getContext(),
+						"An error has occured, cannot perform action!",
+						Toast.LENGTH_LONG).show();
 			} catch (UserAlreadyExistsException e) {
 				e.printStackTrace();
 			}
@@ -220,40 +246,25 @@ public class RegisterFBLoginActivity extends Activity {
 		}
 
 	}
-/*
-	private class LoadFbProfilePicture extends AsyncTask<String, Void, Bitmap> {
-		ImageView bmImage;
-
-		public LoadFbProfilePicture(ImageView bmImage) {
-			this.bmImage = bmImage;
-		}
-
-		@Override
-		protected Bitmap doInBackground(String... urls) {
-			URL img_value = null;
-			Log.e("LoginAct", urls[0]);
-			try {
-				img_value = new URL("https://graph.facebook.com/" + urls[0]
-						+ "/picture?type=large");
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Bitmap mIcon1 = null;
-			try {
-				mIcon1 = BitmapFactory.decodeStream(img_value.openConnection()
-						.getInputStream());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			return mIcon1;
-		}
-
-		@Override
-		protected void onPostExecute(Bitmap result) {
-			bmImage.setImageBitmap(result);
-		}
-	}*/
+	/*
+	 * private class LoadFbProfilePicture extends AsyncTask<String, Void,
+	 * Bitmap> { ImageView bmImage;
+	 * 
+	 * public LoadFbProfilePicture(ImageView bmImage) { this.bmImage = bmImage;
+	 * }
+	 * 
+	 * @Override protected Bitmap doInBackground(String... urls) { URL img_value
+	 * = null; Log.e("LoginAct", urls[0]); try { img_value = new
+	 * URL("https://graph.facebook.com/" + urls[0] + "/picture?type=large"); }
+	 * catch (MalformedURLException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); } Bitmap mIcon1 = null; try { mIcon1 =
+	 * BitmapFactory.decodeStream(img_value.openConnection() .getInputStream());
+	 * } catch (IOException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); }
+	 * 
+	 * return mIcon1; }
+	 * 
+	 * @Override protected void onPostExecute(Bitmap result) {
+	 * bmImage.setImageBitmap(result); } }
+	 */
 }
