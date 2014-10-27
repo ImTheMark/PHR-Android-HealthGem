@@ -91,7 +91,7 @@ public class RegisterUserInformationActivity extends Activity {
 				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_ALLERGIES, allergies.getText().toString());
 				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_KNOWNHEALTHPROBLEMS, knownHealthProblems.getText().toString());
 				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_GENDER, gender.getSelectedItem().toString());
-				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_BIRTHDATE, birthdate.getText().toString());
+				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_BIRTHDATE, birthdate.getText().toString()+" 00:00:00");
 				Intent intent = new Intent(getApplicationContext(), RegisterFBLoginActivity.class);
 				startActivity(intent);
 			}			

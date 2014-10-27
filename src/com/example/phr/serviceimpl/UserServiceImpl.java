@@ -1,5 +1,7 @@
 package com.example.phr.serviceimpl;
 
+import java.text.ParseException;
+
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -11,6 +13,7 @@ import com.example.phr.exceptions.WebServerException;
 import com.example.phr.local_db.SPreference;
 import com.example.phr.mobile.models.User;
 import com.example.phr.service.UserService;
+import com.example.phr.tools.DateTimeParser;
 import com.example.phr.web.dao.UserDao;
 import com.example.phr.web.daoimpl.UserDaoImpl;
 
@@ -77,8 +80,13 @@ public class UserServiceImpl implements UserService {
 				SPreference.ALLERGIES));
 		user.setContactNumber(HealthGem.getSharedPreferences().loadPreferences(
 				SPreference.NUMBER));
-		user.setDateOfBirth(HealthGem.getSharedPreferences().loadPreferences(
-				SPreference.BIRTHDATE));
+		try {
+			user.setDateOfBirth(DateTimeParser.getTimestamp(HealthGem.getSharedPreferences().loadPreferences(
+					SPreference.BIRTHDATE)));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		user.setEmail(HealthGem.getSharedPreferences().loadPreferences(
 				SPreference.EMAIL));
 		user.setEmergencyContactNumber(HealthGem.getSharedPreferences()
