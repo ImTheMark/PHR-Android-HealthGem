@@ -335,15 +335,13 @@ public class SummaryReportFragment extends Fragment {
 		User user = userService.getUser();
 		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
 				Locale.ENGLISH);
-		/*
-		 * String bdayDate = user.getDateOfBirth(); Timestamp bdaytimestamp =
-		 * null; try { bdaytimestamp = DateTimeParser.getTimestamp(bdayDate); }
-		 * catch (ParseException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } int age =
-		 * Integer.parseInt(DateTimeParser.getYear(timestamp)) -
-		 * Integer.parseInt(DateTimeParser.getYear(bdaytimestamp));
-		 */
-		int age = 40;
+
+		Timestamp bdaytimestamp = user.getDateOfBirth();
+
+		int age = Integer.parseInt(DateTimeParser.getYear(timestamp))
+				- Integer.parseInt(DateTimeParser.getYear(bdaytimestamp));
+
+		// int age = 40;
 		if (user.getGender().equals("F"))
 			bmr = 655 + (4.35 * weight.getWeightInPounds())
 					+ (4.7 * user.getHeight()) - (4.7 * age);
