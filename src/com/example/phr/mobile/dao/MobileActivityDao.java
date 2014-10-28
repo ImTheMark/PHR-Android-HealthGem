@@ -2,14 +2,14 @@ package com.example.phr.mobile.dao;
 
 import java.util.List;
 
-import com.example.phr.mobile.models.ActivitySingle;
+import com.example.phr.mobile.models.Activity;
 
 public interface MobileActivityDao {
 
-	public void addReturnsEntryId(ActivitySingle activity);
+	public void addReturnsEntryId(Activity activity);
 
-	public List<ActivitySingle> getAll();
+	public List<Activity> getAll();
 
-	public ActivitySingle get(int id);
+	public Activity get(int id);
 
 }

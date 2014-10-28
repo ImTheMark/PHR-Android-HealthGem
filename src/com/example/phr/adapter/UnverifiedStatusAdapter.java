@@ -1,9 +1,9 @@
 package com.example.phr.adapter;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,15 +12,12 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.phr.NewStatusActivity;
 import com.example.phr.R;
+import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
-import com.example.phr.mobile.models.ActivitySingle;
-import com.example.phr.mobile.models.ActivityTrackerEntry;
-import com.example.phr.mobile.models.Food;
-import com.example.phr.mobile.models.FoodTrackerEntry;
-import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.mobile.models.TrackerEntry;
 import com.example.phr.mobile.models.UnverifiedActivityEntry;
 import com.example.phr.mobile.models.UnverifiedFoodEntry;
@@ -30,7 +27,6 @@ import com.example.phr.service.ActivityTrackerService;
 import com.example.phr.service.FoodTrackerService;
 import com.example.phr.service.VerificationService;
 import com.example.phr.serviceimpl.ActivityTrackerServiceImpl;
-import com.example.phr.serviceimpl.FoodServiceImpl;
 import com.example.phr.serviceimpl.FoodTrackerServiceImpl;
 import com.example.phr.serviceimpl.VerificationServiceImpl;
 import com.example.phr.tools.DateTimeParser;
@@ -42,7 +38,6 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 	private final VerificationService verificationService;
 	private final FoodTrackerService foodService;
 	private final ActivityTrackerService activityService;
-	
 
 	private static class ViewHolder {
 		TextView status;
@@ -56,7 +51,8 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 		Button ignore;
 	}
 
-	public UnverifiedStatusAdapter(Context aContext, List<TrackerEntry> aListOfStatus) {
+	public UnverifiedStatusAdapter(Context aContext,
+			List<TrackerEntry> aListOfStatus) {
 		this.aListOfStatus = aListOfStatus;
 		mContext = aContext;
 		verificationService = new VerificationServiceImpl();
@@ -85,7 +81,8 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 
 		if (convertView == null) {
 			LayoutInflater inflater = LayoutInflater.from(mContext);
-			convertView = inflater.inflate(R.layout.item_verification, parent, false);
+			convertView = inflater.inflate(R.layout.item_verification, parent,
+					false);
 
 			viewHolder = new ViewHolder();
 			viewHolder.date = (TextView) convertView
@@ -116,32 +113,38 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 		viewHolder.time.setText(String.valueOf(DateTimeParser
 				.getTime(aListOfStatus.get(position).getTimestamp())));
 		viewHolder.status.setText(aListOfStatus.get(position).getStatus());
-		
+
 		viewHolder.amount.setVisibility(View.GONE);
 		viewHolder.edit.setText("Edit");
-		
-		if(aListOfStatus.get(position).getClass().equals(UnverifiedActivityEntry.class)){
+
+		if (aListOfStatus.get(position).getClass()
+				.equals(UnverifiedActivityEntry.class)) {
 			viewHolder.question.setText("Did you perform: ");
-			viewHolder.word.setText(((UnverifiedActivityEntry)aListOfStatus.get(position)).getActivityName());
-			
+			viewHolder.word.setText(((UnverifiedActivityEntry) aListOfStatus
+					.get(position)).getActivityName());
+
 			viewHolder.confirm.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					try {
-						UnverifiedActivityEntry unverified = (UnverifiedActivityEntry) aListOfStatus.remove(position);
-						
+						UnverifiedActivityEntry unverified = (UnverifiedActivityEntry) aListOfStatus
+								.get(position);
 
-/*						ActivityTrackerEntry act = new ActivityTrackerEntry(
-								unverified.getFacebookID(), unverified.getTimestamp(),
-								unverified.getStatus(), unverified.getImage(), 
-								ActivitySingle activity,
-								unverified.getCalorieBurnedPerHour()
-								);
-						
-						activityService.add(act);*/
-						
-						
+						Intent i = new Intent(mContext, NewStatusActivity.class);
+						i.putExtra("unverified", TrackerInputType.ACTIVITY);
+						i.putExtra("object", unverified);
+						mContext.startActivity(i);
+						/*
+						 * ActivityTrackerEntry act = new ActivityTrackerEntry(
+						 * unverified.getFacebookID(),
+						 * unverified.getTimestamp(), unverified.getStatus(),
+						 * unverified.getImage(), ActivitySingle activity,
+						 * unverified.getCalorieBurnedPerHour() );
+						 * 
+						 * activityService.add(act);
+						 */
+
 						verificationService.delete(unverified);
 						notifyDataSetChanged();
 					} catch (EntryNotFoundException e) {
@@ -156,13 +159,15 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 					}
 				}
 			});
-			
+
 			viewHolder.ignore.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View arg0) {
 					try {
-						verificationService.delete((UnverifiedActivityEntry) aListOfStatus.get(position));
+						verificationService
+								.delete((UnverifiedActivityEntry) aListOfStatus
+										.get(position));
 						aListOfStatus.remove(position);
 						notifyDataSetChanged();
 					} catch (EntryNotFoundException e) {
@@ -175,58 +180,54 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
+
 				}
 			});
 		}
 
-		
-		else if(aListOfStatus.get(position).getClass().equals(UnverifiedFoodEntry.class)){
+		else if (aListOfStatus.get(position).getClass()
+				.equals(UnverifiedFoodEntry.class)) {
 			viewHolder.question.setText("Did you eat: ");
-			viewHolder.word.setText(((UnverifiedFoodEntry)aListOfStatus.get(position)).getFoodName());
+			viewHolder.word.setText(((UnverifiedFoodEntry) aListOfStatus
+					.get(position)).getFoodName());
 			viewHolder.amount.setVisibility(View.VISIBLE);
-			viewHolder.amount.setText(((UnverifiedFoodEntry)aListOfStatus.get(position)).getServingSize()+"");
-			
+			viewHolder.amount.setText(((UnverifiedFoodEntry) aListOfStatus
+					.get(position)).getServingSize() + "");
+
 			viewHolder.confirm.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
-					try {
-						UnverifiedFoodEntry unverified = (UnverifiedFoodEntry) aListOfStatus.remove(position);
-						
+					UnverifiedFoodEntry unverified = (UnverifiedFoodEntry) aListOfStatus
+							.get(position);
 
-/*						FoodTrackerEntry food = new FoodTrackerEntry(
-								unverified.getFacebookID(), 
-								unverified.getTimestamp(),
-								unverified.getStatus(), 
-								unverified.getImage(), 
-								unverified.getFood(), 
-								unverified.getServingSize());
-						
-						foodService.add(food);*/
-						
-						
-						verificationService.delete(unverified);
-						notifyDataSetChanged();
-					} catch (EntryNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ServiceException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (OutdatedAccessTokenException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					Intent i = new Intent(mContext, NewStatusActivity.class);
+					i.putExtra("unverified", TrackerInputType.FOOD);
+					i.putExtra("object", unverified);
+					mContext.startActivity(i);
+					/*
+					 * FoodTrackerEntry food = new FoodTrackerEntry(
+					 * unverified.getFacebookID(), unverified.getTimestamp(),
+					 * unverified.getStatus(), unverified.getImage(),
+					 * unverified.getFood(), unverified.getServingSize());
+					 * 
+					 * foodService.add(food);
+					 * 
+					 * verificationService.delete(unverified);
+					 */
+
+					notifyDataSetChanged();
 				}
 			});
-			
+
 			viewHolder.ignore.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View arg0) {
 					try {
-						verificationService.delete((UnverifiedFoodEntry) aListOfStatus.get(position));
+						verificationService
+								.delete((UnverifiedFoodEntry) aListOfStatus
+										.get(position));
 						aListOfStatus.remove(position);
 						notifyDataSetChanged();
 					} catch (EntryNotFoundException e) {
@@ -239,36 +240,36 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
+
 				}
 			});
 		}
 
-		
-		else if(aListOfStatus.get(position).getClass().equals(UnverifiedRestaurantEntry.class)){
+		else if (aListOfStatus.get(position).getClass()
+				.equals(UnverifiedRestaurantEntry.class)) {
 			viewHolder.question.setText("Did you eat at: ");
-			viewHolder.word.setText(((UnverifiedRestaurantEntry)aListOfStatus.get(position)).getRestaurantName());
+			viewHolder.word.setText(((UnverifiedRestaurantEntry) aListOfStatus
+					.get(position)).getRestaurantName());
 			viewHolder.edit.setText("Edit");
-			
+
 			viewHolder.confirm.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					try {
-						UnverifiedRestaurantEntry unverified = (UnverifiedRestaurantEntry) aListOfStatus.remove(position);
-						
+						UnverifiedRestaurantEntry unverified = (UnverifiedRestaurantEntry) aListOfStatus
+								.remove(position);
 
-/*						FoodTrackerEntry food = new FoodTrackerEntry(
-								unverified.getFacebookID(), 
-								unverified.getTimestamp(),
-								unverified.getStatus(), 
-								unverified.getImage(), 
-								unverified.getFood, 
-								unverified.getServingSize());
-						
-						foodService.add(food);*/
-						
-						
+						/*
+						 * FoodTrackerEntry food = new FoodTrackerEntry(
+						 * unverified.getFacebookID(),
+						 * unverified.getTimestamp(), unverified.getStatus(),
+						 * unverified.getImage(), unverified.getFood,
+						 * unverified.getServingSize());
+						 * 
+						 * foodService.add(food);
+						 */
+
 						verificationService.delete(unverified);
 						notifyDataSetChanged();
 					} catch (EntryNotFoundException e) {
@@ -283,13 +284,15 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 					}
 				}
 			});
-			
+
 			viewHolder.ignore.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View arg0) {
 					try {
-						verificationService.delete((UnverifiedRestaurantEntry) aListOfStatus.get(position));
+						verificationService
+								.delete((UnverifiedRestaurantEntry) aListOfStatus
+										.get(position));
 						aListOfStatus.remove(position);
 						notifyDataSetChanged();
 					} catch (EntryNotFoundException e) {
@@ -302,15 +305,15 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
+
 				}
 			});
 		}
 
-		
-		else if(aListOfStatus.get(position).getClass().equals(UnverifiedSportsEstablishmentEntry.class)){
+		else if (aListOfStatus.get(position).getClass()
+				.equals(UnverifiedSportsEstablishmentEntry.class)) {
 			viewHolder.question.setText("Did go eat at: ");
-			//viewHolder.word.setText(((UnverifiedSportsEstablishmentEntry)aListOfStatus.get(position)).getEstablishment());
+			// viewHolder.word.setText(((UnverifiedSportsEstablishmentEntry)aListOfStatus.get(position)).getEstablishment());
 		}
 
 		return convertView;

@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Locale;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -42,7 +41,7 @@ import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.exceptions.WebServerException;
-import com.example.phr.mobile.models.ActivitySingle;
+import com.example.phr.mobile.models.Activity;
 import com.example.phr.mobile.models.ActivityTrackerEntry;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.mobile.models.BloodSugar;
@@ -71,7 +70,7 @@ import com.example.phr.tools.DecodeImage;
 import com.example.phr.tools.ImageHandler;
 import com.example.phr.tools.WeightConverter;
 
-public class NewStatusActivity extends Activity {
+public class NewStatusActivity extends android.app.Activity {
 
 	ImageButton mBtnTagFriend;
 	ImageButton mBtnCheckinLocation;
@@ -136,7 +135,7 @@ public class NewStatusActivity extends Activity {
 	Weight editWeight;
 	Note editNote;
 	CheckUp editCheckup;
-	ActivitySingle chosenActivity;
+	Activity chosenActivity;
 	Food chosenFood;
 	FoodTrackerEntry editFoodTrackerEntry;
 	ActivityTrackerEntry editActivityTrackerEntry;
@@ -425,13 +424,13 @@ public class NewStatusActivity extends Activity {
 				currentTracker = TrackerInputType.ACTIVITY;
 				txtCurrentTracker.setText(TrackerInputType.ACTIVITY);
 
-				chosenActivity = (ActivitySingle) in.getExtras()
-						.getSerializable("activity added");
+				chosenActivity = (Activity) in.getExtras().getSerializable(
+						"activity added");
 				Log.e("new activity", chosenActivity.getName());
 				setActivityTemplate(chosenActivity.getName(),
 						chosenActivity.getMET(),
 						extras.getString("activity_duration"),
-						extras.getString("activity_unit"), "");
+						extras.getString("activity_unit"), "", photo);
 
 			} else if (from.equals("new food")) {
 				currentTracker = TrackerInputType.FOOD;
@@ -440,7 +439,7 @@ public class NewStatusActivity extends Activity {
 				chosenFood = (Food) in.getExtras()
 						.getSerializable("food added");
 				setFoodTemplate(chosenFood.getServingSize(), chosenFood,
-						notesStatus.getText().toString());
+						notesStatus.getText().toString(), photo);
 
 			}
 		} else if (extras != null && in.hasExtra("edit")) {
@@ -530,7 +529,7 @@ public class NewStatusActivity extends Activity {
 				Log.e("editbsobject",
 						String.valueOf(editFoodTrackerEntry.getEntryID()));
 				setFoodTemplate(editFoodTrackerEntry.getServingCount(),
-						chosenFood, editFoodTrackerEntry.getStatus());
+						chosenFood, editFoodTrackerEntry.getStatus(), temp);
 
 			} else if (editTracker.equals(TrackerInputType.ACTIVITY)) {
 				txtCurrentTracker.setText(TrackerInputType.ACTIVITY);
@@ -549,7 +548,7 @@ public class NewStatusActivity extends Activity {
 						.getName(), editActivityTrackerEntry.getActivity()
 						.getMET(), String.valueOf(editActivityTrackerEntry
 						.getDurationInSeconds()), "hr",
-						editActivityTrackerEntry.getStatus());
+						editActivityTrackerEntry.getStatus(), photo);
 
 			}
 		}
@@ -565,7 +564,8 @@ public class NewStatusActivity extends Activity {
 		mBtnFb.setVisibility(View.VISIBLE);
 	}
 
-	private void setFoodTemplate(double serving, Food food, String status) {
+	private void setFoodTemplate(double serving, Food food, String status,
+			Bitmap image) {
 		// TODO Auto-generated method stub
 		setAllTemplateGone();
 		foodTemplate.setVisibility(View.VISIBLE);
@@ -584,6 +584,12 @@ public class NewStatusActivity extends Activity {
 		txtFoodQuantityUnit.setText(food.getServingUnit());
 
 		txtFoodQuantity.setText(String.valueOf(serving));
+		if (image != null) {
+			Log.e("in", "set food template");
+			imageTemplate.setVisibility(View.VISIBLE);
+			photo = image;
+			statusImage.setImageBitmap(image);
+		}
 		if (mode.equals("add")) {
 			notesStatus.setHint("how you feel? ");
 			setAddTemplate();
@@ -595,7 +601,7 @@ public class NewStatusActivity extends Activity {
 	}
 
 	private void setActivityTemplate(String name, Double met, String duration,
-			String unit, String status) {
+			String unit, String status, Bitmap image) {
 		// TODO Auto-generated method stub
 		setAllTemplateGone();
 		activityTemplate.setVisibility(View.VISIBLE);
@@ -605,6 +611,12 @@ public class NewStatusActivity extends Activity {
 		txtActivityDuration.setText(duration);
 		double cal = met * 5; // not true
 		txtActivityCal.setText(String.valueOf(cal));
+		if (image != null) {
+			Log.e("in", "set activity template");
+			imageTemplate.setVisibility(View.VISIBLE);
+			photo = image;
+			statusImage.setImageBitmap(image);
+		}
 		if (mode.equals("add")) {
 			notesStatus.setHint("how you feel? ");
 			setAddTemplate();
@@ -755,7 +767,7 @@ public class NewStatusActivity extends Activity {
 			}
 		} else if (requestCode == 3) {
 			// String activity = data.getStringExtra("activity chosen");
-			chosenActivity = (ActivitySingle) data.getExtras().getSerializable(
+			chosenActivity = (Activity) data.getExtras().getSerializable(
 					"activity chosen");
 			currentTracker = TrackerInputType.ACTIVITY;
 			txtCurrentTracker.setText(TrackerInputType.ACTIVITY);
@@ -801,7 +813,7 @@ public class NewStatusActivity extends Activity {
 
 						setFoodTemplate(Double.parseDouble(txtFoodSize
 								.getText().toString()), food, notesStatus
-								.getText().toString());
+								.getText().toString(), photo);
 
 					}
 				})
@@ -857,9 +869,10 @@ public class NewStatusActivity extends Activity {
 								.parseDouble(editFoodCarbs.getText().toString()));
 						chosenFood.setFat(Double.parseDouble(editFoodFats
 								.getText().toString()));
-						setFoodTemplate(Double.parseDouble(txtFoodSize
+
+						setFoodTemplate(Double.parseDouble(txtFoodQuantity
 								.getText().toString()), chosenFood, notesStatus
-								.getText().toString());
+								.getText().toString(), photo);
 					}
 				})
 				.setNegativeButton("Cancel",
@@ -909,7 +922,7 @@ public class NewStatusActivity extends Activity {
 										.getText().toString(), String
 										.valueOf(activityUnitSpinner
 												.getSelectedItem()),
-								"How you feel? ");
+								"How you feel? ", photo);
 					}
 				})
 				.setNegativeButton("Cancel",
@@ -1480,6 +1493,12 @@ public class NewStatusActivity extends Activity {
 					Log.e("call", "foodActivity");
 					Intent intent = new Intent(getApplicationContext(),
 							FoodTrackerDailyActivity.class);
+					SimpleDateFormat fmtFood = new SimpleDateFormat(
+							"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+					String txtdate = fmtFood.format(editFoodTrackerEntry
+							.getTimestamp());
+					Log.e("newstatus", txtdate);
+					intent.putExtra("date", txtdate);
 					startActivity(intent);
 				} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
 					editActivityToDatabase();
@@ -1658,12 +1677,17 @@ public class NewStatusActivity extends Activity {
 		try {
 			Log.e("in", "edit");
 			PHRImage image;
+			Log.e("editfoodsetimage", setImage.toString());
 			if (setImage == true) {
+				Log.e("editfoodsetimage", "in");
 				String encodedImage = ImageHandler.encodeImageToBase64(photo);
 				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
-			} else
+			} else {
 				image = null;
+				Log.e("newstatuact", "image null");
+			}
 			FoodTrackerEntry foodEntry = null;
+			Log.e("newstatuact", String.valueOf(image));
 			foodEntry = new FoodTrackerEntry(editFoodTrackerEntry.getEntryID(),
 					editFoodTrackerEntry.getTimestamp(), notesStatus.getText()
 							.toString(), image, chosenFood,

@@ -8,12 +8,12 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileActivityDao;
-import com.example.phr.mobile.models.ActivitySingle;
+import com.example.phr.mobile.models.Activity;
 
 public class MobileActivityDaoImpl implements MobileActivityDao {
 
 	@Override
-	public void addReturnsEntryId(ActivitySingle activity) {
+	public void addReturnsEntryId(Activity activity) {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
 		
@@ -27,7 +27,7 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 		}
 	}
 
-	private boolean exists(ActivitySingle activity) {
+	private boolean exists(Activity activity) {
 		boolean bool = false;
 		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_ACTIVITYLIST + " WHERE " + DatabaseHandler.ACTLIST_ID + " = " + activity.getEntryID();
 
@@ -42,13 +42,13 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 	}
 
 	@Override
-	public List<ActivitySingle> getAll() {
+	public List<Activity> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ActivitySingle get(int activityID) {
+	public Activity get(int activityID) {
 		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_ACTIVITYLIST + " WHERE " +
 				DatabaseHandler.ACTLIST_ID + " = " + activityID;
 
@@ -57,7 +57,7 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 		Cursor cursor = db.rawQuery(selectQuery, null);
 
 		if (cursor.moveToFirst()) { 
-			ActivitySingle act = new ActivitySingle(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2)); 
+			Activity act = new Activity(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2)); 
 			return act; 
 		} 
 		return null;

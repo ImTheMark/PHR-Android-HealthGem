@@ -3,7 +3,6 @@ package com.example.phr;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,16 +19,16 @@ import android.widget.ListView;
 
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
-import com.example.phr.mobile.models.ActivitySingle;
+import com.example.phr.mobile.models.Activity;
 import com.example.phr.service.ActivityService;
 import com.example.phr.serviceimpl.ActivityServiceImpl;
 
-public class ActivitiesSearchListActivity extends Activity {
+public class ActivitiesSearchListActivity extends android.app.Activity {
 	EditText searchWord;
 	ListView searchList;
 	ImageButton searchButton;
 	ArrayAdapter<String> adapter;
-	ArrayList<ActivitySingle> result;
+	ArrayList<Activity> result;
 	ArrayList<String> resultName;
 
 	@SuppressLint("NewApi")
@@ -54,10 +53,10 @@ public class ActivitiesSearchListActivity extends Activity {
 				 */
 				ActivityService service = new ActivityServiceImpl();
 				Log.e("search word", searchWord.getText().toString());
-				result = new ArrayList<ActivitySingle>();
+				result = new ArrayList<Activity>();
 				try {
-					result = (ArrayList<ActivitySingle>) service
-							.search(searchWord.getText().toString());
+					result = (ArrayList<Activity>) service.search(searchWord
+							.getText().toString());
 				} catch (ServiceException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -84,7 +83,7 @@ public class ActivitiesSearchListActivity extends Activity {
 					long arg3) {
 				// TODO Auto-generated method stub
 				// int current = resultName.get(arg2);
-				ActivitySingle chosenItem = result.get(arg2);
+				Activity chosenItem = result.get(arg2);
 				Intent intent = new Intent();
 				intent.putExtra("activity chosen", chosenItem);
 				Log.e("activity chosen", chosenItem.getName());

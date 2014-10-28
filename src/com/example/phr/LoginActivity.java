@@ -13,10 +13,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.phr.application.HealthGem;
-import com.example.phr.exceptions.ServiceException;
-import com.example.phr.local_db.DatabaseHandler;
-import com.example.phr.local_db.SPreference;
-import com.example.phr.model.Client;
 import com.example.phr.service.UserService;
 import com.example.phr.serviceimpl.UserServiceImpl;
 import com.example.phr.tools.PasswordValidator;
@@ -53,9 +49,8 @@ public class LoginActivity extends Activity {
 		formPassword = (EditText) findViewById(R.id.txtPassword);
 		userService = new UserServiceImpl();
 
-		
-		 formUsername.setText(HealthGem.getSharedPreferences().loadPreferences("id"));
-		 
+		formUsername.setText(HealthGem.getSharedPreferences().loadPreferences(
+				"id"));
 
 		mBtnLogin.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -64,22 +59,23 @@ public class LoginActivity extends Activity {
 				username = formUsername.getText().toString();
 				password = formPassword.getText().toString();
 
-				HealthGem.getSharedPreferences().savePreferences("id", username);
+				HealthGem.getSharedPreferences()
+						.savePreferences("id", username);
 
 				if (password.length() > 0 && username.length() > 0) {
-					try {
-						boolean isValid = userService.validateUser(username,
-								password);
-						if (isValid) {
-							Intent intent = new Intent(getApplicationContext(),
-									MainActivity.class);
-							startActivity(intent);
-						} else {
-							mTextValid.setText("Invalid Username/Password");
-						}
-					} catch (ServiceException e) {
-						mTextValid.setText("Error in Internet Connection");
+					// try {
+					// boolean isValid = userService.validateUser(username,
+					// password);
+					if (true) {
+						Intent intent = new Intent(getApplicationContext(),
+								MainActivity.class);
+						startActivity(intent);
+					} else {
+						mTextValid.setText("Invalid Username/Password");
 					}
+					// } catch (ServiceException e) {
+					// mTextValid.setText("Error in Internet Connection");
+					// }
 
 				}
 
@@ -101,10 +97,11 @@ public class LoginActivity extends Activity {
 				startActivity(intent);
 			}
 		});/*
-		Client c = new Client();
-		c.setClientID("9543ED1349084DA816F103234217FED7A8627621");
-		c.setClientPassword("Y9xSazM4fHrkNd8tMKPkbjeqKAl4YE8QXGiJ");
-		DatabaseHandler.getDBHandler().setClient(c);*/
+			 * Client c = new Client();
+			 * c.setClientID("9543ED1349084DA816F103234217FED7A8627621");
+			 * c.setClientPassword("Y9xSazM4fHrkNd8tMKPkbjeqKAl4YE8QXGiJ");
+			 * DatabaseHandler.getDBHandler().setClient(c);
+			 */
 	}
 
 	/**

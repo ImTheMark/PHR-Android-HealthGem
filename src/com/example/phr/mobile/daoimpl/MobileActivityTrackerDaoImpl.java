@@ -12,6 +12,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.EntryNotFoundException;
@@ -70,7 +71,7 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 		}
 		if (activity.getFacebookID() != null)
 			values.put(DatabaseHandler.ACT_FBPOSTID, activity.getFacebookID());
-
+		Log.e("add act to mobile db", "added");
 		db.insert(DatabaseHandler.TABLE_ACTIVITY, null, values);
 		db.close();
 
@@ -98,7 +99,7 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 		values.put(DatabaseHandler.ACT_STATUS, activity.getStatus());
 
 		try {
-			if (activity.getImage().getFileName() == null) {
+			if (activity.getImage() == null) {
 				String encoded = activity.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				activity.getImage().setFileName(fileName);

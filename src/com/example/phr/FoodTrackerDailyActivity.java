@@ -33,12 +33,14 @@ import android.widget.ListView;
 import com.example.phr.adapter.DailyFoodAdapter;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.DataAccessException;
+import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.dao.MobileFoodTrackerDao;
 import com.example.phr.mobile.daoimpl.MobileFoodTrackerDaoImpl;
 import com.example.phr.mobile.models.FoodTrackerEntry;
 import com.example.phr.mobile.models.GroupedFood;
+import com.example.phr.service.FoodTrackerService;
 import com.example.phr.serviceimpl.FoodTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
 
@@ -53,7 +55,7 @@ public class FoodTrackerDailyActivity extends Activity {
 	AlertDialog.Builder alertDialog;
 	ArrayList<String> names;
 	String mode;
-	FoodTrackerServiceImpl foodServiceImpl;
+	FoodTrackerService foodServiceImpl;
 	AlertDialog alertD;
 	FoodTrackerEntry chosenItem;
 
@@ -159,7 +161,13 @@ public class FoodTrackerDailyActivity extends Activity {
 
 							try {
 								Log.e("food", "del");
-								foodServiceImpl.delete(chosenItem);
+								foodServiceImpl = new FoodTrackerServiceImpl();
+								try {
+									foodServiceImpl.delete(chosenItem);
+								} catch (EntryNotFoundException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 								Log.e("food", "del_done");
 							} catch (ServiceException e) {
 								// TODO Auto-generated catch block
