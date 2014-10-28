@@ -26,12 +26,17 @@ public class RegisterUserInformationActivity extends Activity {
 	EditText allergies;
 	EditText knownHealthProblems;
 	EditText birthdate;
+	Spinner heightUnit;
+	Spinner weightUnit;
 	Spinner gender;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_registration_user_information);
+		
+		heightUnit = (Spinner) findViewById(R.id.dropdownRegistrationHeight);
+		weightUnit = (Spinner) findViewById(R.id.dropdownRegistrationWeight);
 		
 		fullName = (EditText) findViewById(R.id.editTextRegistrationFullName);
 		contactNumber = (EditText) findViewById(R.id.editTextRegistrationContactNumber);
@@ -55,7 +60,7 @@ public class RegisterUserInformationActivity extends Activity {
 		allergies.setText(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_ALLERGIES));
 		knownHealthProblems.setText(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_KNOWNHEALTHPROBLEMS));
 		birthdate.setText(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_BIRTHDATE));
-		
+		gender.setSelection(Integer.parseInt(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_GENDER)));
 	}
 
 	@Override
@@ -75,8 +80,6 @@ public class RegisterUserInformationActivity extends Activity {
 					weight.getText().toString().equals("") ||
 					contactPerson.getText().toString().equals("") ||
 					contactPersonNumber.getText().toString().equals("") ||
-					allergies.getText().toString().equals("") ||
-					knownHealthProblems.getText().toString().equals("") ||
 					birthdate.getText().toString().equals("")){
 				Toast.makeText(HealthGem.getContext(), "Please complete the missing fields.", Toast.LENGTH_LONG).show();	
 			}
@@ -90,8 +93,13 @@ public class RegisterUserInformationActivity extends Activity {
 				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_CONTACTPERSONNUMBER, contactPersonNumber.getText().toString());
 				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_ALLERGIES, allergies.getText().toString());
 				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_KNOWNHEALTHPROBLEMS, knownHealthProblems.getText().toString());
-				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_GENDER, gender.getSelectedItem().toString());
+				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_GENDER, gender.getSelectedItemPosition()+"");
 				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_BIRTHDATE, birthdate.getText().toString()+" 00:00:00");
+				
+				HealthGem.getSharedPreferences().savePreferences(SPreference.SETTINGS_HEIGHTUNIT, heightUnit.getSelectedItemPosition()+"");
+				HealthGem.getSharedPreferences().savePreferences(SPreference.SETTINGS_WEIGHTUNIT, weightUnit.getSelectedItemPosition()+"");
+				
+				
 				Intent intent = new Intent(getApplicationContext(), RegisterFBLoginActivity.class);
 				startActivity(intent);
 			}			

@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -214,6 +215,11 @@ public class RegisterFBLoginActivity extends Activity {
 				newUser.setWeight(Double.parseDouble(HealthGem
 						.getSharedPreferences().loadPreferences(
 								SPreference.REGISTER_WEIGHT)));
+				
+				String[] genderList = getResources().getStringArray(R.array.gender);
+				newUser.setGender(genderList[Integer.parseInt(HealthGem.getSharedPreferences()
+				     						.loadPreferences(SPreference.REGISTER_GENDER))]);
+				
 				if (user != null)
 					newUser.setFbAccessToken(HealthGem
 							.getSharedPreferences()
