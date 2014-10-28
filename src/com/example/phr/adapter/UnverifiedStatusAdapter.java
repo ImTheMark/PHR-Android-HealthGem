@@ -121,7 +121,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 				.equals(UnverifiedActivityEntry.class)) {
 			viewHolder.question.setText("Did you perform: ");
 			viewHolder.word.setText(((UnverifiedActivityEntry) aListOfStatus
-					.get(position)).getActivityName());
+					.get(position)).getActivity().getName());
 
 			viewHolder.confirm.setOnClickListener(new OnClickListener() {
 

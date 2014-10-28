@@ -4,14 +4,14 @@ import java.sql.Timestamp;
 
 public class UnverifiedActivityEntry extends TrackerEntry {
 
-	ActivitySingle activity;
+	Activity activity;
 	int durationInSeconds;
 	Double calorieBurnedPerHour;
 	String extractedWord;
 
 	public UnverifiedActivityEntry(Integer entryID, String facebookID,
 			Timestamp timestamp, String status, PHRImage image,
-			ActivitySingle activity, int durationInSeconds,
+			Activity activity, int durationInSeconds,
 			Double calorieBurnedPerHour, String extractedWord) {
 		super(entryID, facebookID, timestamp, status, image);
 		this.activity = activity;
@@ -21,7 +21,7 @@ public class UnverifiedActivityEntry extends TrackerEntry {
 	}
 
 	public UnverifiedActivityEntry(String facebookID, Timestamp timestamp,
-			String status, PHRImage image, ActivitySingle activity,
+			String status, PHRImage image, Activity activity,
 			int durationInSeconds, Double calorieBurnedPerHour,
 			String extractedWord) {
 		super(facebookID, timestamp, status, image);
@@ -31,11 +31,11 @@ public class UnverifiedActivityEntry extends TrackerEntry {
 		this.extractedWord = extractedWord;
 	}
 
-	public ActivitySingle getActivity() {
+	public Activity getActivity() {
 		return activity;
 	}
 
-	public void setActivity(ActivitySingle activity) {
+	public void setActivity(Activity activity) {
 		this.activity = activity;
 	}
 
