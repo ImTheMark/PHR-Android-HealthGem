@@ -26,6 +26,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public static final String KEY_USERNAME = "username";
 	public static final String KEY_ACCESSTOKEN = "token";
 	
+	// TEMP LIST FOR UNVERIFIED
+	public static final String TABLE_TEMP_FOODLIST = "tempfoodlist";
+	public static final String TABLE_TEMP_ACTIVITYLIST = "tempactivitylist";
+	
 	// ACTIVITY LIST
 	public static final String TABLE_ACTIVITYLIST = "activitylist";
 	public static final String ACTLIST_ID = "id";
@@ -133,6 +137,31 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		
+		String CREATE_TEMP_ACTIVITYLIST_TABLE = "CREATE TABLE "
+				+ TABLE_TEMP_ACTIVITYLIST + "(" 
+				+ ACTLIST_ID + " INTEGER PRIMARY KEY ," 
+				+ ACTLIST_NAME + " TEXT,"
+				+ ACTLIST_MET + " REAL"
+				+ ")";
+		
+		
+		String CREATE_TEMP_FOODLIST_TABLE = "CREATE TABLE "
+				+ TABLE_TEMP_FOODLIST + "(" 
+				+ FOODLIST_ID + " INTEGER PRIMARY KEY ," 
+				+ FOODLIST_NAME + " TEXT,"
+				+ FOODLIST_CALORIE + " REAL," 
+				+ FOODLIST_SERVINGUNIT + " TEXT," 
+				+ FOODLIST_SERVINGSIZE + " REAL,"
+				+ FOODLIST_RESTAURANTID + " INTEGER,"  
+				+ FOODLIST_FROMFATSECRET + " INTEGER,"  
+				+ FOODLIST_PROTEIN + " REAL,"  
+				+ FOODLIST_FAT + " REAL,"  
+				+ FOODLIST_CARBOHYDRATE + " REAL"  
+				+ ")";
+		
+		
+		
 		
 		
 		String CREATE_ACCESSTOKEN_TABLE = "CREATE TABLE " + TABLE_ACCESSTOKEN
@@ -246,6 +275,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ WEIGHT_FBPOSTID + " TEXT"  
 				+ ")";
 		
+
+		db.execSQL(CREATE_TEMP_ACTIVITYLIST_TABLE);
+		db.execSQL(CREATE_TEMP_FOODLIST_TABLE);
+		
 		db.execSQL(CREATE_ACCESSTOKEN_TABLE);
 		db.execSQL(CREATE_ACTIVITYLIST_TABLE);
 		db.execSQL(CREATE_ACTIVITY_TABLE);
@@ -260,6 +293,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TEMP_FOODLIST);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TEMP_ACTIVITYLIST);
+		
+		
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACCESSTOKEN);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACTIVITYLIST);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACTIVITY);

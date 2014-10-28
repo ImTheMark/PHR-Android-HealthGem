@@ -9,6 +9,10 @@ import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.exceptions.WebServerException;
+import com.example.phr.mobile.dao.MobileVerificationDao;
+import com.example.phr.mobile.daoimpl.MobileVerificationDaoImpl;
+import com.example.phr.mobile.models.Activity;
+import com.example.phr.mobile.models.Food;
 import com.example.phr.mobile.models.TrackerEntry;
 import com.example.phr.mobile.models.UnverifiedActivityEntry;
 import com.example.phr.mobile.models.UnverifiedFoodEntry;
@@ -21,6 +25,7 @@ import com.example.phr.web.daoimpl.WebVerificationDaoImpl;
 public class VerificationServiceImpl implements VerificationService {
 
 	WebVerificationDao webVerificationDao = new WebVerificationDaoImpl();
+	MobileVerificationDao mobileVerificationDao = new MobileVerificationDaoImpl();
 
 	@Override
 	public void updateListOfUnverifiedPosts() throws ServiceException,
@@ -137,6 +142,26 @@ public class VerificationServiceImpl implements VerificationService {
 		Collections.reverse(list);
 		
 		return list;
+	}
+
+	@Override
+	public void addFoodListToTemporaryDatabase(List<Food> foodList) {
+		mobileVerificationDao.addFoodList(foodList);
+	}
+
+	@Override
+	public void addActivityListToTemporaryDatabase(List<Activity> activityList) {
+		mobileVerificationDao.addActivityList(activityList);
+	}
+
+	@Override
+	public List<Food> getFoodList() {
+		return mobileVerificationDao.getFoodList();
+	}
+
+	@Override
+	public List<Activity> getActivityList() {
+		return mobileVerificationDao.getActivityList();
 	}
 
 }
