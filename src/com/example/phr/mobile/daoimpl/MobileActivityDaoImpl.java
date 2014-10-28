@@ -25,6 +25,8 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 			
 			db.insert(DatabaseHandler.TABLE_ACTIVITYLIST, null, values);
 		}
+		
+		db.close();
 	}
 
 	private boolean exists(Activity activity) {
@@ -37,7 +39,8 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 		
 		if (cursor.moveToFirst()) 
 			bool = true;
-		
+
+		db.close();
 		return bool;
 	}
 
@@ -58,6 +61,8 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 
 		if (cursor.moveToFirst()) { 
 			Activity act = new Activity(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2)); 
+
+			db.close();
 			return act; 
 		} 
 		return null;
