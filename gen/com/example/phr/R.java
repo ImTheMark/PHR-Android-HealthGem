@@ -602,6 +602,7 @@ containing a value of this type.
         public static final int menu_item_next=0x7f0401e0;
         public static final int menu_item_status_edit=0x7f0401df;
         public static final int menu_item_status_post=0x7f0401da;
+        public static final int menu_item_status_verify=0x7f0401e1;
         public static final int normal=0x7f040001;
         public static final int noteBanner=0x7f040087;
         public static final int pager=0x7f040057;

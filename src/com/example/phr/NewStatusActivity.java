@@ -51,6 +51,7 @@ import com.example.phr.mobile.models.FoodTrackerEntry;
 import com.example.phr.mobile.models.Note;
 import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.mobile.models.PHRImageType;
+import com.example.phr.mobile.models.UnverifiedActivityEntry;
 import com.example.phr.mobile.models.UnverifiedFoodEntry;
 import com.example.phr.mobile.models.Weight;
 import com.example.phr.service.ActivityTrackerService;
@@ -59,6 +60,7 @@ import com.example.phr.service.BloodSugarTrackerService;
 import com.example.phr.service.CheckUpTrackerService;
 import com.example.phr.service.FoodTrackerService;
 import com.example.phr.service.NoteTrackerService;
+import com.example.phr.service.VerificationService;
 import com.example.phr.service.WeightTrackerService;
 import com.example.phr.serviceimpl.ActivityTrackerServiceImpl;
 import com.example.phr.serviceimpl.BloodPressureTrackerServiceImpl;
@@ -66,6 +68,7 @@ import com.example.phr.serviceimpl.BloodSugarTrackerServiceImpl;
 import com.example.phr.serviceimpl.CheckUpTrackerServiceImpl;
 import com.example.phr.serviceimpl.FoodTrackerServiceImpl;
 import com.example.phr.serviceimpl.NoteTrackerServiceImpl;
+import com.example.phr.serviceimpl.VerificationServiceImpl;
 import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
 import com.example.phr.tools.DecodeImage;
 import com.example.phr.tools.ImageHandler;
@@ -145,6 +148,7 @@ public class NewStatusActivity extends android.app.Activity {
 	Boolean setImage;
 	TextView txtCurrentTracker;
 	UnverifiedFoodEntry unferifiedFood;
+	UnverifiedActivityEntry unferifiedActivity;
 	public static final int CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE = 1777;
 
 	@SuppressLint("NewApi")
@@ -553,24 +557,49 @@ public class NewStatusActivity extends android.app.Activity {
 						editActivityTrackerEntry.getStatus(), photo);
 
 			}
-		} else if (extras != null && in.hasExtra("edit")) {
+		} else if (extras != null && in.hasExtra("unverified")) {
 			String verifyTracker = extras.getString("unverified");
 			Bitmap temp = null;
 			mode = "verify";
 			if (verifyTracker.equals(TrackerInputType.FOOD)) {
-				unferifiedFood = (UnverifiedFoodEntry) in.getExtras().getSerializable("object");
-				currentTracker = TrackerInputType.BLOOD_SUGAR;
-				txtCurrentTracker.setText(TrackerInputType.BLOOD_SUGAR);
-				if (editBs.getImage() != null) {
-					temp = ImageHandler.loadImage(editBs.getImage()
+				unferifiedFood = (UnverifiedFoodEntry) in.getExtras()
+						.getSerializable("object");
+				currentTracker = TrackerInputType.FOOD;
+				txtCurrentTracker.setText(TrackerInputType.FOOD);
+				if (unferifiedFood.getImage() != null) {
+					temp = ImageHandler.loadImage(unferifiedFood.getImage()
 							.getFileName());
 					setImage = true;
 				}
-				Log.e("editbsobject", String.valueOf(editBs.getEntryID()));
-				setBloodSugarTemplate(String.valueOf(editBs.getBloodSugar()),
-						editBs.getType(), editBs.getStatus(), temp);
-?
-			} 
+				Log.e("verifiyingfood",
+						String.valueOf(unferifiedFood.getEntryID()));
+				chosenFood = unferifiedFood.getFood();
+
+				setFoodTemplate(unferifiedFood.getServingCount(), chosenFood,
+						unferifiedFood.getStatus(), temp);
+
+			} else if (verifyTracker.equals(TrackerInputType.ACTIVITY)) {
+				unferifiedActivity = (UnverifiedActivityEntry) in.getExtras()
+						.getSerializable("object");
+				currentTracker = TrackerInputType.ACTIVITY;
+				txtCurrentTracker.setText(TrackerInputType.ACTIVITY);
+				if (unferifiedActivity.getImage() != null) {
+					temp = ImageHandler.loadImage(unferifiedActivity.getImage()
+							.getFileName());
+					setImage = true;
+				}
+				Log.e("verifiyingactivity",
+						String.valueOf(unferifiedActivity.getEntryID()));
+
+				/*
+				 * chosenActivity = unferifiedActivity.getActivity();
+				 * 
+				 * setActivityTemplate(unferifiedActivity.getActivity()
+				 * .getName(), unferifiedActivity.getActivity() .getMET(),
+				 * String.valueOf(unferifiedActivity .getDurationInSeconds()),
+				 * "hr", unferifiedActivity.getStatus(), photo);
+				 */
+			}
 		}
 	}
 
@@ -1542,6 +1571,39 @@ public class NewStatusActivity extends android.app.Activity {
 				e.printStackTrace();
 			}
 			return true;
+
+		case R.id.menu_item_status_verify:
+			try {
+				if (currentTracker.equals(TrackerInputType.FOOD)) {
+					Log.e("call", "verify");
+					verifyFoodToDatabase();
+					Log.e("call", "foodActivity");
+					Intent intent = new Intent(getApplicationContext(),
+							FoodTrackerDailyActivity.class);
+					SimpleDateFormat fmtFood = new SimpleDateFormat(
+							"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+					String txtdate = fmtFood.format(unferifiedFood
+							.getTimestamp());
+					Log.e("newstatus", txtdate);
+					intent.putExtra("date", txtdate);
+					startActivity(intent);
+				} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
+
+				}
+			} catch (ServiceException e) {
+				// output error message or something
+				System.out.println(e.getMessage());
+			} catch (OutdatedAccessTokenException e) {
+				// Message - > Log user out
+				e.printStackTrace();
+			} catch (WebServerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DataAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -1736,6 +1798,39 @@ public class NewStatusActivity extends android.app.Activity {
 				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
 			} else
 				image = null;
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void verifyFoodToDatabase() throws ServiceException,
+			OutdatedAccessTokenException, WebServerException,
+			DataAccessException {
+
+		try {
+			Log.e("in", "verify");
+			PHRImage image;
+			Log.e("verifyfoodsetimage", setImage.toString());
+			if (setImage == true) {
+				Log.e("verifyfoodsetimage", "in");
+				String encodedImage = ImageHandler.encodeImageToBase64(photo);
+				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
+			} else {
+				image = null;
+				Log.e("newstatuact", "image null");
+			}
+			VerificationService verificationService = new VerificationServiceImpl();
+			FoodTrackerEntry foodEntry = new FoodTrackerEntry(
+					unferifiedFood.getFacebookID(),
+					unferifiedFood.getTimestamp(), notesStatus.getText()
+							.toString(), image, chosenFood,
+					Double.parseDouble(txtFoodQuantity.getText().toString()));
+			FoodTrackerService foodTrackerService = new FoodTrackerServiceImpl();
+			foodTrackerService.add(foodEntry);
+			verificationService.delete(unferifiedFood);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

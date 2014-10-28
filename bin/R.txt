@@ -452,6 +452,7 @@ int id menu_item_add_new_activity 0x7f0401dc
 int id menu_item_next 0x7f0401e0
 int id menu_item_status_edit 0x7f0401df
 int id menu_item_status_post 0x7f0401da
+int id menu_item_status_verify 0x7f0401e1
 int id normal 0x7f040001
 int id noteBanner 0x7f040087
 int id pager 0x7f040057

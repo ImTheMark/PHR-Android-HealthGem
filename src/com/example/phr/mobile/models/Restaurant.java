@@ -1,10 +1,10 @@
-package phr.models;
+package com.example.phr.mobile.models;
 
 public class Restaurant {
-	
+
 	Integer entryID;
 	String name;
-	
+
 	public Restaurant(Integer entryID, String name) {
 		super();
 		this.entryID = entryID;
@@ -31,5 +31,5 @@ public class Restaurant {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 }
