@@ -1,31 +1,54 @@
 package com.example.phr.mobile.models;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class UnverifiedRestaurantEntry extends TrackerEntry {
 
-	String restaurantName;
+	String extractedWord;
+	Restaurant restaurant;
+	List<Food> foods;
 
-	public UnverifiedRestaurantEntry(Integer entryID, 
-			String facebookID, Timestamp timestamp, String status,
-			PHRImage image, String restaurantName) {
-		super(entryID, facebookID, timestamp, status, image);
-		this.restaurantName = restaurantName;
-	}
-
-	public UnverifiedRestaurantEntry(User user, String facebookID,
+	public UnverifiedRestaurantEntry(Integer entryID, String facebookID,
 			Timestamp timestamp, String status, PHRImage image,
-			String restaurantName) {
-		super(user, facebookID, timestamp, status, image);
-		this.restaurantName = restaurantName;
+			String extractedWord, Restaurant restaurant, List<Food> foods) {
+		super(entryID, facebookID, timestamp, status, image);
+		this.extractedWord = extractedWord;
+		this.restaurant = restaurant;
+		this.foods = foods;
 	}
 
-	public String getRestaurantName() {
-		return restaurantName;
+	public UnverifiedRestaurantEntry(String facebookID, Timestamp timestamp,
+			String status, PHRImage image, String extractedWord,
+			Restaurant restaurant, List<Food> foods) {
+		super(facebookID, timestamp, status, image);
+		this.extractedWord = extractedWord;
+		this.restaurant = restaurant;
+		this.foods = foods;
 	}
 
-	public void setRestaurantName(String restaurantName) {
-		this.restaurantName = restaurantName;
+	public String getExtractedWord() {
+		return extractedWord;
+	}
+
+	public void setExtractedWord(String extractedWord) {
+		this.extractedWord = extractedWord;
+	}
+
+	public Restaurant getRestaurant() {
+		return restaurant;
+	}
+
+	public void setRestaurant(Restaurant restaurant) {
+		this.restaurant = restaurant;
+	}
+
+	public List<Food> getFoods() {
+		return foods;
+	}
+
+	public void setFoods(List<Food> foods) {
+		this.foods = foods;
 	}
 
 }

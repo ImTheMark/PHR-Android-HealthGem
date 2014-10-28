@@ -4,95 +4,50 @@ import java.sql.Timestamp;
 
 public class UnverifiedFoodEntry extends TrackerEntry {
 
-	String foodName;
-	Double calorie;
-	Double protein;
-	Double fat;
-	Double carbohydrate;
-	String servingUnit;
-	Double servingSize;
+	Food food;
+	double servingCount;
+	String extractedWord;
 
 	public UnverifiedFoodEntry(Integer entryID, String facebookID,
-			Timestamp timestamp, String status, PHRImage image,
-			String foodName, Double calorie, Double protein, Double fat,
-			Double carbohydrate, String servingUnit, Double servingSize) {
+			Timestamp timestamp, String status, PHRImage image, Food food,
+			double servingCount, String extractedWord) {
 		super(entryID, facebookID, timestamp, status, image);
-		this.foodName = foodName;
-		this.calorie = calorie;
-		this.protein = protein;
-		this.fat = fat;
-		this.carbohydrate = carbohydrate;
-		this.servingUnit = servingUnit;
-		this.servingSize = servingSize;
+		this.food = food;
+		this.servingCount = servingCount;
+		this.extractedWord = extractedWord;
 	}
 
-	public UnverifiedFoodEntry(User user, String facebookID,
-			Timestamp timestamp, String status, PHRImage image,
-			String foodName, Double calorie, Double protein, Double fat,
-			Double carbohydrate, String servingUnit, Double servingSize) {
-		super(user, facebookID, timestamp, status, image);
-		this.foodName = foodName;
-		this.calorie = calorie;
-		this.protein = protein;
-		this.fat = fat;
-		this.carbohydrate = carbohydrate;
-		this.servingUnit = servingUnit;
-		this.servingSize = servingSize;
+	public UnverifiedFoodEntry(String facebookID, Timestamp timestamp,
+			String status, PHRImage image, Food food, double servingCount,
+			String extractedWord) {
+		super(facebookID, timestamp, status, image);
+		this.food = food;
+		this.servingCount = servingCount;
+		this.extractedWord = extractedWord;
 	}
 
-	public String getFoodName() {
-		return foodName;
+	public Food getFood() {
+		return food;
 	}
 
-	public void setFoodName(String foodName) {
-		this.foodName = foodName;
+	public void setFood(Food food) {
+		this.food = food;
 	}
 
-	public Double getCalorie() {
-		return calorie;
+	public double getServingCount() {
+		return servingCount;
 	}
 
-	public void setCalorie(Double calorie) {
-		this.calorie = calorie;
+	public void setServingCount(double servingCount) {
+		this.servingCount = servingCount;
 	}
 
-	public Double getProtein() {
-		return protein;
+	public String getExtractedWord() {
+		return extractedWord;
 	}
 
-	public void setProtein(Double protein) {
-		this.protein = protein;
+	public void setExtractedWord(String extractedWord) {
+		this.extractedWord = extractedWord;
 	}
 
-	public Double getFat() {
-		return fat;
-	}
-
-	public void setFat(Double fat) {
-		this.fat = fat;
-	}
-
-	public Double getCarbohydrate() {
-		return carbohydrate;
-	}
-
-	public void setCarbohydrate(Double carbohydrate) {
-		this.carbohydrate = carbohydrate;
-	}
-
-	public String getServingUnit() {
-		return servingUnit;
-	}
-
-	public void setServingUnit(String servingUnit) {
-		this.servingUnit = servingUnit;
-	}
-
-	public Double getServingSize() {
-		return servingSize;
-	}
-
-	public void setServingSize(Double servingSize) {
-		this.servingSize = servingSize;
-	}
 }

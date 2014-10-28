@@ -8,21 +8,19 @@ public class UnverifiedActivityEntry extends TrackerEntry {
 	int durationInSeconds;
 	int calorieBurnedPerHour;
 
-	public UnverifiedActivityEntry(Integer entryID,
-			String facebookID, Timestamp timestamp, String status,
-			PHRImage image, String activityName, int durationInSeconds,
-			int calorieBurnedPerHour) {
+	public UnverifiedActivityEntry(Integer entryID, String facebookID,
+			Timestamp timestamp, String status, PHRImage image,
+			String activityName, int durationInSeconds, int calorieBurnedPerHour) {
 		super(entryID, facebookID, timestamp, status, image);
 		this.activityName = activityName;
 		this.durationInSeconds = durationInSeconds;
 		this.calorieBurnedPerHour = calorieBurnedPerHour;
 	}
 
-	public UnverifiedActivityEntry(User user, String facebookID,
-			Timestamp timestamp, String status, PHRImage image,
-			String activityName, int durationInSeconds,
-			int calorieBurnedPerHour) {
-		super(user, facebookID, timestamp, status, image);
+	public UnverifiedActivityEntry(String facebookID, Timestamp timestamp,
+			String status, PHRImage image, String activityName,
+			int durationInSeconds, int calorieBurnedPerHour) {
+		super(facebookID, timestamp, status, image);
 		this.activityName = activityName;
 		this.durationInSeconds = durationInSeconds;
 		this.calorieBurnedPerHour = calorieBurnedPerHour;

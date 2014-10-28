@@ -3,7 +3,6 @@ package com.example.phr.mobile.models;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-
 public abstract class TrackerEntry implements Serializable {
 
 	Integer entryID;
@@ -12,8 +11,8 @@ public abstract class TrackerEntry implements Serializable {
 	String status;
 	PHRImage image;
 
-	public TrackerEntry(Integer entryID, String facebookID, Timestamp timestamp,
-			String status, PHRImage image) {
+	public TrackerEntry(Integer entryID, String facebookID,
+			Timestamp timestamp, String status, PHRImage image) {
 		super();
 		this.entryID = entryID;
 		this.facebookID = facebookID;
@@ -45,11 +44,6 @@ public abstract class TrackerEntry implements Serializable {
 		this.timestamp = timestamp;
 		this.status = status;
 		this.image = image;
-	}
-
-	public TrackerEntry(User user, String facebookID, Timestamp timestamp2,
-			String status2, PHRImage image2) {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Integer getEntryID() {
