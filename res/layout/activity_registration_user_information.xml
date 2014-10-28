@@ -19,6 +19,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:background="@null"
+                android:visibility="gone"
                 android:scaleType="fitXY"
                 android:src="@drawable/picture_placeholder" />
 
@@ -58,7 +59,7 @@
                     android:layout_below="@id/editTextRegistrationFullName"
                     android:background="@drawable/underline_background"
                     android:hint="Contact Number"
-                    android:inputType="textPersonName"
+                    android:inputType="phone"
                     android:padding="5dp" />
 
                 <EditText
@@ -68,7 +69,7 @@
                     android:layout_below="@id/editTextRegistrationContactNumber"
                     android:background="@drawable/underline_background"
                     android:hint="Email Address"
-                    android:inputType="textPersonName"
+                    android:inputType="textEmailAddress"
                     android:padding="5dp" />
             </RelativeLayout>
         </LinearLayout>
@@ -294,13 +295,19 @@
 
             <EditText
                 android:id="@+id/EditTextRegistrationAllergies"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+		        android:lines="3" 
+		        android:minLines="3"
+		        android:gravity="top|left" 
+		        android:maxLines="10" 
+		        android:layout_height="wrap_content"
+		        android:layout_width="fill_parent" 
+                android:hint="ex. Seafood"
                 android:layout_below="@id/RegistrationAllergiesDivider"
                 android:background="@drawable/underline_background"
-                android:hint="ex. Seafood"
-                android:inputType="textMultiLine"
-                android:padding="5dp" />
+                android:padding="5dp"
+		        android:scrollbars="vertical" />
+            
         </RelativeLayout>
 
         <RelativeLayout
@@ -324,13 +331,18 @@
 
             <EditText
                 android:id="@+id/EditTextRegistrationHealthProblems"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+		        android:lines="3" 
+		        android:minLines="3"
+		        android:gravity="top|left" 
+		        android:maxLines="10" 
+		        android:layout_height="wrap_content"
+		        android:layout_width="fill_parent" 
+                android:hint="ex. Diabetes"
                 android:layout_below="@id/RegistrationHealthProblemsDivider"
                 android:background="@drawable/underline_background"
-                android:hint="ex. Diabetes"
-                android:inputType="textMultiLine"
-                android:padding="5dp" />
+                android:padding="5dp"
+		        android:scrollbars="vertical"  />
         </RelativeLayout>
 
     </LinearLayout>
