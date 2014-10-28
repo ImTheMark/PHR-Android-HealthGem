@@ -8,5 +8,6 @@ public class TrackerInputType {
 	public static final String WEIGHT = "Measuring Weight";
 	public static final String ACTIVITY = "Doing an Activity";
 	public static final String CHECKUP = "Record a Checkup";
-	
+	public static final String RESTAURANT = "Restaurant";
+
 }

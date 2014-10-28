@@ -53,6 +53,7 @@ import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.mobile.models.PHRImageType;
 import com.example.phr.mobile.models.UnverifiedActivityEntry;
 import com.example.phr.mobile.models.UnverifiedFoodEntry;
+import com.example.phr.mobile.models.UnverifiedRestaurantEntry;
 import com.example.phr.mobile.models.Weight;
 import com.example.phr.service.ActivityTrackerService;
 import com.example.phr.service.BloodPressureTrackerService;
@@ -142,6 +143,7 @@ public class NewStatusActivity extends android.app.Activity {
 	Activity chosenActivity;
 	Food chosenFood;
 	FoodTrackerEntry editFoodTrackerEntry;
+	FoodTrackerEntry verifyFoodTrackerEntry;
 	ActivityTrackerEntry editActivityTrackerEntry;
 	ImageView statusImage;
 	Bitmap photo;
@@ -149,6 +151,7 @@ public class NewStatusActivity extends android.app.Activity {
 	TextView txtCurrentTracker;
 	UnverifiedFoodEntry unferifiedFood;
 	UnverifiedActivityEntry unferifiedActivity;
+	UnverifiedRestaurantEntry unferifiedRestaurant;
 	public static final int CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE = 1777;
 
 	@SuppressLint("NewApi")
@@ -553,7 +556,7 @@ public class NewStatusActivity extends android.app.Activity {
 				setActivityTemplate(editActivityTrackerEntry.getActivity()
 						.getName(), editActivityTrackerEntry.getActivity()
 						.getMET(), String.valueOf(editActivityTrackerEntry
-						.getDurationInSeconds()), "hr",
+						.getDurationInSeconds() / 3600), "hr",
 						editActivityTrackerEntry.getStatus(), photo);
 
 			}
@@ -591,14 +594,33 @@ public class NewStatusActivity extends android.app.Activity {
 				Log.e("verifiyingactivity",
 						String.valueOf(unferifiedActivity.getEntryID()));
 
-				/*
-				 * chosenActivity = unferifiedActivity.getActivity();
-				 * 
-				 * setActivityTemplate(unferifiedActivity.getActivity()
-				 * .getName(), unferifiedActivity.getActivity() .getMET(),
-				 * String.valueOf(unferifiedActivity .getDurationInSeconds()),
-				 * "hr", unferifiedActivity.getStatus(), photo);
-				 */
+				chosenActivity = unferifiedActivity.getActivity();
+
+				setActivityTemplate(unferifiedActivity.getActivity().getName(),
+						unferifiedActivity.getActivity().getMET(),
+						String.valueOf(unferifiedActivity
+								.getDurationInSeconds() / 3600), "hr",
+						unferifiedActivity.getStatus(), photo);
+
+			} else if (verifyTracker.equals(TrackerInputType.RESTAURANT)) {
+				unferifiedRestaurant = (UnverifiedRestaurantEntry) in
+						.getExtras().getSerializable("object");
+				verifyFoodTrackerEntry = (FoodTrackerEntry) in.getExtras()
+						.getSerializable("object2");
+				currentTracker = TrackerInputType.FOOD;
+				txtCurrentTracker.setText(TrackerInputType.FOOD);
+				if (verifyFoodTrackerEntry.getImage() != null) {
+					temp = ImageHandler.loadImage(verifyFoodTrackerEntry
+							.getImage().getFileName());
+					setImage = true;
+				}
+				Log.e("verifiyingfood",
+						String.valueOf(unferifiedFood.getEntryID()));
+				chosenFood = verifyFoodTrackerEntry.getFood();
+
+				setFoodTemplate(verifyFoodTrackerEntry.getServingCount(),
+						chosenFood, verifyFoodTrackerEntry.getStatus(), temp);
+
 			}
 		}
 	}
@@ -1588,7 +1610,23 @@ public class NewStatusActivity extends android.app.Activity {
 					intent.putExtra("date", txtdate);
 					startActivity(intent);
 				} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
-
+					verifyActivityToDatabase();
+					Log.e("call", "acitivityActivity");
+					Intent intent = new Intent(getApplicationContext(),
+							ActivitiesTrackerActivity.class);
+					startActivity(intent);
+				} else if (currentTracker.equals(TrackerInputType.RESTAURANT)) {
+					verifyRestaurantToDatabase();
+					Log.e("call", "foodActivity");
+					Intent intent = new Intent(getApplicationContext(),
+							FoodTrackerDailyActivity.class);
+					SimpleDateFormat fmtFood = new SimpleDateFormat(
+							"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+					String txtdate = fmtFood.format(verifyFoodTrackerEntry
+							.getTimestamp());
+					Log.e("newstatus", txtdate);
+					intent.putExtra("date", txtdate);
+					startActivity(intent);
 				}
 			} catch (ServiceException e) {
 				// output error message or something
@@ -1799,6 +1837,22 @@ public class NewStatusActivity extends android.app.Activity {
 			} else
 				image = null;
 
+			int sec = 0;
+			if (txtActivityDurationUnit.toString().equals("hr"))
+				sec = Integer.parseInt(txtActivityDuration.toString()) * 3600;
+			else if (txtActivityDurationUnit.toString().equals("min"))
+				sec = Integer.parseInt(activityDuration.toString()) * 60;
+
+			ActivityTrackerEntry activityEntry = new ActivityTrackerEntry(
+					editActivityTrackerEntry.getEntryID(),
+					editActivityTrackerEntry.getTimestamp(), notesStatus
+							.getText().toString(), image, chosenActivity,
+					Double.parseDouble(txtActivityCal.getText().toString()),
+					sec);
+
+			ActivityTrackerService activityTrackerService = new ActivityTrackerServiceImpl();
+			activityTrackerService.edit(activityEntry);
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1831,6 +1885,80 @@ public class NewStatusActivity extends android.app.Activity {
 			FoodTrackerService foodTrackerService = new FoodTrackerServiceImpl();
 			foodTrackerService.add(foodEntry);
 			verificationService.delete(unferifiedFood);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void verifyRestaurantToDatabase() throws ServiceException,
+			OutdatedAccessTokenException, WebServerException,
+			DataAccessException {
+
+		try {
+			Log.e("in", "verify");
+			PHRImage image;
+			Log.e("verifyfoodsetimage", setImage.toString());
+			if (setImage == true) {
+				Log.e("verifyfoodsetimage", "in");
+				String encodedImage = ImageHandler.encodeImageToBase64(photo);
+				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
+			} else {
+				image = null;
+				Log.e("newstatuact", "image null");
+			}
+			VerificationService verificationService = new VerificationServiceImpl();
+			FoodTrackerEntry foodEntry = new FoodTrackerEntry(
+					verifyFoodTrackerEntry.getFacebookID(),
+					verifyFoodTrackerEntry.getTimestamp(), notesStatus
+							.getText().toString(), image, chosenFood,
+					Double.parseDouble(txtFoodQuantity.getText().toString()));
+			FoodTrackerService foodTrackerService = new FoodTrackerServiceImpl();
+			foodTrackerService.add(foodEntry);
+			verificationService.delete(unferifiedRestaurant);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void verifyActivityToDatabase() throws ServiceException,
+			OutdatedAccessTokenException, WebServerException,
+			DataAccessException {
+
+		try {
+			Log.e("in", "verify");
+			PHRImage image;
+			Log.e("verifyactivitysetimage", setImage.toString());
+			if (setImage == true) {
+				Log.e("verifyactivitysetimage", "in");
+				String encodedImage = ImageHandler.encodeImageToBase64(photo);
+				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
+			} else {
+				image = null;
+				Log.e("newstatuact", "image null");
+			}
+			VerificationService verificationService = new VerificationServiceImpl();
+			int sec = 0;
+			if (txtActivityDurationUnit.toString().equals("hr"))
+				sec = Integer.parseInt(txtActivityDuration.toString()) * 3600;
+			else if (txtActivityDurationUnit.toString().equals("min"))
+				sec = Integer.parseInt(activityDuration.toString()) * 60;
+
+			ActivityTrackerEntry activityEntry = new ActivityTrackerEntry(
+					unferifiedActivity.getFacebookID(),
+					unferifiedActivity.getTimestamp(), notesStatus.getText()
+							.toString(), image, chosenActivity,
+					Double.parseDouble(txtActivityCal.getText().toString()),
+					sec);
+
+			ActivityTrackerService activityTrackerService = new ActivityTrackerServiceImpl();
+			activityTrackerService.add(activityEntry);
+			verificationService.delete(unferifiedActivity);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
