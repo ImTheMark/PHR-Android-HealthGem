@@ -51,6 +51,7 @@ import com.example.phr.mobile.models.FoodTrackerEntry;
 import com.example.phr.mobile.models.Note;
 import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.mobile.models.PHRImageType;
+import com.example.phr.mobile.models.UnverifiedFoodEntry;
 import com.example.phr.mobile.models.Weight;
 import com.example.phr.service.ActivityTrackerService;
 import com.example.phr.service.BloodPressureTrackerService;
@@ -143,6 +144,7 @@ public class NewStatusActivity extends android.app.Activity {
 	Bitmap photo;
 	Boolean setImage;
 	TextView txtCurrentTracker;
+	UnverifiedFoodEntry unferifiedFood;
 	public static final int CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE = 1777;
 
 	@SuppressLint("NewApi")
@@ -551,6 +553,24 @@ public class NewStatusActivity extends android.app.Activity {
 						editActivityTrackerEntry.getStatus(), photo);
 
 			}
+		} else if (extras != null && in.hasExtra("edit")) {
+			String verifyTracker = extras.getString("unverified");
+			Bitmap temp = null;
+			mode = "verify";
+			if (verifyTracker.equals(TrackerInputType.FOOD)) {
+				unferifiedFood = (UnverifiedFoodEntry) in.getExtras().getSerializable("object");
+				currentTracker = TrackerInputType.BLOOD_SUGAR;
+				txtCurrentTracker.setText(TrackerInputType.BLOOD_SUGAR);
+				if (editBs.getImage() != null) {
+					temp = ImageHandler.loadImage(editBs.getImage()
+							.getFileName());
+					setImage = true;
+				}
+				Log.e("editbsobject", String.valueOf(editBs.getEntryID()));
+				setBloodSugarTemplate(String.valueOf(editBs.getBloodSugar()),
+						editBs.getType(), editBs.getStatus(), temp);
+?
+			} 
 		}
 	}
 
@@ -571,11 +591,10 @@ public class NewStatusActivity extends android.app.Activity {
 		foodTemplate.setVisibility(View.VISIBLE);
 		foodCal.setVisibility(View.VISIBLE);
 
-		double cal = (serving / food.getServingSize()) * food.getCalorie();
-		double protein = (serving / food.getServingSize()) * food.getProtein();
-		double carbs = (serving / food.getServingSize())
-				* food.getCarbohydrate();
-		double fats = (serving / food.getServingSize()) * food.getFat();
+		double cal = serving * food.getCalorie();
+		double protein = serving * food.getProtein();
+		double carbs = serving * food.getCarbohydrate();
+		double fats = serving * food.getFat();
 		txtFoodCal.setText(String.valueOf(cal));
 		txtFoodProtein.setText(String.valueOf(protein));
 		txtFoodCarbs.setText(String.valueOf(carbs));
@@ -1371,6 +1390,8 @@ public class NewStatusActivity extends android.app.Activity {
 			getMenuInflater().inflate(R.menu.menu_status_post, menu);
 		else if (mode.equals("edit"))
 			getMenuInflater().inflate(R.menu.menu_edit_status, menu);
+		else if (mode.equals("verify"))
+			getMenuInflater().inflate(R.menu.menu_verify_status, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 

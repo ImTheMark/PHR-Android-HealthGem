@@ -333,8 +333,6 @@ public class SummaryReportFragment extends Fragment {
 
 		UserService userService = new UserServiceImpl();
 		User user = userService.getUser();
-		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-				Locale.ENGLISH);
 
 		Timestamp bdaytimestamp = user.getDateOfBirth();
 

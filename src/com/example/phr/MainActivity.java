@@ -109,52 +109,51 @@ public class MainActivity extends FragmentActivity implements
 			public void onPageScrollStateChanged(int arg0) {
 			}
 		});
+		// check if user post blood pressure today
+		Calendar bpAlarmTime = Calendar.getInstance();
+		bpAlarmTime.set(Calendar.HOUR_OF_DAY, 10);
+		bpAlarmTime.set(Calendar.MINUTE, 0);
+		bpAlarmTime.set(Calendar.SECOND, 0);
+		setAlarm(bpAlarmTime, TrackerInputType.BLOOD_PRESSURE, 2);
 
 		// check if user post blood sugar today
 		Calendar bsAlarmTime = Calendar.getInstance();
 		bsAlarmTime.set(Calendar.HOUR_OF_DAY, 14);
 		bsAlarmTime.set(Calendar.MINUTE, 0);
 		bsAlarmTime.set(Calendar.SECOND, 0);
-		setAlarm(bsAlarmTime, TrackerInputType.BLOOD_SUGAR);
+		setAlarm(bsAlarmTime, TrackerInputType.BLOOD_SUGAR, 1);
 
-		// check if user post blood pressure today
-		Calendar bpAlarmTime = Calendar.getInstance();
-		bpAlarmTime.set(Calendar.HOUR_OF_DAY, 10);
-		bpAlarmTime.set(Calendar.MINUTE, 0);
-		bpAlarmTime.set(Calendar.SECOND, 0);
-		setAlarm(bpAlarmTime, TrackerInputType.BLOOD_PRESSURE);
+		// check if user post weight between this 6 months at this time
+		Calendar checkupAlarmTime = Calendar.getInstance();
+		checkupAlarmTime.set(Calendar.HOUR_OF_DAY, 16);
+		checkupAlarmTime.set(Calendar.MINUTE, 0);
+		checkupAlarmTime.set(Calendar.SECOND, 0);
+		setAlarm(checkupAlarmTime, TrackerInputType.CHECKUP, 6);
 
-		// check if user post food today in fb, if not notif user to post food
-		Calendar foodAlarmTime = Calendar.getInstance();
-		foodAlarmTime.set(Calendar.HOUR_OF_DAY, 20);
-		foodAlarmTime.set(Calendar.MINUTE, 0);
-		foodAlarmTime.set(Calendar.SECOND, 0);
-		setAlarm(foodAlarmTime, TrackerInputType.FOOD);
+		// check if user post weight between this 2 weeks at this time
+		Calendar weightAlarmTime = Calendar.getInstance();
+		weightAlarmTime.set(Calendar.HOUR_OF_DAY, 17);
+		weightAlarmTime.set(Calendar.MINUTE, 0);
+		weightAlarmTime.set(Calendar.SECOND, 0);
+		setAlarm(weightAlarmTime, TrackerInputType.WEIGHT, 5);
 
 		// check if user post activty this week at this time
 		Calendar activityAlarmTime = Calendar.getInstance();
 		activityAlarmTime.set(Calendar.HOUR_OF_DAY, 18);
 		activityAlarmTime.set(Calendar.MINUTE, 0);
 		activityAlarmTime.set(Calendar.SECOND, 0);
-		setAlarm(activityAlarmTime, TrackerInputType.ACTIVITY);
+		setAlarm(activityAlarmTime, TrackerInputType.ACTIVITY, 4);
 
-		// check if user post weight between this 2 weeks at this time
-		Calendar weightAlarmTime = Calendar.getInstance();
-		weightAlarmTime.set(Calendar.HOUR_OF_DAY, 18);
-		weightAlarmTime.set(Calendar.MINUTE, 0);
-		weightAlarmTime.set(Calendar.SECOND, 0);
-		setAlarm(weightAlarmTime, TrackerInputType.WEIGHT);
-
-		// check if user post weight between this 6 months at this time
-		Calendar checkupAlarmTime = Calendar.getInstance();
-		checkupAlarmTime.set(Calendar.HOUR_OF_DAY, 18);
-		checkupAlarmTime.set(Calendar.MINUTE, 0);
-		checkupAlarmTime.set(Calendar.SECOND, 0);
-		setAlarm(checkupAlarmTime, TrackerInputType.CHECKUP);
+		// check if user post food today in fb, if not notif user to post food
+		Calendar foodAlarmTime = Calendar.getInstance();
+		foodAlarmTime.set(Calendar.HOUR_OF_DAY, 20);
+		foodAlarmTime.set(Calendar.MINUTE, 0);
+		foodAlarmTime.set(Calendar.SECOND, 0);
+		setAlarm(foodAlarmTime, TrackerInputType.FOOD, 3);
 
 	}
 
-	private void setAlarm(Calendar targetCal, String tracker) {
+	private void setAlarm(Calendar targetCal, String tracker, int rqs) {
 
 		Intent intent = new Intent(getBaseContext(), AlarmReceiver.class);
 		if (tracker.equals(TrackerInputType.BLOOD_SUGAR))
@@ -170,7 +169,8 @@ public class MainActivity extends FragmentActivity implements
 		else if (tracker.equals(TrackerInputType.ACTIVITY))
 			intent.putExtra("tracker", TrackerInputType.ACTIVITY);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(
-				getBaseContext(), RQS_1, intent, 0);
+				getBaseContext(), rqs, intent,
+				PendingIntent.FLAG_UPDATE_CURRENT);
 		AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 		// alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
 		// targetCal.getTimeInMillis(),

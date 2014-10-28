@@ -744,6 +744,7 @@ int menu menu_edit_status 0x7f0a0006
 int menu menu_registration_next 0x7f0a0007
 int menu menu_status_post 0x7f0a0008
 int menu menu_tracker_help 0x7f0a0009
+int menu menu_verify_status 0x7f0a000a
 int string action_settings 0x7f07001d
 int string app_id 0x7f07001a
 int string app_name 0x7f07001b
