@@ -118,6 +118,9 @@
         <activity android:name="com.example.phr.VerificationActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|locale"
   	 		android:screenOrientation="portrait" />
+        <activity android:name="com.example.phr.VerificationListPickerActivity" 
+            android:configChanges="orientation|keyboardHidden|screenSize|locale"
+  	 		android:screenOrientation="portrait"/>
         
         
         <activity android:name="com.example.phr.SettingsActivity"
