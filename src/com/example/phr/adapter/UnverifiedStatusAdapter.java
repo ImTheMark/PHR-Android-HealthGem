@@ -189,10 +189,10 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 				.equals(UnverifiedFoodEntry.class)) {
 			viewHolder.question.setText("Did you eat: ");
 			viewHolder.word.setText(((UnverifiedFoodEntry) aListOfStatus
-					.get(position)).getFoodName());
+					.get(position)).getFood().getName());
 			viewHolder.amount.setVisibility(View.VISIBLE);
 			viewHolder.amount.setText(((UnverifiedFoodEntry) aListOfStatus
-					.get(position)).getServingSize() + "");
+					.get(position)).getServingCount() + "");
 
 			viewHolder.confirm.setOnClickListener(new OnClickListener() {
 
@@ -249,7 +249,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 				.equals(UnverifiedRestaurantEntry.class)) {
 			viewHolder.question.setText("Did you eat at: ");
 			viewHolder.word.setText(((UnverifiedRestaurantEntry) aListOfStatus
-					.get(position)).getRestaurantName());
+					.get(position)).getRestaurant().getName());
 			viewHolder.edit.setText("Edit");
 
 			viewHolder.confirm.setOnClickListener(new OnClickListener() {
