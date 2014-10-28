@@ -2,20 +2,20 @@ package com.example.phr.mobile.models;
 
 import java.io.Serializable;
 
-public class ActivitySingle implements Serializable {
+public class Activity implements Serializable {
 
 	Integer entryID;
 	String name;
 	double MET;
 
-	public ActivitySingle(Integer entryID, String name, double mET) {
+	public Activity(Integer entryID, String name, double mET) {
 		super();
 		this.entryID = entryID;
 		this.name = name;
 		MET = mET;
 	}
 
-	public ActivitySingle(String name, double mET) {
+	public Activity(String name, double mET) {
 		super();
 		this.name = name;
 		MET = mET;

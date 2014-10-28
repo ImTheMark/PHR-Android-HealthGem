@@ -96,7 +96,7 @@ public class CalorieAdapter extends BaseAdapter {
 		viewHolder.month.setText(String.valueOf(DateTimeParser
 				.getMonth(mListOfCalorie.get(position).getDate())));
 		int progress = (int) (totalcal / mListOfCalorie.get(position)
-				.getRequireCal());
+				.getRequireCal()) * 100;
 
 		viewHolder.bar.setProgress(progress);
 

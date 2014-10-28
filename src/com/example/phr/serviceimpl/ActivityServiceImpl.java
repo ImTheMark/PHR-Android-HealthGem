@@ -5,7 +5,7 @@ import java.util.List;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.exceptions.WebServerException;
-import com.example.phr.mobile.models.ActivitySingle;
+import com.example.phr.mobile.models.Activity;
 import com.example.phr.service.ActivityService;
 import com.example.phr.web.dao.WebActivityDao;
 import com.example.phr.web.daoimpl.WebActivityDaoImpl;
@@ -15,7 +15,7 @@ public class ActivityServiceImpl implements ActivityService {
 	WebActivityDao webActivityDao = new WebActivityDaoImpl();
 
 	@Override
-	public int add(ActivitySingle activity)
+	public int add(Activity activity)
 			throws OutdatedAccessTokenException, ServiceException {
 		try {
 			return webActivityDao.addReturnEntryId(activity);
@@ -25,7 +25,7 @@ public class ActivityServiceImpl implements ActivityService {
 	}
 
 	@Override
-	public List<ActivitySingle> getAll() throws ServiceException,
+	public List<Activity> getAll() throws ServiceException,
 			OutdatedAccessTokenException {
 		try {
 			return webActivityDao.getAll();
@@ -36,7 +36,7 @@ public class ActivityServiceImpl implements ActivityService {
 	}
 
 	@Override
-	public List<ActivitySingle> search(String query) throws ServiceException,
+	public List<Activity> search(String query) throws ServiceException,
 			OutdatedAccessTokenException {
 		try {
 			return webActivityDao.search(query);

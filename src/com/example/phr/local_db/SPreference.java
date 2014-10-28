@@ -38,6 +38,10 @@ public class SPreference {
 	public static final String FBACCESSTOKEN = "FBAccessToken";
 	
 	
+	public static final String SETTINGS_WEIGHTUNIT = "weightUnit";
+	public static final String SETTINGS_HEIGHTUNIT = "heightUnit";
+	
+	
 	Context c;
 
 	public SPreference(Context c) {

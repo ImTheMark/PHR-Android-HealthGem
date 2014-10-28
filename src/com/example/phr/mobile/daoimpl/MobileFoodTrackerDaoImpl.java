@@ -98,14 +98,17 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 		values.put(DatabaseHandler.FOOD_STATUS, food.getStatus());
 
 		try {
-			if (food.getImage().getFileName() == null) {
+			if (food.getImage().getFileName() != null) {
 				String encoded = food.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				food.getImage().setFileName(fileName);
 				values.put(DatabaseHandler.FOOD_PHOTO, food.getImage()
 						.getFileName());
-			} else
+			} else {
+
 				values.putNull(DatabaseHandler.FOOD_PHOTO);
+				Log.e("fooddaoimpl", "image null");
+			}
 		} catch (FileNotFoundException e) {
 			throw new DataAccessException("An error occurred in the DAO layer",
 					e);

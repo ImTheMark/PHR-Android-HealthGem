@@ -1,6 +1,5 @@
 package com.example.phr;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,9 +8,9 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.example.phr.mobile.models.ActivitySingle;
+import com.example.phr.mobile.models.Activity;
 
-public class AddNewActivityActivity extends Activity {
+public class AddNewActivityActivity extends android.app.Activity {
 
 	EditText newActivity;
 	EditText newActivityCal;
@@ -44,8 +43,8 @@ public class AddNewActivityActivity extends Activity {
 			Intent i = new Intent(getApplicationContext(),
 					NewStatusActivity.class);
 			Double computedMet = 100.0;
-			ActivitySingle addActivity = new ActivitySingle(newActivity
-					.getText().toString(), computedMet);
+			Activity addActivity = new Activity(newActivity.getText()
+					.toString(), computedMet);
 			Log.e("new", addActivity.getName());
 			i.putExtra("from", "new activity");
 			i.putExtra("activity added", addActivity);

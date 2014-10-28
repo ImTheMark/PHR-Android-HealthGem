@@ -898,6 +898,7 @@ containing a value of this type.
         public static final int menu_registration_next=0x7f0a0007;
         public static final int menu_status_post=0x7f0a0008;
         public static final int menu_tracker_help=0x7f0a0009;
+        public static final int menu_verify_status=0x7f0a000a;
     }
     public static final class string {
         public static final int action_settings=0x7f07001d;
