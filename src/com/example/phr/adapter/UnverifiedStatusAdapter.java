@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.phr.NewStatusActivity;
 import com.example.phr.R;
+import com.example.phr.VerificationListPickerActivity;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
@@ -256,32 +257,15 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 
 				@Override
 				public void onClick(View v) {
-					try {
-						UnverifiedRestaurantEntry unverified = (UnverifiedRestaurantEntry) aListOfStatus
-								.remove(position);
-
-						/*
-						 * FoodTrackerEntry food = new FoodTrackerEntry(
-						 * unverified.getFacebookID(),
-						 * unverified.getTimestamp(), unverified.getStatus(),
-						 * unverified.getImage(), unverified.getFood,
-						 * unverified.getServingSize());
-						 * 
-						 * foodService.add(food);
-						 */
-
-						verificationService.delete(unverified);
-						notifyDataSetChanged();
-					} catch (EntryNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ServiceException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (OutdatedAccessTokenException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					UnverifiedRestaurantEntry unverified = (UnverifiedRestaurantEntry) aListOfStatus
+							.get(position);
+					
+					verificationService.addFoodListToTemporaryDatabase(unverified.getFoods());
+					unverified.setFoods(null);
+					
+					Intent i = new Intent(mContext, VerificationListPickerActivity.class);
+					i.putExtra("restaurant", unverified);
+					mContext.startActivity(i);
 				}
 			});
 
@@ -312,8 +296,47 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 
 		else if (aListOfStatus.get(position).getClass()
 				.equals(UnverifiedSportsEstablishmentEntry.class)) {
-			viewHolder.question.setText("Did go eat at: ");
-			// viewHolder.word.setText(((UnverifiedSportsEstablishmentEntry)aListOfStatus.get(position)).getEstablishment());
+			viewHolder.question.setText("Did go at: ");
+			viewHolder.word.setText(((UnverifiedSportsEstablishmentEntry)aListOfStatus.get(position)).getSportEstablishment().getName());
+			viewHolder.confirm.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					UnverifiedSportsEstablishmentEntry unverified = (UnverifiedSportsEstablishmentEntry) aListOfStatus
+							.get(position);
+					
+					verificationService.addActivityListToTemporaryDatabase(unverified.getActivities());
+					unverified.setActivities(null);
+					
+					Intent i = new Intent(mContext, VerificationListPickerActivity.class);
+					i.putExtra("sportestablishment", unverified);
+					mContext.startActivity(i);
+				}
+			});
+
+			viewHolder.ignore.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View arg0) {
+					try {
+						verificationService
+								.delete((UnverifiedSportsEstablishmentEntry) aListOfStatus
+										.get(position));
+						aListOfStatus.remove(position);
+						notifyDataSetChanged();
+					} catch (EntryNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ServiceException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (OutdatedAccessTokenException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+			});
 		}
 
 		return convertView;
