@@ -150,6 +150,17 @@ public class MainActivity extends FragmentActivity implements
 		foodAlarmTime.set(Calendar.MINUTE, 0);
 		foodAlarmTime.set(Calendar.SECOND, 0);
 		setAlarm(foodAlarmTime, TrackerInputType.FOOD, 3);
+		
+		
+
+		
+		Intent in = getIntent();
+		Bundle extras = getIntent().getExtras();
+		
+		if (extras != null && in.hasExtra("backToMenu")) {
+			int position = in.getExtras().getInt("backToMenu");
+			viewPager.setCurrentItem(position);
+		}
 
 	}
 
