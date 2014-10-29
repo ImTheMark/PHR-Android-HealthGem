@@ -60,7 +60,8 @@ public class RegisterUserInformationActivity extends Activity {
 		allergies.setText(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_ALLERGIES));
 		knownHealthProblems.setText(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_KNOWNHEALTHPROBLEMS));
 		birthdate.setText(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_BIRTHDATE));
-		gender.setSelection(Integer.parseInt(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_GENDER)));
+		
+		//gender.setSelection(Integer.parseInt(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_GENDER)));
 	}
 
 	@Override
@@ -93,7 +94,7 @@ public class RegisterUserInformationActivity extends Activity {
 				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_CONTACTPERSONNUMBER, contactPersonNumber.getText().toString());
 				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_ALLERGIES, allergies.getText().toString());
 				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_KNOWNHEALTHPROBLEMS, knownHealthProblems.getText().toString());
-				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_GENDER, gender.getSelectedItemPosition()+"");
+				//HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_GENDER, gender.getSelectedItemPosition()+"");
 				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_BIRTHDATE, birthdate.getText().toString()+" 00:00:00");
 				
 				HealthGem.getSharedPreferences().savePreferences(SPreference.SETTINGS_HEIGHTUNIT, heightUnit.getSelectedItemPosition()+"");
