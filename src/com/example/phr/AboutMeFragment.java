@@ -104,12 +104,23 @@ public class AboutMeFragment extends Fragment {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		systolic.setText(String.valueOf(bp.getSystolic()));
-		diastolic.setText(String.valueOf(bp.getDiastolic()));
-		bloodsugar.setText(String.valueOf(bs.getBloodSugar()));
-		lastcheckup.setText(String.valueOf(DateTimeParser.getDate(checkup
-				.getTimestamp())));
+		if (bp != null) {
+			systolic.setText(String.valueOf(bp.getSystolic()));
+			diastolic.setText(String.valueOf(bp.getDiastolic()));
+		} else {
+			systolic.setText("N");
+			diastolic.setText("A");
+		}
+		if (bs != null) {
+			bloodsugar.setText(String.valueOf(bs.getBloodSugar()));
+		} else {
+			bloodsugar.setText("N/A");
+		}
+		if (checkup != null)
+			lastcheckup.setText(String.valueOf(DateTimeParser.getDate(checkup
+					.getTimestamp())));
+		else
+			lastcheckup.setText("N/A");
 		return rootView;
 	}
 }
