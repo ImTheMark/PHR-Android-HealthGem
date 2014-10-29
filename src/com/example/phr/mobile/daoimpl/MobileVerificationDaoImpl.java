@@ -28,8 +28,7 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 			values.put(DatabaseHandler.FOODLIST_ID, food.getEntryID());
 			values.put(DatabaseHandler.FOODLIST_NAME, food.getName());
 			values.put(DatabaseHandler.FOODLIST_CALORIE, food.getCalorie());
-			values.put(DatabaseHandler.FOODLIST_SERVINGUNIT, food.getServingUnit());
-			values.put(DatabaseHandler.FOODLIST_SERVINGSIZE, food.getServingSize());
+			values.put(DatabaseHandler.FOODLIST_SERVING, food.getServing());
 			values.put(DatabaseHandler.FOODLIST_RESTAURANTID, food.getRestaurantID());
 			values.put(DatabaseHandler.FOODLIST_FROMFATSECRET, food.getFromFatsecret());
 			values.put(DatabaseHandler.FOODLIST_PROTEIN, food.getProtein());
@@ -71,10 +70,10 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 		
 		if (cursor.moveToFirst()) {
 			do {
-				Boolean bool = cursor.getInt(6) != 0;
-				Food food = new Food(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2), cursor.getDouble(7),
-						cursor.getDouble(8), cursor.getDouble(9), cursor.getString(3),
-						cursor.getDouble(4), cursor.getInt(5), bool);
+				Boolean bool = cursor.getInt(5) != 0;
+				Food food = new Food(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2), cursor.getDouble(6),
+						cursor.getDouble(7), cursor.getDouble(8), cursor.getString(3),
+						cursor.getInt(4), bool);
 				list.add(food);
 			} while (cursor.moveToNext());
 		}
