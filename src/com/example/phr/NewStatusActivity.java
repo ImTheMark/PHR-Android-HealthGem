@@ -447,7 +447,7 @@ public class NewStatusActivity extends android.app.Activity {
 
 				chosenFood = (Food) in.getExtras()
 						.getSerializable("food added");
-				setFoodTemplate(chosenFood.getServingSize(), chosenFood,
+				setFoodTemplate(1.0, chosenFood,
 						notesStatus.getText().toString(), photo);
 
 			}
@@ -651,7 +651,7 @@ public class NewStatusActivity extends android.app.Activity {
 		txtFoodCarbs.setText(String.valueOf(carbs));
 		txtFoodFat.setText(String.valueOf(fats));
 		txtFood.setText(food.getName());
-		txtFoodQuantityUnit.setText(food.getServingUnit());
+		txtFoodQuantityUnit.setText(food.getServing());
 
 		txtFoodQuantity.setText(String.valueOf(serving));
 		if (image != null) {
@@ -874,7 +874,7 @@ public class NewStatusActivity extends android.app.Activity {
 		txtFoodSize = (EditText) foodView.findViewById(R.id.txtFoodServingSize);
 		txtFoodSize.setText(String.valueOf(serving));
 		txtFoodUnit = (TextView) foodView.findViewById(R.id.foodUnit);
-		txtFoodUnit.setText(food.getServingUnit());
+		txtFoodUnit.setText(food.getServing());
 		alertDialogBuilder
 				.setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
