@@ -130,7 +130,7 @@ public class VerificationServiceImpl implements VerificationService {
 		list.addAll(getAllUnverifiedActivityPosts());
 		list.addAll(getAllUnverifiedFoodPosts());
 		list.addAll(getAllUnverifiedRestaurantPosts());
-		//list.addAll(getAllUnverifiedSportsEstablishmentPosts());
+		list.addAll(getAllUnverifiedSportsEstablishmentPosts());
 		
 		Collections.sort(list, new Comparator<TrackerEntry>() {
 			@Override
