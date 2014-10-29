@@ -172,8 +172,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="125 g"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="125 grams"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#0A090A" />
 
         <TextView

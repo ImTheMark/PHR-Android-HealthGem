@@ -25,7 +25,7 @@ public class SingleFoodAdapter extends BaseAdapter {
 		TextView time;
 		TextView food;
 		TextView servingNumber;
-		TextView servingUnit;
+		//TextView servingUnit;
 	}
 
 	public SingleFoodAdapter(Context aContext, List<Food> aListOfFoodSingles) {
@@ -73,8 +73,8 @@ public class SingleFoodAdapter extends BaseAdapter {
 			viewHolder.servingNumber = (TextView) convertView
 					.findViewById(R.id.serving);
 
-			viewHolder.servingUnit = (TextView) convertView
-					.findViewById(R.id.servingUnit);
+			/*viewHolder.servingUnit = (TextView) convertView
+					.findViewById(R.id.servingUnit);*/
 			convertView.setTag(viewHolder);
 		}
 
@@ -96,7 +96,7 @@ public class SingleFoodAdapter extends BaseAdapter {
 			viewHolder.time.setText("");
 
 		viewHolder.servingNumber.setText(String.valueOf(mListOfFoodSingle.get(
-				position).getServingSize()));
+				position).getServing()));
 
 		return convertView;
 	}

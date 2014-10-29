@@ -96,11 +96,11 @@ public class Food implements Serializable {
 		this.carbohydrate = carbohydrate;
 	}
 
-	public String getServingUnit() {
+	public String getServing() {
 		return serving;
 	}
 
-	public void setServingUnit(String serving) {
+	public void setServing(String serving) {
 		this.serving = serving;
 	}
 

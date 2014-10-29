@@ -81,16 +81,17 @@ public class CalorieBreakdownAdapter extends BaseAdapter {
 		viewHolder = (ViewHolder) convertView.getTag();
 		if (mListOfCalorie.get(position).getClass()
 				.equals(FoodTrackerEntry.class)) {
+			
 			viewHolder.calorie.setText(String
 					.valueOf(((FoodTrackerEntry) mListOfCalorie.get(position))
 							.getFood().getCalorie()));
 			viewHolder.action.setText(((FoodTrackerEntry) mListOfCalorie
 					.get(position)).getFood().getName());
 			viewHolder.servingCount.setText(String
-					.valueOf(((FoodTrackerEntry) mListOfCalorie.get(position))
-							.getServingCount()));
+					.valueOf(((FoodTrackerEntry) mListOfCalorie.get(position)).getServingCount()));
+			
 			viewHolder.unit.setText(((FoodTrackerEntry) mListOfCalorie
-					.get(position)).getFood().getServingUnit());
+					.get(position)).getFood().getServing());
 
 			viewHolder.time.setText(String.valueOf(DateTimeParser
 					.getTime(((FoodTrackerEntry) mListOfCalorie.get(position))
@@ -99,6 +100,7 @@ public class CalorieBreakdownAdapter extends BaseAdapter {
 			viewHolder.image.setImageResource(R.drawable.icon_food);
 		} else if (mListOfCalorie.get(position).getClass()
 				.equals(ActivityTrackerEntry.class)) {
+			
 			viewHolder.calorie.setText(String
 					.valueOf(((ActivityTrackerEntry) mListOfCalorie
 							.get(position)).getCaloriesBurnedPerHour()));
