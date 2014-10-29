@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.phr.application.HealthGem;
+import com.example.phr.exceptions.ServiceException;
 import com.example.phr.service.UserService;
 import com.example.phr.serviceimpl.UserServiceImpl;
 import com.example.phr.tools.PasswordValidator;
@@ -63,9 +64,9 @@ public class LoginActivity extends Activity {
 						.savePreferences("id", username);
 
 				if (password.length() > 0 && username.length() > 0) {
-					// try {
-					// boolean isValid = userService.validateUser(username,
-					// password);
+					try {
+					 boolean isValid = userService.validateUser(username,
+					 password);
 					if (true) {
 						Intent intent = new Intent(getApplicationContext(),
 								MainActivity.class);
@@ -73,9 +74,9 @@ public class LoginActivity extends Activity {
 					} else {
 						mTextValid.setText("Invalid Username/Password");
 					}
-					// } catch (ServiceException e) {
-					// mTextValid.setText("Error in Internet Connection");
-					// }
+					 } catch (ServiceException e) {
+					 mTextValid.setText("Error in Internet Connection");
+					}
 
 				}
 

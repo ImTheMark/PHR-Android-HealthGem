@@ -63,7 +63,7 @@ public class WebVerificationDaoImpl extends BasicDaoImpl implements
 	@Override
 	public List<UnverifiedFoodEntry> getAllUnverifiedFoodPosts()
 			throws WebServerException, OutdatedAccessTokenException {
-		String command = "verification/getAllSportsEstablishments";
+		String command = "verification/getAllFoods";
 		Type type = new TypeToken<List<UnverifiedFoodEntry>>() {
 		}.getType();
 		return getAll(command, type);
@@ -72,7 +72,7 @@ public class WebVerificationDaoImpl extends BasicDaoImpl implements
 	@Override
 	public List<UnverifiedActivityEntry> getAllUnverifiedActivityPosts()
 			throws WebServerException, OutdatedAccessTokenException {
-		String command = "verification/getAllSportsEstablishments";
+		String command = "verification/getAllActivities";
 		Type type = new TypeToken<List<UnverifiedActivityEntry>>() {
 		}.getType();
 		return getAll(command, type);
@@ -81,7 +81,7 @@ public class WebVerificationDaoImpl extends BasicDaoImpl implements
 	@Override
 	public List<UnverifiedRestaurantEntry> getAllUnverifiedRestaurantPosts()
 			throws WebServerException, OutdatedAccessTokenException {
-		String command = "verification/getAllSportsEstablishments";
+		String command = "verification/getAllRestaurants";
 		Type type = new TypeToken<List<UnverifiedRestaurantEntry>>() {
 		}.getType();
 		return getAll(command, type);
