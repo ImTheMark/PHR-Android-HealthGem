@@ -40,8 +40,14 @@ import com.example.phr.mobile.dao.MobileFoodTrackerDao;
 import com.example.phr.mobile.daoimpl.MobileFoodTrackerDaoImpl;
 import com.example.phr.mobile.models.FoodTrackerEntry;
 import com.example.phr.mobile.models.GroupedFood;
+import com.example.phr.mobile.models.User;
+import com.example.phr.mobile.models.Weight;
 import com.example.phr.service.FoodTrackerService;
+import com.example.phr.service.UserService;
+import com.example.phr.service.WeightTrackerService;
 import com.example.phr.serviceimpl.FoodTrackerServiceImpl;
+import com.example.phr.serviceimpl.UserServiceImpl;
+import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
 
 public class FoodTrackerDailyActivity extends Activity {
@@ -206,10 +212,39 @@ public class FoodTrackerDailyActivity extends Activity {
 		// --------------------------------
 		View dailyChart;
 
+		WeightTrackerService weightService = new WeightTrackerServiceImpl();
+		Weight weight = null;
+		try {
+			weight = weightService.getLatest();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UserService userService = new UserServiceImpl();
+		User user = userService.getUser();
+
+		Timestamp bdaytimestamp = user.getDateOfBirth();
+
+		int age = Integer.parseInt(DateTimeParser.getYear(timestamp))
+				- Integer.parseInt(DateTimeParser.getYear(bdaytimestamp));
+		double bmr = 0;
+		// int age = 40;
+		if (user.getGender().equals("F"))
+			bmr = 655 + (4.35 * weight.getWeightInPounds())
+					+ (4.7 * user.getHeight()) - (4.7 * age);
+		else if (user.getGender().equals("M"))
+			bmr = 66 + (6.23 * weight.getWeightInPounds())
+					+ (12.7 * user.getHeight()) - (6.8 * age);
+
+		double recommendFats = (50 / 2000) * bmr;
+		double recommendCarbs = (300 / 2000) * bmr;
+		double recommendProtein = (65 / 2000) * bmr;
+
 		int[] x = { 0, 1, 2 };
 		double[] intake = { groupedFood.getProtein(), groupedFood.getFat(),
 				groupedFood.getCarbohydrates() };
-		double[] recommended = { 41.25, 53.63, 247.5 };
+		double[] recommended = { recommendProtein, recommendFats,
+				recommendCarbs };
 
 		String[] mMonth = new String[] { "Protein", "Fats", "Carbohydrates" };
 

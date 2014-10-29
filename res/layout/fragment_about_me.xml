@@ -10,14 +10,14 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/profImg"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/fragmentaboutme_mark" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/profName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Castilo, Mark"
@@ -71,7 +71,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/TextView02"
+                            android:id="@+id/profBday"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="January 2, 1990" />
@@ -90,7 +90,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/textView3"
+                            android:id="@+id/profSex"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="M" />
@@ -116,10 +116,15 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/TextView10"
+                            android:id="@+id/profHeight"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="5&apos;9 feet" />
+                            android:text="5&apos;9" />
+                          <TextView
+                            android:id="@+id/profHeightUnit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" feet" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -135,10 +140,15 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/TextView09"
+                            android:id="@+id/profWeight"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="180lbs" />
+                            android:text="180" />
+                        <TextView
+                            android:id="@+id/profWeightUnit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" lbs" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -156,7 +166,7 @@
                         android:text="Contact: " />
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/profContact"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0917 4679653" />
@@ -175,7 +185,7 @@
                         android:text="Email Address: " />
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/profEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="mark@gmail.com" />
@@ -194,7 +204,7 @@
                         android:text="Facebook Account: " />
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/profFb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="mark@gmail.com" />
@@ -247,10 +257,20 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/TextView02"
+                            android:id="@+id/profSystolic"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="110/80" />
+                            android:text="110" />
+                        <TextView
+                            android:id="@+id/profBlank"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="/" />
+                        <TextView
+                            android:id="@+id/profDiastolic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="80" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -266,10 +286,15 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/textView3"
+                            android:id="@+id/profSugarLvl"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="7.4 mmol/L" />
+                            android:text="7.4 " />
+                        <TextView
+                            android:id="@+id/profSugarLvlUnit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" mmol/L" />
                     </LinearLayout>
 
                 
@@ -285,7 +310,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/TextView07"
+                        android:id="@+id/profLastCheckup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="July 1, 2013" />
@@ -304,7 +329,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/TextView07"
+                        android:id="@+id/profHealthProblem"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
@@ -324,7 +349,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/TextView03"
+                        android:id="@+id/profAllergies"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
@@ -374,7 +399,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/TextView13"
+                        android:id="@+id/profContactPerson"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Maria Castilo" />
@@ -392,7 +417,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/TextView12"
+                        android:id="@+id/profContactNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0917 5896775" />

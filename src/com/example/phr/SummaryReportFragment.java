@@ -279,6 +279,7 @@ public class SummaryReportFragment extends Fragment {
 		});
 
 		// calorie
+
 		cProgress = (ProgressBar) rootView.findViewById(R.id.progressBar2);
 		Drawable draw = getResources()
 				.getDrawable(R.drawable.customprogressbar);
@@ -391,11 +392,15 @@ public class SummaryReportFragment extends Fragment {
 		});
 
 		View dailyChart;
-
+		// 300g carbohydrates, 50g of protein and 65g fat
+		// RDI2K(protein) / 2000 = x / BMR
+		double recommendFats = (50 / 2000) * bmr;
+		double recommendCarbs = (300 / 2000) * bmr;
+		double recommendProtein = (65 / 2000) * bmr;
 		int[] x = { 0, 1, 2 };
 		double[] intake = { groupedFood.getProtein(), groupedFood.getFat(),
 				groupedFood.getCarbohydrates() };
-		double[] recommeded = { 41.25, 53.63, 247.5 };
+		double[] recommeded = { recommendProtein, recommendFats, recommendCarbs };
 
 		String[] mMonth = new String[] { "Protein", "Fats", "Carbohydrates" };
 
