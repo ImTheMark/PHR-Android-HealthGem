@@ -59,7 +59,7 @@ public class CalorieTrackerEntryServiceImpl implements CalorieTrackerService {
 			e.printStackTrace();
 		}
 		UserService userService = new UserServiceImpl();
-		User user = userService.getUser();
+		//User user = userService.getUser();
 		Timestamp timestamp;
 		// current date
 		DateFormat dateFormat;
@@ -71,7 +71,7 @@ public class CalorieTrackerEntryServiceImpl implements CalorieTrackerService {
 		fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss", Locale.ENGLISH);
 		calobj = Calendar.getInstance();
 		Date date = null;
-		try {
+/*		try {
 			date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
 					+ timeFormat.format(calobj.getTime()));
 		} catch (ParseException e) {
@@ -81,15 +81,15 @@ public class CalorieTrackerEntryServiceImpl implements CalorieTrackerService {
 		timestamp = new Timestamp(date.getTime());
 		Timestamp bdaytimestamp = user.getDateOfBirth();
 		int age = Integer.parseInt(DateTimeParser.getYear(timestamp))
-				- Integer.parseInt(DateTimeParser.getYear(bdaytimestamp));
+				- Integer.parseInt(DateTimeParser.getYear(bdaytimestamp));*/
 		double bmr = 0.0;
 		// int age = 40;
-		if (user.getGender().equals("F"))
+/*		if (user.getGender().equals("F"))
 			bmr = 655 + (4.35 * weight.getWeightInPounds())
 					+ (4.7 * user.getHeight()) - (4.7 * age);
 		else if (user.getGender().equals("M"))
 			bmr = 66 + (6.23 * weight.getWeightInPounds())
-					+ (12.7 * user.getHeight()) - (6.8 * age);
+					+ (12.7 * user.getHeight()) - (6.8 * age);*/
 
 		while (list.size() != 0) {
 			CalorieTrackerEntry calorieEntry = new CalorieTrackerEntry();

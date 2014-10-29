@@ -221,20 +221,20 @@ public class FoodTrackerDailyActivity extends Activity {
 			e.printStackTrace();
 		}
 		UserService userService = new UserServiceImpl();
-		User user = userService.getUser();
+/*		User user = userService.getUser();
 
 		Timestamp bdaytimestamp = user.getDateOfBirth();
 
 		int age = Integer.parseInt(DateTimeParser.getYear(timestamp))
-				- Integer.parseInt(DateTimeParser.getYear(bdaytimestamp));
+				- Integer.parseInt(DateTimeParser.getYear(bdaytimestamp));*/
 		double bmr = 0;
 		// int age = 40;
-		if (user.getGender().equals("F"))
+/*		if (user.getGender().equals("F"))
 			bmr = 655 + (4.35 * weight.getWeightInPounds())
 					+ (4.7 * user.getHeight()) - (4.7 * age);
 		else if (user.getGender().equals("M"))
 			bmr = 66 + (6.23 * weight.getWeightInPounds())
-					+ (12.7 * user.getHeight()) - (6.8 * age);
+					+ (12.7 * user.getHeight()) - (6.8 * age);*/
 
 		double recommendFats = (50 / 2000) * bmr;
 		double recommendCarbs = (300 / 2000) * bmr;

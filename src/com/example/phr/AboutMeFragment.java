@@ -76,7 +76,7 @@ public class AboutMeFragment extends Fragment {
 		image = (ImageView) rootView.findViewById(R.id.profImg);
 
 		UserService userService = new UserServiceImpl();
-		User user = userService.getUser();
+		/*User user = userService.getUser();
 
 		name.setText(user.getName());
 		birthday.setText(String.valueOf(DateTimeParser.getDate(user
@@ -120,7 +120,7 @@ public class AboutMeFragment extends Fragment {
 			lastcheckup.setText(String.valueOf(DateTimeParser.getDate(checkup
 					.getTimestamp())));
 		else
-			lastcheckup.setText("N/A");
+			lastcheckup.setText("N/A");*/
 		return rootView;
 	}
 }
