@@ -10,8 +10,7 @@ public class Food implements Serializable {
 	double protein;
 	double fat;
 	double carbohydrate;
-	String servingUnit;
-	double servingSize;
+	String serving;
 	Integer restaurantID;
 	Boolean fromFatsecret;
 
@@ -21,8 +20,8 @@ public class Food implements Serializable {
 	}
 
 	public Food(Integer entryID, String name, double calorie, double protein,
-			double fat, double carbohydrate, String servingUnit,
-			double servingSize, Integer restaurantID, Boolean fromFatsecret) {
+			double fat, double carbohydrate, String serving,
+			Integer restaurantID, Boolean fromFatsecret) {
 		super();
 		this.entryID = entryID;
 		this.name = name;
@@ -30,23 +29,21 @@ public class Food implements Serializable {
 		this.protein = protein;
 		this.fat = fat;
 		this.carbohydrate = carbohydrate;
-		this.servingUnit = servingUnit;
-		this.servingSize = servingSize;
+		this.serving = serving;
 		this.restaurantID = restaurantID;
 		this.fromFatsecret = fromFatsecret;
 	}
 
 	public Food(String name, double calorie, double protein, double fat,
-			double carbohydrate, String servingUnit, double servingSize,
-			Integer restaurantID, Boolean fromFatsecret) {
+			double carbohydrate, String serving, Integer restaurantID,
+			Boolean fromFatsecret) {
 		super();
 		this.name = name;
 		this.calorie = calorie;
 		this.protein = protein;
 		this.fat = fat;
 		this.carbohydrate = carbohydrate;
-		this.servingUnit = servingUnit;
-		this.servingSize = servingSize;
+		this.serving = serving;
 		this.restaurantID = restaurantID;
 		this.fromFatsecret = fromFatsecret;
 	}
@@ -100,19 +97,11 @@ public class Food implements Serializable {
 	}
 
 	public String getServingUnit() {
-		return servingUnit;
+		return serving;
 	}
 
-	public void setServingUnit(String servingUnit) {
-		this.servingUnit = servingUnit;
-	}
-
-	public double getServingSize() {
-		return servingSize;
-	}
-
-	public void setServingSize(double servingSize) {
-		this.servingSize = servingSize;
+	public void setServingUnit(String serving) {
+		this.serving = serving;
 	}
 
 	public Integer getRestaurantID() {
