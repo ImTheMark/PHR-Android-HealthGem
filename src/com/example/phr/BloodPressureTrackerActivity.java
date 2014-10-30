@@ -31,13 +31,16 @@ import android.widget.ListView;
 
 import com.example.phr.adapter.BloodPressureAdapter;
 import com.example.phr.enums.TrackerInputType;
+import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
+import com.example.phr.mobile.dao.MobileBloodPressureTrackerDao;
+import com.example.phr.mobile.daoimpl.MobileBloodPressureTrackerDaoImpl;
 import com.example.phr.mobile.models.BloodPressure;
+import com.example.phr.service.BloodPressureTrackerService;
 import com.example.phr.serviceimpl.BloodPressureTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
-import com.google.common.collect.Lists;
 
 public class BloodPressureTrackerActivity extends Activity {
 
@@ -45,14 +48,14 @@ public class BloodPressureTrackerActivity extends Activity {
 	BloodPressureAdapter bloodPressureAdapter;
 	LinearLayout mBtnBloodPressurePost;
 	List<BloodPressure> list;
-	List<BloodPressure> reverselist;
 	XYMultipleSeriesDataset bloodPressureDataset;
 	View bloodPressureChart;
 	LinearLayout bloodPressureContainer;
 	AlertDialog.Builder alertDialog;
 	ArrayList<String> names;
 	String mode;
-	BloodPressureTrackerServiceImpl bpServiceImpl;
+	MobileBloodPressureTrackerDao bpDao;
+	BloodPressureTrackerService bpService;
 	AlertDialog alertD;
 	BloodPressure chosenItem;
 
@@ -67,23 +70,19 @@ public class BloodPressureTrackerActivity extends Activity {
 
 		// FAKE DATA
 		list = new ArrayList<BloodPressure>();
-		reverselist = new ArrayList<BloodPressure>();
 
-		bpServiceImpl = new BloodPressureTrackerServiceImpl();
+		bpDao = new MobileBloodPressureTrackerDaoImpl();
+		bpService = new BloodPressureTrackerServiceImpl();
+
 		try {
-			list = bpServiceImpl.getAll();
-			reverselist = Lists.reverse(list);
-
-		} catch (ServiceException e) {
+			list = bpDao.getAllReversed();
+		} catch (DataAccessException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (BloodPressure bp : list) {
-			// bp.setImage(getResources().getDrawable(R.drawable.bloodpressure_warning));
+			e1.printStackTrace();
 		}
 
 		bloodPressureAdapter = new BloodPressureAdapter(
-				getApplicationContext(), reverselist);
+				getApplicationContext(), list);
 		mBloodPressureList.setAdapter(bloodPressureAdapter);
 		mBloodPressureList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -129,15 +128,15 @@ public class BloodPressureTrackerActivity extends Activity {
 
 							try {
 								Log.e("bloodpressure", "del");
-								bpServiceImpl.delete(chosenItem);
+								bpService.delete(chosenItem);
 								Log.e("bloodpressure", "del_done");
-							} catch (ServiceException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
 							} catch (OutdatedAccessTokenException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							} catch (EntryNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (ServiceException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
@@ -177,11 +176,11 @@ public class BloodPressureTrackerActivity extends Activity {
 		ArrayList<String> bloodPressureDate = new ArrayList<String>();
 
 		if (list.size() >= 7)
-			for (int i = list.size() - 7; i < list.size(); i++)
+			for (int i = 6; i >= 0; i++)
 				bloodPressureDate.add(DateTimeParser.getMonthDay(list.get(i)
 						.getTimestamp()));
 		else
-			for (int i = 0; i < list.size(); i++)
+			for (int i = list.size() - 1; i >= 0; i++)
 				bloodPressureDate.add(DateTimeParser.getMonthDay(list.get(i)
 						.getTimestamp()));
 
@@ -193,10 +192,10 @@ public class BloodPressureTrackerActivity extends Activity {
 		ArrayList<Integer> systolic = new ArrayList<Integer>();
 
 		if (list.size() >= 7)
-			for (int i = list.size() - 7; i < list.size(); i++)
+			for (int i = 6; i >= 0; i++)
 				systolic.add(list.get(i).getSystolic());
 		else
-			for (int i = 0; i < list.size(); i++)
+			for (int i = list.size() - 1; i >= 0; i++)
 				systolic.add(list.get(i).getSystolic());
 
 		return systolic;
@@ -206,10 +205,10 @@ public class BloodPressureTrackerActivity extends Activity {
 		ArrayList<Integer> diastolic = new ArrayList<Integer>();
 
 		if (list.size() >= 7)
-			for (int i = list.size() - 7; i < list.size(); i++)
+			for (int i = 6; i >= 0; i++)
 				diastolic.add(list.get(i).getDiastolic());
 		else
-			for (int i = 0; i < list.size(); i++)
+			for (int i = list.size() - 1; i >= 0; i++)
 				diastolic.add(list.get(i).getDiastolic());
 
 		return diastolic;
@@ -351,13 +350,13 @@ public class BloodPressureTrackerActivity extends Activity {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public void onBackPressed() {
-		Intent intent = new Intent(getApplicationContext(),
-				MainActivity.class);
+		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 		intent.putExtra("backToMenu", 2);
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+				| Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 	}
 

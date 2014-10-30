@@ -32,11 +32,15 @@ import android.widget.ListView;
 
 import com.example.phr.adapter.BloodSugarAdapter;
 import com.example.phr.enums.TrackerInputType;
+import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
+import com.example.phr.mobile.dao.MobileBloodSugarTrackerDao;
+import com.example.phr.mobile.daoimpl.MobileBloodSugarTrackerDaoImpl;
 import com.example.phr.mobile.models.BloodSugar;
 import com.example.phr.serviceimpl.BloodSugarTrackerServiceImpl;
+import com.example.phr.tools.DateTimeParser;
 
 public class BloodSugarTrackerActivity extends Activity {
 
@@ -48,6 +52,7 @@ public class BloodSugarTrackerActivity extends Activity {
 	ArrayList<String> names;
 	String mode;
 	BloodSugarTrackerServiceImpl bsServiceImpl;
+	MobileBloodSugarTrackerDao bsDao;
 	AlertDialog alertD;
 	BloodSugar chosenItem;
 
@@ -62,14 +67,15 @@ public class BloodSugarTrackerActivity extends Activity {
 		list = new ArrayList<BloodSugar>();
 
 		bsServiceImpl = new BloodSugarTrackerServiceImpl();
+		bsDao = new MobileBloodSugarTrackerDaoImpl();
+
 		try {
-
-			list = bsServiceImpl.getAll();
-
-		} catch (ServiceException e) {
+			list = bsDao.getAllReversed();
+		} catch (DataAccessException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
+
 		Log.e(String.valueOf(list.size()), "size");
 		bloodSugarAdapter = new BloodSugarAdapter(getApplicationContext(), list);
 		mBloodSugarList.setAdapter(bloodSugarAdapter);
@@ -151,16 +157,22 @@ public class BloodSugarTrackerActivity extends Activity {
 		// ------------------------------
 		View bloodSugarChart;
 
-		String[] bloodSugarMonth = new String[] { "May 31", "Jun 07", "Jun 14",
-				"Jun 21", "Jun 28", "Jul 05", "Jul 12" };
+		// String[] bloodSugarMonth = new String[] { "May 31", "Jun 07",
+		// "Jun 14",
+		// "Jun 21", "Jun 28", "Jul 05", "Jul 12" };
+		// double[] bloodsugar = { 9, 7.4, 9, 9, 7.4, 9, 7.5 };
 
-		int[] bloodSugarx = { 1, 2, 3, 4, 5, 6, 7 };
-		double[] bloodsugar = { 9, 7.4, 9, 9, 7.4, 9, 7.5 };
-
+		ArrayList<String> bloodSugarMonth = getLastSevenDateTime();
+		ArrayList<Integer> bloodSugarx = getGraphElement();
+		ArrayList<Integer> bloodsugar = getLastSevenBloodSugar();
 		XYSeries bloodSugarSeries = new XYSeries("Glucose Level");
 
-		for (int i = 0; i < bloodSugarx.length; i++) {
-			bloodSugarSeries.add(bloodSugarx[i], bloodsugar[i]);
+		// for (int i = 0; i < bloodSugarx.length; i++) {
+		// bloodSugarSeries.add(bloodSugarx[i], bloodsugar[i]);
+		// }
+
+		for (int i = 0; i < bloodSugarx.size(); i++) {
+			bloodSugarSeries.add(bloodSugarx.get(i), bloodsugar.get(i));
 		}
 
 		XYMultipleSeriesDataset bloodsugarDataset = new XYMultipleSeriesDataset();
@@ -195,8 +207,13 @@ public class BloodSugarTrackerActivity extends Activity {
 		bloodSugarMultiRenderer.setMargins(new int[] { 90, 100, 120, 50 });
 		bloodSugarMultiRenderer.setLegendHeight(60);
 
-		for (int i = 0; i < bloodSugarx.length; i++) {
-			bloodSugarMultiRenderer.addXTextLabel(i + 1, bloodSugarMonth[i]);
+		// for (int i = 0; i < bloodSugarx.length; i++) {
+		// bloodSugarMultiRenderer.addXTextLabel(i + 1, bloodSugarMonth[i]);
+		// }
+
+		for (int i = 0; i < bloodSugarMonth.size(); i++) {
+			bloodSugarMultiRenderer
+					.addXTextLabel(i + 1, bloodSugarMonth.get(i));
 		}
 
 		bloodSugarMultiRenderer.setApplyBackgroundColor(true);
@@ -245,6 +262,35 @@ public class BloodSugarTrackerActivity extends Activity {
 		return number;
 	}
 
+	public ArrayList<String> getLastSevenDateTime() {
+		ArrayList<String> bloodPressureDate = new ArrayList<String>();
+
+		if (list.size() >= 7)
+			for (int i = 6; i >= 0; i++)
+				bloodPressureDate.add(DateTimeParser.getMonthDay(list.get(i)
+						.getTimestamp()));
+		else
+			for (int i = list.size() - 1; i >= 0; i++)
+				bloodPressureDate.add(DateTimeParser.getMonthDay(list.get(i)
+						.getTimestamp()));
+
+		return bloodPressureDate;
+
+	}
+
+	public ArrayList<Integer> getLastSevenBloodSugar() {
+		ArrayList<Integer> systolic = new ArrayList<Integer>();
+
+		if (list.size() >= 7)
+			for (int i = 6; i >= 0; i++)
+				systolic.add((int) list.get(i).getBloodSugar());
+		else
+			for (int i = list.size() - 1; i >= 0; i++)
+				systolic.add((int) list.get(i).getBloodSugar());
+
+		return systolic;
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu items for use in the action bar
@@ -264,13 +310,13 @@ public class BloodSugarTrackerActivity extends Activity {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public void onBackPressed() {
-		Intent intent = new Intent(getApplicationContext(),
-				MainActivity.class);
+		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 		intent.putExtra("backToMenu", 2);
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+				| Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 	}
 
