@@ -48,8 +48,8 @@ public class AddNewActivityActivity extends android.app.Activity {
 			Log.e("new", addActivity.getName());
 			i.putExtra("from", "new activity");
 			i.putExtra("activity added", addActivity);
-			i.putExtra("activity_duration", newActivityDuration.getText()
-					.toString());
+			i.putExtra("activity_duration", Double
+					.parseDouble(newActivityDuration.getText().toString()));
 			i.putExtra("activity_unit",
 					String.valueOf(newActivityDurationUnit.getSelectedItem()));
 			/*

@@ -438,7 +438,7 @@ public class NewStatusActivity extends android.app.Activity {
 				Log.e("new activity", chosenActivity.getName());
 				setActivityTemplate(chosenActivity.getName(),
 						chosenActivity.getMET(),
-						extras.getString("activity_duration"),
+						extras.getDouble("activity_duration"),
 						extras.getString("activity_unit"), "", photo);
 
 			} else if (from.equals("new food")) {
@@ -447,8 +447,8 @@ public class NewStatusActivity extends android.app.Activity {
 
 				chosenFood = (Food) in.getExtras()
 						.getSerializable("food added");
-				setFoodTemplate(1.0, chosenFood,
-						notesStatus.getText().toString(), photo);
+				setFoodTemplate(1.0, chosenFood, notesStatus.getText()
+						.toString(), photo);
 
 			}
 		} else if (extras != null && in.hasExtra("edit")) {
@@ -555,9 +555,9 @@ public class NewStatusActivity extends android.app.Activity {
 						String.valueOf(editActivityTrackerEntry.getEntryID()));
 				setActivityTemplate(editActivityTrackerEntry.getActivity()
 						.getName(), editActivityTrackerEntry.getActivity()
-						.getMET(), String.valueOf(editActivityTrackerEntry
-						.getDurationInSeconds() / 3600), "hr",
-						editActivityTrackerEntry.getStatus(), photo);
+						.getMET(),
+						editActivityTrackerEntry.getDurationInSeconds() / 3600,
+						"hr", editActivityTrackerEntry.getStatus(), photo);
 
 			}
 		} else if (extras != null && in.hasExtra("unverified")) {
@@ -598,8 +598,7 @@ public class NewStatusActivity extends android.app.Activity {
 
 				setActivityTemplate(unferifiedActivity.getActivity().getName(),
 						unferifiedActivity.getActivity().getMET(),
-						String.valueOf(unferifiedActivity
-								.getDurationInSeconds() / 3600), "hr",
+						unferifiedActivity.getDurationInSeconds() / 3600, "hr",
 						unferifiedActivity.getStatus(), photo);
 
 			} else if (verifyTracker.equals(TrackerInputType.RESTAURANT)) {
@@ -670,7 +669,7 @@ public class NewStatusActivity extends android.app.Activity {
 
 	}
 
-	private void setActivityTemplate(String name, Double met, String duration,
+	private void setActivityTemplate(String name, Double met, double duration,
 			String unit, String status, Bitmap image) {
 		// TODO Auto-generated method stub
 		setAllTemplateGone();
@@ -678,8 +677,21 @@ public class NewStatusActivity extends android.app.Activity {
 		activityCal.setVisibility(View.VISIBLE);
 		txtActivity.setText(name);
 		txtActivityDurationUnit.setText(unit);
-		txtActivityDuration.setText(duration);
-		double cal = met * 5; // not true
+		txtActivityDuration.setText(String.valueOf(duration));
+		double cal = 0; // not true
+		Weight weight = null;
+		WeightTrackerService weightService = new WeightTrackerServiceImpl();
+		try {
+			weight = weightService.getLatest();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (unit.equals("hr"))
+			cal = met * weight.getWeightInKilograms() * duration;
+		else if (unit.equals("min"))
+			cal = met * weight.getWeightInKilograms() * duration * 60;
+
 		txtActivityCal.setText(String.valueOf(cal));
 		if (image != null) {
 			Log.e("in", "set activity template");
@@ -988,8 +1000,9 @@ public class NewStatusActivity extends android.app.Activity {
 					public void onClick(DialogInterface dialog, int id) {
 						// set activity met -- get from database
 						setActivityTemplate(chosenActivity.getName(),
-								chosenActivity.getMET(), activityDuration
-										.getText().toString(), String
+								chosenActivity.getMET(), Double
+										.parseDouble(activityDuration.getText()
+												.toString()), String
 										.valueOf(activityUnitSpinner
 												.getSelectedItem()),
 								"How you feel? ", photo);
