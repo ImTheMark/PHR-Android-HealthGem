@@ -63,7 +63,7 @@ public class BloodSugarTrackerActivity extends Activity {
 
 		bsServiceImpl = new BloodSugarTrackerServiceImpl();
 		try {
-		
+
 			list = bsServiceImpl.getAll();
 
 		} catch (ServiceException e) {
@@ -79,7 +79,7 @@ public class BloodSugarTrackerActivity extends Activity {
 					long arg3) {
 				Log.e("bloodsugar",
 						String.valueOf(list.get(arg2).getBloodSugar()));
-			
+
 				chosenItem = (BloodSugar) arg0.getAdapter().getItem(arg2);
 				mode = "";
 				names = new ArrayList<String>();
@@ -230,6 +230,19 @@ public class BloodSugarTrackerActivity extends Activity {
 				startActivity(i);
 			}
 		});
+	}
+
+	public ArrayList<Integer> getGraphElement() {
+		ArrayList<Integer> number = new ArrayList<Integer>();
+
+		if (list.size() >= 7)
+			for (int i = 0; i < 7; i++)
+				number.add(i + 1);
+		else
+			for (int i = 0; i < list.size(); i++)
+				number.add(i + 1);
+
+		return number;
 	}
 
 	@Override
