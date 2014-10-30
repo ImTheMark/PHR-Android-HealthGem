@@ -1,9 +1,10 @@
 package com.example.phr.mobile.models;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class UnverifiedSportsEstablishmentEntry extends TrackerEntry {
+public class UnverifiedSportsEstablishmentEntry extends TrackerEntry implements Serializable {
 
 	String extractedWord;
 	SportEstablishment sportEstablishment;

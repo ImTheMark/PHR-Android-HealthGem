@@ -1,8 +1,9 @@
 package com.example.phr.mobile.models;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class UnverifiedActivityEntry extends TrackerEntry {
+public class UnverifiedActivityEntry extends TrackerEntry implements Serializable {
 
 	Activity activity;
 	int durationInSeconds;

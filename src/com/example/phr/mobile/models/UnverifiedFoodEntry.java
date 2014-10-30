@@ -1,8 +1,9 @@
 package com.example.phr.mobile.models;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class UnverifiedFoodEntry extends TrackerEntry {
+public class UnverifiedFoodEntry extends TrackerEntry implements Serializable {
 
 	Food food;
 	double servingCount;
