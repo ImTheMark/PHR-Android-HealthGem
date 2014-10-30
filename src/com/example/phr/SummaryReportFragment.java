@@ -333,9 +333,9 @@ public class SummaryReportFragment extends Fragment {
 		// inches ) - ( 6.8 x age in year )
 
 		UserService userService = new UserServiceImpl();
-		//User user = userService.getUser();
+		User user = userService.getUser();
 
-		/*Timestamp bdaytimestamp = user.getDateOfBirth();
+		Timestamp bdaytimestamp = user.getDateOfBirth();
 
 		int age = Integer.parseInt(DateTimeParser.getYear(timestamp))
 				- Integer.parseInt(DateTimeParser.getYear(bdaytimestamp));
@@ -346,12 +346,12 @@ public class SummaryReportFragment extends Fragment {
 					+ (4.7 * user.getHeight()) - (4.7 * age);
 		else if (user.getGender().equals("M"))
 			bmr = 66 + (6.23 * weight.getWeightInPounds())
-					+ (12.7 * user.getHeight()) - (6.8 * age);*/
+					+ (12.7 * user.getHeight()) - (6.8 * age);
 
 		txtBigTotalCalRequire.setText(String.valueOf(bmr));
 		txtSmallTotalCalRequire.setText(String.valueOf(bmr));
 
-		int cProgressStatus = (int) (total / 1500); // compute
+		int cProgressStatus = (int) (total / bmr) * 100; // compute
 		if (cProgressStatus > 100)
 			cProgressStatus = 100;
 		cProgress.setProgress(cProgressStatus);
@@ -404,12 +404,10 @@ public class SummaryReportFragment extends Fragment {
 
 		String[] mMonth = new String[] { "Protein", "Fats", "Carbohydrates" };
 
-		// Creating an XYSeries for Income
-		// CategorySeries incomeSeries = new CategorySeries("Income");
 		XYSeries incomeSeries = new XYSeries("Current Intake");
-		// Creating an XYSeries for Income
+
 		XYSeries expenseSeries = new XYSeries("Recommended Intake");
-		// Adding data to Income and Expense Series
+
 		for (int i = 0; i < x.length; i++) {
 			incomeSeries.add(i, intake[i]);
 			expenseSeries.add(i, recommeded[i]);
