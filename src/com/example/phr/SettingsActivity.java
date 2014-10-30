@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.ToggleButton;
 
 public class SettingsActivity extends Activity {
@@ -31,6 +32,31 @@ public class SettingsActivity extends Activity {
 		logoutButton = (Button) findViewById(R.id.btnLogout);
 		bloodPressureButton = (ToggleButton) findViewById(R.id.settingsToggleButtonBloodPressure);
 		bloodSugarButton = (ToggleButton) findViewById(R.id.settingsToggleButtonBloodSugar);
+		
+		radioGroupHeight.check(settingsDao.isHeightSettingInFeet() ? 1 : 0);
+		radioGroupWeight.check(settingsDao.isWeightSettingInPounds() ? 1 : 0);
+		
+		radioGroupHeight.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(RadioGroup arg0, int checkedID) {
+				if(checkedID == R.id.radioGroupSettingHeightButtonFT)
+					settingsDao.setHeightToFeet();
+				else
+					settingsDao.setHeightToCentimeters();
+			}
+		});
+		
+		radioGroupWeight.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(RadioGroup arg0, int checkedID) {
+				if(checkedID == R.id.radioGroupSettingWeightButtonLBS)
+					settingsDao.setHeightToFeet();
+				else
+					settingsDao.setHeightToCentimeters();
+			}
+		});
 		
 		logoutButton.setOnClickListener(new OnClickListener() {
 			

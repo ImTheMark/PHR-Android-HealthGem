@@ -29,7 +29,6 @@ public class SPreference {
 	public static final String BIRTHDATE = "Birthdate";
 	public static final String GENDER = "Gender";
 	public static final String HEIGHT = "Height";
-	public static final String WEIGHT = "Weight";
 	public static final String CONTACTPERSON = "ContactPerson";
 	public static final String CONTACTPERSONNUMBER = "ContactPersonNumber";
 	public static final String ALLERGIES = "Allergies";
@@ -124,7 +123,6 @@ public class SPreference {
 		savePreferences(EMAIL, loadPreferences(REGISTER_EMAIL));
 		savePreferences(NUMBER, loadPreferences(REGISTER_CONTACTNUMBER));
 		savePreferences(USERNAME, loadPreferences(REGISTER_USERNAME));
-		savePreferences(WEIGHT, loadPreferences(REGISTER_WEIGHT));
 		
 		clearRegisterInformation();
 	}

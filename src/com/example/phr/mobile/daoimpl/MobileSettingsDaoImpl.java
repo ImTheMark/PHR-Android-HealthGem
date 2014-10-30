@@ -9,6 +9,8 @@ public class MobileSettingsDaoImpl implements MobileSettingsDao {
 	public void initializeSettings() {
 		setBloodPressureNotificationOn();
 		setBloodSugarNotificationOn();
+		setHeightToFeet();
+		setWeightToPounds();
 	}
 
 	@Override
