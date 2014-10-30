@@ -115,12 +115,12 @@ public class UserServiceImpl implements UserService {
 				SPreference.NAME));
 		user.setUsername(HealthGem.getSharedPreferences().loadPreferences(
 				SPreference.USERNAME));
-		double weight = getDouble(
+/*		double weight = getDouble(
 				PreferenceManager.getDefaultSharedPreferences(HealthGem
 						.getContext()), SPreference.WEIGHT, 100.0);
-		// user.setWeight(Double.parseDouble(HealthGem.getSharedPreferences()
-		// .loadPreferences(SPreference.WEIGHT)));
-		user.setWeight(weight);
+		user.setWeight(Double.parseDouble(HealthGem.getSharedPreferences()
+		loadPreferences(SPreference.WEIGHT)));
+		user.setWeight(weight);*/
 		return user;
 	}
 
