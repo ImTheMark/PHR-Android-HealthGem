@@ -188,7 +188,7 @@
                         android:textAppearance="?android:attr/textAppearanceLarge" />
 
                     <ToggleButton
-                        android:id="@+id/ToggleButton01"
+                        android:id="@+id/settingsToggleButtonBloodPressure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -209,7 +209,7 @@
                         android:textAppearance="?android:attr/textAppearanceLarge" />
 
                     <ToggleButton
-                        android:id="@+id/togglebuttonActivitySharing"
+                        android:id="@+id/settingsToggleButtonBloodSugar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
