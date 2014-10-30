@@ -2,6 +2,8 @@ package com.example.phr;
 
 import com.example.phr.application.HealthGem;
 import com.example.phr.local_db.SPreference;
+import com.example.phr.mobile.dao.MobileSettingsDao;
+import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -29,11 +31,14 @@ public class RegisterUserInformationActivity extends Activity {
 	Spinner heightUnit;
 	Spinner weightUnit;
 	Spinner gender;
+	MobileSettingsDao settingsDao;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_registration_user_information);
+		
+		settingsDao = new MobileSettingsDaoImpl();
 		
 		heightUnit = (Spinner) findViewById(R.id.dropdownRegistrationHeight);
 		weightUnit = (Spinner) findViewById(R.id.dropdownRegistrationWeight);
@@ -97,8 +102,15 @@ public class RegisterUserInformationActivity extends Activity {
 				//HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_GENDER, gender.getSelectedItemPosition()+"");
 				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_BIRTHDATE, birthdate.getText().toString()+" 00:00:00");
 				
-				HealthGem.getSharedPreferences().savePreferences(SPreference.SETTINGS_HEIGHTUNIT, heightUnit.getSelectedItemPosition()+"");
-				HealthGem.getSharedPreferences().savePreferences(SPreference.SETTINGS_WEIGHTUNIT, weightUnit.getSelectedItemPosition()+"");
+				if(heightUnit.getSelectedItemPosition() == 0)
+					settingsDao.setHeightToFeet();
+				else
+					settingsDao.setHeightToCentimeters();
+				
+				if(weightUnit.getSelectedItemPosition() == 0)
+					settingsDao.setWeightToPounds();
+				else
+					settingsDao.setWeightToKilograms();
 				
 				
 				Intent intent = new Intent(getApplicationContext(), RegisterFBLoginActivity.class);

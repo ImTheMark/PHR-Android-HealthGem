@@ -16,5 +16,17 @@ public interface MobileSettingsDao {
 	
 	public Boolean getBloodSugarNotificationSetting();
 	
+	public void setWeightToKilograms();
+	
+	public void setWeightToPounds();
+	
+	public Boolean isWeightSettingInPounds();
+	
+	public void setHeightToFeet();
+	
+	public void setHeightToCentimeters();
+	
+	public Boolean isHeightSettingInFeet();
+	
 
 }
