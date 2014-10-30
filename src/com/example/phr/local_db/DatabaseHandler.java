@@ -337,4 +337,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.insert(TABLE_ACCESSTOKEN, null, values);
 		db.close();
 	}
+	
+	public void deleteAccessToken(){
+		SQLiteDatabase db = dbHandler.getWritableDatabase();
+
+		db.delete(TABLE_ACCESSTOKEN, null, null);
+		
+		db.close();
+	}
+
 }
