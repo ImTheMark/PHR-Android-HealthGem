@@ -12,6 +12,7 @@ import org.achartengine.renderer.XYSeriesRenderer;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -211,12 +213,26 @@ public class WeightTrackerActivity extends Activity {
 		return super.onCreateOptionsMenu(menu);
 	}
 
+	private void displayhelp() {
+
+		Dialog dialog = new Dialog(this);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setContentView(R.layout.item_help);
+		ImageView image = (ImageView) dialog.findViewById(R.id.help_imageview);
+		image.setBackgroundResource(R.drawable.bloodpressuretracker_help);
+		dialog.getWindow().setBackgroundDrawable(null);
+		dialog.show();
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			onBackPressed();
 			break;
+		case R.id.action_help:
+			displayhelp();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
