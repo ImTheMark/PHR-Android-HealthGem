@@ -27,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 
 import com.example.phr.adapter.BloodPressureAdapter;
@@ -58,6 +59,8 @@ public class BloodPressureTrackerActivity extends Activity {
 	BloodPressureTrackerService bpService;
 	AlertDialog alertD;
 	BloodPressure chosenItem;
+	XYMultipleSeriesRenderer bloodPressureMultiRenderer;
+	private final double mZoomLevel = 1;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -175,14 +178,9 @@ public class BloodPressureTrackerActivity extends Activity {
 	public ArrayList<String> getLastSevenDateTime() {
 		ArrayList<String> bloodPressureDate = new ArrayList<String>();
 
-		if (list.size() >= 7)
-			for (int i = 6; i >= 0; i++)
-				bloodPressureDate.add(DateTimeParser.getMonthDay(list.get(i)
-						.getTimestamp()));
-		else
-			for (int i = list.size() - 1; i >= 0; i++)
-				bloodPressureDate.add(DateTimeParser.getMonthDay(list.get(i)
-						.getTimestamp()));
+		for (int i = list.size() - 1; i >= 0; i--)
+			bloodPressureDate.add(DateTimeParser.getMonthDay(list.get(i)
+					.getTimestamp()));
 
 		return bloodPressureDate;
 
@@ -191,12 +189,8 @@ public class BloodPressureTrackerActivity extends Activity {
 	public ArrayList<Integer> getLastSevenSystolic() {
 		ArrayList<Integer> systolic = new ArrayList<Integer>();
 
-		if (list.size() >= 7)
-			for (int i = 6; i >= 0; i++)
-				systolic.add(list.get(i).getSystolic());
-		else
-			for (int i = list.size() - 1; i >= 0; i++)
-				systolic.add(list.get(i).getSystolic());
+		for (int i = list.size() - 1; i >= 0; i--)
+			systolic.add(list.get(i).getSystolic());
 
 		return systolic;
 	}
@@ -204,12 +198,8 @@ public class BloodPressureTrackerActivity extends Activity {
 	public ArrayList<Integer> getLastSevenDiastolic() {
 		ArrayList<Integer> diastolic = new ArrayList<Integer>();
 
-		if (list.size() >= 7)
-			for (int i = 6; i >= 0; i++)
-				diastolic.add(list.get(i).getDiastolic());
-		else
-			for (int i = list.size() - 1; i >= 0; i++)
-				diastolic.add(list.get(i).getDiastolic());
+		for (int i = list.size() - 1; i >= 0; i--)
+			diastolic.add(list.get(i).getDiastolic());
 
 		return diastolic;
 	}
@@ -217,12 +207,8 @@ public class BloodPressureTrackerActivity extends Activity {
 	public ArrayList<Integer> getGraphElement() {
 		ArrayList<Integer> number = new ArrayList<Integer>();
 
-		if (list.size() >= 7)
-			for (int i = 0; i < 7; i++)
-				number.add(i + 1);
-		else
-			for (int i = 0; i < list.size(); i++)
-				number.add(i + 1);
+		for (int i = 0; i < list.size(); i++)
+			number.add(i + 1);
 
 		return number;
 	}
@@ -272,7 +258,7 @@ public class BloodPressureTrackerActivity extends Activity {
 		diastolicRenderer.setChartValuesTextSize(25);
 		diastolicRenderer.setChartValuesSpacing(20);
 
-		XYMultipleSeriesRenderer bloodPressureMultiRenderer = new
+		bloodPressureMultiRenderer = new
 
 		XYMultipleSeriesRenderer();
 		bloodPressureMultiRenderer.setXLabels(0);
@@ -285,11 +271,15 @@ public class BloodPressureTrackerActivity extends Activity {
 		bloodPressureMultiRenderer.setChartTitleTextSize(30);
 		bloodPressureMultiRenderer.setLegendTextSize(30);
 		bloodPressureMultiRenderer.setPointSize(10);
-		bloodPressureMultiRenderer.setXAxisMin(0);
-		bloodPressureMultiRenderer.setXAxisMax(7);
+		bloodPressureMultiRenderer.setXAxisMin(list.size() - 6);
+		bloodPressureMultiRenderer.setXAxisMax(list.size());
+		bloodPressureMultiRenderer.setPanEnabled(true, false);
+		bloodPressureMultiRenderer.setZoomEnabled(false, false);
+		bloodPressureMultiRenderer.setClickEnabled(false);
+		bloodPressureMultiRenderer.setInScroll(true);
 
 		// margin --- top, left, bottom, right
-		bloodPressureMultiRenderer.setMargins(new int[] { 90, 100, 120, 50 });
+		bloodPressureMultiRenderer.setMargins(new int[] { 90, 150, 100, 50 });
 		bloodPressureMultiRenderer.setLegendHeight(60);
 
 		// for (int i = 0; i < bloodPressurex.size(); i++) {
@@ -320,7 +310,8 @@ public class BloodPressureTrackerActivity extends Activity {
 		bloodPressureChart = ChartFactory.getLineChartView(getBaseContext(),
 				bloodPressureDataset, bloodPressureMultiRenderer);
 
-		bloodPressureContainer.addView(bloodPressureChart);
+		bloodPressureContainer.addView(bloodPressureChart, new LayoutParams(
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
 	}
 

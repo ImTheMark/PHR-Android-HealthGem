@@ -339,12 +339,14 @@ public class SummaryReportFragment extends Fragment {
 
 		int age = Integer.parseInt(DateTimeParser.getYear(timestamp))
 				- Integer.parseInt(DateTimeParser.getYear(bdaytimestamp));
-
+		Log.e("age", String.valueOf(age));
 		// int age = 40;
-		if (user.getGender().equals("F"))
+		// String gender =user.getGender();
+		String gender = "F";
+		if (gender.equals("F"))
 			bmr = 655 + (4.35 * weight.getWeightInPounds())
 					+ (4.7 * user.getHeight()) - (4.7 * age);
-		else if (user.getGender().equals("M"))
+		else if (gender.equals("M"))
 			bmr = 66 + (6.23 * weight.getWeightInPounds())
 					+ (12.7 * user.getHeight()) - (6.8 * age);
 

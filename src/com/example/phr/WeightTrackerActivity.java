@@ -122,11 +122,15 @@ public class WeightTrackerActivity extends Activity {
 		weightMultiRenderer.setChartTitleTextSize(30);
 		weightMultiRenderer.setLegendTextSize(30);
 		weightMultiRenderer.setPointSize(10);
-		weightMultiRenderer.setXAxisMin(0);
-		weightMultiRenderer.setXAxisMax(7);
+		weightMultiRenderer.setXAxisMin(list.size() - 6);
+		weightMultiRenderer.setXAxisMax(list.size());
+		weightMultiRenderer.setPanEnabled(true, false);
+		weightMultiRenderer.setZoomEnabled(false, false);
+		weightMultiRenderer.setClickEnabled(false);
+		weightMultiRenderer.setInScroll(true);
 
 		// margin --- top, left, bottom, right
-		weightMultiRenderer.setMargins(new int[] { 90, 100, 120, 50 });
+		weightMultiRenderer.setMargins(new int[] { 90, 150, 100, 50 });
 		weightMultiRenderer.setLegendHeight(60);
 
 		// for (int i = 0; i < weightx.length; i++) {
@@ -162,14 +166,9 @@ public class WeightTrackerActivity extends Activity {
 	public ArrayList<String> getLastSevenDateTime() {
 		ArrayList<String> bloodPressureDate = new ArrayList<String>();
 
-		if (list.size() >= 7)
-			for (int i = 6; i >= 0; i++)
-				bloodPressureDate.add(DateTimeParser.getMonthDay(list.get(i)
-						.getTimestamp()));
-		else
-			for (int i = list.size() - 1; i >= 0; i++)
-				bloodPressureDate.add(DateTimeParser.getMonthDay(list.get(i)
-						.getTimestamp()));
+		for (int i = list.size() - 1; i >= 0; i--)
+			bloodPressureDate.add(DateTimeParser.getMonthDay(list.get(i)
+					.getTimestamp()));
 
 		return bloodPressureDate;
 
@@ -178,12 +177,8 @@ public class WeightTrackerActivity extends Activity {
 	public ArrayList<Double> getLastSevenWeight() {
 		ArrayList<Double> weight = new ArrayList<Double>();
 
-		if (list.size() >= 7)
-			for (int i = 6; i >= 0; i++)
-				weight.add(list.get(i).getWeightInPounds());
-		else
-			for (int i = list.size() - 1; i >= 0; i++)
-				weight.add(list.get(i).getWeightInPounds());
+		for (int i = list.size() - 1; i >= 0; i--)
+			weight.add(list.get(i).getWeightInPounds());
 
 		return weight;
 	}
@@ -191,12 +186,8 @@ public class WeightTrackerActivity extends Activity {
 	public ArrayList<Integer> getGraphElement() {
 		ArrayList<Integer> number = new ArrayList<Integer>();
 
-		if (list.size() >= 7)
-			for (int i = 0; i < 7; i++)
-				number.add(i + 1);
-		else
-			for (int i = 0; i < list.size(); i++)
-				number.add(i + 1);
+		for (int i = 0; i < list.size(); i++)
+			number.add(i + 1);
 
 		return number;
 	}

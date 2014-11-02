@@ -200,11 +200,15 @@ public class BloodSugarTrackerActivity extends Activity {
 		bloodSugarMultiRenderer.setChartTitleTextSize(30);
 		bloodSugarMultiRenderer.setLegendTextSize(30);
 		bloodSugarMultiRenderer.setPointSize(10);
-		bloodSugarMultiRenderer.setXAxisMin(0);
-		bloodSugarMultiRenderer.setXAxisMax(7);
+		bloodSugarMultiRenderer.setXAxisMin(list.size() - 6);
+		bloodSugarMultiRenderer.setXAxisMax(list.size());
+		bloodSugarMultiRenderer.setPanEnabled(true, false);
+		bloodSugarMultiRenderer.setZoomEnabled(false, false);
+		bloodSugarMultiRenderer.setClickEnabled(false);
+		bloodSugarMultiRenderer.setInScroll(true);
 
 		// margin --- top, left, bottom, right
-		bloodSugarMultiRenderer.setMargins(new int[] { 90, 100, 120, 50 });
+		bloodSugarMultiRenderer.setMargins(new int[] { 90, 150, 100, 50 });
 		bloodSugarMultiRenderer.setLegendHeight(60);
 
 		// for (int i = 0; i < bloodSugarx.length; i++) {
@@ -252,12 +256,8 @@ public class BloodSugarTrackerActivity extends Activity {
 	public ArrayList<Integer> getGraphElement() {
 		ArrayList<Integer> number = new ArrayList<Integer>();
 
-		if (list.size() >= 7)
-			for (int i = 0; i < 7; i++)
-				number.add(i + 1);
-		else
-			for (int i = 0; i < list.size(); i++)
-				number.add(i + 1);
+		for (int i = 0; i < list.size(); i++)
+			number.add(i + 1);
 
 		return number;
 	}
@@ -265,14 +265,9 @@ public class BloodSugarTrackerActivity extends Activity {
 	public ArrayList<String> getLastSevenDateTime() {
 		ArrayList<String> bloodPressureDate = new ArrayList<String>();
 
-		if (list.size() >= 7)
-			for (int i = 6; i >= 0; i++)
-				bloodPressureDate.add(DateTimeParser.getMonthDay(list.get(i)
-						.getTimestamp()));
-		else
-			for (int i = list.size() - 1; i >= 0; i++)
-				bloodPressureDate.add(DateTimeParser.getMonthDay(list.get(i)
-						.getTimestamp()));
+		for (int i = list.size() - 1; i >= 0; i--)
+			bloodPressureDate.add(DateTimeParser.getMonthDay(list.get(i)
+					.getTimestamp()));
 
 		return bloodPressureDate;
 
@@ -281,12 +276,8 @@ public class BloodSugarTrackerActivity extends Activity {
 	public ArrayList<Integer> getLastSevenBloodSugar() {
 		ArrayList<Integer> systolic = new ArrayList<Integer>();
 
-		if (list.size() >= 7)
-			for (int i = 6; i >= 0; i++)
-				systolic.add((int) list.get(i).getBloodSugar());
-		else
-			for (int i = list.size() - 1; i >= 0; i++)
-				systolic.add((int) list.get(i).getBloodSugar());
+		for (int i = list.size() - 1; i >= 0; i--)
+			systolic.add((int) list.get(i).getBloodSugar());
 
 		return systolic;
 	}

@@ -260,7 +260,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 		long diffDays = diff / (24 * 60 * 60 * 1000); // days
 		if (lastCheckup != null && diffDays < 180)
 			notif = false;
-
+		Log.e("diffdays", String.valueOf(diff));
 		return notif;
 	}
 
