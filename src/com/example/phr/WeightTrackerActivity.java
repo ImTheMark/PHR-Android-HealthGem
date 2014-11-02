@@ -28,7 +28,9 @@ import android.widget.ListView;
 import com.example.phr.adapter.WeightAdapter;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.DataAccessException;
+import com.example.phr.mobile.dao.MobileSettingsDao;
 import com.example.phr.mobile.dao.MobileWeightTrackerDao;
+import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
 import com.example.phr.mobile.daoimpl.MobileWeightTrackerDaoImpl;
 import com.example.phr.mobile.models.Weight;
 import com.example.phr.tools.DateTimeParser;
@@ -39,6 +41,7 @@ public class WeightTrackerActivity extends Activity {
 	ListView mWeightList;
 	ImageView mBtnAddWeight;
 	List<Weight> list;
+	MobileSettingsDao setting;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -50,6 +53,7 @@ public class WeightTrackerActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		MobileWeightTrackerDao daoImpl = new MobileWeightTrackerDaoImpl();
+		setting = new MobileSettingsDaoImpl();
 		List<List<Weight>> weightList = new ArrayList<List<Weight>>();
 		;
 		try {
@@ -116,7 +120,10 @@ public class WeightTrackerActivity extends Activity {
 		weightMultiRenderer.setXLabels(0);
 		weightMultiRenderer.setChartTitle("Weight Graph");
 		weightMultiRenderer.setXTitle("Year 2014");
-		weightMultiRenderer.setYTitle("Weight in lbs");
+		if (setting.isWeightSettingInPounds())
+			weightMultiRenderer.setYTitle("Weight in lbs");
+		else
+			weightMultiRenderer.setYTitle("Weight in kgs");
 		weightMultiRenderer.setZoomButtonsVisible(false);
 		weightMultiRenderer.setAxisTitleTextSize(30);
 		weightMultiRenderer.setChartTitleTextSize(30);
@@ -176,9 +183,13 @@ public class WeightTrackerActivity extends Activity {
 
 	public ArrayList<Double> getLastSevenWeight() {
 		ArrayList<Double> weight = new ArrayList<Double>();
-
-		for (int i = list.size() - 1; i >= 0; i--)
-			weight.add(list.get(i).getWeightInPounds());
+		if (setting.isWeightSettingInPounds()) {
+			for (int i = list.size() - 1; i >= 0; i--)
+				weight.add(list.get(i).getWeightInPounds());
+		} else {
+			for (int i = list.size() - 1; i >= 0; i--)
+				weight.add(list.get(i).getWeightInKilograms());
+		}
 
 		return weight;
 	}

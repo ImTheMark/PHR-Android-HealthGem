@@ -40,8 +40,10 @@ import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.dao.MobileActivityTrackerDao;
 import com.example.phr.mobile.dao.MobileFoodTrackerDao;
+import com.example.phr.mobile.dao.MobileSettingsDao;
 import com.example.phr.mobile.daoimpl.MobileActivityTrackerDaoImpl;
 import com.example.phr.mobile.daoimpl.MobileFoodTrackerDaoImpl;
+import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.mobile.models.BloodSugar;
 import com.example.phr.mobile.models.GroupedActivity;
@@ -100,6 +102,7 @@ public class SummaryReportFragment extends Fragment {
 	DateFormat fmt;
 	Calendar calobj;
 	Timestamp timestamp;
+	MobileSettingsDao setting;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -107,6 +110,7 @@ public class SummaryReportFragment extends Fragment {
 
 		View rootView = inflater.inflate(R.layout.fragment_summary_report,
 				container, false);
+		setting = new MobileSettingsDaoImpl();
 
 		// blood sugar
 		txtBsDate = (TextView) rootView.findViewById(R.id.txtHomeBsDate);
@@ -239,14 +243,21 @@ public class SummaryReportFragment extends Fragment {
 		}
 		if (weight != null) {
 			Log.e("home weight", "not null");
-			txtWeight.setText(String.valueOf(weight.getWeightInPounds()));
+			if (setting.isWeightSettingInPounds()) {
+				txtWeight.setText(String.valueOf(weight.getWeightInPounds()));
+				txtWeightUnit.setText("lbs");
+			} else {
+				txtWeight
+						.setText(String.valueOf(weight.getWeightInKilograms()));
+				txtWeightUnit.setText("kgs");
+			}
 			double heightInMeter = 1.75;
 			double bmi = weight.getWeightInKilograms()
 					/ (heightInMeter * heightInMeter);
 			DecimalFormat df = new DecimalFormat("#.00");
 			String formattedBmi = df.format(bmi);
 			txtBmi.setText(formattedBmi);
-			txtWeightUnit.setText("lbs");
+
 			String weightStatus;
 			if (bmi < 18.5)
 				weightStatus = "Underweight";

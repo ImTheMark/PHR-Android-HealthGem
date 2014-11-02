@@ -13,6 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.phr.R;
+import com.example.phr.mobile.dao.MobileSettingsDao;
+import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
 import com.example.phr.mobile.models.Weight;
 import com.example.phr.tools.DateTimeParser;
 
@@ -26,6 +28,7 @@ public class WeightAdapter extends BaseAdapter {
 		TextView month;
 		TextView day;
 		TextView average;
+		TextView aveUnit;
 		LinearLayout trackerListForDay;
 	}
 
@@ -53,6 +56,7 @@ public class WeightAdapter extends BaseAdapter {
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder viewHolder;
 		DecimalFormat df = new DecimalFormat("#.00");
+		MobileSettingsDao setting = new MobileSettingsDaoImpl();
 
 		if (convertView == null) {
 			LayoutInflater inflater = LayoutInflater.from(mContext);
@@ -66,6 +70,8 @@ public class WeightAdapter extends BaseAdapter {
 					.findViewById(R.id.txtTrackerDay);
 			viewHolder.average = (TextView) convertView
 					.findViewById(R.id.txtTrackerAverage);
+			viewHolder.aveUnit = (TextView) convertView
+					.findViewById(R.id.txtTrackerAverageUnit);
 			viewHolder.trackerListForDay = (LinearLayout) convertView
 					.findViewById(R.id.trackerListForDay);
 
@@ -82,6 +88,11 @@ public class WeightAdapter extends BaseAdapter {
 		viewHolder.month.setText(month);
 		viewHolder.day.setText(day);
 		viewHolder.average.setText(String.valueOf(average));
+
+		if (setting.isWeightSettingInPounds())
+			viewHolder.aveUnit.setText("lbs");
+		else
+			viewHolder.aveUnit.setText("kgs");
 
 		viewHolder.trackerListForDay.removeAllViews();
 
@@ -106,8 +117,12 @@ public class WeightAdapter extends BaseAdapter {
 			// kg for now
 
 			TextView txtWeight = new TextView(mContext);
+			String weightFormated;
+			if (setting.isWeightSettingInPounds())
+				weightFormated = df.format(status.getWeightInPounds());
+			else
+				weightFormated = df.format(status.getWeightInKilograms());
 
-			String weightFormated = df.format(status.getWeightInKilograms());
 			txtWeight.setText(weightFormated);
 			RelativeLayout.LayoutParams w = new RelativeLayout.LayoutParams(
 					RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -118,8 +133,10 @@ public class WeightAdapter extends BaseAdapter {
 			row.addView(txtWeight);
 
 			viewHolder.trackerListForDay.addView(row);
-
-			average += status.getWeightInKilograms();
+			if (setting.isWeightSettingInPounds())
+				average += status.getWeightInPounds();
+			else
+				average += status.getWeightInKilograms();
 		}
 
 		average /= mListOfGroupedWeightByDate.get(position).size();
@@ -128,5 +145,4 @@ public class WeightAdapter extends BaseAdapter {
 
 		return convertView;
 	}
-
 }
