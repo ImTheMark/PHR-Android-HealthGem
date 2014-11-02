@@ -99,7 +99,7 @@ public class SPreference {
 		savePreferences(REGISTER_FBACCESSTOKEN,"");
 		savePreferences(REGISTER_FBUSERNAME,"");
 		savePreferences(REGISTER_NAME,"");
-		//savePreferences(REGISTER_GENDER,"");
+		savePreferences(REGISTER_GENDER,"");
 		savePreferences(REGISTER_HEIGHT,"");
 		savePreferences(REGISTER_KNOWNHEALTHPROBLEMS,"");
 		savePreferences(REGISTER_EMAIL,"");
@@ -117,7 +117,7 @@ public class SPreference {
 		savePreferences(FBACCESSTOKEN, loadPreferences(REGISTER_FBACCESSTOKEN));
 		savePreferences(FBUSERNAME, loadPreferences(REGISTER_FBUSERNAME));
 		savePreferences(NAME, loadPreferences(REGISTER_NAME));
-		//savePreferences(GENDER, loadPreferences(REGISTER_GENDER));
+		savePreferences(GENDER, loadPreferences(REGISTER_GENDER));
 		savePreferences(HEIGHT, loadPreferences(REGISTER_HEIGHT));
 		savePreferences(KNOWNHEALTHPROBLEMS, loadPreferences(REGISTER_KNOWNHEALTHPROBLEMS));
 		savePreferences(EMAIL, loadPreferences(REGISTER_EMAIL));

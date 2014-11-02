@@ -7,6 +7,7 @@ import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -66,7 +67,13 @@ public class RegisterUserInformationActivity extends Activity {
 		knownHealthProblems.setText(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_KNOWNHEALTHPROBLEMS));
 		birthdate.setText(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_BIRTHDATE));
 		
-		//gender.setSelection(Integer.parseInt(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_GENDER)));
+		Resources res = getResources();
+		String[] genderArray = res.getStringArray(R.array.gender);
+		
+		if(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_GENDER).equals(genderArray[0]))
+			gender.setSelection(0);
+		else
+			gender.setSelection(1);
 	}
 
 	@Override
@@ -99,7 +106,7 @@ public class RegisterUserInformationActivity extends Activity {
 				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_CONTACTPERSONNUMBER, contactPersonNumber.getText().toString());
 				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_ALLERGIES, allergies.getText().toString());
 				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_KNOWNHEALTHPROBLEMS, knownHealthProblems.getText().toString());
-				//HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_GENDER, gender.getSelectedItemPosition()+"");
+				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_GENDER, gender.getSelectedItem()+"");
 				HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_BIRTHDATE, birthdate.getText().toString()+" 00:00:00");
 				
 				if(heightUnit.getSelectedItemPosition() == 0)
