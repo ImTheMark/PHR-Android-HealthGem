@@ -269,15 +269,14 @@ public class SummaryReportFragment extends Fragment {
 				weightStatus = "Obesity";
 			txtWeightStatus.setText(weightStatus);
 
-			// if(weightStatus.equals("Overweight")
-			// ||weightStatus.equals("Obesity"))
-			// imgWeight.setImageResource(R.drawable.fatweight);
-			/*
-			 * else if (weightStatus.equals("Normal weight"))
-			 * imgWeight.setImageResource(R.drawable.normalweight); else if
-			 * (weightStatus.equals("Underweight"))
-			 * imgWeight.setImageResource(R.drawable.underweight);
-			 */
+			if (weightStatus.equals("Overweight")
+					|| weightStatus.equals("Obesity"))
+				imgWeight.setImageResource(R.drawable.overweight);
+
+			else if (weightStatus.equals("Normal weight"))
+				imgWeight.setImageResource(R.drawable.normalweight);
+			else if (weightStatus.equals("Underweight"))
+				imgWeight.setImageResource(R.drawable.underweight);
 
 		}
 		weightHomeRecordHolder.setOnClickListener(new OnClickListener() {

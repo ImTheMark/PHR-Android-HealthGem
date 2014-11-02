@@ -255,7 +255,7 @@
                     android:id="@+id/imgHomeWeight"
                     android:layout_width="fill_parent"
                     android:layout_height="170dp"
-                    android:src="@drawable/fragmentsummaryreport_fat" 
+                    android:src="@drawable/normalweight" 
                     android:gravity="center"/>
 
             </LinearLayout>
