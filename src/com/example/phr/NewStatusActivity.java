@@ -35,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.DataAccessException;
@@ -1110,9 +1111,14 @@ public class NewStatusActivity extends android.app.Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 
-						setWeightTemplate(weight.getText().toString(), String
-								.valueOf(weightUnitSpinner.getSelectedItem()),
-								notesStatus.getText().toString(), photo);
+						if (weight.getText().toString().equals(""))
+							Toast.makeText(context, "Please enter your weight",
+									Toast.LENGTH_LONG).show();
+						else
+							setWeightTemplate(weight.getText().toString(),
+									String.valueOf(weightUnitSpinner
+											.getSelectedItem()), notesStatus
+											.getText().toString(), photo);
 
 					}
 				})
