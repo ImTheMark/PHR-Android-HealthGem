@@ -219,7 +219,7 @@ public class WeightTrackerActivity extends Activity {
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.item_help);
 		ImageView image = (ImageView) dialog.findViewById(R.id.help_imageview);
-		image.setBackgroundResource(R.drawable.bloodpressuretracker_help);
+		image.setBackgroundResource(R.drawable.weighttracker_help);
 		dialog.getWindow().setBackgroundDrawable(null);
 		dialog.show();
 	}
