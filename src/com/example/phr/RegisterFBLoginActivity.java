@@ -4,7 +4,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -176,6 +175,8 @@ public class RegisterFBLoginActivity extends Activity {
 		case R.id.menu_item_next:
 			Intent intent = new Intent(getApplicationContext(),
 					MainActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+					| Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			try {
 				User newUser = new User();
 				newUser.setAllergies(HealthGem.getSharedPreferences()
@@ -217,7 +218,7 @@ public class RegisterFBLoginActivity extends Activity {
 								SPreference.REGISTER_WEIGHT)));
 				newUser.setGender(HealthGem.getSharedPreferences()
 						.loadPreferences(SPreference.REGISTER_GENDER));
-				
+
 				if (user != null)
 					newUser.setFbAccessToken(HealthGem
 							.getSharedPreferences()
