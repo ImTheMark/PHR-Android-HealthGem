@@ -8,8 +8,6 @@ public interface MobileActivityDao {
 
 	public void addReturnsEntryId(Activity activity);
 
-	public List<Activity> getAll();
-
 	public Activity get(int id);
 
 }
