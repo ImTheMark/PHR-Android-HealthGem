@@ -33,8 +33,15 @@ public class SettingsActivity extends Activity {
 		bloodPressureButton = (ToggleButton) findViewById(R.id.settingsToggleButtonBloodPressure);
 		bloodSugarButton = (ToggleButton) findViewById(R.id.settingsToggleButtonBloodSugar);
 		
-		radioGroupHeight.check(settingsDao.isHeightSettingInFeet() ? 1 : 0);
-		radioGroupWeight.check(settingsDao.isWeightSettingInPounds() ? 1 : 0);
+		if(settingsDao.isHeightSettingInFeet())
+			radioGroupHeight.check(1);
+		else
+			radioGroupHeight.check(0);
+		
+		if(settingsDao.isWeightSettingInPounds())
+			radioGroupWeight.check(1);
+		else
+			radioGroupWeight.check(0);
 		
 		radioGroupHeight.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
