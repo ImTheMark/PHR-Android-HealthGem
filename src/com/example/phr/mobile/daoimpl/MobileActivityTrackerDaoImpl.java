@@ -47,8 +47,8 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 
 		mobileActivityDao.addReturnsEntryId(activity.getActivity());
 
-		// values.put(DatabaseHandler.ACT_DURATION,
-		// activity.getCalorisBurnedPerHour());
+		values.put(DatabaseHandler.ACT_DURATION,
+				activity.getDurationInSeconds());
 		values.put(DatabaseHandler.ACT_CALORIEBURNED,
 				activity.getCaloriesBurnedPerHour());
 		values.put(DatabaseHandler.ACT_STATUS, activity.getStatus());
@@ -92,8 +92,11 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 				fmt.format(activity.getTimestamp()));
 		values.put(DatabaseHandler.ACT_ACTIVITYID, activity.getActivity()
 				.getEntryID());
-		// values.put(DatabaseHandler.ACT_DURATION,
-		// activity.getCalorisBurnedPerHour());
+		
+		mobileActivityDao.addReturnsEntryId(activity.getActivity());
+
+		values.put(DatabaseHandler.ACT_DURATION,
+				activity.getDurationInSeconds());
 		values.put(DatabaseHandler.ACT_CALORIEBURNED,
 				activity.getCaloriesBurnedPerHour());
 		values.put(DatabaseHandler.ACT_STATUS, activity.getStatus());
