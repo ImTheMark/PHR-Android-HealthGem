@@ -27,6 +27,8 @@ import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.exceptions.UserAlreadyExistsException;
 import com.example.phr.local_db.SPreference;
+import com.example.phr.mobile.dao.MobileSettingsDao;
+import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
 import com.example.phr.mobile.models.User;
 import com.example.phr.mobile.models.Weight;
 import com.example.phr.service.UserService;
@@ -52,6 +54,8 @@ public class RegisterFBLoginActivity extends Activity {
 	public static String userID;
 	private UserService userService;
 	private WeightTrackerService weightService;
+
+	private MobileSettingsDao settingDao;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -236,7 +240,8 @@ public class RegisterFBLoginActivity extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
+				settingDao = new MobileSettingsDaoImpl();
+				settingDao.initializeSettings();
 				startActivity(intent);
 			} catch (ServiceException e) {
 				Toast.makeText(HealthGem.getContext(),

@@ -13,7 +13,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.phr.application.HealthGem;
+import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
+import com.example.phr.mobile.dao.MobileSettingsDao;
+import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
 import com.example.phr.service.UserService;
 import com.example.phr.serviceimpl.UserServiceImpl;
 import com.example.phr.tools.PasswordValidator;
@@ -32,6 +35,7 @@ public class LoginActivity extends Activity {
 	private TextView mTextValid;
 
 	private UserService userService;
+	private MobileSettingsDao settingDao;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -65,19 +69,26 @@ public class LoginActivity extends Activity {
 
 				if (password.length() > 0 && username.length() > 0) {
 					try {
-					 boolean isValid = userService.validateUser(username,
-					 password);
-					if (true) {
-						Intent intent = new Intent(getApplicationContext(),
-								MainActivity.class);
-						intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-								| Intent.FLAG_ACTIVITY_CLEAR_TOP);
-						startActivity(intent);
-					} else {
-						mTextValid.setText("Invalid Username/Password");
-					}
-					 } catch (ServiceException e) {
-					 mTextValid.setText("Error in Internet Connection");
+						boolean isValid = userService.validateUser(username,
+								password);
+						if (true) {
+							Intent intent = new Intent(getApplicationContext(),
+									MainActivity.class);
+							intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+									| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+							HealthGem.getSharedPreferences().saveUser(
+									userService.getUserGivenUsername(username));
+							settingDao = new MobileSettingsDaoImpl();
+							settingDao.initializeSettings();
+							startActivity(intent);
+						} else {
+							mTextValid.setText("Invalid Username/Password");
+						}
+					} catch (ServiceException e) {
+						mTextValid.setText("Error in Internet Connection");
+					} catch (OutdatedAccessTokenException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 
 				}

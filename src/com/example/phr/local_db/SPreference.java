@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.example.phr.mobile.models.User;
+
 public class SPreference {
-	
+
 	public static final String REGISTER_USERNAME = "rUsername";
 	public static final String REGISTER_PASSWORD = "rPassword";
 	public static final String REGISTER_NAME = "rName";
@@ -21,7 +23,7 @@ public class SPreference {
 	public static final String REGISTER_KNOWNHEALTHPROBLEMS = "rKnown";
 	public static final String REGISTER_FBUSERNAME = "rFBUsername";
 	public static final String REGISTER_FBACCESSTOKEN = "rFBAccessToken";
-	
+
 	public static final String USERNAME = "Username";
 	public static final String NAME = "Name";
 	public static final String NUMBER = "Number";
@@ -35,14 +37,12 @@ public class SPreference {
 	public static final String KNOWNHEALTHPROBLEMS = "Known";
 	public static final String FBUSERNAME = "FBUsername";
 	public static final String FBACCESSTOKEN = "FBAccessToken";
-	
-	
+
 	public static final String SETTINGS_WEIGHTUNIT = "weightUnit";
 	public static final String SETTINGS_HEIGHTUNIT = "heightUnit";
 	public static final String SETTINGS_NOTIF_BLOODPRESSURE = "notifBloodPressure";
 	public static final String SETTINGS_NOTIF_BLOODSUGAR = "notifBloodSugar";
-	
-	
+
 	Context c;
 
 	public SPreference(Context c) {
@@ -90,40 +90,57 @@ public class SPreference {
 		editor.remove(key).commit();
 		return false;
 	}
-	
-	public void clearRegisterInformation(){
-		savePreferences(REGISTER_ALLERGIES,"");
-		savePreferences(REGISTER_BIRTHDATE,"");
-		savePreferences(REGISTER_CONTACTPERSON,"");
-		savePreferences(REGISTER_CONTACTPERSONNUMBER,"");
-		savePreferences(REGISTER_FBACCESSTOKEN,"");
-		savePreferences(REGISTER_FBUSERNAME,"");
-		savePreferences(REGISTER_NAME,"");
-		savePreferences(REGISTER_GENDER,"");
-		savePreferences(REGISTER_HEIGHT,"");
-		savePreferences(REGISTER_KNOWNHEALTHPROBLEMS,"");
-		savePreferences(REGISTER_EMAIL,"");
-		savePreferences(REGISTER_CONTACTNUMBER,"");
-		savePreferences(REGISTER_USERNAME,"");
-		savePreferences(REGISTER_PASSWORD,"");
-		savePreferences(REGISTER_WEIGHT,"");
+
+	public void clearRegisterInformation() {
+		savePreferences(REGISTER_ALLERGIES, "");
+		savePreferences(REGISTER_BIRTHDATE, "");
+		savePreferences(REGISTER_CONTACTPERSON, "");
+		savePreferences(REGISTER_CONTACTPERSONNUMBER, "");
+		savePreferences(REGISTER_FBACCESSTOKEN, "");
+		savePreferences(REGISTER_FBUSERNAME, "");
+		savePreferences(REGISTER_NAME, "");
+		savePreferences(REGISTER_GENDER, "");
+		savePreferences(REGISTER_HEIGHT, "");
+		savePreferences(REGISTER_KNOWNHEALTHPROBLEMS, "");
+		savePreferences(REGISTER_EMAIL, "");
+		savePreferences(REGISTER_CONTACTNUMBER, "");
+		savePreferences(REGISTER_USERNAME, "");
+		savePreferences(REGISTER_PASSWORD, "");
+		savePreferences(REGISTER_WEIGHT, "");
 	}
 
 	public void registerUser() {
 		savePreferences(ALLERGIES, loadPreferences(REGISTER_ALLERGIES));
 		savePreferences(BIRTHDATE, loadPreferences(REGISTER_BIRTHDATE));
 		savePreferences(CONTACTPERSON, loadPreferences(REGISTER_CONTACTPERSON));
-		savePreferences(CONTACTPERSONNUMBER, loadPreferences(REGISTER_CONTACTPERSONNUMBER));
+		savePreferences(CONTACTPERSONNUMBER,
+				loadPreferences(REGISTER_CONTACTPERSONNUMBER));
 		savePreferences(FBACCESSTOKEN, loadPreferences(REGISTER_FBACCESSTOKEN));
 		savePreferences(FBUSERNAME, loadPreferences(REGISTER_FBUSERNAME));
 		savePreferences(NAME, loadPreferences(REGISTER_NAME));
 		savePreferences(GENDER, loadPreferences(REGISTER_GENDER));
 		savePreferences(HEIGHT, loadPreferences(REGISTER_HEIGHT));
-		savePreferences(KNOWNHEALTHPROBLEMS, loadPreferences(REGISTER_KNOWNHEALTHPROBLEMS));
+		savePreferences(KNOWNHEALTHPROBLEMS,
+				loadPreferences(REGISTER_KNOWNHEALTHPROBLEMS));
 		savePreferences(EMAIL, loadPreferences(REGISTER_EMAIL));
 		savePreferences(NUMBER, loadPreferences(REGISTER_CONTACTNUMBER));
 		savePreferences(USERNAME, loadPreferences(REGISTER_USERNAME));
-		
+
 		clearRegisterInformation();
+	}
+
+	public void saveUser(User user) {
+		savePreferences(ALLERGIES, user.getAllergies());
+		savePreferences(BIRTHDATE, user.getDateOfBirth() + "");
+		savePreferences(CONTACTPERSON, user.getEmergencyPerson());
+		savePreferences(CONTACTPERSONNUMBER, user.getEmergencyContactNumber());
+		savePreferences(FBACCESSTOKEN, user.getFbAccessToken());
+		savePreferences(NAME, user.getName());
+		savePreferences(GENDER, user.getGender());
+		savePreferences(HEIGHT, user.getHeight() + "");
+		savePreferences(KNOWNHEALTHPROBLEMS, user.getKnownHealthProblems());
+		savePreferences(EMAIL, user.getEmail());
+		savePreferences(NUMBER, user.getContactNumber());
+		savePreferences(USERNAME, user.getUsername());
 	}
 }
