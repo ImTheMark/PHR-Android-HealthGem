@@ -23,6 +23,8 @@ import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.ImageHandlerException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
+import com.example.phr.mobile.models.PHRImage;
+import com.example.phr.mobile.models.PHRImageType;
 import com.example.phr.mobile.models.TrackerEntry;
 import com.example.phr.mobile.models.UnverifiedActivityEntry;
 import com.example.phr.mobile.models.UnverifiedFoodEntry;
@@ -154,22 +156,24 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 
 				@Override
 				public void onClick(View v) {
-					
-					try {
-						verificationService.storeImage(ImageHandler.saveImageReturnFileName(aListOfStatus.get(position).getImage().getEncodedImage()));
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ImageHandlerException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
+
 
 					UnverifiedActivityEntry unverified = (UnverifiedActivityEntry) aListOfStatus
 							.get(position);
-					unverified.setImage(null);
+					if (aListOfStatus.get(position).getImage() != null){
 
+						try {
+							verificationService.storeImage(ImageHandler.saveImageReturnFileName(aListOfStatus.get(position).getImage().getEncodedImage()));
+							unverified.setImage(new PHRImage(verificationService.getImageFileName(), PHRImageType.FILENAME));
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (ImageHandlerException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					
 					Intent i = new Intent(mContext, NewStatusActivity.class);
 					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					i.putExtra("unverified", TrackerInputType.ACTIVITY);
@@ -231,19 +235,21 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View v) {
 					
-					try {
-						verificationService.storeImage(ImageHandler.saveImageReturnFileName(aListOfStatus.get(position).getImage().getEncodedImage()));
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ImageHandlerException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
 					UnverifiedFoodEntry unverified = (UnverifiedFoodEntry) aListOfStatus
 							.get(position);
-					unverified.setImage(null);
+					if (aListOfStatus.get(position).getImage() != null){
+
+						try {
+							verificationService.storeImage(ImageHandler.saveImageReturnFileName(aListOfStatus.get(position).getImage().getEncodedImage()));
+							unverified.setImage(new PHRImage(verificationService.getImageFileName(), PHRImageType.FILENAME));
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (ImageHandlerException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 
 					Intent i = new Intent(mContext, NewStatusActivity.class);
 					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -302,19 +308,22 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View v) {
 					
-					try {
-						verificationService.storeImage(ImageHandler.saveImageReturnFileName(aListOfStatus.get(position).getImage().getEncodedImage()));
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ImageHandlerException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
 					UnverifiedRestaurantEntry unverified = (UnverifiedRestaurantEntry) aListOfStatus
 							.get(position);
-					unverified.setImage(null);
+
+					if (aListOfStatus.get(position).getImage() != null){
+
+						try {
+							verificationService.storeImage(ImageHandler.saveImageReturnFileName(aListOfStatus.get(position).getImage().getEncodedImage()));
+							unverified.setImage(new PHRImage(verificationService.getImageFileName(), PHRImageType.FILENAME));
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (ImageHandlerException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 
 					verificationService
 							.addFoodListToTemporaryDatabase(unverified
@@ -365,20 +374,23 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View v) {
 					
-					try {
-						verificationService.storeImage(ImageHandler.saveImageReturnFileName(aListOfStatus.get(position).getImage().getEncodedImage()));
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ImageHandlerException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
 					UnverifiedSportsEstablishmentEntry unverified = (UnverifiedSportsEstablishmentEntry) aListOfStatus
 							.get(position);
-					unverified.setImage(null);
+					
+					if (aListOfStatus.get(position).getImage() != null){
 
+						try {
+							verificationService.storeImage(ImageHandler.saveImageReturnFileName(aListOfStatus.get(position).getImage().getEncodedImage()));
+							unverified.setImage(new PHRImage(verificationService.getImageFileName(), PHRImageType.FILENAME));
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (ImageHandlerException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					
 					verificationService
 							.addActivityListToTemporaryDatabase(unverified
 									.getActivities());

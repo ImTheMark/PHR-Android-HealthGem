@@ -13,6 +13,7 @@ import com.example.phr.local_db.SPreference;
 import com.example.phr.mobile.dao.MobileVerificationDao;
 import com.example.phr.mobile.models.Activity;
 import com.example.phr.mobile.models.Food;
+import com.example.phr.tools.ImageHandler;
 
 public class MobileVerificationDaoImpl implements MobileVerificationDao {
 
@@ -111,6 +112,8 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 
 	@Override
 	public void storeImage(String fileName) {
+		if(getImageFileName() != null && !getImageFileName().equals(""))
+			ImageHandler.deleteImage(getImageFileName());
 		HealthGem.getSharedPreferences().savePreferences(SPreference.VERIFICATION_TEMP_IMAGE, fileName);
 	}
 
