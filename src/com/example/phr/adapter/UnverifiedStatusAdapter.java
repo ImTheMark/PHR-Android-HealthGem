@@ -1,5 +1,6 @@
 package com.example.phr.adapter;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import android.content.Context;
@@ -19,6 +20,7 @@ import com.example.phr.R;
 import com.example.phr.VerificationListPickerActivity;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.EntryNotFoundException;
+import com.example.phr.exceptions.ImageHandlerException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.TrackerEntry;
@@ -123,9 +125,16 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 
 		if (aListOfStatus.get(position).getImage() != null) {
 
-			viewHolder.statusImg.setImageDrawable(new BitmapDrawable(mContext
-					.getResources(), ImageHandler.loadImage(aListOfStatus
-					.get(position).getImage().getFileName())));
+			try {
+				viewHolder.statusImg.setImageDrawable(new BitmapDrawable(mContext.getResources(), 
+						ImageHandler.decodeImage(aListOfStatus.get(position).getImage().getEncodedImage())));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ImageHandlerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			viewHolder.statusImg.setVisibility(View.VISIBLE);
 
 		} else {
