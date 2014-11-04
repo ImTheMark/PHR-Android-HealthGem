@@ -1,5 +1,6 @@
 package com.example.phr;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -9,6 +10,7 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -84,10 +86,16 @@ public class VerificationListPickerActivity extends android.app.Activity {
 					.getSerializable("sportestablishment");
 
 			activityList = verificationService.getActivityList();
-
-			// ActivityAdapter adapter = new
-			// ActivityAdapter(getApplicationContext(), activityList);
-			// listView.setAdapter(adapter);
+			List<String> actListNameOnly = new ArrayList<String>();
+			
+			for(Activity act : activityList)
+				actListNameOnly.add(act.getName());
+			
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+					R.layout.item_custom_listview, actListNameOnly);
+			
+			listView.setAdapter(adapter);
+			
 			listView.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
