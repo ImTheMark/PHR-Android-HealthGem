@@ -148,6 +148,7 @@ public class MobileBloodPressureTrackerDaoImpl implements
 			EntryNotFoundException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
+		ImageHandler.deleteImage(bp.getImage().getFileName());
 		db.delete(DatabaseHandler.TABLE_BLOODPRESSURE, DatabaseHandler.BP_ID
 				+ "=" + bp.getEntryID(), null);
 		db.close();

@@ -58,6 +58,14 @@ public class ImageHandler {
 		return null;
 	}
 	
+	public static Boolean deleteImage(String filename){
+		ContextWrapper cw = new ContextWrapper(HealthGem.getContext());
+		File directory = cw.getDir("images", Context.MODE_PRIVATE);
+		File file = new File(directory, filename);
+		boolean deleted = file.delete();
+		return deleted;
+	}
+	
  	public static String encodeImageToBase64(Bitmap image)
 	{
 	    Bitmap immagex=image;

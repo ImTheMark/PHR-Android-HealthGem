@@ -146,6 +146,7 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 			EntryNotFoundException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
+		ImageHandler.deleteImage(note.getImage().getFileName());
 		db.delete(DatabaseHandler.TABLE_NOTES, DatabaseHandler.NOTES_ID + "="
 				+ note.getEntryID(), null);
 		db.close();

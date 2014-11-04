@@ -148,6 +148,7 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 			EntryNotFoundException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
+		ImageHandler.deleteImage(weight.getImage().getFileName());
 		db.delete(DatabaseHandler.TABLE_WEIGHT, DatabaseHandler.WEIGHT_ID + "="
 				+ weight.getEntryID(), null);
 		db.close();

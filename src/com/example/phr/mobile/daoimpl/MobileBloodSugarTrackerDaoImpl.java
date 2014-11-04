@@ -155,6 +155,7 @@ public class MobileBloodSugarTrackerDaoImpl implements
 			EntryNotFoundException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
+		ImageHandler.deleteImage(bloodSugar.getImage().getFileName());
 		db.delete(DatabaseHandler.TABLE_BLOODSUGAR, DatabaseHandler.BS_ID + "="
 				+ bloodSugar.getEntryID(), null);
 		db.close();

@@ -222,6 +222,7 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 			throws DataAccessException, EntryNotFoundException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
+		ImageHandler.deleteImage(activity.getImage().getFileName());
 		db.delete(DatabaseHandler.TABLE_ACTIVITY, DatabaseHandler.ACT_ID + "="
 				+ activity.getEntryID(), null);
 		db.close();
