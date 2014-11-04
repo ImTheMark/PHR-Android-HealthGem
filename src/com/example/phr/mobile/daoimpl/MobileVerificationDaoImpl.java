@@ -7,7 +7,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.phr.application.HealthGem;
 import com.example.phr.local_db.DatabaseHandler;
+import com.example.phr.local_db.SPreference;
 import com.example.phr.mobile.dao.MobileVerificationDao;
 import com.example.phr.mobile.models.Activity;
 import com.example.phr.mobile.models.Food;
@@ -105,6 +107,16 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 
 		db.close();
 		return null;
+	}
+
+	@Override
+	public void storeImage(String fileName) {
+		HealthGem.getSharedPreferences().savePreferences(SPreference.VERIFICATION_TEMP_IMAGE, fileName);
+	}
+
+	@Override
+	public String getImageFileName() {
+		return HealthGem.getSharedPreferences().loadPreferences(SPreference.VERIFICATION_TEMP_IMAGE);
 	}
 
 }

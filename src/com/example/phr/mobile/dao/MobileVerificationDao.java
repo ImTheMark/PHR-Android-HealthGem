@@ -14,5 +14,9 @@ public interface MobileVerificationDao {
 	public List<Food> getFoodList();
 	
 	public List<Activity> getActivityList();
+	
+	public void storeImage(String fileName);
+	
+	public String getImageFileName();
 
 }

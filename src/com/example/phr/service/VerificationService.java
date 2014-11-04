@@ -23,6 +23,10 @@ public interface VerificationService {
 	
 	public List<Activity> getActivityList();
 	
+	public void storeImage(String fileName);
+	
+	public String getImageFileName();
+	
 	public void updateListOfUnverifiedPosts() throws ServiceException,
 			OutdatedAccessTokenException;
 

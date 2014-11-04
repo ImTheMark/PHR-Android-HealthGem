@@ -164,4 +164,14 @@ public class VerificationServiceImpl implements VerificationService {
 		return mobileVerificationDao.getActivityList();
 	}
 
+	@Override
+	public void storeImage(String fileName) {
+		mobileVerificationDao.storeImage(fileName);
+	}
+
+	@Override
+	public String getImageFileName() {
+		return mobileVerificationDao.getImageFileName();
+	}
+
 }

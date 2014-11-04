@@ -42,6 +42,9 @@ public class SPreference {
 	public static final String SETTINGS_HEIGHTUNIT = "heightUnit";
 	public static final String SETTINGS_NOTIF_BLOODPRESSURE = "notifBloodPressure";
 	public static final String SETTINGS_NOTIF_BLOODSUGAR = "notifBloodSugar";
+	
+
+	public static final String VERIFICATION_TEMP_IMAGE = "verificationTemporaryImage";
 
 	Context c;
 
