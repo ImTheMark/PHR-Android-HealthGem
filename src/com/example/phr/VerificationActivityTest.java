@@ -47,6 +47,10 @@ public class VerificationActivityTest extends Activity {
 				new GetPostsFromServer().execute();
 			}
 		});
+		swipeLayout.setColorScheme(android.R.color.holo_blue_bright, 
+                android.R.color.holo_green_light, 
+                android.R.color.holo_orange_light, 
+                android.R.color.holo_red_light);
 
 		listView = (ListView) findViewById(R.id.verification_listview_test);
 		vService = new VerificationServiceImpl();
@@ -69,18 +73,10 @@ public class VerificationActivityTest extends Activity {
 
 		private List<TrackerEntry> list;
 
-		/*
-		 * private final ProgressDialog dialog = new ProgressDialog(
-		 * HealthGem.getContext());
-		 */
-
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 			list = new ArrayList<TrackerEntry>();
-			/*
-			 * dialog.setMessage("Downloading contacts..."); dialog.show();
-			 */
 		}
 
 		@Override
@@ -99,12 +95,16 @@ public class VerificationActivityTest extends Activity {
 
 		@Override
 		protected void onPostExecute(Void result) {
-
 			super.onPostExecute(result);
-			/* dialog.dismiss(); */
 
 			try {
 				list = vService.getAll();
+
+				if (list != null && !list.isEmpty()) {
+					unverifiedList = list;
+					adapter.notifyDataSetChanged();
+				}
+				
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -113,13 +113,7 @@ public class VerificationActivityTest extends Activity {
 				e.printStackTrace();
 			}
 
-			if (list != null && !list.isEmpty()) {
-				unverifiedList = list;
-				adapter.notifyDataSetChanged();
-			}
-
 			swipeLayout.setRefreshing(false);
-
 		}
 	}
 
