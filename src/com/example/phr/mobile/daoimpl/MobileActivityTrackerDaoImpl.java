@@ -92,7 +92,7 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 				fmt.format(activity.getTimestamp()));
 		values.put(DatabaseHandler.ACT_ACTIVITYID, activity.getActivity()
 				.getEntryID());
-		
+
 		mobileActivityDao.addReturnsEntryId(activity.getActivity());
 
 		values.put(DatabaseHandler.ACT_DURATION,
@@ -383,16 +383,10 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 		while (actList.size() != 0 && !dateHasPassedFromGivenDate) {
 			ActivityTrackerEntry activity = actList.remove(0);
 
-			if (String.valueOf(
-					DateTimeParser.getMonth(actList.get(0).getTimestamp()))
-					.equals(String.valueOf(DateTimeParser.getMonth(date)))
-					&& String
-							.valueOf(
-									DateTimeParser.getDay(actList.get(0)
-											.getTimestamp()))
-							.equals(String.valueOf(DateTimeParser.getDay(date))))
+			if (DateTimeParser.getMonthDay(activity.getTimestamp()).equals(
+					DateTimeParser.getMonthDay(date)))
 				actListFromDate.add(activity);
-			else if (actList.get(0).getTimestamp().after(date))
+			else if (activity.getTimestamp().after(date))
 				dateHasPassedFromGivenDate = true;
 		}
 
@@ -451,20 +445,14 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 		while (actList.size() != 0 && !dateHasPassedFromGivenDate) {
 			ActivityTrackerEntry activity = actList.remove(0);
 
-			if (String.valueOf(
-					DateTimeParser.getMonth(actList.get(0).getTimestamp()))
-					.equals(String.valueOf(DateTimeParser.getMonth(date)))
-					&& String
-							.valueOf(
-									DateTimeParser.getDay(actList.get(0)
-											.getTimestamp()))
-							.equals(String.valueOf(DateTimeParser.getDay(date)))) {
+			if (DateTimeParser.getMonthDay(activity.getTimestamp()).equals(
+					DateTimeParser.getMonthDay(date))) {
 				actListFromDate.add(activity);
 				calBurned += activity.getCaloriesBurnedPerHour()
 						* (activity.getDurationInSeconds() / 3600);
 				// not sure
 				groupedDate = activity.getTimestamp();
-			} else if (actList.get(0).getTimestamp().after(date))
+			} else if (activity.getTimestamp().after(date))
 				dateHasPassedFromGivenDate = true;
 		}
 

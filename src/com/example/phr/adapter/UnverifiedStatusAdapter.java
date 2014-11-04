@@ -133,6 +133,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 							.get(position);
 
 					Intent i = new Intent(mContext, NewStatusActivity.class);
+					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					i.putExtra("unverified", TrackerInputType.ACTIVITY);
 					i.putExtra("object", unverified);
 					mContext.startActivity(i);
@@ -195,6 +196,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 							.get(position);
 
 					Intent i = new Intent(mContext, NewStatusActivity.class);
+					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					i.putExtra("unverified", TrackerInputType.FOOD);
 					i.putExtra("object", unverified);
 					mContext.startActivity(i);
@@ -259,6 +261,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 
 					Intent i = new Intent(mContext,
 							VerificationListPickerActivity.class);
+					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					i.putExtra("restaurant", unverified);
 					mContext.startActivity(i);
 				}
@@ -309,6 +312,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 
 					Intent i = new Intent(mContext,
 							VerificationListPickerActivity.class);
+					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					i.putExtra("sportestablishment", unverified);
 					mContext.startActivity(i);
 				}

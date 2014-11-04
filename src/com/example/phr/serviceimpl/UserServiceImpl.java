@@ -102,7 +102,8 @@ public class UserServiceImpl implements UserService {
 				.loadPreferences(SPreference.CONTACTPERSON));
 		user.setGender(HealthGem.getSharedPreferences().loadPreferences(
 				SPreference.GENDER));
-
+		user.setFbAccessToken(HealthGem.getSharedPreferences().loadPreferences(
+				SPreference.FBACCESSTOKEN));
 		double height = getDouble(
 				PreferenceManager.getDefaultSharedPreferences(HealthGem
 						.getContext()), SPreference.HEIGHT, 100.0);

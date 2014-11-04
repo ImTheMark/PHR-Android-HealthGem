@@ -11,8 +11,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,6 +38,10 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+				.permitAll().build();
+
+		StrictMode.setThreadPolicy(policy);
 		setContentView(R.layout.activity_main);
 
 		// Initilization
@@ -114,49 +120,54 @@ public class MainActivity extends FragmentActivity implements
 		bpAlarmTime.set(Calendar.HOUR_OF_DAY, 10);
 		bpAlarmTime.set(Calendar.MINUTE, 0);
 		bpAlarmTime.set(Calendar.SECOND, 0);
-		setAlarm(bpAlarmTime, TrackerInputType.BLOOD_PRESSURE, 2);
+		if (bpAlarmTime.getTimeInMillis() < System.currentTimeMillis()) {
+			Log.e(String.valueOf(bpAlarmTime.getTimeInMillis()),
+					"bp set alarm time");
+			Log.e(String.valueOf(System.currentTimeMillis()),
+					"system set alarm time");
+			Log.e("bpalarm", "set");
+			setAlarm(bpAlarmTime, TrackerInputType.BLOOD_PRESSURE, 1);
+		}
 
 		// check if user post blood sugar today
 		Calendar bsAlarmTime = Calendar.getInstance();
 		bsAlarmTime.set(Calendar.HOUR_OF_DAY, 14);
 		bsAlarmTime.set(Calendar.MINUTE, 0);
 		bsAlarmTime.set(Calendar.SECOND, 0);
-		setAlarm(bsAlarmTime, TrackerInputType.BLOOD_SUGAR, 1);
+		Log.e("bsalarm", "set");
+		setAlarm(bsAlarmTime, TrackerInputType.BLOOD_SUGAR, 2);
 
 		// check if user post weight between this 6 months at this time
 		Calendar checkupAlarmTime = Calendar.getInstance();
 		checkupAlarmTime.set(Calendar.HOUR_OF_DAY, 16);
 		checkupAlarmTime.set(Calendar.MINUTE, 0);
 		checkupAlarmTime.set(Calendar.SECOND, 0);
-		setAlarm(checkupAlarmTime, TrackerInputType.CHECKUP, 6);
+		setAlarm(checkupAlarmTime, TrackerInputType.CHECKUP, 3);
 
 		// check if user post weight between this 2 weeks at this time
 		Calendar weightAlarmTime = Calendar.getInstance();
 		weightAlarmTime.set(Calendar.HOUR_OF_DAY, 17);
 		weightAlarmTime.set(Calendar.MINUTE, 0);
 		weightAlarmTime.set(Calendar.SECOND, 0);
-		setAlarm(weightAlarmTime, TrackerInputType.WEIGHT, 5);
+		setAlarm(weightAlarmTime, TrackerInputType.WEIGHT, 4);
 
 		// check if user post activty this week at this time
 		Calendar activityAlarmTime = Calendar.getInstance();
 		activityAlarmTime.set(Calendar.HOUR_OF_DAY, 18);
 		activityAlarmTime.set(Calendar.MINUTE, 0);
 		activityAlarmTime.set(Calendar.SECOND, 0);
-		setAlarm(activityAlarmTime, TrackerInputType.ACTIVITY, 4);
+		setAlarm(activityAlarmTime, TrackerInputType.ACTIVITY, 5);
 
 		// check if user post food today in fb, if not notif user to post food
 		Calendar foodAlarmTime = Calendar.getInstance();
 		foodAlarmTime.set(Calendar.HOUR_OF_DAY, 20);
 		foodAlarmTime.set(Calendar.MINUTE, 0);
 		foodAlarmTime.set(Calendar.SECOND, 0);
-		setAlarm(foodAlarmTime, TrackerInputType.FOOD, 3);
-		
-		
+		setAlarm(foodAlarmTime, TrackerInputType.FOOD, 6);
 
-		
 		Intent in = getIntent();
 		Bundle extras = getIntent().getExtras();
-		
+
 		if (extras != null && in.hasExtra("backToMenu")) {
 			int position = in.getExtras().getInt("backToMenu");
 			viewPager.setCurrentItem(position);
@@ -229,7 +240,7 @@ public class MainActivity extends FragmentActivity implements
 			return true;
 		case R.id.action_notifications:
 			Intent intent2 = new Intent(getApplicationContext(),
-					VerificationActivity.class);
+					VerificationActivityTest.class);
 			startActivity(intent2);
 			return true;
 		default:

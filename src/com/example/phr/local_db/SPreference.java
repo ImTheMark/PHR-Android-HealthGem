@@ -134,6 +134,7 @@ public class SPreference {
 		savePreferences(BIRTHDATE, user.getDateOfBirth() + "");
 		savePreferences(CONTACTPERSON, user.getEmergencyPerson());
 		savePreferences(CONTACTPERSONNUMBER, user.getEmergencyContactNumber());
+		Log.e("user preference", user.getFbAccessToken());
 		savePreferences(FBACCESSTOKEN, user.getFbAccessToken());
 		savePreferences(NAME, user.getName());
 		savePreferences(GENDER, user.getGender());

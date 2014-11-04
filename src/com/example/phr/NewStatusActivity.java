@@ -60,6 +60,7 @@ import com.example.phr.service.ActivityTrackerService;
 import com.example.phr.service.BloodPressureTrackerService;
 import com.example.phr.service.BloodSugarTrackerService;
 import com.example.phr.service.CheckUpTrackerService;
+import com.example.phr.service.FacebookPostService;
 import com.example.phr.service.FoodTrackerService;
 import com.example.phr.service.NoteTrackerService;
 import com.example.phr.service.VerificationService;
@@ -68,6 +69,7 @@ import com.example.phr.serviceimpl.ActivityTrackerServiceImpl;
 import com.example.phr.serviceimpl.BloodPressureTrackerServiceImpl;
 import com.example.phr.serviceimpl.BloodSugarTrackerServiceImpl;
 import com.example.phr.serviceimpl.CheckUpTrackerServiceImpl;
+import com.example.phr.serviceimpl.FacebookPostServiceImpl;
 import com.example.phr.serviceimpl.FoodTrackerServiceImpl;
 import com.example.phr.serviceimpl.NoteTrackerServiceImpl;
 import com.example.phr.serviceimpl.VerificationServiceImpl;
@@ -75,6 +77,8 @@ import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
 import com.example.phr.tools.DecodeImage;
 import com.example.phr.tools.ImageHandler;
 import com.example.phr.tools.WeightConverter;
+
+import facebook4j.FacebookException;
 
 public class NewStatusActivity extends android.app.Activity {
 
@@ -160,11 +164,11 @@ public class NewStatusActivity extends android.app.Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setTitle("Post a Status");
-		setContentView(R.layout.activity_new_status);
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
 
 		StrictMode.setThreadPolicy(policy);
+		setContentView(R.layout.activity_new_status);
 		Log.e("in", "ew status");
 
 		/*
@@ -606,7 +610,7 @@ public class NewStatusActivity extends android.app.Activity {
 				unferifiedRestaurant = (UnverifiedRestaurantEntry) in
 						.getExtras().getSerializable("object");
 				verifyFoodTrackerEntry = (FoodTrackerEntry) in.getExtras()
-						.getSerializable("object2");
+						.getSerializable("object1");
 				currentTracker = TrackerInputType.FOOD;
 				txtCurrentTracker.setText(TrackerInputType.FOOD);
 				if (verifyFoodTrackerEntry.getImage() != null) {
@@ -615,7 +619,7 @@ public class NewStatusActivity extends android.app.Activity {
 					setImage = true;
 				}
 				Log.e("verifiyingfood",
-						String.valueOf(unferifiedFood.getEntryID()));
+						String.valueOf(verifyFoodTrackerEntry.getEntryID()));
 				chosenFood = verifyFoodTrackerEntry.getFood();
 
 				setFoodTemplate(verifyFoodTrackerEntry.getServingCount(),
@@ -663,7 +667,7 @@ public class NewStatusActivity extends android.app.Activity {
 		if (mode.equals("add")) {
 			notesStatus.setHint("how you feel? ");
 			setAddTemplate();
-		} else if (mode.equals("edit")) {
+		} else if (mode.equals("edit") || mode.equals("verify")) {
 			notesStatus.setText(status);
 			setEditTemplate();
 		}
@@ -703,7 +707,7 @@ public class NewStatusActivity extends android.app.Activity {
 		if (mode.equals("add")) {
 			notesStatus.setHint("how you feel? ");
 			setAddTemplate();
-		} else if (mode.equals("edit")) {
+		} else if (mode.equals("edit") || mode.equals("verify")) {
 			notesStatus.setText(status);
 			setEditTemplate();
 		}
@@ -1353,22 +1357,32 @@ public class NewStatusActivity extends android.app.Activity {
 			OutdatedAccessTokenException {
 
 		try {
-
+			FacebookPostService fbPostService = new FacebookPostServiceImpl();
 			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
 					+ timeFormat.format(calobj.getTime()));
 			Timestamp timestamp = new Timestamp(date.getTime());
 			PHRImage image;
+			String fbId = null;
 			if (setImage == true) {
 				String encodedImage = ImageHandler.encodeImageToBase64(photo);
 				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
 			} else
 				image = null;
+			Log.e("fb", String.valueOf(mBtnFb.getTag()));
+			if (((Boolean) mBtnFb.getTag()) == true)
+				try {
+					Log.e("fb", "call");
+					fbId = fbPostService.publish("Hi, from Healthgem");
+					Log.e("fb", "done");
+				} catch (FacebookException e) {
+					Log.e("Unable to publish", e.getErrorMessage());
+				}
 
 			FoodTrackerEntry foodEntry = null;
 			foodEntry = new FoodTrackerEntry(timestamp, notesStatus.getText()
 					.toString(), image, chosenFood,
 					Double.parseDouble(txtFoodQuantity.getText().toString()));
-
+			foodEntry.setFacebookID(fbId);
 			FoodTrackerService foodTrackerService = new FoodTrackerServiceImpl();
 			foodTrackerService.add(foodEntry);
 

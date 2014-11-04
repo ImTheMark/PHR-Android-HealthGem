@@ -1,5 +1,8 @@
 package com.example.phr.service;
 
-public class FacebookPostService {
+import facebook4j.FacebookException;
 
+public interface FacebookPostService {
+
+	public String publish(String message) throws FacebookException;
 }

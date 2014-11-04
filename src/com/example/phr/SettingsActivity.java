@@ -1,7 +1,10 @@
 package com.example.phr;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -14,6 +17,7 @@ import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileSettingsDao;
 import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
 
+@SuppressLint("NewApi")
 public class SettingsActivity extends Activity {
 
 	private RadioGroup radioGroupWeight;
@@ -23,9 +27,14 @@ public class SettingsActivity extends Activity {
 	private ToggleButton bloodSugarButton;
 	private MobileSettingsDao settingsDao;
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+				.permitAll().build();
+
+		StrictMode.setThreadPolicy(policy);
 		setContentView(R.layout.activity_settings);
 		setTitle("Settings");
 		radioGroupHeight = (RadioGroup) findViewById(R.id.radioGroupSettingHeight);
@@ -75,6 +84,12 @@ public class SettingsActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				DatabaseHandler.getDBHandler().deleteAccessToken();
+
+				Intent intent = new Intent(getApplicationContext(),
+						LoginActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+						| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
 			}
 		});
 

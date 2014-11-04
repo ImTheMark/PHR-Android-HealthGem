@@ -7,9 +7,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.WebServerException;
+import com.example.phr.local_db.SPreference;
 import com.example.phr.mobile.dao.MobileAccessDao;
 import com.example.phr.mobile.daoimpl.MobileAccessDaoImpl;
 import com.example.phr.mobile.models.UnverifiedActivityEntry;
@@ -33,7 +35,8 @@ public class WebVerificationDaoImpl extends BasicDaoImpl implements
 			JSONObject data = new JSONObject();
 			data.put("accessToken", accessDao.getAccessToken().getAccessToken());
 			data.put("username", accessDao.getAccessToken().getUserName());
-			data.put("fbAccessToken", "fbAccessToken"); // TO CHANGE
+			data.put("fbAccessToken", HealthGem.getSharedPreferences()
+					.loadPreferences(SPreference.FBACCESSTOKEN)); // TO CHANGE
 			String jsonToSend = jsonRequestCreator
 					.createJSONRequest(data, null);
 			System.out.println("" + "JSON Request Sent: " + jsonToSend);

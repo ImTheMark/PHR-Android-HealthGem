@@ -1,6 +1,8 @@
 package com.example.phr.mobile.models;
 
-public class Restaurant {
+import java.io.Serializable;
+
+public class Restaurant implements Serializable {
 
 	Integer entryID;
 	String name;

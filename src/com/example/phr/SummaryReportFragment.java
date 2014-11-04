@@ -244,14 +244,12 @@ public class SummaryReportFragment extends Fragment {
 		}
 
 		if (weight != null) {
-			Log.e("home weight", "not null");
+			Log.e("home weight", weight.getWeightInPounds() + "");
 			if (setting.isWeightSettingInPounds()) {
-				txtWeight.setText(df.format(String.valueOf(weight
-						.getWeightInPounds())));
+				txtWeight.setText(df.format(weight.getWeightInPounds()));
 				txtWeightUnit.setText("lbs");
 			} else {
-				txtWeight.setText(df.format(String.valueOf(weight
-						.getWeightInKilograms())));
+				txtWeight.setText(df.format(weight.getWeightInKilograms()));
 				txtWeightUnit.setText("kgs");
 			}
 			double heightInMeter = 1.75;
@@ -350,23 +348,27 @@ public class SummaryReportFragment extends Fragment {
 
 		Timestamp bdaytimestamp = user.getDateOfBirth();
 
-		int age = Integer.parseInt(DateTimeParser.getYear(timestamp))
-				- Integer.parseInt(DateTimeParser.getYear(bdaytimestamp));
-		Log.e("age", String.valueOf(age));
-		// int age = 40;
+		/*
+		 * int age = Integer.parseInt(DateTimeParser.getYear(timestamp)) -
+		 * Integer.parseInt(DateTimeParser.getYear(bdaytimestamp)); Log.e("age",
+		 * String.valueOf(age));
+		 */
+		int age = 40;
 		String gender = user.getGender();
 		// String gender = "F";
+		Log.e("bmr", weight.getWeightInPounds() + "");
+		Log.e("bmr2", user.getHeight() + "");
 		if (gender.equals("F"))
 			bmr = 655 + (4.35 * weight.getWeightInPounds())
 					+ (4.7 * user.getHeight()) - (4.7 * age);
 		else if (gender.equals("M"))
 			bmr = 66 + (6.23 * weight.getWeightInPounds())
 					+ (12.7 * user.getHeight()) - (6.8 * age);
+		txtBigTotalCalRequire.setText(df.format(bmr));
+		txtSmallTotalCalRequire.setText(df.format(bmr));
 
-		txtBigTotalCalRequire.setText(df.format(String.valueOf(bmr)));
-		txtSmallTotalCalRequire.setText(df.format(String.valueOf(bmr)));
-
-		int cProgressStatus = (int) (total / bmr) * 100; // compute
+		int cProgressStatus = (int) Math.round((total / bmr) * 100); // compute
+		Log.e("progress status", cProgressStatus + "");
 		if (cProgressStatus > 100)
 			cProgressStatus = 100;
 		cProgress.setProgress(cProgressStatus);
@@ -409,9 +411,9 @@ public class SummaryReportFragment extends Fragment {
 		View dailyChart;
 		// 300g carbohydrates, 50g of protein and 65g fat
 		// RDI2K(protein) / 2000 = x / BMR
-		double recommendFats = (50 / 2000) * bmr;
-		double recommendCarbs = (300 / 2000) * bmr;
-		double recommendProtein = (65 / 2000) * bmr;
+		double recommendFats = (50 / 2000.0) * bmr;
+		double recommendCarbs = (300 / 2000.0) * bmr;
+		double recommendProtein = (65 / 2000.0) * bmr;
 		int[] x = { 0, 1, 2 };
 		double[] intake = { groupedFood.getProtein(), groupedFood.getFat(),
 				groupedFood.getCarbohydrates() };

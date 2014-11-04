@@ -56,8 +56,9 @@ public class AlarmReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		String tracker = intent.getExtras().getString("tracker");
-		myIntent = new Intent(context, MainActivity.class);
+		// myIntent = new Intent(context, MainActivity.class);
 		// get current time
+		thisContext = context;
 		dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
 		timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
 		fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss", Locale.ENGLISH);
@@ -75,17 +76,23 @@ public class AlarmReceiver extends BroadcastReceiver {
 		// check condition
 		if (tracker.equals(TrackerInputType.BLOOD_SUGAR)
 				&& showBsNotif(timestamp)) {
+			Log.e("callnotif", "bs");
 			title = "HealthGem";
 			content = "What's your sugar level?";
 			ticker = "It's time to measure sugar level!";
 			myIntent = new Intent(context, BloodSugarTrackerActivity.class);
+			pendingIntent = PendingIntent.getActivity(context, 1, myIntent,
+					Intent.FLAG_ACTIVITY_NEW_TASK);
 			showNotification();
 		} else if (tracker.equals(TrackerInputType.BLOOD_PRESSURE)
 				&& showBpNotif(timestamp)) {
+			Log.e("callnotif", "bp");
 			title = "HealthGem";
 			content = "What's your blood pressure?";
 			ticker = "It's time to measure blood pressure!";
 			myIntent = new Intent(context, BloodPressureTrackerActivity.class);
+			pendingIntent = PendingIntent.getActivity(context, 2, myIntent,
+					Intent.FLAG_ACTIVITY_NEW_TASK);
 			showNotification();
 		} else if (tracker.equals(TrackerInputType.CHECKUP)
 				&& showCheckupNotif(date)) {
@@ -93,6 +100,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 			content = "Did you check up between this 6 months?";
 			ticker = "It's time to have a check up!";
 			myIntent = new Intent(context, CheckupTrackerActivity.class);
+			pendingIntent = PendingIntent.getActivity(context, 3, myIntent,
+					Intent.FLAG_ACTIVITY_NEW_TASK);
 			showNotification();
 		} else if (tracker.equals(TrackerInputType.WEIGHT)
 				&& showWeightNotif(date)) {
@@ -100,6 +109,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 			content = "What's your weight?";
 			ticker = "It's time to measure your weight!";
 			myIntent = new Intent(context, WeightTrackerActivity.class);
+			pendingIntent = PendingIntent.getActivity(context, 4, myIntent,
+					Intent.FLAG_ACTIVITY_NEW_TASK);
 			showNotification();
 		} else if (tracker.equals(TrackerInputType.FOOD)
 				&& showFoodNotif(timestamp)) {
@@ -107,6 +118,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 			content = "What did you ate?";
 			ticker = "It's time record the food you ate!";
 			myIntent = new Intent(context, GroupedFoodTrackerActivity.class);
+			pendingIntent = PendingIntent.getActivity(context, 5, myIntent,
+					Intent.FLAG_ACTIVITY_NEW_TASK);
 			showNotification();
 		} else if (tracker.equals(TrackerInputType.ACTIVITY)
 				&& showActivityNotif(date)) {
@@ -114,12 +127,10 @@ public class AlarmReceiver extends BroadcastReceiver {
 			content = "Did you excercise?";
 			ticker = "It's time to record your activity!";
 			myIntent = new Intent(context, ActivitiesTrackerActivity.class);
+			pendingIntent = PendingIntent.getActivity(context, 6, myIntent,
+					Intent.FLAG_ACTIVITY_NEW_TASK);
 			showNotification();
 		}
-
-		pendingIntent = PendingIntent.getActivity(context, 0, myIntent,
-				Intent.FLAG_ACTIVITY_NEW_TASK);
-		thisContext = context;
 
 		/*
 		 * Date d1 = null; Date d2 = null;

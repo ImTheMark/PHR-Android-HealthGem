@@ -1,8 +1,10 @@
 package com.example.phr;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -10,6 +12,7 @@ import android.widget.Spinner;
 
 import com.example.phr.mobile.models.Food;
 
+@SuppressLint("NewApi")
 public class AddNewFoodActivity extends Activity {
 
 	EditText newFood;
@@ -20,9 +23,14 @@ public class AddNewFoodActivity extends Activity {
 	EditText newFoodServing;
 	Spinner newServingUnit;
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+				.permitAll().build();
+
+		StrictMode.setThreadPolicy(policy);
 		setTitle("Add New Food");
 		setContentView(R.layout.activity_add_new_food);
 
@@ -55,9 +63,8 @@ public class AddNewFoodActivity extends Activity {
 					Double.parseDouble(newFoodProtein.getText().toString()),
 					Double.parseDouble(newFoodFat.getText().toString()),
 					Double.parseDouble(newFoodCarbs.getText().toString()),
-					String.valueOf(newServingUnit.getSelectedItem()) + " " +
-					newFoodServing.getText().toString(),
-					null, true);
+					String.valueOf(newServingUnit.getSelectedItem()) + " "
+							+ newFoodServing.getText().toString(), null, true);
 			i.putExtra("food added", addFood);
 			startActivity(i);
 			return true;
