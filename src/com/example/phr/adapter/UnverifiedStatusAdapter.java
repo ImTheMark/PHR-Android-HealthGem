@@ -4,12 +4,14 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.phr.NewStatusActivity;
@@ -31,6 +33,7 @@ import com.example.phr.serviceimpl.ActivityTrackerServiceImpl;
 import com.example.phr.serviceimpl.FoodTrackerServiceImpl;
 import com.example.phr.serviceimpl.VerificationServiceImpl;
 import com.example.phr.tools.DateTimeParser;
+import com.example.phr.tools.ImageHandler;
 
 public class UnverifiedStatusAdapter extends BaseAdapter {
 
@@ -50,6 +53,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 		Button confirm;
 		Button edit;
 		Button ignore;
+		ImageView statusImg;
 	}
 
 	public UnverifiedStatusAdapter(Context aContext,
@@ -104,6 +108,8 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 					.findViewById(R.id.verification_edit);
 			viewHolder.ignore = (Button) convertView
 					.findViewById(R.id.verification_ignore);
+			viewHolder.statusImg = (ImageView) convertView
+					.findViewById(R.id.verification_statusPhotoHolder);
 
 			convertView.setTag(viewHolder);
 		}
@@ -114,6 +120,17 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 		viewHolder.time.setText(String.valueOf(DateTimeParser
 				.getTime(aListOfStatus.get(position).getTimestamp())));
 		viewHolder.status.setText(aListOfStatus.get(position).getStatus());
+
+		if (aListOfStatus.get(position).getImage() != null) {
+
+			viewHolder.statusImg.setImageDrawable(new BitmapDrawable(mContext
+					.getResources(), ImageHandler.loadImage(aListOfStatus
+					.get(position).getImage().getFileName())));
+			viewHolder.statusImg.setVisibility(View.VISIBLE);
+
+		} else {
+			viewHolder.statusImg.setVisibility(View.GONE);
+		}
 
 		viewHolder.amount.setVisibility(View.GONE);
 		viewHolder.edit.setText("Edit");
