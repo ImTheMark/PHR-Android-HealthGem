@@ -165,8 +165,8 @@ public class VerificationServiceImpl implements VerificationService {
 	}
 
 	@Override
-	public void storeImage(String fileName) {
-		mobileVerificationDao.storeImage(fileName);
+	public void storeEncodedImage(String encodedImage) {
+		mobileVerificationDao.storeEncodedImage(encodedImage);
 	}
 
 	@Override

@@ -23,7 +23,7 @@ public interface VerificationService {
 	
 	public List<Activity> getActivityList();
 	
-	public void storeImage(String fileName);
+	public void storeEncodedImage(String encodedImage);
 	
 	public String getImageFileName();
 	

@@ -163,7 +163,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 					if (aListOfStatus.get(position).getImage() != null){
 
 						try {
-							verificationService.storeImage(ImageHandler.saveImageReturnFileName(aListOfStatus.get(position).getImage().getEncodedImage()));
+							verificationService.storeEncodedImage(aListOfStatus.get(position).getImage().getEncodedImage());
 							unverified.setImage(new PHRImage(verificationService.getImageFileName(), PHRImageType.FILENAME));
 						} catch (FileNotFoundException e) {
 							// TODO Auto-generated catch block
@@ -240,7 +240,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 					if (aListOfStatus.get(position).getImage() != null){
 
 						try {
-							verificationService.storeImage(ImageHandler.saveImageReturnFileName(aListOfStatus.get(position).getImage().getEncodedImage()));
+							verificationService.storeEncodedImage(aListOfStatus.get(position).getImage().getEncodedImage());
 							unverified.setImage(new PHRImage(verificationService.getImageFileName(), PHRImageType.FILENAME));
 						} catch (FileNotFoundException e) {
 							// TODO Auto-generated catch block
@@ -314,7 +314,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 					if (aListOfStatus.get(position).getImage() != null){
 
 						try {
-							verificationService.storeImage(ImageHandler.saveImageReturnFileName(aListOfStatus.get(position).getImage().getEncodedImage()));
+							verificationService.storeEncodedImage(aListOfStatus.get(position).getImage().getEncodedImage());
 							unverified.setImage(new PHRImage(verificationService.getImageFileName(), PHRImageType.FILENAME));
 						} catch (FileNotFoundException e) {
 							// TODO Auto-generated catch block
@@ -380,7 +380,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 					if (aListOfStatus.get(position).getImage() != null){
 
 						try {
-							verificationService.storeImage(ImageHandler.saveImageReturnFileName(aListOfStatus.get(position).getImage().getEncodedImage()));
+							verificationService.storeEncodedImage(aListOfStatus.get(position).getImage().getEncodedImage());
 							unverified.setImage(new PHRImage(verificationService.getImageFileName(), PHRImageType.FILENAME));
 						} catch (FileNotFoundException e) {
 							// TODO Auto-generated catch block
