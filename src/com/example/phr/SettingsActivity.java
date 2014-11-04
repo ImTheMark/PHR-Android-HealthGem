@@ -23,6 +23,7 @@ public class SettingsActivity extends Activity {
 	private RadioGroup radioGroupWeight;
 	private RadioGroup radioGroupHeight;
 	private Button logoutButton;
+	private Button fbButton;
 	private ToggleButton bloodPressureButton;
 	private ToggleButton bloodSugarButton;
 	private MobileSettingsDao settingsDao;
@@ -40,8 +41,20 @@ public class SettingsActivity extends Activity {
 		radioGroupHeight = (RadioGroup) findViewById(R.id.radioGroupSettingHeight);
 		radioGroupWeight = (RadioGroup) findViewById(R.id.radioGroupSettingWeight);
 		logoutButton = (Button) findViewById(R.id.btnLogout);
+		fbButton = (Button) findViewById(R.id.settingsFBLogin);
 		bloodPressureButton = (ToggleButton) findViewById(R.id.settingsToggleButtonBloodPressure);
 		bloodSugarButton = (ToggleButton) findViewById(R.id.settingsToggleButtonBloodSugar);
+		
+		fbButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(getApplicationContext(),
+						RegisterFBLoginActivity.class);
+				intent.putExtra("mode", false);
+				startActivity(intent);
+			}
+		});
 
 		settingsDao = new MobileSettingsDaoImpl();
 

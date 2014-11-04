@@ -59,6 +59,7 @@ public class RegisterFBLoginActivity extends Activity {
 	private WeightTrackerService weightService;
 
 	private MobileSettingsDao settingDao;
+	private Boolean isRegister = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +111,12 @@ public class RegisterFBLoginActivity extends Activity {
 			}
 		});
 
+		Intent in = getIntent();
+		Bundle extras = getIntent().getExtras();
+		
+		if (extras != null && in.hasExtra("mode")) {
+			isRegister = in.getExtras().getBoolean("mode");
+		}
 	}
 
 	private final Session.StatusCallback statusCallback = new Session.StatusCallback() {
@@ -175,7 +182,10 @@ public class RegisterFBLoginActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_registration_next, menu);
+		if(isRegister)
+			getMenuInflater().inflate(R.menu.menu_registration_next, menu);
+		else
+			getMenuInflater().inflate(R.menu.menu_registration_save, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -256,6 +266,8 @@ public class RegisterFBLoginActivity extends Activity {
 			} catch (UserAlreadyExistsException e) {
 				e.printStackTrace();
 			}
+			return true;
+		case R.id.menu_item_save:
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

@@ -34,6 +34,7 @@ public class RegisterUserInformationActivity extends Activity {
 	Spinner weightUnit;
 	Spinner gender;
 	MobileSettingsDao settingsDao;
+	Boolean isRegister = true;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -92,11 +93,21 @@ public class RegisterUserInformationActivity extends Activity {
 			gender.setSelection(0);
 		else
 			gender.setSelection(1);
+
+		Intent in = getIntent();
+		Bundle extras = getIntent().getExtras();
+		
+		if (extras != null && in.hasExtra("mode")) {
+			isRegister = in.getExtras().getBoolean("mode");
+		}
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_registration_next, menu);
+		if(isRegister)
+			getMenuInflater().inflate(R.menu.menu_registration_next, menu);
+		else
+			getMenuInflater().inflate(R.menu.menu_registration_save, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
