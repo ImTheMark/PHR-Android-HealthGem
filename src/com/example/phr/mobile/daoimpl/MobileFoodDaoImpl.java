@@ -30,7 +30,6 @@ public class MobileFoodDaoImpl implements MobileFoodDao {
 		values.put(DatabaseHandler.FOODLIST_CARBOHYDRATE, food.getCarbohydrate());
 
 		db.insert(DatabaseHandler.TABLE_FOODLIST, null, values);
-		db.close();
 	}
 
 	@Override
@@ -93,7 +92,6 @@ public class MobileFoodDaoImpl implements MobileFoodDao {
 			return food;
 		}
 
-		db.close();
 		return null;
 	}
 

@@ -26,7 +26,6 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 			db.insert(DatabaseHandler.TABLE_ACTIVITYLIST, null, values);
 		}
 		
-		db.close();
 	}
 
 	private boolean exists(Activity activity) {
@@ -40,14 +39,7 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 		if (cursor.moveToFirst()) 
 			bool = true;
 
-		db.close();
 		return bool;
-	}
-
-	@Override
-	public List<Activity> getAll() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -62,45 +54,8 @@ public class MobileActivityDaoImpl implements MobileActivityDao {
 		if (cursor.moveToFirst()) { 
 			Activity act = new Activity(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2)); 
 
-			db.close();
 			return act; 
 		} 
 		return null;
 	}
-
-	// OLD CODE
-	/*
-	 * @Override public void addActivityListEntry(SQLiteDatabase db,
-	 * ActivitySingle activity) { ContentValues values = new ContentValues();
-	 * values.put(DatabaseHandler.ACTLIST_ID, activity.getEntryID());
-	 * values.put(DatabaseHandler.ACTLIST_NAME, activity.getName());
-	 * values.put(DatabaseHandler.ACTLIST_MET, activity.getMET());
-	 * db.insert(DatabaseHandler.TABLE_ACTIVITYLIST, null, values); }
-	 * 
-	 * @Override public ArrayList<ActivitySingle> getAllActivityListEntry()
-	 * throws DataAccessException { ArrayList<ActivitySingle> actList = new
-	 * ArrayList<ActivitySingle>(); String selectQuery = "SELECT  * FROM " +
-	 * DatabaseHandler.TABLE_ACTIVITYLIST;
-	 * 
-	 * SQLiteDatabase db = DatabaseHandler.getDBHandler()
-	 * .getWritableDatabase(); Cursor cursor = db.rawQuery(selectQuery, null);
-	 * 
-	 * if (cursor.moveToFirst()) { do { actList.add(new
-	 * ActivitySingle(cursor.getInt(0), cursor .getString(2),
-	 * cursor.getDouble(3))); } while (cursor.moveToNext()); }
-	 * 
-	 * db.close(); return actList; }
-	 * 
-	 * @Override public Boolean activityListEntryExists(SQLiteDatabase db,
-	 * Integer activityID) throws DataAccessException { Boolean bool = false;
-	 * String selectQuery = "SELECT  * FROM " +
-	 * DatabaseHandler.TABLE_ACTIVITYLIST + " WHERE " +
-	 * DatabaseHandler.ACTLIST_ID + " = " + activityID;
-	 * 
-	 * Cursor cursor = db.rawQuery(selectQuery, null);
-	 * 
-	 * if (cursor.moveToFirst()) bool = true;
-	 * 
-	 * return bool; }
-	 */
 }
