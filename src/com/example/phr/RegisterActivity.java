@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.local_db.SPreference;
+import com.example.phr.mobile.dao.MobileUserDao;
+import com.example.phr.mobile.daoimpl.MobileUserDaoImpl;
 import com.example.phr.service.UserService;
 import com.example.phr.serviceimpl.UserServiceImpl;
 import com.example.phr.tools.PasswordValidator;
@@ -31,6 +33,7 @@ public class RegisterActivity extends Activity {
 	private TextView mTextValid;
 	private TextView textViewPasswordStrength;
 	private UserService userService;
+	private MobileUserDao userDao;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class RegisterActivity extends Activity {
 		setContentView(R.layout.activity_register);
 
 		userService = new UserServiceImpl();
+		userDao =  new MobileUserDaoImpl();
 
 		mBtnRegister = (ImageButton) findViewById(R.id.btnRegister);
 		mTextValid = (TextView) findViewById(R.id.valid);
@@ -131,6 +135,6 @@ public class RegisterActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
 
-		HealthGem.getSharedPreferences().clearRegisterInformation();
+		userDao.clearRegisterInformation();
 	}
 }

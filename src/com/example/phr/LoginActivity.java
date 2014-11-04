@@ -16,7 +16,9 @@ import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.dao.MobileSettingsDao;
+import com.example.phr.mobile.dao.MobileUserDao;
 import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
+import com.example.phr.mobile.daoimpl.MobileUserDaoImpl;
 import com.example.phr.service.UserService;
 import com.example.phr.serviceimpl.UserServiceImpl;
 import com.example.phr.tools.PasswordValidator;
@@ -36,6 +38,7 @@ public class LoginActivity extends Activity {
 
 	private UserService userService;
 	private MobileSettingsDao settingDao;
+	private MobileUserDao userDao;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -76,8 +79,10 @@ public class LoginActivity extends Activity {
 									MainActivity.class);
 							intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
 									| Intent.FLAG_ACTIVITY_CLEAR_TOP);
-							HealthGem.getSharedPreferences().saveUser(
-									userService.getUserGivenUsername(username));
+							
+							userDao = new MobileUserDaoImpl();
+							
+							userDao.saveUser(userService.getUserGivenUsername(username));
 							settingDao = new MobileSettingsDaoImpl();
 							settingDao.initializeSettings();
 							startActivity(intent);

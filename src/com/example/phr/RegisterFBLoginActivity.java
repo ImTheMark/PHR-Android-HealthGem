@@ -66,6 +66,7 @@ public class RegisterFBLoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
+		userService = new UserServiceImpl();
 
 		StrictMode.setThreadPolicy(policy);
 		weightService = new WeightTrackerServiceImpl();
@@ -243,9 +244,7 @@ public class RegisterFBLoginActivity extends Activity {
 					newUser.setFbAccessToken(HealthGem
 							.getSharedPreferences()
 							.loadPreferences(SPreference.REGISTER_FBACCESSTOKEN));
-				userService = new UserServiceImpl();
 				userService.registerUser(newUser);
-				HealthGem.getSharedPreferences().registerUser();
 				Date date = new Date();
 				Timestamp timestamp = new Timestamp(date.getTime());
 				Weight weight = new Weight(timestamp, "", null,
@@ -268,6 +267,20 @@ public class RegisterFBLoginActivity extends Activity {
 			}
 			return true;
 		case R.id.menu_item_save:
+			if(user != null){
+				User editedUser = userService.getUser();
+				editedUser.setFbAccessToken(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_FBACCESSTOKEN));
+				try {
+					userService.edit(editedUser);
+				} catch (ServiceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (OutdatedAccessTokenException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			onBackPressed();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

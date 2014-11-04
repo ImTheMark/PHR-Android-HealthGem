@@ -1,5 +1,7 @@
 package com.example.phr;
 
+import java.text.ParseException;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -13,9 +15,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.phr.application.HealthGem;
+import com.example.phr.exceptions.OutdatedAccessTokenException;
+import com.example.phr.exceptions.ServiceException;
 import com.example.phr.local_db.SPreference;
 import com.example.phr.mobile.dao.MobileSettingsDao;
 import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
+import com.example.phr.mobile.models.User;
+import com.example.phr.service.UserService;
+import com.example.phr.serviceimpl.UserServiceImpl;
+import com.example.phr.tools.DateTimeParser;
 
 @SuppressLint("NewApi")
 public class RegisterUserInformationActivity extends Activity {
@@ -35,6 +43,7 @@ public class RegisterUserInformationActivity extends Activity {
 	Spinner gender;
 	MobileSettingsDao settingsDao;
 	Boolean isRegister = true;
+	UserService userService;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -43,6 +52,8 @@ public class RegisterUserInformationActivity extends Activity {
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
 
+		userService = new UserServiceImpl();
+		
 		StrictMode.setThreadPolicy(policy);
 		setContentView(R.layout.activity_registration_user_information);
 
@@ -174,6 +185,61 @@ public class RegisterUserInformationActivity extends Activity {
 						RegisterFBLoginActivity.class);
 				startActivity(intent);
 			}
+			return true;
+		case R.id.menu_item_save:
+			if (fullName.getText().toString().equals("")
+					|| contactNumber.getText().toString().equals("")
+					|| email.getText().toString().equals("")
+					|| height.getText().toString().equals("")
+					|| weight.getText().toString().equals("")
+					|| contactPerson.getText().toString().equals("")
+					|| contactPersonNumber.getText().toString().equals("")
+					|| birthdate.getText().toString().equals("")) {
+				Toast.makeText(HealthGem.getContext(),
+						"Please complete the missing fields.",
+						Toast.LENGTH_LONG).show();
+			} else {
+				User editedUser = userService.getUser();
+
+				editedUser.setName(fullName.getText().toString());
+				editedUser.setContactNumber(contactNumber.getText().toString());
+				editedUser.setEmail(email.getText().toString());
+				editedUser.setHeight(Double.parseDouble(height.getText().toString()));
+				editedUser.setWeight(Double.parseDouble(weight.getText().toString()));
+				editedUser.setEmergencyPerson(contactPerson.getText().toString());
+				editedUser.setEmergencyContactNumber(contactPersonNumber.getText().toString());
+				editedUser.setAllergies(allergies.getText().toString());
+				editedUser.setKnownHealthProblems(knownHealthProblems.getText().toString());
+				editedUser.setGender(gender.getSelectedItem() + "");
+				try {
+					editedUser.setDateOfBirth(DateTimeParser.getTimestamp(birthdate.getText().toString() + " 00:00:00"));
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				if (heightUnit.getSelectedItemPosition() == 0)
+					settingsDao.setHeightToFeet();
+				else
+					settingsDao.setHeightToCentimeters();
+
+				if (weightUnit.getSelectedItemPosition() == 0)
+					settingsDao.setWeightToPounds();
+				else
+					settingsDao.setWeightToKilograms();
+				
+				try {
+					userService.edit(editedUser);
+				} catch (ServiceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (OutdatedAccessTokenException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			onBackPressed();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
