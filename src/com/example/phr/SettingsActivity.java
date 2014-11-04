@@ -1,8 +1,5 @@
 package com.example.phr;
 
-import com.example.phr.local_db.DatabaseHandler;
-import com.example.phr.mobile.dao.MobileSettingsDao;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,15 +10,19 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.ToggleButton;
 
+import com.example.phr.local_db.DatabaseHandler;
+import com.example.phr.mobile.dao.MobileSettingsDao;
+import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
+
 public class SettingsActivity extends Activity {
-	
+
 	private RadioGroup radioGroupWeight;
 	private RadioGroup radioGroupHeight;
 	private Button logoutButton;
 	private ToggleButton bloodPressureButton;
 	private ToggleButton bloodSugarButton;
 	private MobileSettingsDao settingsDao;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,68 +33,72 @@ public class SettingsActivity extends Activity {
 		logoutButton = (Button) findViewById(R.id.btnLogout);
 		bloodPressureButton = (ToggleButton) findViewById(R.id.settingsToggleButtonBloodPressure);
 		bloodSugarButton = (ToggleButton) findViewById(R.id.settingsToggleButtonBloodSugar);
-		
+
 		radioGroupHeight.check(settingsDao.isHeightSettingInFeet() ? 1 : 0);
 		radioGroupWeight.check(settingsDao.isWeightSettingInPounds() ? 1 : 0);
-		
-		radioGroupHeight.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
-			@Override
-			public void onCheckedChanged(RadioGroup arg0, int checkedID) {
-				if(checkedID == R.id.radioGroupSettingHeightButtonFT)
-					settingsDao.setHeightToFeet();
-				else
-					settingsDao.setHeightToCentimeters();
-			}
-		});
-		
-		radioGroupWeight.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
-			@Override
-			public void onCheckedChanged(RadioGroup arg0, int checkedID) {
-				if(checkedID == R.id.radioGroupSettingWeightButtonLBS)
-					settingsDao.setHeightToFeet();
-				else
-					settingsDao.setHeightToCentimeters();
-			}
-		});
-		
+
+		settingsDao = new MobileSettingsDaoImpl();
+
+		radioGroupHeight
+				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+					@Override
+					public void onCheckedChanged(RadioGroup arg0, int checkedID) {
+						if (checkedID == R.id.radioGroupSettingHeightButtonFT)
+							settingsDao.setHeightToFeet();
+						else
+							settingsDao.setHeightToCentimeters();
+					}
+				});
+
+		radioGroupWeight
+				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+					@Override
+					public void onCheckedChanged(RadioGroup arg0, int checkedID) {
+						if (checkedID == R.id.radioGroupSettingWeightButtonLBS)
+							settingsDao.setHeightToFeet();
+						else
+							settingsDao.setHeightToCentimeters();
+					}
+				});
+
 		logoutButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				DatabaseHandler.getDBHandler().deleteAccessToken();
 			}
 		});
-		
-		bloodPressureButton.setChecked(settingsDao.getBloodPressureNotificationSetting());
-		bloodSugarButton.setChecked(settingsDao.getBloodSugarNotificationSetting());
-		
+
+		bloodPressureButton.setChecked(settingsDao
+				.getBloodPressureNotificationSetting());
+		bloodSugarButton.setChecked(settingsDao
+				.getBloodSugarNotificationSetting());
+
 		bloodPressureButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				boolean on = ((ToggleButton) v).isChecked();
-				
-				if(on){
+
+				if (on) {
 					settingsDao.setBloodPressureNotificationOn();
-				}
-				else{
+				} else {
 					settingsDao.setBloodPressureNotificationOff();
 				}
 			}
 		});
-		
+
 		bloodSugarButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				boolean on = ((ToggleButton) v).isChecked();
-				
-				if(on){
+
+				if (on) {
 					settingsDao.setBloodSugarNotificationOn();
-				}
-				else{
+				} else {
 					settingsDao.setBloodSugarNotificationOff();
 				}
 			}
@@ -102,14 +107,14 @@ public class SettingsActivity extends Activity {
 
 	private String getItemSelectedRadioGroupWeight() {
 		int selected = radioGroupWeight.getCheckedRadioButtonId();
-        Button radioBtn = (RadioButton) findViewById(selected);
-        return radioBtn.getText().toString();
+		Button radioBtn = (RadioButton) findViewById(selected);
+		return radioBtn.getText().toString();
 	}
 
 	private String getItemSelectedRadioGroupHeight() {
 		int selected = radioGroupHeight.getCheckedRadioButtonId();
-        Button radioBtn = (RadioButton) findViewById(selected);
-        return radioBtn.getText().toString();
+		Button radioBtn = (RadioButton) findViewById(selected);
+		return radioBtn.getText().toString();
 	}
 
 }

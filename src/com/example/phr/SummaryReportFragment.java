@@ -111,6 +111,7 @@ public class SummaryReportFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_summary_report,
 				container, false);
 		setting = new MobileSettingsDaoImpl();
+		DecimalFormat df = new DecimalFormat("#.00");
 
 		// blood sugar
 		txtBsDate = (TextView) rootView.findViewById(R.id.txtHomeBsDate);
@@ -241,20 +242,22 @@ public class SummaryReportFragment extends Fragment {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		if (weight != null) {
 			Log.e("home weight", "not null");
 			if (setting.isWeightSettingInPounds()) {
-				txtWeight.setText(String.valueOf(weight.getWeightInPounds()));
+				txtWeight.setText(df.format(String.valueOf(weight
+						.getWeightInPounds())));
 				txtWeightUnit.setText("lbs");
 			} else {
-				txtWeight
-						.setText(String.valueOf(weight.getWeightInKilograms()));
+				txtWeight.setText(df.format(String.valueOf(weight
+						.getWeightInKilograms())));
 				txtWeightUnit.setText("kgs");
 			}
 			double heightInMeter = 1.75;
 			double bmi = weight.getWeightInKilograms()
 					/ (heightInMeter * heightInMeter);
-			DecimalFormat df = new DecimalFormat("#.00");
+
 			String formattedBmi = df.format(bmi);
 			txtBmi.setText(formattedBmi);
 
@@ -351,8 +354,8 @@ public class SummaryReportFragment extends Fragment {
 				- Integer.parseInt(DateTimeParser.getYear(bdaytimestamp));
 		Log.e("age", String.valueOf(age));
 		// int age = 40;
-		// String gender =user.getGender();
-		String gender = "F";
+		String gender = user.getGender();
+		// String gender = "F";
 		if (gender.equals("F"))
 			bmr = 655 + (4.35 * weight.getWeightInPounds())
 					+ (4.7 * user.getHeight()) - (4.7 * age);
@@ -360,8 +363,8 @@ public class SummaryReportFragment extends Fragment {
 			bmr = 66 + (6.23 * weight.getWeightInPounds())
 					+ (12.7 * user.getHeight()) - (6.8 * age);
 
-		txtBigTotalCalRequire.setText(String.valueOf(bmr));
-		txtSmallTotalCalRequire.setText(String.valueOf(bmr));
+		txtBigTotalCalRequire.setText(df.format(String.valueOf(bmr)));
+		txtSmallTotalCalRequire.setText(df.format(String.valueOf(bmr)));
 
 		int cProgressStatus = (int) (total / bmr) * 100; // compute
 		if (cProgressStatus > 100)

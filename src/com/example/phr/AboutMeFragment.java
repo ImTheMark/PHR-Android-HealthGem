@@ -22,7 +22,6 @@ import com.example.phr.serviceimpl.BloodSugarTrackerServiceImpl;
 import com.example.phr.serviceimpl.CheckUpTrackerServiceImpl;
 import com.example.phr.serviceimpl.UserServiceImpl;
 import com.example.phr.tools.DateTimeParser;
-import com.example.phr.tools.ImageHandler;
 
 public class AboutMeFragment extends Fragment {
 
@@ -91,8 +90,8 @@ public class AboutMeFragment extends Fragment {
 		knownHealthProblems.setText(user.getKnownHealthProblems());
 		emergencyContactNumber.setText(user.getContactNumber());
 		emergencyPerson.setText(user.getEmergencyPerson());
-		image.setImageBitmap(ImageHandler.loadImage(user.getPhoto()
-				.getFileName()));
+		// image.setImageBitmap(ImageHandler.loadImage(user.getPhoto()
+		// .getFileName()));
 		BloodPressureTrackerService bpService = new BloodPressureTrackerServiceImpl();
 		BloodSugarTrackerService bsService = new BloodSugarTrackerServiceImpl();
 		CheckUpTrackerService checkupService = new CheckUpTrackerServiceImpl();

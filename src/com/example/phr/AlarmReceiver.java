@@ -226,10 +226,13 @@ public class AlarmReceiver extends BroadcastReceiver {
 			e.printStackTrace();
 		}
 
-		long diff = current.getTime() - lastTime.getTime(); // in milliseconds
-		long diffDays = diff / (24 * 60 * 60 * 1000); // days
-		if (lastActivity != null && diffDays < 6)
-			notif = false;
+		if (lastTime != null) {
+			long diff = current.getTime() - lastTime.getTime(); // in
+																// milliseconds
+			long diffDays = diff / (24 * 60 * 60 * 1000); // days
+			if (lastActivity != null && diffDays < 6)
+				notif = false;
+		}
 
 		return notif;
 	}
@@ -255,12 +258,14 @@ public class AlarmReceiver extends BroadcastReceiver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		long diff = current.getTime() - lastTime.getTime(); // in milliseconds
-		long diffDays = diff / (24 * 60 * 60 * 1000); // days
-		if (lastCheckup != null && diffDays < 180)
-			notif = false;
-		Log.e("diffdays", String.valueOf(diff));
+		if (lastTime != null) {
+			long diff = current.getTime() - lastTime.getTime(); // in
+			// milliseconds
+			long diffDays = diff / (24 * 60 * 60 * 1000); // days
+			if (lastCheckup != null && diffDays < 180)
+				notif = false;
+			// Log.e("diffdays", String.valueOf(diff));
+		}
 		return notif;
 	}
 
@@ -284,11 +289,13 @@ public class AlarmReceiver extends BroadcastReceiver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		long diff = current.getTime() - lastTime.getTime(); // in milliseconds
-		long diffDays = diff / (24 * 60 * 60 * 1000); // days
-		if (lastWeight != null && diffDays < 14)
-			notif = false;
+		if (lastTime != null) {
+			long diff = current.getTime() - lastTime.getTime(); // in
+			// milliseconds
+			long diffDays = diff / (24 * 60 * 60 * 1000); // days
+			if (lastWeight != null && diffDays < 14)
+				notif = false;
+		}
 		return notif;
 	}
 

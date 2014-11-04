@@ -111,6 +111,7 @@ public class FoodTrackerDailyActivity extends Activity {
 		 */
 		List<FoodTrackerEntry> list = new ArrayList<FoodTrackerEntry>();
 		foodDao = new MobileFoodTrackerDaoImpl();
+		foodServiceImpl = new FoodTrackerServiceImpl();
 		try {
 			list = foodDao.getAllFromDate(timestamp);
 			groupedFood = foodDao.getFromDateCalculated(timestamp);
@@ -166,19 +167,16 @@ public class FoodTrackerDailyActivity extends Activity {
 						} else if (mode.equals("Delete")) {
 
 							try {
-								Log.e("food", "del");
-								foodServiceImpl = new FoodTrackerServiceImpl();
-								try {
-									foodServiceImpl.delete(chosenItem);
-								} catch (EntryNotFoundException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								Log.e("food", "del_done");
-							} catch (ServiceException e) {
+								Log.e("fooddel", "start");
+								foodServiceImpl.delete(chosenItem);
+								Log.e("fooddel", "done");
+							} catch (OutdatedAccessTokenException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
-							} catch (OutdatedAccessTokenException e) {
+							} catch (EntryNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (ServiceException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}

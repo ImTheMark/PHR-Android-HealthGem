@@ -128,36 +128,28 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 
 				@Override
 				public void onClick(View v) {
-					try {
-						UnverifiedActivityEntry unverified = (UnverifiedActivityEntry) aListOfStatus
-								.get(position);
 
-						Intent i = new Intent(mContext, NewStatusActivity.class);
-						i.putExtra("unverified", TrackerInputType.ACTIVITY);
-						i.putExtra("object", unverified);
-						mContext.startActivity(i);
-						/*
-						 * ActivityTrackerEntry act = new ActivityTrackerEntry(
-						 * unverified.getFacebookID(),
-						 * unverified.getTimestamp(), unverified.getStatus(),
-						 * unverified.getImage(), ActivitySingle activity,
-						 * unverified.getCalorieBurnedPerHour() );
-						 * 
-						 * activityService.add(act);
-						 */
+					UnverifiedActivityEntry unverified = (UnverifiedActivityEntry) aListOfStatus
+							.get(position);
 
-						verificationService.delete(unverified);
-						notifyDataSetChanged();
-					} catch (EntryNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ServiceException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (OutdatedAccessTokenException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					Intent i = new Intent(mContext, NewStatusActivity.class);
+					i.putExtra("unverified", TrackerInputType.ACTIVITY);
+					i.putExtra("object", unverified);
+					mContext.startActivity(i);
+					/*
+					 * ActivityTrackerEntry act = new ActivityTrackerEntry(
+					 * unverified.getFacebookID(), unverified.getTimestamp(),
+					 * unverified.getStatus(), unverified.getImage(),
+					 * ActivitySingle activity,
+					 * unverified.getCalorieBurnedPerHour() );
+					 * 
+					 * activityService.add(act);
+					 * 
+					 * 
+					 * verificationService.delete(unverified);
+					 */
+					notifyDataSetChanged();
+
 				}
 			});
 
@@ -259,11 +251,14 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 				public void onClick(View v) {
 					UnverifiedRestaurantEntry unverified = (UnverifiedRestaurantEntry) aListOfStatus
 							.get(position);
-					
-					verificationService.addFoodListToTemporaryDatabase(unverified.getFoods());
+
+					verificationService
+							.addFoodListToTemporaryDatabase(unverified
+									.getFoods());
 					unverified.setFoods(null);
-					
-					Intent i = new Intent(mContext, VerificationListPickerActivity.class);
+
+					Intent i = new Intent(mContext,
+							VerificationListPickerActivity.class);
 					i.putExtra("restaurant", unverified);
 					mContext.startActivity(i);
 				}
@@ -297,18 +292,23 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 		else if (aListOfStatus.get(position).getClass()
 				.equals(UnverifiedSportsEstablishmentEntry.class)) {
 			viewHolder.question.setText("Did go at: ");
-			viewHolder.word.setText(((UnverifiedSportsEstablishmentEntry)aListOfStatus.get(position)).getSportEstablishment().getName());
+			viewHolder.word
+					.setText(((UnverifiedSportsEstablishmentEntry) aListOfStatus
+							.get(position)).getSportEstablishment().getName());
 			viewHolder.confirm.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
 					UnverifiedSportsEstablishmentEntry unverified = (UnverifiedSportsEstablishmentEntry) aListOfStatus
 							.get(position);
-					
-					verificationService.addActivityListToTemporaryDatabase(unverified.getActivities());
+
+					verificationService
+							.addActivityListToTemporaryDatabase(unverified
+									.getActivities());
 					unverified.setActivities(null);
-					
-					Intent i = new Intent(mContext, VerificationListPickerActivity.class);
+
+					Intent i = new Intent(mContext,
+							VerificationListPickerActivity.class);
 					i.putExtra("sportestablishment", unverified);
 					mContext.startActivity(i);
 				}
