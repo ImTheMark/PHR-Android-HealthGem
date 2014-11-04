@@ -112,7 +112,7 @@ public class VerificationListPickerActivity extends android.app.Activity {
 
 					Intent i = new Intent(getApplicationContext(),
 							NewStatusActivity.class);
-					i.putExtra("unverified", TrackerInputType.ACTIVITY);
+					i.putExtra("unverified", TrackerInputType.SPORTS);
 					i.putExtra("object", sportsEntry);
 					i.putExtra("object1", actEntry);
 					startActivity(i);

@@ -56,6 +56,7 @@ import com.example.phr.mobile.models.PHRImageType;
 import com.example.phr.mobile.models.UnverifiedActivityEntry;
 import com.example.phr.mobile.models.UnverifiedFoodEntry;
 import com.example.phr.mobile.models.UnverifiedRestaurantEntry;
+import com.example.phr.mobile.models.UnverifiedSportsEstablishmentEntry;
 import com.example.phr.mobile.models.Weight;
 import com.example.phr.service.ActivityTrackerService;
 import com.example.phr.service.BloodPressureTrackerService;
@@ -151,6 +152,7 @@ public class NewStatusActivity extends android.app.Activity {
 	FoodTrackerEntry editFoodTrackerEntry;
 	FoodTrackerEntry verifyFoodTrackerEntry;
 	ActivityTrackerEntry editActivityTrackerEntry;
+	ActivityTrackerEntry verifyActivityTrackerEntry;
 	ImageView statusImage;
 	Bitmap photo;
 	Boolean setImage;
@@ -158,6 +160,7 @@ public class NewStatusActivity extends android.app.Activity {
 	UnverifiedFoodEntry unferifiedFood;
 	UnverifiedActivityEntry unferifiedActivity;
 	UnverifiedRestaurantEntry unferifiedRestaurant;
+	UnverifiedSportsEstablishmentEntry unferifiedSport;
 	public static final int CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE = 1777;
 	DecimalFormat df = new DecimalFormat("#.00");
 
@@ -613,8 +616,8 @@ public class NewStatusActivity extends android.app.Activity {
 						.getExtras().getSerializable("object");
 				verifyFoodTrackerEntry = (FoodTrackerEntry) in.getExtras()
 						.getSerializable("object1");
-				currentTracker = TrackerInputType.FOOD;
-				txtCurrentTracker.setText(TrackerInputType.FOOD);
+				currentTracker = TrackerInputType.RESTAURANT;
+				txtCurrentTracker.setText(TrackerInputType.RESTAURANT);
 				if (verifyFoodTrackerEntry.getImage() != null) {
 					temp = ImageHandler.loadImage(verifyFoodTrackerEntry
 							.getImage().getFileName());
@@ -626,6 +629,28 @@ public class NewStatusActivity extends android.app.Activity {
 
 				setFoodTemplate(verifyFoodTrackerEntry.getServingCount(),
 						chosenFood, verifyFoodTrackerEntry.getStatus(), temp);
+
+			} else if (verifyTracker.equals(TrackerInputType.SPORTS)) {
+				unferifiedSport = (UnverifiedSportsEstablishmentEntry) in
+						.getExtras().getSerializable("object");
+				verifyActivityTrackerEntry = (ActivityTrackerEntry) in
+						.getExtras().getSerializable("object1");
+				currentTracker = TrackerInputType.SPORTS;
+				txtCurrentTracker.setText(TrackerInputType.SPORTS);
+				if (verifyActivityTrackerEntry.getImage() != null) {
+					temp = ImageHandler.loadImage(verifyActivityTrackerEntry
+							.getImage().getFileName());
+					setImage = true;
+				}
+				Log.e("verifiyingactivity",
+						String.valueOf(verifyActivityTrackerEntry.getEntryID()));
+				chosenActivity = verifyActivityTrackerEntry.getActivity();
+
+				setActivityTemplate(
+						verifyActivityTrackerEntry.getActivity().getName(),
+						verifyActivityTrackerEntry.getActivity().getMET(),
+						verifyActivityTrackerEntry.getDurationInSeconds() / 3600,
+						"hr", verifyActivityTrackerEntry.getStatus(), photo);
 
 			}
 		}
@@ -1662,6 +1687,12 @@ public class NewStatusActivity extends android.app.Activity {
 					Log.e("newstatus", txtdate);
 					intent.putExtra("date", txtdate);
 					startActivity(intent);
+				} else if (currentTracker.equals(TrackerInputType.SPORTS)) {
+					verifySportToDatabase();
+					Log.e("call", "sportActivity");
+					Intent intent = new Intent(getApplicationContext(),
+							ActivitiesTrackerActivity.class);
+					startActivity(intent);
 				}
 			} catch (ServiceException e) {
 				// output error message or something
@@ -1942,7 +1973,7 @@ public class NewStatusActivity extends android.app.Activity {
 				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
 			} else {
 				image = null;
-				Log.e("newstatuact", "image null");
+				Log.e("newstatusact", "image null");
 			}
 			VerificationService verificationService = new VerificationServiceImpl();
 			FoodTrackerEntry foodEntry = new FoodTrackerEntry(
@@ -1953,6 +1984,47 @@ public class NewStatusActivity extends android.app.Activity {
 			FoodTrackerService foodTrackerService = new FoodTrackerServiceImpl();
 			foodTrackerService.add(foodEntry);
 			verificationService.delete(unferifiedRestaurant);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void verifySportToDatabase() throws ServiceException,
+			OutdatedAccessTokenException, WebServerException,
+			DataAccessException {
+
+		try {
+			Log.e("in", "verify");
+			PHRImage image;
+			Log.e("verifySportsetimage", setImage.toString());
+			if (setImage == true) {
+				Log.e("verifySportsetimage", "in");
+				String encodedImage = ImageHandler.encodeImageToBase64(photo);
+				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
+			} else {
+				image = null;
+				Log.e("newstatusact", "image null");
+			}
+
+			int sec = 0;
+			if (txtActivityDurationUnit.toString().equals("hr"))
+				sec = Integer.parseInt(txtActivityDuration.toString()) * 3600;
+			else if (txtActivityDurationUnit.toString().equals("min"))
+				sec = Integer.parseInt(activityDuration.toString()) * 60;
+
+			VerificationService verificationService = new VerificationServiceImpl();
+			ActivityTrackerEntry activityEntry = new ActivityTrackerEntry(
+					verifyActivityTrackerEntry.getFacebookID(),
+					verifyActivityTrackerEntry.getTimestamp(), notesStatus
+							.getText().toString(), image, chosenActivity,
+					Double.parseDouble(txtActivityCal.getText().toString()),
+					sec);
+			ActivityTrackerService activityTrackerService = new ActivityTrackerServiceImpl();
+			activityTrackerService.add(activityEntry);
+			verificationService.delete(unferifiedSport);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
