@@ -242,4 +242,16 @@ public class VerificationServiceDummyImpl implements VerificationService {
 		
 	}
 
+	@Override
+	public void storeImage(String fileName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getImageFileName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
