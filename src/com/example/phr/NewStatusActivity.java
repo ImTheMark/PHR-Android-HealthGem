@@ -3,6 +3,7 @@ package com.example.phr;
 import java.io.File;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -158,6 +159,7 @@ public class NewStatusActivity extends android.app.Activity {
 	UnverifiedActivityEntry unferifiedActivity;
 	UnverifiedRestaurantEntry unferifiedRestaurant;
 	public static final int CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE = 1777;
+	DecimalFormat df = new DecimalFormat("#.00");
 
 	@SuppressLint("NewApi")
 	@Override
@@ -650,10 +652,10 @@ public class NewStatusActivity extends android.app.Activity {
 		double protein = serving * food.getProtein();
 		double carbs = serving * food.getCarbohydrate();
 		double fats = serving * food.getFat();
-		txtFoodCal.setText(String.valueOf(cal));
-		txtFoodProtein.setText(String.valueOf(protein));
-		txtFoodCarbs.setText(String.valueOf(carbs));
-		txtFoodFat.setText(String.valueOf(fats));
+		txtFoodCal.setText(df.format(cal));
+		txtFoodProtein.setText(df.format(protein));
+		txtFoodCarbs.setText(df.format(carbs));
+		txtFoodFat.setText(df.format(fats));
 		txtFood.setText(food.getName());
 		txtFoodQuantityUnit.setText(food.getServing());
 
@@ -697,7 +699,7 @@ public class NewStatusActivity extends android.app.Activity {
 		else if (unit.equals("min"))
 			cal = met * weight.getWeightInKilograms() * duration * 60;
 
-		txtActivityCal.setText(String.valueOf(cal));
+		txtActivityCal.setText(df.format(cal));
 		if (image != null) {
 			Log.e("in", "set activity template");
 			imageTemplate.setVisibility(View.VISIBLE);

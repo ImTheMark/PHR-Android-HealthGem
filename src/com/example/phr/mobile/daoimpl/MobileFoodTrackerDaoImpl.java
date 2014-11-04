@@ -2,6 +2,7 @@ package com.example.phr.mobile.daoimpl;
 
 import java.io.FileNotFoundException;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import com.example.phr.tools.ImageHandler;
 public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 
 	MobileFoodDao mobileFoodDao = new MobileFoodDaoImpl();
+	DecimalFormat df = new DecimalFormat("#.00");
 
 	@Override
 	public void add(FoodTrackerEntry food) throws DataAccessException {
@@ -455,14 +457,18 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 			} else if (food.getTimestamp().after(date))
 				dateHasPassedFromGivenDate = true;
 		}
-		GroupedFood groupedFood = new GroupedFood(groupedDate, groupedCalorie,
-				groupedProtein, groupedFat, groupedCarb);
+		GroupedFood groupedFood = new GroupedFood(groupedDate,
+				Double.parseDouble(df.format(groupedCalorie)),
+				Double.parseDouble(df.format(groupedProtein)),
+				Double.parseDouble(df.format(groupedFat)),
+				Double.parseDouble(df.format(groupedCarb)));
 		return groupedFood;
 	}
 
 	@Override
 	public List<GroupedFood> getAllGroupedByDateCalculated()
 			throws DataAccessException {
+		Log.e("getAllGroupedDateCalculated", "called");
 		List<GroupedFood> calGroupedFood = new ArrayList<GroupedFood>();
 		List<FoodTrackerEntry> foodList = new ArrayList<FoodTrackerEntry>();
 		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_FOOD
@@ -504,7 +510,7 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 		}
 
 		db.close();
-
+		FoodTrackerEntry f;
 		while (foodList.size() != 0) {
 			List<FoodTrackerEntry> foodListPerDay = new ArrayList<FoodTrackerEntry>();
 			String monthDay = DateTimeParser.getMonthDay(foodList.get(0)
@@ -514,13 +520,15 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 			double groupedCalorie = 0;
 			double groupedCarb = 0;
 			double groupedFat = 0;
-			FoodTrackerEntry f = foodList.get(0);
+			f = foodList.get(0);
 			Timestamp date = null;
 			while (foodList.size() != 0
 					&& monthDay.equals(DateTimeParser.getMonthDay(f
 							.getTimestamp())))
 
 			{
+				Log.e("same group",
+						DateTimeParser.getMonthDay(f.getTimestamp()));
 				date = f.getTimestamp();
 				groupedProtein += f.getFood().getProtein()
 						* f.getServingCount();
@@ -532,10 +540,16 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 				foodListPerDay.add(f);
 				Log.e("foodlistsize", String.valueOf(foodList.size()));
 				foodList.remove(0);
+				if (foodList.size() != 0)
+					f = foodList.get(0);
 			}
 			Log.e("date", String.valueOf(date));
-			calGroupedFood.add(new GroupedFood(date, groupedCalorie,
-					groupedProtein, groupedFat, groupedCarb));
+			Log.e("grouped cal", String.valueOf(groupedCalorie));
+			calGroupedFood.add(new GroupedFood(date, Double.parseDouble(df
+					.format(groupedCalorie)), Double.parseDouble(df
+					.format(groupedProtein)), Double.parseDouble(df
+					.format(groupedFat)), Double.parseDouble(df
+					.format(groupedCarb))));
 
 		}
 

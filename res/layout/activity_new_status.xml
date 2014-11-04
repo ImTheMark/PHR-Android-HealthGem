@@ -361,7 +361,8 @@
         android:orientation="horizontal"
         android:layout_above="@id/statusTabsPlaceholder"
         android:gravity="center"
-        android:visibility="gone" >
+        android:visibility="gone" 
+        android:background="#e7e6dd">
 
         <LinearLayout
                 android:layout_width="0dp"
@@ -460,7 +461,8 @@
         android:orientation="horizontal"
         android:layout_above="@id/statusTabsPlaceholder"
         android:gravity="center"
-        android:visibility="gone" >
+        android:visibility="gone" 
+        android:background="#e7e6dd">
 
         <TextView
             android:id="@+id/textView2"

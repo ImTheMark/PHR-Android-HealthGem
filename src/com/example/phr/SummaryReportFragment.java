@@ -348,12 +348,8 @@ public class SummaryReportFragment extends Fragment {
 
 		Timestamp bdaytimestamp = user.getDateOfBirth();
 
-		/*
-		 * int age = Integer.parseInt(DateTimeParser.getYear(timestamp)) -
-		 * Integer.parseInt(DateTimeParser.getYear(bdaytimestamp)); Log.e("age",
-		 * String.valueOf(age));
-		 */
-		int age = 40;
+		int age = Integer.parseInt(DateTimeParser.getYear(timestamp))
+				- Integer.parseInt(DateTimeParser.getYear(bdaytimestamp));
 		String gender = user.getGender();
 		// String gender = "F";
 		Log.e("bmr", weight.getWeightInPounds() + "");
@@ -364,6 +360,7 @@ public class SummaryReportFragment extends Fragment {
 		else if (gender.equals("M"))
 			bmr = 66 + (6.23 * weight.getWeightInPounds())
 					+ (12.7 * user.getHeight()) - (6.8 * age);
+
 		txtBigTotalCalRequire.setText(df.format(bmr));
 		txtSmallTotalCalRequire.setText(df.format(bmr));
 
@@ -411,9 +408,13 @@ public class SummaryReportFragment extends Fragment {
 		View dailyChart;
 		// 300g carbohydrates, 50g of protein and 65g fat
 		// RDI2K(protein) / 2000 = x / BMR
-		double recommendFats = (50 / 2000.0) * bmr;
-		double recommendCarbs = (300 / 2000.0) * bmr;
-		double recommendProtein = (65 / 2000.0) * bmr;
+		double recommendFats = Double.parseDouble(df
+				.format((50 / 2000.0) * bmr));
+		double recommendCarbs = Double.parseDouble(df.format((300 / 2000.0)
+				* bmr));
+		double recommendProtein = Double.parseDouble(df.format((65 / 2000.0)
+				* bmr));
+
 		int[] x = { 0, 1, 2 };
 		double[] intake = { groupedFood.getProtein(), groupedFood.getFat(),
 				groupedFood.getCarbohydrates() };

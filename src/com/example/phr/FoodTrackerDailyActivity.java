@@ -1,6 +1,7 @@
 package com.example.phr;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -239,11 +240,16 @@ public class FoodTrackerDailyActivity extends Activity {
 			bmr = 66 + (6.23 * weight.getWeightInPounds())
 					+ (12.7 * user.getHeight()) - (6.8 * age);
 
-		double recommendFats = (50 / 2000) * bmr;
-		double recommendCarbs = (300 / 2000) * bmr;
-		double recommendProtein = (65 / 2000) * bmr;
+		DecimalFormat df = new DecimalFormat("#.00");
+		double recommendFats = Double.parseDouble(df
+				.format((50 / 2000.0) * bmr));
+		double recommendCarbs = Double.parseDouble(df.format((300 / 2000.0)
+				* bmr));
+		double recommendProtein = Double.parseDouble(df.format((65 / 2000.0)
+				* bmr));
 
 		int[] x = { 0, 1, 2 };
+
 		double[] intake = { groupedFood.getProtein(), groupedFood.getFat(),
 				groupedFood.getCarbohydrates() };
 		double[] recommended = { recommendProtein, recommendFats,
