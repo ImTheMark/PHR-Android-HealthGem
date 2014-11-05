@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -115,55 +114,87 @@ public class MainActivity extends FragmentActivity implements
 			public void onPageScrollStateChanged(int arg0) {
 			}
 		});
+
+		long _alarm = 0;
+		Calendar now = Calendar.getInstance();
+
 		// check if user post blood pressure today
 		Calendar bpAlarmTime = Calendar.getInstance();
 		bpAlarmTime.set(Calendar.HOUR_OF_DAY, 10);
 		bpAlarmTime.set(Calendar.MINUTE, 0);
 		bpAlarmTime.set(Calendar.SECOND, 0);
-		if (bpAlarmTime.getTimeInMillis() < System.currentTimeMillis()) {
-			Log.e(String.valueOf(bpAlarmTime.getTimeInMillis()),
-					"bp set alarm time");
-			Log.e(String.valueOf(System.currentTimeMillis()),
-					"system set alarm time");
-			Log.e("bpalarm", "set");
-			setAlarm(bpAlarmTime, TrackerInputType.BLOOD_PRESSURE, 1);
+		if (bpAlarmTime.getTimeInMillis() <= now.getTimeInMillis()) {
+			_alarm = bpAlarmTime.getTimeInMillis()
+					+ (AlarmManager.INTERVAL_DAY + 1);
+		} else {
+			_alarm = bpAlarmTime.getTimeInMillis();
 		}
+		setAlarm(_alarm, TrackerInputType.BLOOD_PRESSURE, 1);
 
 		// check if user post blood sugar today
 		Calendar bsAlarmTime = Calendar.getInstance();
 		bsAlarmTime.set(Calendar.HOUR_OF_DAY, 14);
 		bsAlarmTime.set(Calendar.MINUTE, 0);
 		bsAlarmTime.set(Calendar.SECOND, 0);
-		Log.e("bsalarm", "set");
-		setAlarm(bsAlarmTime, TrackerInputType.BLOOD_SUGAR, 2);
+		if (bsAlarmTime.getTimeInMillis() <= now.getTimeInMillis()) {
+			_alarm = bsAlarmTime.getTimeInMillis()
+					+ (AlarmManager.INTERVAL_DAY + 1);
+		} else {
+			_alarm = bsAlarmTime.getTimeInMillis();
+		}
+		setAlarm(_alarm, TrackerInputType.BLOOD_SUGAR, 2);
 
 		// check if user post weight between this 6 months at this time
 		Calendar checkupAlarmTime = Calendar.getInstance();
 		checkupAlarmTime.set(Calendar.HOUR_OF_DAY, 16);
 		checkupAlarmTime.set(Calendar.MINUTE, 0);
 		checkupAlarmTime.set(Calendar.SECOND, 0);
-		setAlarm(checkupAlarmTime, TrackerInputType.CHECKUP, 3);
+		if (checkupAlarmTime.getTimeInMillis() <= now.getTimeInMillis()) {
+			_alarm = checkupAlarmTime.getTimeInMillis()
+					+ (AlarmManager.INTERVAL_DAY + 1);
+		} else {
+			_alarm = checkupAlarmTime.getTimeInMillis();
+		}
+		setAlarm(_alarm, TrackerInputType.CHECKUP, 3);
 
 		// check if user post weight between this 2 weeks at this time
 		Calendar weightAlarmTime = Calendar.getInstance();
 		weightAlarmTime.set(Calendar.HOUR_OF_DAY, 17);
 		weightAlarmTime.set(Calendar.MINUTE, 0);
 		weightAlarmTime.set(Calendar.SECOND, 0);
-		setAlarm(weightAlarmTime, TrackerInputType.WEIGHT, 4);
+		if (weightAlarmTime.getTimeInMillis() <= now.getTimeInMillis()) {
+			_alarm = weightAlarmTime.getTimeInMillis()
+					+ (AlarmManager.INTERVAL_DAY + 1);
+		} else {
+			_alarm = weightAlarmTime.getTimeInMillis();
+		}
+		setAlarm(_alarm, TrackerInputType.WEIGHT, 4);
 
 		// check if user post activty this week at this time
 		Calendar activityAlarmTime = Calendar.getInstance();
 		activityAlarmTime.set(Calendar.HOUR_OF_DAY, 18);
 		activityAlarmTime.set(Calendar.MINUTE, 0);
 		activityAlarmTime.set(Calendar.SECOND, 0);
-		setAlarm(activityAlarmTime, TrackerInputType.ACTIVITY, 5);
+		if (activityAlarmTime.getTimeInMillis() <= now.getTimeInMillis()) {
+			_alarm = activityAlarmTime.getTimeInMillis()
+					+ (AlarmManager.INTERVAL_DAY + 1);
+		} else {
+			_alarm = activityAlarmTime.getTimeInMillis();
+		}
+		setAlarm(_alarm, TrackerInputType.ACTIVITY, 5);
 
 		// check if user post food today in fb, if not notif user to post food
 		Calendar foodAlarmTime = Calendar.getInstance();
 		foodAlarmTime.set(Calendar.HOUR_OF_DAY, 20);
 		foodAlarmTime.set(Calendar.MINUTE, 0);
 		foodAlarmTime.set(Calendar.SECOND, 0);
-		setAlarm(foodAlarmTime, TrackerInputType.FOOD, 6);
+		if (foodAlarmTime.getTimeInMillis() <= now.getTimeInMillis()) {
+			_alarm = foodAlarmTime.getTimeInMillis()
+					+ (AlarmManager.INTERVAL_DAY + 1);
+		} else {
+			_alarm = foodAlarmTime.getTimeInMillis();
+		}
+		setAlarm(_alarm, TrackerInputType.FOOD, 6);
 
 		Intent in = getIntent();
 		Bundle extras = getIntent().getExtras();
@@ -175,7 +206,7 @@ public class MainActivity extends FragmentActivity implements
 
 	}
 
-	private void setAlarm(Calendar targetCal, String tracker, int rqs) {
+	private void setAlarm(long targetCal, String tracker, int rqs) {
 
 		Intent intent = new Intent(getBaseContext(), AlarmReceiver.class);
 		if (tracker.equals(TrackerInputType.BLOOD_SUGAR))
@@ -197,9 +228,8 @@ public class MainActivity extends FragmentActivity implements
 		// alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
 		// targetCal.getTimeInMillis(),
 		// AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
-		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-				targetCal.getTimeInMillis(), AlarmManager.INTERVAL_DAY,
-				pendingIntent);
+		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, targetCal,
+				AlarmManager.INTERVAL_DAY, pendingIntent);
 		// alarmManager.set(AlarmManager.RTC_WAKEUP,
 		// targetCal.getTimeInMillis(),
 		// pendingIntent);
