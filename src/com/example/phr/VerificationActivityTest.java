@@ -101,8 +101,10 @@ public class VerificationActivityTest extends Activity {
 				list = vService.getAll();
 
 				if (list != null && !list.isEmpty()) {
+					unverifiedList.clear();
 					unverifiedList = list;
-					adapter.notifyDataSetChanged();
+					//adapter.notifyDataSetChanged();
+					((UnverifiedStatusAdapter)listView.getAdapter()).notifyDataSetChanged();
 				}
 				
 			} catch (ServiceException e) {
