@@ -18,7 +18,6 @@ import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.ImageHandlerException;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileWeightTrackerDao;
-import com.example.phr.mobile.models.FBPost;
 import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.mobile.models.Weight;
 import com.example.phr.tools.DateTimeParser;
@@ -132,7 +131,8 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 					String encoded = ImageHandler.encodeImageToBase64(bitmap);
 					image.setEncodedImage(encoded);
 				}
-				Weight weight = new Weight(cursor.getInt(0), cursor.getString(5), timestamp, cursor.getString(3),
+				Weight weight = new Weight(cursor.getInt(0),
+						cursor.getString(5), timestamp, cursor.getString(3),
 						image, cursor.getDouble(2));
 
 				weightList.add(weight);
@@ -148,7 +148,8 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 			EntryNotFoundException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
-		ImageHandler.deleteImage(weight.getImage().getFileName());
+		if (weight.getImage() != null)
+			ImageHandler.deleteImage(weight.getImage().getFileName());
 		db.delete(DatabaseHandler.TABLE_WEIGHT, DatabaseHandler.WEIGHT_ID + "="
 				+ weight.getEntryID(), null);
 		db.close();
@@ -185,7 +186,8 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 					image.setEncodedImage(encoded);
 				}
 
-				Weight weight = new Weight(cursor.getInt(0), cursor.getString(5), timestamp, cursor.getString(3),
+				Weight weight = new Weight(cursor.getInt(0),
+						cursor.getString(5), timestamp, cursor.getString(3),
 						image, cursor.getDouble(2));
 
 				weightList.add(weight);
@@ -229,7 +231,8 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 					image.setEncodedImage(encoded);
 				}
 
-				Weight weight = new Weight(cursor.getInt(0), cursor.getString(5), timestamp, cursor.getString(3),
+				Weight weight = new Weight(cursor.getInt(0),
+						cursor.getString(5), timestamp, cursor.getString(3),
 						image, cursor.getDouble(2));
 
 				weightList.add(weight);
@@ -258,7 +261,8 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 	@Override
 	public Weight getLatest() throws DataAccessException {
 		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_WEIGHT
-				+ " ORDER BY " + DatabaseHandler.WEIGHT_DATEADDED + " DESC LIMIT 1";
+				+ " ORDER BY " + DatabaseHandler.WEIGHT_DATEADDED
+				+ " DESC LIMIT 1";
 
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
@@ -267,8 +271,7 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 		if (cursor.moveToFirst()) {
 			Timestamp timestamp;
 			try {
-				timestamp = DateTimeParser
-						.getTimestamp(cursor.getString(1));
+				timestamp = DateTimeParser.getTimestamp(cursor.getString(1));
 			} catch (ParseException e) {
 				throw new DataAccessException(
 						"Cannot complete operation due to parse failure", e);
@@ -284,8 +287,8 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 				image.setEncodedImage(encoded);
 			}
 
-			Weight weight = new Weight(cursor.getInt(0), cursor.getString(5), timestamp, cursor.getString(3),
-					image, cursor.getDouble(2));
+			Weight weight = new Weight(cursor.getInt(0), cursor.getString(5),
+					timestamp, cursor.getString(3), image, cursor.getDouble(2));
 			return weight;
 		}
 		db.close();

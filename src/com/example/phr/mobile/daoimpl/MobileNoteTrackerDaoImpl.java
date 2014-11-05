@@ -18,7 +18,6 @@ import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.ImageHandlerException;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileNoteTrackerDao;
-import com.example.phr.mobile.models.FBPost;
 import com.example.phr.mobile.models.Note;
 import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.tools.DateTimeParser;
@@ -130,8 +129,9 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 					image.setFileName(cursor.getString(4));
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 				}
-				Note note = new Note(cursor.getInt(0), cursor.getString(5), timestamp, cursor.getString(3),
-						image, cursor.getString(2));
+				Note note = new Note(cursor.getInt(0), cursor.getString(5),
+						timestamp, cursor.getString(3), image,
+						cursor.getString(2));
 
 				noteList.add(note);
 			} while (cursor.moveToNext());
@@ -146,7 +146,8 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 			EntryNotFoundException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
-		ImageHandler.deleteImage(note.getImage().getFileName());
+		if (note.getImage() != null)
+			ImageHandler.deleteImage(note.getImage().getFileName());
 		db.delete(DatabaseHandler.TABLE_NOTES, DatabaseHandler.NOTES_ID + "="
 				+ note.getEntryID(), null);
 		db.close();
@@ -182,8 +183,9 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 				}
 
-				Note note = new Note(cursor.getInt(0), cursor.getString(5), timestamp, cursor.getString(3),
-						image, cursor.getString(2));
+				Note note = new Note(cursor.getInt(0), cursor.getString(5),
+						timestamp, cursor.getString(3), image,
+						cursor.getString(2));
 
 				noteList.add(note);
 			} while (cursor.moveToNext());
@@ -196,7 +198,8 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 	@Override
 	public Note getLatest() throws DataAccessException {
 		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_NOTES
-				+ " ORDER BY " + DatabaseHandler.NOTES_DATEADDED + " DESC LIMIT 1";
+				+ " ORDER BY " + DatabaseHandler.NOTES_DATEADDED
+				+ " DESC LIMIT 1";
 
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
@@ -205,8 +208,7 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 		if (cursor.moveToFirst()) {
 			Timestamp timestamp;
 			try {
-				timestamp = DateTimeParser
-						.getTimestamp(cursor.getString(1));
+				timestamp = DateTimeParser.getTimestamp(cursor.getString(1));
 			} catch (ParseException e) {
 				throw new DataAccessException(
 						"Cannot complete operation due to parse failure", e);
@@ -220,8 +222,8 @@ public class MobileNoteTrackerDaoImpl implements MobileNoteTrackerDao {
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 			}
 
-			Note note = new Note(cursor.getInt(0), cursor.getString(5), timestamp, cursor.getString(3),
-					image, cursor.getString(2));
+			Note note = new Note(cursor.getInt(0), cursor.getString(5),
+					timestamp, cursor.getString(3), image, cursor.getString(2));
 			return note;
 		}
 

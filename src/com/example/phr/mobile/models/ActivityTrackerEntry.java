@@ -16,6 +16,7 @@ public class ActivityTrackerEntry extends TrackerEntry implements Serializable {
 		super(entryID, facebookID, timestamp, status, image);
 		this.activity = activity;
 		this.caloriesBurnedPerHour = caloriesBurnedPerHour;
+		this.durationInSeconds = durationInSeconds;
 	}
 
 	public ActivityTrackerEntry(Integer entryID, Timestamp timestamp,
@@ -24,6 +25,7 @@ public class ActivityTrackerEntry extends TrackerEntry implements Serializable {
 		super(entryID, timestamp, status, image);
 		this.activity = activity;
 		this.caloriesBurnedPerHour = caloriesBurnedPerHour;
+		this.durationInSeconds = durationInSeconds;
 	}
 
 	public ActivityTrackerEntry(String facebookID, Timestamp timestamp,
@@ -32,14 +34,16 @@ public class ActivityTrackerEntry extends TrackerEntry implements Serializable {
 		super(facebookID, timestamp, status, image);
 		this.activity = activity;
 		this.caloriesBurnedPerHour = caloriesBurnedPerHour;
+		this.durationInSeconds = durationInSeconds;
 	}
 
 	public ActivityTrackerEntry(Timestamp timestamp, String status,
-			PHRImage image, Activity activity,
-			double caloriesBurnedPerHour, int durationInSeconds) {
+			PHRImage image, Activity activity, double caloriesBurnedPerHour,
+			int durationInSeconds) {
 		super(timestamp, status, image);
 		this.activity = activity;
 		this.caloriesBurnedPerHour = caloriesBurnedPerHour;
+		this.durationInSeconds = durationInSeconds;
 	}
 
 	public Activity getActivity() {

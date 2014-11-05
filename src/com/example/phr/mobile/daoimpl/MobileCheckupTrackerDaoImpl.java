@@ -19,7 +19,6 @@ import com.example.phr.exceptions.ImageHandlerException;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileCheckupTrackerDao;
 import com.example.phr.mobile.models.CheckUp;
-import com.example.phr.mobile.models.FBPost;
 import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.tools.DateTimeParser;
 import com.example.phr.tools.ImageHandler;
@@ -136,8 +135,9 @@ public class MobileCheckupTrackerDaoImpl implements MobileCheckupTrackerDao {
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 				}
 
-				CheckUp cu = new CheckUp(cursor.getInt(0), cursor.getString(7), timestamp, cursor.getString(5),
-						image, cursor.getString(2), cursor.getString(3),
+				CheckUp cu = new CheckUp(cursor.getInt(0), cursor.getString(7),
+						timestamp, cursor.getString(5), image,
+						cursor.getString(2), cursor.getString(3),
 						cursor.getString(4));
 
 				cuList.add(cu);
@@ -153,7 +153,8 @@ public class MobileCheckupTrackerDaoImpl implements MobileCheckupTrackerDao {
 			EntryNotFoundException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
-		ImageHandler.deleteImage(checkUp.getImage().getFileName());
+		if (checkUp.getImage() != null)
+			ImageHandler.deleteImage(checkUp.getImage().getFileName());
 		db.delete(DatabaseHandler.TABLE_CHECKUP, DatabaseHandler.CU_ID + "="
 				+ checkUp.getEntryID(), null);
 		db.close();
@@ -188,8 +189,9 @@ public class MobileCheckupTrackerDaoImpl implements MobileCheckupTrackerDao {
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 				}
 
-				CheckUp cu = new CheckUp(cursor.getInt(0), cursor.getString(7), timestamp, cursor.getString(5),
-						image, cursor.getString(2), cursor.getString(3),
+				CheckUp cu = new CheckUp(cursor.getInt(0), cursor.getString(7),
+						timestamp, cursor.getString(5), image,
+						cursor.getString(2), cursor.getString(3),
 						cursor.getString(4));
 
 				cuList.add(cu);
@@ -212,8 +214,7 @@ public class MobileCheckupTrackerDaoImpl implements MobileCheckupTrackerDao {
 		if (cursor.moveToFirst()) {
 			Timestamp timestamp;
 			try {
-				timestamp = DateTimeParser
-						.getTimestamp(cursor.getString(1));
+				timestamp = DateTimeParser.getTimestamp(cursor.getString(1));
 			} catch (ParseException e) {
 				throw new DataAccessException(
 						"Cannot complete operation due to parse failure", e);
@@ -227,9 +228,9 @@ public class MobileCheckupTrackerDaoImpl implements MobileCheckupTrackerDao {
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 			}
 
-			CheckUp cu = new CheckUp(cursor.getInt(0), cursor.getString(7), timestamp, cursor.getString(5),
-					image, cursor.getString(2), cursor.getString(3),
-					cursor.getString(4));
+			CheckUp cu = new CheckUp(cursor.getInt(0), cursor.getString(7),
+					timestamp, cursor.getString(5), image, cursor.getString(2),
+					cursor.getString(3), cursor.getString(4));
 			return cu;
 		}
 

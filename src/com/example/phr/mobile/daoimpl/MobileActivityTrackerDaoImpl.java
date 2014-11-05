@@ -46,7 +46,7 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 				.getEntryID());
 
 		mobileActivityDao.addReturnsEntryId(activity.getActivity());
-
+		Log.e("act", activity.getDurationInSeconds() + "");
 		values.put(DatabaseHandler.ACT_DURATION,
 				activity.getDurationInSeconds());
 		values.put(DatabaseHandler.ACT_CALORIEBURNED,
@@ -222,7 +222,8 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 			throws DataAccessException, EntryNotFoundException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
-		ImageHandler.deleteImage(activity.getImage().getFileName());
+		if (activity.getImage() != null)
+			ImageHandler.deleteImage(activity.getImage().getFileName());
 		db.delete(DatabaseHandler.TABLE_ACTIVITY, DatabaseHandler.ACT_ID + "="
 				+ activity.getEntryID(), null);
 		db.close();

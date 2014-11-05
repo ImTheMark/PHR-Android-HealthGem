@@ -53,7 +53,7 @@ public class RegisterUserInformationActivity extends Activity {
 				.permitAll().build();
 
 		userService = new UserServiceImpl();
-		
+
 		StrictMode.setThreadPolicy(policy);
 		setContentView(R.layout.activity_registration_user_information);
 
@@ -107,15 +107,27 @@ public class RegisterUserInformationActivity extends Activity {
 
 		Intent in = getIntent();
 		Bundle extras = getIntent().getExtras();
-		
+
 		if (extras != null && in.hasExtra("mode")) {
 			isRegister = in.getExtras().getBoolean("mode");
+			User currUser = userService.getUser();
+			fullName.setText(currUser.getName());
+			contactNumber.setText(currUser.getContactNumber());
+			email.setText(currUser.getEmail());
+			height.setText(currUser.getHeight() + "");
+			weight.setText(currUser.getWeight() + "");
+			contactPerson.setText(currUser.getEmergencyPerson());
+			contactPersonNumber.setText(currUser.getEmergencyContactNumber());
+			allergies.setText(currUser.getAllergies());
+			knownHealthProblems.setText(currUser.getKnownHealthProblems());
+			birthdate.setText((currUser.getDateOfBirth() + "")
+					.subSequence(0, 9));
 		}
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		if(isRegister)
+		if (isRegister)
 			getMenuInflater().inflate(R.menu.menu_registration_next, menu);
 		else
 			getMenuInflater().inflate(R.menu.menu_registration_save, menu);
@@ -204,15 +216,22 @@ public class RegisterUserInformationActivity extends Activity {
 				editedUser.setName(fullName.getText().toString());
 				editedUser.setContactNumber(contactNumber.getText().toString());
 				editedUser.setEmail(email.getText().toString());
-				editedUser.setHeight(Double.parseDouble(height.getText().toString()));
-				editedUser.setWeight(Double.parseDouble(weight.getText().toString()));
-				editedUser.setEmergencyPerson(contactPerson.getText().toString());
-				editedUser.setEmergencyContactNumber(contactPersonNumber.getText().toString());
+				editedUser.setHeight(Double.parseDouble(height.getText()
+						.toString()));
+				editedUser.setWeight(Double.parseDouble(weight.getText()
+						.toString()));
+				editedUser.setEmergencyPerson(contactPerson.getText()
+						.toString());
+				editedUser.setEmergencyContactNumber(contactPersonNumber
+						.getText().toString());
 				editedUser.setAllergies(allergies.getText().toString());
-				editedUser.setKnownHealthProblems(knownHealthProblems.getText().toString());
+				editedUser.setKnownHealthProblems(knownHealthProblems.getText()
+						.toString());
 				editedUser.setGender(gender.getSelectedItem() + "");
 				try {
-					editedUser.setDateOfBirth(DateTimeParser.getTimestamp(birthdate.getText().toString() + " 00:00:00"));
+					editedUser.setDateOfBirth(DateTimeParser
+							.getTimestamp(birthdate.getText().toString()
+									+ " 00:00:00"));
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -227,7 +246,7 @@ public class RegisterUserInformationActivity extends Activity {
 					settingsDao.setWeightToPounds();
 				else
 					settingsDao.setWeightToKilograms();
-				
+
 				try {
 					userService.edit(editedUser);
 				} catch (ServiceException e) {

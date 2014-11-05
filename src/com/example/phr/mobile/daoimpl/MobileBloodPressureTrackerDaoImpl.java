@@ -148,7 +148,8 @@ public class MobileBloodPressureTrackerDaoImpl implements
 			EntryNotFoundException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
-		ImageHandler.deleteImage(bp.getImage().getFileName());
+		if (bp.getImage() != null)
+			ImageHandler.deleteImage(bp.getImage().getFileName());
 		db.delete(DatabaseHandler.TABLE_BLOODPRESSURE, DatabaseHandler.BP_ID
 				+ "=" + bp.getEntryID(), null);
 		db.close();
@@ -208,12 +209,10 @@ public class MobileBloodPressureTrackerDaoImpl implements
 		if (cursor.moveToFirst()) {
 			Timestamp timestamp;
 			try {
-				timestamp = DateTimeParser
-						.getTimestamp(cursor.getString(1));
+				timestamp = DateTimeParser.getTimestamp(cursor.getString(1));
 			} catch (ParseException e) {
 				throw new DataAccessException(
-						"An error has occured while trying to access data",
-						e);
+						"An error has occured while trying to access data", e);
 			}
 			PHRImage image = new PHRImage();
 			if (cursor.getString(5) == null)
@@ -222,9 +221,9 @@ public class MobileBloodPressureTrackerDaoImpl implements
 				image.setFileName(cursor.getString(5));
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 			}
-			BloodPressure bp = new BloodPressure(cursor.getInt(0),
-					timestamp, cursor.getString(4), image,
-					cursor.getInt(2), cursor.getInt(3));
+			BloodPressure bp = new BloodPressure(cursor.getInt(0), timestamp,
+					cursor.getString(4), image, cursor.getInt(2),
+					cursor.getInt(3));
 			return bp;
 		}
 

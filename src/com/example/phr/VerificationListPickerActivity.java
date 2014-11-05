@@ -10,20 +10,24 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.phr.adapter.SingleFoodAdapter;
 import com.example.phr.enums.TrackerInputType;
+import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.Activity;
 import com.example.phr.mobile.models.ActivityTrackerEntry;
 import com.example.phr.mobile.models.Food;
 import com.example.phr.mobile.models.FoodTrackerEntry;
 import com.example.phr.mobile.models.UnverifiedRestaurantEntry;
 import com.example.phr.mobile.models.UnverifiedSportsEstablishmentEntry;
+import com.example.phr.mobile.models.Weight;
 import com.example.phr.service.VerificationService;
+import com.example.phr.service.WeightTrackerService;
 import com.example.phr.serviceimpl.VerificationServiceImpl;
+import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
 
 public class VerificationListPickerActivity extends android.app.Activity {
 
@@ -87,15 +91,16 @@ public class VerificationListPickerActivity extends android.app.Activity {
 
 			activityList = verificationService.getActivityList();
 			List<String> actListNameOnly = new ArrayList<String>();
-			
-			for(Activity act : activityList)
+
+			for (Activity act : activityList)
 				actListNameOnly.add(act.getName());
-			
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-					R.layout.item_custom_listview, actListNameOnly);
-			
+
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+					getApplicationContext(), R.layout.item_custom_listview,
+					actListNameOnly);
+
 			listView.setAdapter(adapter);
-			
+
 			listView.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
@@ -103,12 +108,22 @@ public class VerificationListPickerActivity extends android.app.Activity {
 						int arg2, long arg3) {
 
 					Activity chosenActivity = activityList.get(arg2);
+					Weight weight = null;
+					WeightTrackerService weightService = new WeightTrackerServiceImpl();
+					try {
+						weight = weightService.getLatest();
+					} catch (ServiceException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					double cal = chosenActivity.getMET()
+							* weight.getWeightInKilograms() * 1;
 
 					ActivityTrackerEntry actEntry = new ActivityTrackerEntry(
 							sportsEntry.getEntryID(), sportsEntry
 									.getFacebookID(), sportsEntry
 									.getTimestamp(), sportsEntry.getStatus(),
-							sportsEntry.getImage(), chosenActivity, 1.0, 3600);
+							sportsEntry.getImage(), chosenActivity, cal, 3600);
 
 					Intent i = new Intent(getApplicationContext(),
 							NewStatusActivity.class);

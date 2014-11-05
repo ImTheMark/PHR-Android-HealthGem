@@ -94,15 +94,13 @@ public class StatusAdapter extends BaseAdapter {
 
 		viewHolder.status.setText(mListOfStatus.get(position).getStatus());
 
-		viewHolder.imgPostVia
-				.setImageResource(R.drawable.activitystatusfeed_heart_gem_supersmall);
+		if (mListOfStatus.get(position).getFacebookID() != null)
+			viewHolder.imgPostVia
+					.setImageResource(R.drawable.activitystatusfeed_icon_small_facebook);
+		else
+			viewHolder.imgPostVia
+					.setImageResource(R.drawable.activitystatusfeed_heart_gem_supersmall);
 
-		/*
-		 * if(mListOfStatus.get(position).getFbPost().getId() != null)
-		 * viewHolder.imgPostVia.setImageDrawable(); else
-		 * viewHolder.imgPostVia.setImageDrawable(mListOfStatus.get(position)
-		 * .getPostViaImgUrl());
-		 */
 		if (mListOfStatus.get(position).getClass()
 				.equals(ActivityTrackerEntry.class)) {
 			viewHolder.actionHolder.setText("Doing ");

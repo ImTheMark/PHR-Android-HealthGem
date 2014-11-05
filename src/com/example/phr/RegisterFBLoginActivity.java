@@ -51,7 +51,10 @@ public class RegisterFBLoginActivity extends Activity {
 	private LoginButton btnLogin;
 	private UiLifecycleHelper uiHelper;
 	private static final List<String> PERMISSIONS = Arrays.asList(
-			"user_birthday", "email", "read_stream");
+			"user_birthday", "email", "read_stream", "user_photos",
+			"user_status", "user_actions:instapp");
+	private static final List<String> PUBLISH_PERMISSIONS = Arrays
+			.asList("publish_actions");
 	private TextView userName;
 	public static GraphUser user;
 	public static String userID;
@@ -93,7 +96,8 @@ public class RegisterFBLoginActivity extends Activity {
 
 		userName = (TextView) findViewById(R.id.textViewRegistrationFBTitle);
 		btnLogin = (LoginButton) findViewById(R.id.fb_login_button);
-		btnLogin.setReadPermissions(PERMISSIONS);
+		// btnLogin.setReadPermissions(PERMISSIONS);
+		btnLogin.setPublishPermissions(PUBLISH_PERMISSIONS);
 		btnLogin.setUserInfoChangedCallback(new UserInfoChangedCallback() {
 			@Override
 			public void onUserInfoFetched(GraphUser user) {
@@ -114,7 +118,7 @@ public class RegisterFBLoginActivity extends Activity {
 
 		Intent in = getIntent();
 		Bundle extras = getIntent().getExtras();
-		
+
 		if (extras != null && in.hasExtra("mode")) {
 			isRegister = in.getExtras().getBoolean("mode");
 		}
@@ -139,7 +143,7 @@ public class RegisterFBLoginActivity extends Activity {
 		if (s != null) {
 			return s.getPermissions().contains(
 					Arrays.asList("user_birthday", "email", "read_stream",
-							"publish_actions"));
+							"publish_actions", "user_photos"));
 		} else
 			return false;
 	}
@@ -183,7 +187,7 @@ public class RegisterFBLoginActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		if(isRegister)
+		if (isRegister)
 			getMenuInflater().inflate(R.menu.menu_registration_next, menu);
 		else
 			getMenuInflater().inflate(R.menu.menu_registration_save, menu);
@@ -267,9 +271,10 @@ public class RegisterFBLoginActivity extends Activity {
 			}
 			return true;
 		case R.id.menu_item_save:
-			if(user != null){
+			if (user != null) {
 				User editedUser = userService.getUser();
-				editedUser.setFbAccessToken(HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_FBACCESSTOKEN));
+				editedUser.setFbAccessToken(HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_FBACCESSTOKEN));
 				try {
 					userService.edit(editedUser);
 				} catch (ServiceException e) {

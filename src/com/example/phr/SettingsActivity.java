@@ -24,6 +24,7 @@ public class SettingsActivity extends Activity {
 	private RadioGroup radioGroupHeight;
 	private Button logoutButton;
 	private Button fbButton;
+	private Button editUser;
 	private ToggleButton bloodPressureButton;
 	private ToggleButton bloodSugarButton;
 	private MobileSettingsDao settingsDao;
@@ -42,11 +43,23 @@ public class SettingsActivity extends Activity {
 		radioGroupWeight = (RadioGroup) findViewById(R.id.radioGroupSettingWeight);
 		logoutButton = (Button) findViewById(R.id.btnLogout);
 		fbButton = (Button) findViewById(R.id.settingsFBLogin);
+		editUser = (Button) findViewById(R.id.btnUpdate);
 		bloodPressureButton = (ToggleButton) findViewById(R.id.settingsToggleButtonBloodPressure);
 		bloodSugarButton = (ToggleButton) findViewById(R.id.settingsToggleButtonBloodSugar);
-		
+
+		editUser.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(getApplicationContext(),
+						RegisterUserInformationActivity.class);
+				intent.putExtra("mode", false);
+				startActivity(intent);
+			}
+		});
+
 		fbButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				Intent intent = new Intent(getApplicationContext(),
@@ -73,9 +86,9 @@ public class SettingsActivity extends Activity {
 
 					@Override
 					public void onCheckedChanged(RadioGroup arg0, int checkedID) {
-						if (checkedID == R.id.radioGroupSettingHeightButtonFT)
+						if (checkedID == R.id.radioGroupSettingHeightButtonFT) {
 							settingsDao.setHeightToFeet();
-						else
+						} else
 							settingsDao.setHeightToCentimeters();
 					}
 				});
@@ -86,9 +99,9 @@ public class SettingsActivity extends Activity {
 					@Override
 					public void onCheckedChanged(RadioGroup arg0, int checkedID) {
 						if (checkedID == R.id.radioGroupSettingWeightButtonLBS)
-							settingsDao.setHeightToFeet();
+							settingsDao.setWeightToPounds();
 						else
-							settingsDao.setHeightToCentimeters();
+							settingsDao.setWeightToKilograms();
 					}
 				});
 

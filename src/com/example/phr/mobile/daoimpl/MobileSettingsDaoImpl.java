@@ -16,35 +16,51 @@ public class MobileSettingsDaoImpl implements MobileSettingsDao {
 	@Override
 	public void setBloodPressureNotificationOn() {
 		HealthGem.getSharedPreferences().savePreferences(
-				HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODPRESSURE, "1");
+				HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODPRESSURE,
+				"1");
 	}
 
 	@Override
 	public void setBloodPressureNotificationOff() {
 		HealthGem.getSharedPreferences().savePreferences(
-				HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODPRESSURE, "0");
+				HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODPRESSURE,
+				"0");
 	}
 
 	@Override
 	public Boolean getBloodSugarNotificationSetting() {
-		return Boolean.getBoolean(HealthGem.getSharedPreferences().loadPreferences(HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODPRESSURE));
+		return Boolean
+				.getBoolean(HealthGem
+						.getSharedPreferences()
+						.loadPreferences(
+								HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODPRESSURE));
 	}
 
 	@Override
 	public void setBloodSugarNotificationOn() {
-		HealthGem.getSharedPreferences().savePreferences(
-				HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODSUGAR, "1");
+		HealthGem
+				.getSharedPreferences()
+				.savePreferences(
+						HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODSUGAR,
+						"1");
 	}
 
 	@Override
 	public void setBloodSugarNotificationOff() {
-		HealthGem.getSharedPreferences().savePreferences(
-				HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODSUGAR, "0");
+		HealthGem
+				.getSharedPreferences()
+				.savePreferences(
+						HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODSUGAR,
+						"0");
 	}
 
 	@Override
 	public Boolean getBloodPressureNotificationSetting() {
-		return Boolean.getBoolean(HealthGem.getSharedPreferences().loadPreferences(HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODSUGAR));
+		return Boolean
+				.getBoolean(HealthGem
+						.getSharedPreferences()
+						.loadPreferences(
+								HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODSUGAR));
 	}
 
 	@Override
@@ -61,13 +77,19 @@ public class MobileSettingsDaoImpl implements MobileSettingsDao {
 
 	@Override
 	public Boolean isWeightSettingInPounds() {
-		return Boolean.getBoolean(HealthGem.getSharedPreferences().loadPreferences(HealthGem.getSharedPreferences().SETTINGS_WEIGHTUNIT));
+		int x = Integer.parseInt(HealthGem.getSharedPreferences()
+				.loadPreferences(
+						HealthGem.getSharedPreferences().SETTINGS_WEIGHTUNIT));
+		if (x == 1)
+			return false;
+		else
+			return true;
 	}
 
 	@Override
 	public void setHeightToFeet() {
 		HealthGem.getSharedPreferences().savePreferences(
-			HealthGem.getSharedPreferences().SETTINGS_HEIGHTUNIT, "1");
+				HealthGem.getSharedPreferences().SETTINGS_HEIGHTUNIT, "1");
 	}
 
 	@Override
@@ -78,7 +100,12 @@ public class MobileSettingsDaoImpl implements MobileSettingsDao {
 
 	@Override
 	public Boolean isHeightSettingInFeet() {
-		return Boolean.getBoolean(HealthGem.getSharedPreferences().loadPreferences(HealthGem.getSharedPreferences().SETTINGS_HEIGHTUNIT));
+		int x = Integer.parseInt(HealthGem.getSharedPreferences()
+				.loadPreferences(
+						HealthGem.getSharedPreferences().SETTINGS_HEIGHTUNIT));
+		if (x == 1)
+			return true;
+		else
+			return false;
 	}
-
 }

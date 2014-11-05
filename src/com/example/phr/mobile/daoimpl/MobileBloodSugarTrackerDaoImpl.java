@@ -19,7 +19,6 @@ import com.example.phr.exceptions.ImageHandlerException;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileBloodSugarTrackerDao;
 import com.example.phr.mobile.models.BloodSugar;
-import com.example.phr.mobile.models.FBPost;
 import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.tools.DateTimeParser;
 import com.example.phr.tools.ImageHandler;
@@ -139,7 +138,8 @@ public class MobileBloodSugarTrackerDaoImpl implements
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 				}
 
-				BloodSugar bs = new BloodSugar(cursor.getInt(0), cursor.getString(6), timestamp, cursor.getString(4),
+				BloodSugar bs = new BloodSugar(cursor.getInt(0),
+						cursor.getString(6), timestamp, cursor.getString(4),
 						image, cursor.getDouble(2), cursor.getString(3));
 
 				bsList.add(bs);
@@ -155,7 +155,8 @@ public class MobileBloodSugarTrackerDaoImpl implements
 			EntryNotFoundException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
-		ImageHandler.deleteImage(bloodSugar.getImage().getFileName());
+		if (bloodSugar.getImage() != null)
+			ImageHandler.deleteImage(bloodSugar.getImage().getFileName());
 		db.delete(DatabaseHandler.TABLE_BLOODSUGAR, DatabaseHandler.BS_ID + "="
 				+ bloodSugar.getEntryID(), null);
 		db.close();
@@ -192,7 +193,8 @@ public class MobileBloodSugarTrackerDaoImpl implements
 					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 				}
 
-				BloodSugar bs = new BloodSugar(cursor.getInt(0), cursor.getString(6), timestamp, cursor.getString(4),
+				BloodSugar bs = new BloodSugar(cursor.getInt(0),
+						cursor.getString(6), timestamp, cursor.getString(4),
 						image, cursor.getDouble(2), cursor.getString(3));
 
 				bsList.add(bs);
@@ -216,8 +218,7 @@ public class MobileBloodSugarTrackerDaoImpl implements
 		if (cursor.moveToFirst()) {
 			Timestamp timestamp;
 			try {
-				timestamp = DateTimeParser
-						.getTimestamp(cursor.getString(1));
+				timestamp = DateTimeParser.getTimestamp(cursor.getString(1));
 			} catch (ParseException e) {
 				throw new DataAccessException(
 						"Cannot complete operation due to parse failure", e);
@@ -232,8 +233,9 @@ public class MobileBloodSugarTrackerDaoImpl implements
 				Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
 			}
 
-			BloodSugar bs = new BloodSugar(cursor.getInt(0), cursor.getString(6), timestamp, cursor.getString(4),
-					image, cursor.getDouble(2), cursor.getString(3));
+			BloodSugar bs = new BloodSugar(cursor.getInt(0),
+					cursor.getString(6), timestamp, cursor.getString(4), image,
+					cursor.getDouble(2), cursor.getString(3));
 			return bs;
 		}
 

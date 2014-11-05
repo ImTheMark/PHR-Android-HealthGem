@@ -188,7 +188,7 @@ public class FoodTrackerDailyActivity extends Activity {
 							}
 
 							Intent i = new Intent(getApplicationContext(),
-									FoodTrackerDailyActivity.class);
+									GroupedFoodTrackerActivity.class);
 							startActivity(i);
 						}
 					}

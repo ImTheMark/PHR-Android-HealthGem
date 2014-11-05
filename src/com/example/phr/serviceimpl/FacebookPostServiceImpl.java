@@ -19,7 +19,7 @@ public class FacebookPostServiceImpl implements FacebookPostService {
 	public String publish(String message) throws FacebookException {
 		facebook = new FacebookFactory().getInstance();
 		facebook.setOAuthAppId(appID, appSecret);
-		String permissions = "publish_actions,email,user_groups,user_status,read_stream,user_actions:instapp";
+		String permissions = "publish_actions";
 		facebook.setOAuthPermissions(permissions);
 
 		facebook.setOAuthAccessToken(new AccessToken(HealthGem

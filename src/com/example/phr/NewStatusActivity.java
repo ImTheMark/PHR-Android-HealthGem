@@ -289,17 +289,17 @@ public class NewStatusActivity extends android.app.Activity {
 		txtActivityDuration.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				callActivityDurationInput(Integer.parseInt(txtActivityDuration
-						.getText().toString()), txtActivityDurationUnit
-						.toString());
+				callActivityDurationInput(Double
+						.parseDouble(txtActivityDuration.getText().toString()),
+						txtActivityDurationUnit.toString());
 			}
 		});
 		txtActivityDurationUnit.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				callActivityDurationInput(Integer.parseInt(txtActivityDuration
-						.getText().toString()), txtActivityDurationUnit
-						.toString());
+				callActivityDurationInput(Double
+						.parseDouble(txtActivityDuration.getText().toString()),
+						txtActivityDurationUnit.toString());
 			}
 		});
 		txtActivity.setOnClickListener(new OnClickListener() {
@@ -722,7 +722,7 @@ public class NewStatusActivity extends android.app.Activity {
 		if (unit.equals("hr"))
 			cal = met * weight.getWeightInKilograms() * duration;
 		else if (unit.equals("min"))
-			cal = met * weight.getWeightInKilograms() * duration * 60;
+			cal = met * weight.getWeightInKilograms() * (duration / 60.0);
 
 		txtActivityCal.setText(df.format(cal));
 		if (image != null) {
@@ -847,50 +847,58 @@ public class NewStatusActivity extends android.app.Activity {
 
 		// check if the request code is same as what is passed here it is 2
 		if (requestCode == 2) {
-			String item = data.getStringExtra("itemValue");
-			Log.e("itemValue = ", item);
-			if (item.equals(TrackerInputType.BLOOD_PRESSURE)) {
-				currentTracker = TrackerInputType.BLOOD_PRESSURE;
-				txtCurrentTracker.setText(TrackerInputType.BLOOD_PRESSURE);
-				callBloodPressureInput(120, 80);
-			} else if (item.equals(TrackerInputType.BLOOD_SUGAR)) {
-				txtCurrentTracker.setText(TrackerInputType.BLOOD_SUGAR);
-				Log.e("txtCuurent", txtCurrentTracker.getText().toString());
-				currentTracker = TrackerInputType.BLOOD_SUGAR;
-				callBloodSugarInput(120, "before meal");
-			} else if (item.equals(TrackerInputType.NOTES)) {
-				txtCurrentTracker.setText(TrackerInputType.NOTES);
-				currentTracker = TrackerInputType.NOTES;
-				callNotesInput();
-			} else if (item.equals(TrackerInputType.WEIGHT)) {
-				txtCurrentTracker.setText(TrackerInputType.WEIGHT);
-				currentTracker = TrackerInputType.WEIGHT;
-				callWeightInput("100", "lb");
-			} else if (item.equals(TrackerInputType.FOOD)) {
-				txtCurrentTracker.setText(TrackerInputType.FOOD);
-				currentTracker = TrackerInputType.FOOD;
-				callFoodInput();
-			} else if (item.equals(TrackerInputType.CHECKUP)) {
-				txtCurrentTracker.setText(TrackerInputType.CHECKUP);
-				currentTracker = TrackerInputType.CHECKUP;
-				callCheckUpInput("", "");
-			} else if (item.equals(TrackerInputType.ACTIVITY)) {
-				txtCurrentTracker.setText(TrackerInputType.ACTIVITY);
-				currentTracker = TrackerInputType.ACTIVITY;
-				callActivityInput();
+			if (data != null) {
+				String item = data.getStringExtra("itemValue");
+				Log.e("itemValue = ", item);
+				if (item.equals(TrackerInputType.BLOOD_PRESSURE)) {
+					currentTracker = TrackerInputType.BLOOD_PRESSURE;
+					txtCurrentTracker.setText(TrackerInputType.BLOOD_PRESSURE);
+					callBloodPressureInput(120, 80);
+				} else if (item.equals(TrackerInputType.BLOOD_SUGAR)) {
+					txtCurrentTracker.setText(TrackerInputType.BLOOD_SUGAR);
+					Log.e("txtCuurent", txtCurrentTracker.getText().toString());
+					currentTracker = TrackerInputType.BLOOD_SUGAR;
+					callBloodSugarInput(120, "before meal");
+				} else if (item.equals(TrackerInputType.NOTES)) {
+					txtCurrentTracker.setText(TrackerInputType.NOTES);
+					currentTracker = TrackerInputType.NOTES;
+					callNotesInput();
+				} else if (item.equals(TrackerInputType.WEIGHT)) {
+					txtCurrentTracker.setText(TrackerInputType.WEIGHT);
+					currentTracker = TrackerInputType.WEIGHT;
+					callWeightInput("100", "lb");
+				} else if (item.equals(TrackerInputType.FOOD)) {
+					txtCurrentTracker.setText(TrackerInputType.FOOD);
+					currentTracker = TrackerInputType.FOOD;
+					callFoodInput();
+				} else if (item.equals(TrackerInputType.CHECKUP)) {
+					txtCurrentTracker.setText(TrackerInputType.CHECKUP);
+					currentTracker = TrackerInputType.CHECKUP;
+					callCheckUpInput("", "");
+				} else if (item.equals(TrackerInputType.ACTIVITY)) {
+					txtCurrentTracker.setText(TrackerInputType.ACTIVITY);
+					currentTracker = TrackerInputType.ACTIVITY;
+					callActivityInput();
+				}
 			}
 		} else if (requestCode == 3) {
 			// String activity = data.getStringExtra("activity chosen");
-			chosenActivity = (Activity) data.getExtras().getSerializable(
-					"activity chosen");
-			currentTracker = TrackerInputType.ACTIVITY;
-			txtCurrentTracker.setText(TrackerInputType.ACTIVITY);
-			callActivityDurationInput(1, "hr");
+			if (data != null && data.getExtras() != null) {
+				chosenActivity = (Activity) data.getExtras().getSerializable(
+						"activity chosen");
+				currentTracker = TrackerInputType.ACTIVITY;
+				txtCurrentTracker.setText(TrackerInputType.ACTIVITY);
+				callActivityDurationInput(1, "hr");
+			}
 		} else if (requestCode == 4) {
-			chosenFood = (Food) data.getExtras().getSerializable("food chosen");
-			txtCurrentTracker.setText(TrackerInputType.FOOD);
-			currentTracker = TrackerInputType.FOOD;
-			callFoodServingInput(chosenFood, 1.0);
+			if (data != null && data.getExtras() != null) {
+
+				chosenFood = (Food) data.getExtras().getSerializable(
+						"food chosen");
+				txtCurrentTracker.setText(TrackerInputType.FOOD);
+				currentTracker = TrackerInputType.FOOD;
+				callFoodServingInput(chosenFood, 1.0);
+			}
 
 		} else if (requestCode == CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE) {
 			// Get our saved file into a bitmap object:
@@ -1002,7 +1010,7 @@ public class NewStatusActivity extends android.app.Activity {
 		alertD.show();
 	}
 
-	private void callActivityDurationInput(int number, String unit) {
+	private void callActivityDurationInput(double number, String unit) {
 		// TODO Auto-generated method stub
 
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
@@ -1464,15 +1472,18 @@ public class NewStatusActivity extends android.app.Activity {
 				image = null;
 			ActivityTrackerEntry activityEntry = null;
 			int sec = 0;
-			if (txtActivityDurationUnit.toString().equals("hr"))
-				sec = Integer.parseInt(txtActivityDuration.toString()) * 3600;
-			else if (txtActivityDurationUnit.toString().equals("min"))
-				sec = Integer.parseInt(activityDuration.toString()) * 60;
-
+			if (txtActivityDurationUnit.getText().toString().equals("hr"))
+				sec = (int) Math.round(Double.parseDouble(txtActivityDuration
+						.getText().toString()) * 3600);
+			else if (txtActivityDurationUnit.getText().toString().equals("min"))
+				sec = (int) Math.round(Double.parseDouble(activityDuration
+						.getText().toString()) * 60);
 			activityEntry = new ActivityTrackerEntry(timestamp, notesStatus
 					.getText().toString(), image, chosenActivity,
 					Double.parseDouble(txtActivityCal.getText().toString()),
 					sec);
+
+			Log.e("newstatus secs", activityEntry.getDurationInSeconds() + "");
 
 			ActivityTrackerService activityTrackerService = new ActivityTrackerServiceImpl();
 			activityTrackerService.add(activityEntry);
@@ -2010,10 +2021,12 @@ public class NewStatusActivity extends android.app.Activity {
 			}
 
 			int sec = 0;
-			if (txtActivityDurationUnit.toString().equals("hr"))
-				sec = Integer.parseInt(txtActivityDuration.toString()) * 3600;
-			else if (txtActivityDurationUnit.toString().equals("min"))
-				sec = Integer.parseInt(activityDuration.toString()) * 60;
+			if (txtActivityDurationUnit.getText().toString().equals("hr"))
+				sec = (int) Math.round(Double.parseDouble(txtActivityDuration
+						.getText().toString()) * 3600);
+			else if (txtActivityDurationUnit.getText().toString().equals("min"))
+				sec = (int) Math.round(Double.parseDouble(activityDuration
+						.getText().toString()) * 60);
 
 			VerificationService verificationService = new VerificationServiceImpl();
 			ActivityTrackerEntry activityEntry = new ActivityTrackerEntry(
@@ -2051,10 +2064,12 @@ public class NewStatusActivity extends android.app.Activity {
 			}
 			VerificationService verificationService = new VerificationServiceImpl();
 			int sec = 0;
-			if (txtActivityDurationUnit.toString().equals("hr"))
-				sec = Integer.parseInt(txtActivityDuration.toString()) * 3600;
-			else if (txtActivityDurationUnit.toString().equals("min"))
-				sec = Integer.parseInt(activityDuration.toString()) * 60;
+			if (txtActivityDurationUnit.getText().toString().equals("hr"))
+				sec = (int) Math.round(Double.parseDouble(txtActivityDuration
+						.getText().toString()) * 3600);
+			else if (txtActivityDurationUnit.getText().toString().equals("min"))
+				sec = (int) Math.round(Double.parseDouble(activityDuration
+						.getText().toString()) * 60);
 
 			ActivityTrackerEntry activityEntry = new ActivityTrackerEntry(
 					unferifiedActivity.getFacebookID(),

@@ -220,7 +220,9 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 			EntryNotFoundException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
-		ImageHandler.deleteImage(food.getImage().getFileName());
+
+		if (food.getImage() != null)
+			ImageHandler.deleteImage(food.getImage().getFileName());
 		db.delete(DatabaseHandler.TABLE_FOOD, DatabaseHandler.FOOD_ID + "="
 				+ food.getEntryID(), null);
 		db.close();

@@ -107,17 +107,20 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 		}
 
 		db.close();
-		return null;
+		return list;
 	}
 
 	@Override
 	public void storeEncodedImage(String encodedImage) {
-		HealthGem.getSharedPreferences().savePreferences(SPreference.VERIFICATION_TEMP_IMAGE, ImageHandler.saveImageReturnFileName(encodedImage));
+		HealthGem.getSharedPreferences().savePreferences(
+				SPreference.VERIFICATION_TEMP_IMAGE,
+				ImageHandler.saveImageReturnFileName(encodedImage));
 	}
 
 	@Override
 	public String getImageFileName() {
-		return HealthGem.getSharedPreferences().loadPreferences(SPreference.VERIFICATION_TEMP_IMAGE);
+		return HealthGem.getSharedPreferences().loadPreferences(
+				SPreference.VERIFICATION_TEMP_IMAGE);
 	}
 
 }

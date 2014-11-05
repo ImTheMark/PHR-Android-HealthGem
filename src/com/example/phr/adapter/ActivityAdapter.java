@@ -3,6 +3,7 @@ package com.example.phr.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +80,10 @@ public class ActivityAdapter extends BaseAdapter {
 				.getDate(mListOfActivity.get(position).getTimestamp())));
 		viewHolder.time.setText(String.valueOf(DateTimeParser
 				.getTime(mListOfActivity.get(position).getTimestamp())));
-		double hr = mListOfActivity.get(position).getDurationInSeconds() / 3600;
+		double hr = mListOfActivity.get(position).getDurationInSeconds() / 3600.0;
+		Log.e("duration", mListOfActivity.get(position).getDurationInSeconds()
+				+ "");
+		Log.e("adapter hr", hr + "");
 		viewHolder.duration.setText(String.valueOf(hr));
 		viewHolder.calBurned.setText(String.valueOf(mListOfActivity.get(
 				position).getCaloriesBurnedPerHour()));
