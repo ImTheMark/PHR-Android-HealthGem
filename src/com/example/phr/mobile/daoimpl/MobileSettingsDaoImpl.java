@@ -29,11 +29,13 @@ public class MobileSettingsDaoImpl implements MobileSettingsDao {
 
 	@Override
 	public Boolean getBloodSugarNotificationSetting() {
-		return Boolean
-				.getBoolean(HealthGem
-						.getSharedPreferences()
-						.loadPreferences(
-								HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODPRESSURE));
+		int x = Integer.parseInt(HealthGem.getSharedPreferences()
+				.loadPreferences(
+						HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODPRESSURE));
+		if (x == 1)
+			return true;
+		else
+			return false;
 	}
 
 	@Override
@@ -56,11 +58,13 @@ public class MobileSettingsDaoImpl implements MobileSettingsDao {
 
 	@Override
 	public Boolean getBloodPressureNotificationSetting() {
-		return Boolean
-				.getBoolean(HealthGem
-						.getSharedPreferences()
-						.loadPreferences(
-								HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODSUGAR));
+		int x = Integer.parseInt(HealthGem.getSharedPreferences()
+				.loadPreferences(
+						HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODSUGAR));
+		if (x == 1)
+			return true;
+		else
+			return false;
 	}
 
 	@Override
