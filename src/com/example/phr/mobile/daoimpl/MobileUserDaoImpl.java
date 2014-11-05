@@ -22,13 +22,13 @@ public class MobileUserDaoImpl implements MobileUserDao {
 		HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_FBUSERNAME, "");
 		HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_NAME, "");
 		HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_GENDER, "");
-		HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_HEIGHT, "");
+		HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_HEIGHTINCHES, "");
 		HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_KNOWNHEALTHPROBLEMS, "");
 		HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_EMAIL, "");
 		HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_CONTACTNUMBER, "");
 		HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_USERNAME, "");
 		HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_PASSWORD, "");
-		HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_WEIGHT, "");
+		HealthGem.getSharedPreferences().savePreferences(SPreference.REGISTER_WEIGHTPOUNDS, "");
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class MobileUserDaoImpl implements MobileUserDao {
 		HealthGem.getSharedPreferences().savePreferences(SPreference.FBUSERNAME, HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_FBUSERNAME));
 		HealthGem.getSharedPreferences().savePreferences(SPreference.NAME, HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_NAME));
 		HealthGem.getSharedPreferences().savePreferences(SPreference.GENDER, HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_GENDER));
-		HealthGem.getSharedPreferences().savePreferences(SPreference.HEIGHT, HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_HEIGHT));
+		HealthGem.getSharedPreferences().savePreferences(SPreference.HEIGHTINCHES, HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_HEIGHTINCHES));
 		HealthGem.getSharedPreferences().savePreferences(SPreference.KNOWNHEALTHPROBLEMS,
 				HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_KNOWNHEALTHPROBLEMS));
 		HealthGem.getSharedPreferences().savePreferences(SPreference.EMAIL, HealthGem.getSharedPreferences().loadPreferences(SPreference.REGISTER_EMAIL));
@@ -61,7 +61,7 @@ public class MobileUserDaoImpl implements MobileUserDao {
 		HealthGem.getSharedPreferences().savePreferences(SPreference.FBACCESSTOKEN, user.getFbAccessToken());
 		HealthGem.getSharedPreferences().savePreferences(SPreference.NAME, user.getName());
 		HealthGem.getSharedPreferences().savePreferences(SPreference.GENDER, user.getGender());
-		HealthGem.getSharedPreferences().savePreferences(SPreference.HEIGHT, user.getHeight() + "");
+		HealthGem.getSharedPreferences().savePreferences(SPreference.HEIGHTINCHES, user.getHeight() + "");
 		HealthGem.getSharedPreferences().savePreferences(SPreference.KNOWNHEALTHPROBLEMS, user.getKnownHealthProblems());
 		HealthGem.getSharedPreferences().savePreferences(SPreference.EMAIL, user.getEmail());
 		HealthGem.getSharedPreferences().savePreferences(SPreference.NUMBER, user.getContactNumber());

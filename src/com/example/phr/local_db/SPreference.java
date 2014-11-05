@@ -15,8 +15,8 @@ public class SPreference {
 	public static final String REGISTER_EMAIL = "rEmail";
 	public static final String REGISTER_BIRTHDATE = "rBirthdate";
 	public static final String REGISTER_GENDER = "rGender";
-	public static final String REGISTER_HEIGHT = "rHeight";
-	public static final String REGISTER_WEIGHT = "rWeight";
+	public static final String REGISTER_HEIGHTINCHES = "rHeight";
+	public static final String REGISTER_WEIGHTPOUNDS = "rWeight";
 	public static final String REGISTER_CONTACTPERSON = "rContactPerson";
 	public static final String REGISTER_CONTACTPERSONNUMBER = "rContactPersonNumber";
 	public static final String REGISTER_ALLERGIES = "rAllergies";
@@ -30,7 +30,7 @@ public class SPreference {
 	public static final String EMAIL = "Email";
 	public static final String BIRTHDATE = "Birthdate";
 	public static final String GENDER = "Gender";
-	public static final String HEIGHT = "Height";
+	public static final String HEIGHTINCHES = "Height";
 	public static final String CONTACTPERSON = "ContactPerson";
 	public static final String CONTACTPERSONNUMBER = "ContactPersonNumber";
 	public static final String ALLERGIES = "Allergies";

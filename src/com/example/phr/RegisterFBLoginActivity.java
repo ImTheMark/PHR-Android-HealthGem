@@ -228,7 +228,7 @@ public class RegisterFBLoginActivity extends Activity {
 						.loadPreferences(SPreference.REGISTER_GENDER));
 				newUser.setHeight(Double.parseDouble(HealthGem
 						.getSharedPreferences().loadPreferences(
-								SPreference.REGISTER_HEIGHT)));
+								SPreference.REGISTER_HEIGHTINCHES)));
 				newUser.setKnownHealthProblems(HealthGem.getSharedPreferences()
 						.loadPreferences(
 								SPreference.REGISTER_KNOWNHEALTHPROBLEMS));
@@ -240,9 +240,7 @@ public class RegisterFBLoginActivity extends Activity {
 						.loadPreferences(SPreference.REGISTER_USERNAME));
 				newUser.setWeight(Double.parseDouble(HealthGem
 						.getSharedPreferences().loadPreferences(
-								SPreference.REGISTER_WEIGHT)));
-				newUser.setGender(HealthGem.getSharedPreferences()
-						.loadPreferences(SPreference.REGISTER_GENDER));
+								SPreference.REGISTER_WEIGHTPOUNDS)));
 
 				if (user != null)
 					newUser.setFbAccessToken(HealthGem
