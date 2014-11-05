@@ -174,4 +174,19 @@ public class VerificationServiceImpl implements VerificationService {
 		return mobileVerificationDao.getImageFileName();
 	}
 
+	@Override
+	public void setUnverifiedPostsCount(int count) {
+		mobileVerificationDao.setUnverifiedPostsCount(count);
+	}
+
+	@Override
+	public void decreaseUnverifiedPostsCount() {
+		mobileVerificationDao.decreaseUnverifiedPostsCount();
+	}
+
+	@Override
+	public int getUnverifiedPostsCount() {
+		return mobileVerificationDao.getUnverifiedPostsCount();
+	}
+
 }

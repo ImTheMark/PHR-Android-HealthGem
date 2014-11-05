@@ -123,4 +123,25 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 				SPreference.VERIFICATION_TEMP_IMAGE);
 	}
 
+	@Override
+	public void setUnverifiedPostsCount(int count) {
+		HealthGem.getSharedPreferences().savePreferences(
+				SPreference.VERIFICATION_COUNT,
+				count+"");
+	}
+
+	@Override
+	public void decreaseUnverifiedPostsCount() {
+		int x = getUnverifiedPostsCount();
+		if(x > 0)
+			setUnverifiedPostsCount(x-1);
+	}
+
+	@Override
+	public int getUnverifiedPostsCount() {
+		int x = Integer.parseInt(HealthGem.getSharedPreferences().loadPreferences(
+				SPreference.VERIFICATION_COUNT));
+		return x;
+	}
+
 }

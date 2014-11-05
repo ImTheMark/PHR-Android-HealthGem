@@ -27,6 +27,12 @@ public interface VerificationService {
 	
 	public String getImageFileName();
 	
+	public void setUnverifiedPostsCount(int count);
+	
+	public void decreaseUnverifiedPostsCount();
+	
+	public int getUnverifiedPostsCount();
+	
 	public void updateListOfUnverifiedPosts() throws ServiceException,
 			OutdatedAccessTokenException;
 

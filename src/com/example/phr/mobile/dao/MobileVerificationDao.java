@@ -18,5 +18,11 @@ public interface MobileVerificationDao {
 	public void storeEncodedImage(String encodedImage);
 	
 	public String getImageFileName();
+	
+	public void setUnverifiedPostsCount(int count);
+	
+	public void decreaseUnverifiedPostsCount();
+	
+	public int getUnverifiedPostsCount();
 
 }
