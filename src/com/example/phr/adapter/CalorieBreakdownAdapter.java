@@ -1,5 +1,6 @@
 package com.example.phr.adapter;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import android.content.Context;
@@ -54,7 +55,7 @@ public class CalorieBreakdownAdapter extends BaseAdapter {
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder viewHolder;
-
+		DecimalFormat df = new DecimalFormat("#.00");
 		if (convertView == null) {
 			LayoutInflater inflater = LayoutInflater.from(mContext);
 			convertView = inflater.inflate(R.layout.item_calorie_breakdown,
@@ -81,15 +82,16 @@ public class CalorieBreakdownAdapter extends BaseAdapter {
 		viewHolder = (ViewHolder) convertView.getTag();
 		if (mListOfCalorie.get(position).getClass()
 				.equals(FoodTrackerEntry.class)) {
-			
-			viewHolder.calorie.setText(String
-					.valueOf(((FoodTrackerEntry) mListOfCalorie.get(position))
+
+			viewHolder.calorie.setText(df
+					.format(((FoodTrackerEntry) mListOfCalorie.get(position))
 							.getFood().getCalorie()));
 			viewHolder.action.setText(((FoodTrackerEntry) mListOfCalorie
 					.get(position)).getFood().getName());
 			viewHolder.servingCount.setText(String
-					.valueOf(((FoodTrackerEntry) mListOfCalorie.get(position)).getServingCount()));
-			
+					.valueOf(((FoodTrackerEntry) mListOfCalorie.get(position))
+							.getServingCount()));
+
 			viewHolder.unit.setText(((FoodTrackerEntry) mListOfCalorie
 					.get(position)).getFood().getServing());
 
@@ -100,10 +102,12 @@ public class CalorieBreakdownAdapter extends BaseAdapter {
 			viewHolder.image.setImageResource(R.drawable.icon_food);
 		} else if (mListOfCalorie.get(position).getClass()
 				.equals(ActivityTrackerEntry.class)) {
-			
-			viewHolder.calorie.setText(String
-					.valueOf(((ActivityTrackerEntry) mListOfCalorie
-							.get(position)).getCaloriesBurnedPerHour()));
+
+			viewHolder.calorie
+					.setText(df.format(((ActivityTrackerEntry) mListOfCalorie
+							.get(position)).getCaloriesBurnedPerHour()
+							* (((ActivityTrackerEntry) mListOfCalorie
+									.get(position)).getDurationInSeconds() / 3600.0)));
 			viewHolder.action.setText(((ActivityTrackerEntry) mListOfCalorie
 					.get(position)).getActivity().getName());
 			double hr = ((ActivityTrackerEntry) mListOfCalorie.get(position))

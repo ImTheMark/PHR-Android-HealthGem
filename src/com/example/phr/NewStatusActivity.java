@@ -1280,10 +1280,26 @@ public class NewStatusActivity extends android.app.Activity {
 				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
 			} else
 				image = null;
+
+			FacebookPostService fbPostService = new FacebookPostServiceImpl();
+			String fbId = null;
+			if (((Boolean) mBtnFb.getTag()) == true)
+				try {
+					Log.e("fb", "call");
+					fbId = fbPostService.publish(notesStatus.getText()
+							+ " - measuring blood presure at "
+							+ String.valueOf(systolicPicker.getCurrent()) + "/"
+							+ String.valueOf(diastolicPicker.getCurrent())
+							+ " mm hg");
+					Log.e("fbId", fbId);
+				} catch (FacebookException e) {
+					Log.e("Unable to publish", e.getErrorMessage());
+				}
+
 			BloodPressure bp = new BloodPressure(timestamp, notesStatus
 					.getText().toString(), image, systolicPicker.getCurrent(),
 					diastolicPicker.getCurrent());
-
+			bp.setFacebookID(fbId);
 			BloodPressureTrackerService bpTrackerService = new BloodPressureTrackerServiceImpl();
 			bpTrackerService.add(bp);
 
@@ -1309,9 +1325,28 @@ public class NewStatusActivity extends android.app.Activity {
 				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
 			} else
 				image = null;
+
+			FacebookPostService fbPostService = new FacebookPostServiceImpl();
+			String fbId = null;
+			if (((Boolean) mBtnFb.getTag()) == true)
+				try {
+					Log.e("fb", "call");
+					fbId = fbPostService
+							.publish(notesStatus.getText()
+									+ " - measuring blood sugar at "
+									+ String.valueOf(sugarPicker.getCurrent())
+									+ " mmol/L"
+									+ " "
+									+ String.valueOf(sugarTypeSpinner
+											.getSelectedItem()));
+					Log.e("fbId", fbId);
+				} catch (FacebookException e) {
+					Log.e("Unable to publish", e.getErrorMessage());
+				}
 			BloodSugar bs = new BloodSugar(timestamp, notesStatus.getText()
 					.toString(), image, sugarPicker.getCurrent(),
 					String.valueOf(sugarTypeSpinner.getSelectedItem()));
+			bs.setFacebookID(fbId);
 			BloodSugarTrackerService bsTrackerService = new BloodSugarTrackerServiceImpl();
 			bsTrackerService.add(bs);
 
@@ -1347,9 +1382,22 @@ public class NewStatusActivity extends android.app.Activity {
 				newWeight = Double.parseDouble(String.valueOf(txtWeight
 						.getText()));
 			}
+			FacebookPostService fbPostService = new FacebookPostServiceImpl();
+			String fbId = null;
+			if (((Boolean) mBtnFb.getTag()) == true)
+				try {
+					Log.e("fb", "call");
+					fbId = fbPostService.publish(notesStatus.getText()
+							.toString()
+							+ " - measuring weight at "
+							+ String.valueOf(newWeight) + " lbs");
+					Log.e("fbId", fbId);
+				} catch (FacebookException e) {
+					Log.e("Unable to publish", e.getErrorMessage());
+				}
 			Weight weight = new Weight(timestamp, notesStatus.getText()
 					.toString(), image, newWeight);
-
+			weight.setFacebookID(fbId);
 			WeightTrackerService weightTrackerService = new WeightTrackerServiceImpl();
 			weightTrackerService.add(weight);
 
@@ -1375,9 +1423,21 @@ public class NewStatusActivity extends android.app.Activity {
 				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
 			} else
 				image = null;
+			FacebookPostService fbPostService = new FacebookPostServiceImpl();
+			String fbId = null;
+			if (((Boolean) mBtnFb.getTag()) == true)
+				try {
+					Log.e("fb", "call");
+					fbId = fbPostService.publish(notesStatus.getText()
+							.toString());
+					Log.e("fbId", fbId);
+				} catch (FacebookException e) {
+					Log.e("Unable to publish", e.getErrorMessage());
+				}
+
 			Note note = new Note(timestamp, null, image, notesStatus.getText()
 					.toString());
-
+			note.setFacebookID(fbId);
 			NoteTrackerService noteTrackerService = new NoteTrackerServiceImpl();
 			noteTrackerService.add(note);
 
@@ -1407,8 +1467,9 @@ public class NewStatusActivity extends android.app.Activity {
 			if (((Boolean) mBtnFb.getTag()) == true)
 				try {
 					Log.e("fb", "call");
-					fbId = fbPostService.publish("Hi, from Healthgem");
-					Log.e("fb", "done");
+					fbId = fbPostService.publish(notesStatus.getText()
+							.toString() + " - eating " + chosenFood.getName());
+					Log.e("fbId", fbId);
 				} catch (FacebookException e) {
 					Log.e("Unable to publish", e.getErrorMessage());
 				}
@@ -1442,10 +1503,27 @@ public class NewStatusActivity extends android.app.Activity {
 				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
 			} else
 				image = null;
+
+			FacebookPostService fbPostService = new FacebookPostServiceImpl();
+			String fbId = null;
+			if (((Boolean) mBtnFb.getTag()) == true)
+				try {
+					Log.e("fb", "call");
+					fbId = fbPostService.publish(notesStatus.getText()
+							.toString()
+							+ " - check up with "
+							+ txtDoctor.getText().toString()
+							+ " due to "
+							+ txtPurpose.getText().toString());
+					Log.e("fbId", fbId);
+				} catch (FacebookException e) {
+					Log.e("Unable to publish", e.getErrorMessage());
+				}
+
 			CheckUp checkup = new CheckUp(timestamp, null, image, txtPurpose
 					.getText().toString(), txtDoctor.getText().toString(),
 					notesStatus.getText().toString());
-
+			checkup.setFacebookID(fbId);
 			CheckUpTrackerService checkupTrackerService = new CheckUpTrackerServiceImpl();
 			checkupTrackerService.add(checkup);
 
@@ -1478,11 +1556,34 @@ public class NewStatusActivity extends android.app.Activity {
 			else if (txtActivityDurationUnit.getText().toString().equals("min"))
 				sec = (int) Math.round(Double.parseDouble(activityDuration
 						.getText().toString()) * 60);
-			activityEntry = new ActivityTrackerEntry(timestamp, notesStatus
-					.getText().toString(), image, chosenActivity,
-					Double.parseDouble(txtActivityCal.getText().toString()),
-					sec);
 
+			FacebookPostService fbPostService = new FacebookPostServiceImpl();
+			String fbId = null;
+			if (((Boolean) mBtnFb.getTag()) == true)
+				try {
+					Log.e("fb", "call");
+					fbId = fbPostService.publish(notesStatus.getText()
+							.toString()
+							+ " - doing "
+							+ chosenActivity.getName());
+					Log.e("fbId", fbId);
+				} catch (FacebookException e) {
+					Log.e("Unable to publish", e.getErrorMessage());
+				}
+			Weight weight = null;
+			WeightTrackerService weightService = new WeightTrackerServiceImpl();
+			try {
+				weight = weightService.getLatest();
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			double calBurned = chosenActivity.getMET()
+					* weight.getWeightInKilograms();
+			activityEntry = new ActivityTrackerEntry(timestamp, notesStatus
+					.getText().toString(), image, chosenActivity, calBurned,
+					sec);
+			activityEntry.setFacebookID(fbId);
 			Log.e("newstatus secs", activityEntry.getDurationInSeconds() + "");
 
 			ActivityTrackerService activityTrackerService = new ActivityTrackerServiceImpl();
@@ -1920,12 +2021,21 @@ public class NewStatusActivity extends android.app.Activity {
 			else if (txtActivityDurationUnit.toString().equals("min"))
 				sec = Integer.parseInt(activityDuration.toString()) * 60;
 
+			Weight weight = null;
+			WeightTrackerService weightService = new WeightTrackerServiceImpl();
+			try {
+				weight = weightService.getLatest();
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			double calBurned = chosenActivity.getMET()
+					* weight.getWeightInKilograms();
 			ActivityTrackerEntry activityEntry = new ActivityTrackerEntry(
 					editActivityTrackerEntry.getEntryID(),
 					editActivityTrackerEntry.getTimestamp(), notesStatus
 							.getText().toString(), image, chosenActivity,
-					Double.parseDouble(txtActivityCal.getText().toString()),
-					sec);
+					calBurned, sec);
 
 			ActivityTrackerService activityTrackerService = new ActivityTrackerServiceImpl();
 			activityTrackerService.edit(activityEntry);
@@ -2019,7 +2129,16 @@ public class NewStatusActivity extends android.app.Activity {
 				image = null;
 				Log.e("newstatusact", "image null");
 			}
-
+			Weight weight = null;
+			WeightTrackerService weightService = new WeightTrackerServiceImpl();
+			try {
+				weight = weightService.getLatest();
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			double calBurned = chosenActivity.getMET()
+					* weight.getWeightInKilograms();
 			int sec = 0;
 			if (txtActivityDurationUnit.getText().toString().equals("hr"))
 				sec = (int) Math.round(Double.parseDouble(txtActivityDuration
@@ -2033,8 +2152,7 @@ public class NewStatusActivity extends android.app.Activity {
 					verifyActivityTrackerEntry.getFacebookID(),
 					verifyActivityTrackerEntry.getTimestamp(), notesStatus
 							.getText().toString(), image, chosenActivity,
-					Double.parseDouble(txtActivityCal.getText().toString()),
-					sec);
+					calBurned, sec);
 			ActivityTrackerService activityTrackerService = new ActivityTrackerServiceImpl();
 			activityTrackerService.add(activityEntry);
 			verificationService.delete(unferifiedSport);
@@ -2071,12 +2189,21 @@ public class NewStatusActivity extends android.app.Activity {
 				sec = (int) Math.round(Double.parseDouble(activityDuration
 						.getText().toString()) * 60);
 
+			Weight weight = null;
+			WeightTrackerService weightService = new WeightTrackerServiceImpl();
+			try {
+				weight = weightService.getLatest();
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			double calBurned = chosenActivity.getMET()
+					* weight.getWeightInKilograms();
+
 			ActivityTrackerEntry activityEntry = new ActivityTrackerEntry(
 					unferifiedActivity.getFacebookID(),
 					unferifiedActivity.getTimestamp(), notesStatus.getText()
-							.toString(), image, chosenActivity,
-					Double.parseDouble(txtActivityCal.getText().toString()),
-					sec);
+							.toString(), image, chosenActivity, calBurned, sec);
 
 			ActivityTrackerService activityTrackerService = new ActivityTrackerServiceImpl();
 			activityTrackerService.add(activityEntry);

@@ -200,7 +200,7 @@ public class BloodSugarTrackerActivity extends Activity {
 		XYMultipleSeriesRenderer();
 		bloodSugarMultiRenderer.setXLabels(0);
 		bloodSugarMultiRenderer.setChartTitle("Blood Sugar Graph");
-		bloodSugarMultiRenderer.setXTitle("Year 2014");
+		bloodSugarMultiRenderer.setXTitle("\n\n\n\n\n\n Year 2014");
 		bloodSugarMultiRenderer.setYTitle("Glucose Level (mmol/L)");
 		bloodSugarMultiRenderer.setZoomButtonsVisible(false);
 		bloodSugarMultiRenderer.setAxisTitleTextSize(30);
@@ -274,7 +274,9 @@ public class BloodSugarTrackerActivity extends Activity {
 
 		for (int i = list.size() - 1; i >= 0; i--)
 			bloodPressureDate.add(DateTimeParser.getMonthDay(list.get(i)
-					.getTimestamp()));
+					.getTimestamp())
+					+ " \n "
+					+ DateTimeParser.getTime(list.get(i).getTimestamp()));
 
 		return bloodPressureDate;
 

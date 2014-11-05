@@ -294,7 +294,9 @@ public class SummaryReportFragment extends Fragment {
 		cProgress = (ProgressBar) rootView.findViewById(R.id.progressBar2);
 		Drawable draw = getResources()
 				.getDrawable(R.drawable.customprogressbar);
-		cProgress.setProgressDrawable(draw);
+		Drawable drawRed = getResources().getDrawable(
+				R.drawable.customprogressbarred);
+
 		txtBigTotalCalRequire = (TextView) rootView
 				.findViewById(R.id.txtHomeCalRequire);
 		txtSmallTotalCalRequire = (TextView) rootView
@@ -331,12 +333,12 @@ public class SummaryReportFragment extends Fragment {
 
 		// set calorie
 
-		txtTotalFoodCal.setText(String.valueOf(groupedFood.getCalorie()));
-		txtTotalActivityCal.setText(String.valueOf(groupedActivity
+		txtTotalFoodCal.setText(df.format(groupedFood.getCalorie()));
+		txtTotalActivityCal.setText(df.format(groupedActivity
 				.getCalorieBurned()));
 		double total = groupedFood.getCalorie()
 				- groupedActivity.getCalorieBurned();
-		txtTotalCal.setText(String.valueOf(total));
+		txtTotalCal.setText(df.format(total));
 		double bmr = 1500; // compute
 		// Women: BMR = 655 + ( 4.35 x weight in pounds ) + ( 4.7 x height in
 		// inches ) - ( 4.7 x age in years )
@@ -366,8 +368,11 @@ public class SummaryReportFragment extends Fragment {
 
 		int cProgressStatus = (int) Math.round((total / bmr) * 100); // compute
 		Log.e("progress status", cProgressStatus + "");
-		if (cProgressStatus > 100)
+		cProgress.setProgressDrawable(draw);
+		if (cProgressStatus > 100) {
 			cProgressStatus = 100;
+			cProgress.setProgressDrawable(drawRed);
+		}
 		cProgress.setProgress(cProgressStatus);
 		cProgress.setMax(100);
 

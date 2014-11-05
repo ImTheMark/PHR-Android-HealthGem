@@ -1,5 +1,6 @@
 package com.example.phr;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +66,7 @@ public class BloodPressureTrackerActivity extends Activity {
 	BloodPressure chosenItem;
 	XYMultipleSeriesRenderer bloodPressureMultiRenderer;
 	private final double mZoomLevel = 1;
+	DecimalFormat df = new DecimalFormat("#.00");
 
 	@SuppressLint("NewApi")
 	@Override
@@ -188,7 +190,9 @@ public class BloodPressureTrackerActivity extends Activity {
 
 		for (int i = list.size() - 1; i >= 0; i--)
 			bloodPressureDate.add(DateTimeParser.getMonthDay(list.get(i)
-					.getTimestamp()));
+					.getTimestamp())
+					+ " \n "
+					+ DateTimeParser.getTime(list.get(i).getTimestamp()));
 
 		return bloodPressureDate;
 
@@ -271,7 +275,7 @@ public class BloodPressureTrackerActivity extends Activity {
 		XYMultipleSeriesRenderer();
 		bloodPressureMultiRenderer.setXLabels(0);
 		bloodPressureMultiRenderer.setChartTitle("Blood Pressure Graph");
-		bloodPressureMultiRenderer.setXTitle("Year 2014");
+		bloodPressureMultiRenderer.setXTitle("\n\n\n\n\n\n Year 2014");
 		bloodPressureMultiRenderer
 				.setYTitle("Systolic/Diastolic Pressure (mm hg)");
 		bloodPressureMultiRenderer.setZoomButtonsVisible(false);

@@ -113,10 +113,9 @@ public class CalorieTrackerEntryServiceImpl implements CalorieTrackerService {
 							* ((FoodTrackerEntry) entry).getServingCount();
 				else if (entry.getClass().equals(ActivityTrackerEntry.class))
 					totalCalBurned += ((ActivityTrackerEntry) entry)
-							.getActivity().getMET()
+							.getCaloriesBurnedPerHour()
 							* (((ActivityTrackerEntry) entry)
-									.getDurationInSeconds() * HOUR)
-							* weight.getWeightInKilograms();
+									.getDurationInSeconds() / 3600.0);
 				trackerListPerDay.add(entry);
 			} while (list.size() != 0
 					&& monthDay.equals(DateTimeParser.getMonthDay(list.get(0)

@@ -1,5 +1,6 @@
 package com.example.phr;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,7 +127,7 @@ public class WeightTrackerActivity extends Activity {
 		XYMultipleSeriesRenderer();
 		weightMultiRenderer.setXLabels(0);
 		weightMultiRenderer.setChartTitle("Weight Graph");
-		weightMultiRenderer.setXTitle("Year 2014");
+		weightMultiRenderer.setXTitle("\n\n\n\n\n\n Year 2014");
 		if (setting.isWeightSettingInPounds())
 			weightMultiRenderer.setYTitle("Weight in lbs");
 		else
@@ -144,7 +145,7 @@ public class WeightTrackerActivity extends Activity {
 		weightMultiRenderer.setInScroll(true);
 
 		// margin --- top, left, bottom, right
-		weightMultiRenderer.setMargins(new int[] { 90, 150, 100, 50 });
+		weightMultiRenderer.setMargins(new int[] { 90, 80, 140, 50 });
 		weightMultiRenderer.setLegendHeight(60);
 
 		// for (int i = 0; i < weightx.length; i++) {
@@ -182,7 +183,9 @@ public class WeightTrackerActivity extends Activity {
 
 		for (int i = list.size() - 1; i >= 0; i--)
 			bloodPressureDate.add(DateTimeParser.getMonthDay(list.get(i)
-					.getTimestamp()));
+					.getTimestamp())
+					+ " \n "
+					+ DateTimeParser.getTime(list.get(i).getTimestamp()));
 
 		return bloodPressureDate;
 
@@ -190,12 +193,15 @@ public class WeightTrackerActivity extends Activity {
 
 	public ArrayList<Double> getLastSevenWeight() {
 		ArrayList<Double> weight = new ArrayList<Double>();
+		DecimalFormat df = new DecimalFormat("#.00");
 		if (setting.isWeightSettingInPounds()) {
 			for (int i = list.size() - 1; i >= 0; i--)
-				weight.add(list.get(i).getWeightInPounds());
+				weight.add(Double.parseDouble(df.format(list.get(i)
+						.getWeightInPounds())));
 		} else {
 			for (int i = list.size() - 1; i >= 0; i--)
-				weight.add(list.get(i).getWeightInKilograms());
+				weight.add(Double.parseDouble(df.format(list.get(i)
+						.getWeightInKilograms())));
 		}
 
 		return weight;

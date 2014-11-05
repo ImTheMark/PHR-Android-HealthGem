@@ -1,8 +1,10 @@
 package com.example.phr.adapter;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.phr.R;
+import com.example.phr.application.HealthGem;
 import com.example.phr.mobile.models.CalorieTrackerEntry;
 import com.example.phr.tools.DateTimeParser;
 
@@ -53,8 +56,11 @@ public class CalorieAdapter extends BaseAdapter {
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder viewHolder;
+		Drawable drawRed = HealthGem.getContext().getResources()
+				.getDrawable(R.drawable.customprogressbarred);
 
 		if (convertView == null) {
+
 			LayoutInflater inflater = LayoutInflater.from(mContext);
 			convertView = inflater
 					.inflate(R.layout.item_calorie, parent, false);
@@ -78,26 +84,30 @@ public class CalorieAdapter extends BaseAdapter {
 					.findViewById(R.id.progressBar2);
 			convertView.setTag(viewHolder);
 		}
-
+		DecimalFormat df = new DecimalFormat("#.00");
 		viewHolder = (ViewHolder) convertView.getTag();
 		double totalcal = mListOfCalorie.get(position).getTotalCalIntake()
 				- mListOfCalorie.get(position).getTotalCalBurned();
-		viewHolder.totalCal.setText(String.valueOf(totalcal));
-		viewHolder.totalRequiredCal.setText(String.valueOf(mListOfCalorie.get(
+		viewHolder.totalCal.setText(df.format(totalcal));
+		viewHolder.totalRequiredCal.setText(df.format(mListOfCalorie.get(
 				position).getRequireCal()));
-		viewHolder.foodCal.setText(String.valueOf(mListOfCalorie.get(position)
+		viewHolder.foodCal.setText(df.format(mListOfCalorie.get(position)
 				.getTotalCalIntake()));
-		viewHolder.activityCal.setText(String.valueOf(mListOfCalorie.get(
-				position).getTotalCalBurned()));
+		viewHolder.activityCal.setText(df.format(mListOfCalorie.get(position)
+				.getTotalCalBurned()));
 
 		viewHolder.day.setText(String.valueOf(DateTimeParser
 				.getDay(mListOfCalorie.get(position).getDate())));
 
 		viewHolder.month.setText(String.valueOf(DateTimeParser
 				.getMonth(mListOfCalorie.get(position).getDate())));
+
 		int progress = (int) Math.round((totalcal / mListOfCalorie
 				.get(position).getRequireCal()) * 100);
-
+		if (progress > 100) {
+			progress = 100;
+			viewHolder.bar.setProgressDrawable(drawRed);
+		}
 		viewHolder.bar.setProgress(progress);
 
 		return convertView;

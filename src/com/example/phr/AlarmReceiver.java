@@ -19,6 +19,8 @@ import android.util.Log;
 
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.ServiceException;
+import com.example.phr.mobile.dao.MobileSettingsDao;
+import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
 import com.example.phr.mobile.models.ActivityTrackerEntry;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.mobile.models.BloodSugar;
@@ -52,6 +54,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 	String content;
 	String ticker;
 	Context thisContext;
+	MobileSettingsDao setting;
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -72,9 +75,11 @@ public class AlarmReceiver extends BroadcastReceiver {
 			e.printStackTrace();
 		}
 		Timestamp timestamp = new Timestamp(date.getTime());
+		setting = new MobileSettingsDaoImpl();
 
 		// check condition
 		if (tracker.equals(TrackerInputType.BLOOD_SUGAR)
+				&& setting.getBloodSugarNotificationSetting()
 				&& showBsNotif(timestamp)) {
 			Log.e("callnotif", "bs");
 			title = "HealthGem";
@@ -85,6 +90,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 					Intent.FLAG_ACTIVITY_NEW_TASK);
 			showNotification();
 		} else if (tracker.equals(TrackerInputType.BLOOD_PRESSURE)
+				&& setting.getBloodPressureNotificationSetting()
 				&& showBpNotif(timestamp)) {
 			Log.e("callnotif", "bp");
 			title = "HealthGem";

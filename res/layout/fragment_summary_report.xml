@@ -611,11 +611,12 @@
 
                 <TextView
                     android:id="@+id/txtHomeBsType"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                      android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/textView2"
+                    android:gravity="center"
                     android:text="Post prandial"
-                    
+                    android:layout_marginTop="2dp"
                     android:textSize="15sp" />
             </RelativeLayout>
         </LinearLayout>

@@ -1,5 +1,6 @@
 package com.example.phr.adapter;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import android.content.Context;
@@ -73,6 +74,7 @@ public class ActivityAdapter extends BaseAdapter {
 			convertView.setTag(viewHolder);
 		}
 
+		DecimalFormat df = new DecimalFormat("#.00");
 		viewHolder = (ViewHolder) convertView.getTag();
 		viewHolder.action.setText(mListOfActivity.get(position).getActivity()
 				.getName().toString());
@@ -84,9 +86,13 @@ public class ActivityAdapter extends BaseAdapter {
 		Log.e("duration", mListOfActivity.get(position).getDurationInSeconds()
 				+ "");
 		Log.e("adapter hr", hr + "");
-		viewHolder.duration.setText(String.valueOf(hr));
-		viewHolder.calBurned.setText(String.valueOf(mListOfActivity.get(
-				position).getCaloriesBurnedPerHour()));
+		viewHolder.duration.setText(df.format(hr));
+		viewHolder.calBurned
+				.setText(df
+						.format(mListOfActivity.get(position)
+								.getCaloriesBurnedPerHour()
+								* (mListOfActivity.get(position)
+										.getDurationInSeconds() / 3600.0)));
 
 		return convertView;
 	}

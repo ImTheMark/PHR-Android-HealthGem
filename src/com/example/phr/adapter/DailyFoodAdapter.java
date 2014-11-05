@@ -102,7 +102,11 @@ public class DailyFoodAdapter extends BaseAdapter {
 				.getTime(mListOfFoodSingle.get(position).getTimestamp())));
 
 		viewHolder.servingNumber.setText(String.valueOf(mListOfFoodSingle.get(
-				position).getServingCount()));
+				position).getServingCount()
+				+ " X"));
+
+		viewHolder.servingUnit.setText(String.valueOf(mListOfFoodSingle
+				.get(position).getFood().getServing()));
 
 		return convertView;
 	}
