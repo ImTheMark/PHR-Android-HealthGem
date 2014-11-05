@@ -84,6 +84,7 @@ public class VerificationServiceImpl implements VerificationService {
 			OutdatedAccessTokenException {
 		try {
 			webVerificationDao.delete(entry);
+			mobileVerificationDao.decreaseUnverifiedPostsCount();
 		} catch (WebServerException e) {
 			throw new ServiceException("error", e);
 		}

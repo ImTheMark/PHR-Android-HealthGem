@@ -46,6 +46,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 	private final VerificationService verificationService;
 	private final FoodTrackerService foodService;
 	private final ActivityTrackerService activityService;
+	private VerificationService verificationService;
 
 	private static class ViewHolder {
 		TextView status;

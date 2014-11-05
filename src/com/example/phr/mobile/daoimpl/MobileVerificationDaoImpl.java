@@ -139,9 +139,11 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 
 	@Override
 	public int getUnverifiedPostsCount() {
-		int x = Integer.parseInt(HealthGem.getSharedPreferences().loadPreferences(
-				SPreference.VERIFICATION_COUNT));
-		return x;
+		if(HealthGem.getSharedPreferences().getPreferences().contains(SPreference.VERIFICATION_COUNT))
+			return Integer.parseInt(HealthGem.getSharedPreferences().loadPreferences(
+					SPreference.VERIFICATION_COUNT));
+		else
+			return 0;
 	}
 
 }

@@ -29,13 +29,16 @@ public class VerificationActivityTest extends Activity {
 	VerificationService vService;
 	UnverifiedStatusAdapter adapter;
 	List<TrackerEntry> unverifiedList;
-
+	VerificationService verificationService;
+	
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
+		
+		verificationService = new VerificationServiceImpl();
 
 		StrictMode.setThreadPolicy(policy);
 		setContentView(R.layout.activity_verification_test);
@@ -56,6 +59,7 @@ public class VerificationActivityTest extends Activity {
 		vService = new VerificationServiceImpl();
 		try {
 			unverifiedList = vService.getAll();
+			verificationService.setUnverifiedPostsCount(unverifiedList.size());
 			Log.e("size ", unverifiedList.size() + "");
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
@@ -103,6 +107,7 @@ public class VerificationActivityTest extends Activity {
 				if (list != null && !list.isEmpty()) {
 					unverifiedList.clear();
 					unverifiedList = list;
+					verificationService.setUnverifiedPostsCount(list.size());
 					//adapter.notifyDataSetChanged();
 					((UnverifiedStatusAdapter)listView.getAdapter()).notifyDataSetChanged();
 				}

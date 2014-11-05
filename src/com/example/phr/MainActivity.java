@@ -17,9 +17,14 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.phr.adapter.TabsPagerAdapter;
 import com.example.phr.enums.TrackerInputType;
+import com.example.phr.service.VerificationService;
+import com.example.phr.serviceimpl.VerificationServiceImpl;
 
 @SuppressLint("NewApi")
 public class MainActivity extends FragmentActivity implements
@@ -256,6 +261,19 @@ public class MainActivity extends FragmentActivity implements
 		// Inflate the menu items for use in the action bar
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activitymain_menu_settings, menu);
+		
+		RelativeLayout badgeLayout = (RelativeLayout) menu.findItem(R.id.action_notifications).getActionView();
+	    TextView tv = (TextView) badgeLayout.findViewById(R.id.actionbar_notifcation_textview);
+	    
+	    VerificationService vService = new VerificationServiceImpl();
+	    
+	    if(vService.getUnverifiedPostsCount() > 0){
+	    	tv.setVisibility(View.VISIBLE);
+	    	tv.setText(vService.getUnverifiedPostsCount());
+	    }
+	    else
+	    	tv.setVisibility(View.GONE);
+	    
 		return super.onCreateOptionsMenu(menu);
 	}
 
