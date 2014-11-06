@@ -13,7 +13,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -261,19 +263,31 @@ public class MainActivity extends FragmentActivity implements
 		// Inflate the menu items for use in the action bar
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activitymain_menu_settings, menu);
-		
-		RelativeLayout badgeLayout = (RelativeLayout) menu.findItem(R.id.action_notifications).getActionView();
-	    TextView tv = (TextView) badgeLayout.findViewById(R.id.actionbar_notifcation_textview);
-	    
-	    VerificationService vService = new VerificationServiceImpl();
-	    
-	    if(vService.getUnverifiedPostsCount() > 0){
-	    	tv.setVisibility(View.VISIBLE);
-	    	tv.setText(vService.getUnverifiedPostsCount());
-	    }
-	    else
-	    	tv.setVisibility(View.GONE);
-	    
+
+		RelativeLayout badgeLayout = (RelativeLayout) menu.findItem(
+				R.id.action_notifications).getActionView();
+		TextView tv = (TextView) badgeLayout
+				.findViewById(R.id.actionbar_notifcation_textview);
+
+		VerificationService vService = new VerificationServiceImpl();
+
+		if (vService.getUnverifiedPostsCount() > 0) {
+			tv.setVisibility(View.VISIBLE);
+			tv.setText(vService.getUnverifiedPostsCount() + "");
+		} else
+			tv.setVisibility(View.GONE);
+
+		final Menu m = menu;
+		final MenuItem item = menu.findItem(R.id.action_notifications);
+		MenuItemCompat.getActionView(item).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Log.e("main notif icon", "print");
+						onOptionsItemSelected(item);
+					}
+				});
+
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -287,6 +301,7 @@ public class MainActivity extends FragmentActivity implements
 			startActivity(intent);
 			return true;
 		case R.id.action_notifications:
+			Log.e("main notif icon", "pindot");
 			Intent intent2 = new Intent(getApplicationContext(),
 					VerificationActivityTest.class);
 			startActivity(intent2);

@@ -80,17 +80,16 @@ public class RegisterUserInformationActivity extends Activity {
 		gender = (Spinner) findViewById(R.id.textViewRegistrationGender);
 		birthdate = (EditText) findViewById(R.id.editTextRegistrationBirthDate);
 
-
 		Intent in = getIntent();
 		Bundle extras = getIntent().getExtras();
 
 		// EDIT MODE
-		
+
 		if (extras != null && in.hasExtra("mode")) {
 			isRegister = in.getExtras().getBoolean("mode");
-			
+
 			User currUser = userService.getUser();
-			
+
 			fullName.setText(currUser.getName());
 			contactNumber.setText(currUser.getContactNumber());
 			email.setText(currUser.getEmail());
@@ -105,80 +104,75 @@ public class RegisterUserInformationActivity extends Activity {
 				gender.setSelection(0);
 			else
 				gender.setSelection(1);
-			
+
 			try {
 				weightService = new WeightTrackerServiceImpl();
-				if(settingsDao.isWeightSettingInPounds()){
+				if (settingsDao.isWeightSettingInPounds()) {
 					weightUnit.setSelection(0);
-					weight.setText(weightService.getLatest().getWeightInPounds()+"");
-				}
-				else{
+					weight.setText(weightService.getLatest()
+							.getWeightInPounds() + "");
+				} else {
 					weightUnit.setSelection(1);
-					weight.setText(weightService.getLatest().getWeightInKilograms()+"");
+					weight.setText(weightService.getLatest()
+							.getWeightInKilograms() + "");
 				}
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 
-			if(settingsDao.isHeightSettingInFeet()){
+			if (settingsDao.isHeightSettingInFeet()) {
 				heightUnit.setSelection(0);
-				height.setText(currUser.getHeight()+"");
+				height.setText(currUser.getHeight() + "");
 			}
-			
-			else{
+
+			else {
 				heightUnit.setSelection(1);
 				Double cm = currUser.getHeight() / 0.39370;
-				height.setText(cm+"");
+				height.setText(cm + "");
 			}
 		}
-		
+
 		// REGISTER MODE
-		
-		else{
+
+		else {
 			fullName.setText(HealthGem.getSharedPreferences().loadPreferences(
 					SPreference.REGISTER_NAME));
-			contactNumber.setText(HealthGem.getSharedPreferences().loadPreferences(
-					SPreference.REGISTER_CONTACTNUMBER));
+			contactNumber.setText(HealthGem.getSharedPreferences()
+					.loadPreferences(SPreference.REGISTER_CONTACTNUMBER));
 			email.setText(HealthGem.getSharedPreferences().loadPreferences(
 					SPreference.REGISTER_EMAIL));
-			contactPerson.setText(HealthGem.getSharedPreferences().loadPreferences(
-					SPreference.REGISTER_CONTACTPERSON));
+			contactPerson.setText(HealthGem.getSharedPreferences()
+					.loadPreferences(SPreference.REGISTER_CONTACTPERSON));
 			contactPersonNumber.setText(HealthGem.getSharedPreferences()
 					.loadPreferences(SPreference.REGISTER_CONTACTPERSONNUMBER));
 			allergies.setText(HealthGem.getSharedPreferences().loadPreferences(
 					SPreference.REGISTER_ALLERGIES));
 			knownHealthProblems.setText(HealthGem.getSharedPreferences()
 					.loadPreferences(SPreference.REGISTER_KNOWNHEALTHPROBLEMS));
-			birthdate.setText((HealthGem.getSharedPreferences().loadPreferences(
-					SPreference.REGISTER_BIRTHDATE)).substring(0, 9));
-			
 
-			if(settingsDao.isWeightSettingInPounds()){
+			if (settingsDao.isWeightSettingInPounds()) {
 				weightUnit.setSelection(0);
-				weight.setText(HealthGem.getSharedPreferences().loadPreferences(
-						SPreference.REGISTER_WEIGHTPOUNDS));
-			}
-			else{
+				weight.setText(HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_WEIGHTPOUNDS));
+			} else {
 				weightUnit.setSelection(1);
-				Double kg = Double.parseDouble(HealthGem.getSharedPreferences().loadPreferences(
-						SPreference.REGISTER_WEIGHTPOUNDS)) / 2.2;
-				weight.setText(kg+"");
+				Double kg = Double.parseDouble(HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_WEIGHTPOUNDS)) / 2.2;
+				weight.setText(kg + "");
 			}
 
-			
-			if(settingsDao.isHeightSettingInFeet()){
+			if (settingsDao.isHeightSettingInFeet()) {
 				heightUnit.setSelection(0);
-				height.setText(HealthGem.getSharedPreferences().loadPreferences(
-						SPreference.REGISTER_HEIGHTINCHES));
+				height.setText(HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_HEIGHTINCHES));
 			}
-			
-			else{
+
+			else {
 				heightUnit.setSelection(1);
-				Double cm = Double.parseDouble(HealthGem.getSharedPreferences().loadPreferences(
-						SPreference.REGISTER_HEIGHTINCHES)) / 0.39370;
-				height.setText(cm+"");
+				Double cm = Double.parseDouble(HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_HEIGHTINCHES)) / 0.39370;
+				height.setText(cm + "");
 			}
 
 			Resources res = getResources();
@@ -245,31 +239,28 @@ public class RegisterUserInformationActivity extends Activity {
 						SPreference.REGISTER_BIRTHDATE,
 						birthdate.getText().toString() + " 00:00:00");
 
-				if (heightUnit.getSelectedItemPosition() == 0){
+				if (heightUnit.getSelectedItemPosition() == 0) {
 					HealthGem.getSharedPreferences().savePreferences(
 							SPreference.REGISTER_HEIGHTINCHES,
 							height.getText().toString());
 					settingsDao.setHeightToFeet();
-				}
-				else{
+				} else {
 					Double ft = Double.parseDouble(height.getText().toString()) * 0.39370;
 					HealthGem.getSharedPreferences().savePreferences(
-							SPreference.REGISTER_HEIGHTINCHES,
-							ft+"");
+							SPreference.REGISTER_HEIGHTINCHES, ft + "");
 					settingsDao.setHeightToCentimeters();
 				}
 
-				if (weightUnit.getSelectedItemPosition() == 0){
+				if (weightUnit.getSelectedItemPosition() == 0) {
 					HealthGem.getSharedPreferences().savePreferences(
 							SPreference.REGISTER_WEIGHTPOUNDS,
 							weight.getText().toString());
 					settingsDao.setWeightToPounds();
-				}
-				else{
-					Double pounds = Double.parseDouble(weight.getText().toString())* 2.2;
+				} else {
+					Double pounds = Double.parseDouble(weight.getText()
+							.toString()) * 2.2;
 					HealthGem.getSharedPreferences().savePreferences(
-							SPreference.REGISTER_WEIGHTPOUNDS,
-							pounds+"");
+							SPreference.REGISTER_WEIGHTPOUNDS, pounds + "");
 					settingsDao.setWeightToKilograms();
 				}
 
@@ -313,30 +304,27 @@ public class RegisterUserInformationActivity extends Activity {
 					e1.printStackTrace();
 				}
 
-				
-				if (heightUnit.getSelectedItemPosition() == 0){
+				if (heightUnit.getSelectedItemPosition() == 0) {
 					editedUser.setHeight(Double.parseDouble(height.getText()
 							.toString()));
 					settingsDao.setHeightToFeet();
-				}
-				else{
+				} else {
 					Double ft = Double.parseDouble(height.getText().toString()) * 0.39370;
 					editedUser.setHeight(ft);
 					settingsDao.setHeightToCentimeters();
 				}
 
-				if (weightUnit.getSelectedItemPosition() == 0){
+				if (weightUnit.getSelectedItemPosition() == 0) {
 					editedUser.setWeight(Double.parseDouble(weight.getText()
 							.toString()));
 					settingsDao.setWeightToPounds();
-				}
-				else{
-					Double pounds = Double.parseDouble(weight.getText().toString())* 2.2;
+				} else {
+					Double pounds = Double.parseDouble(weight.getText()
+							.toString()) * 2.2;
 					editedUser.setWeight(pounds);
 					settingsDao.setWeightToKilograms();
 				}
-				
-				
+
 				Date date = new Date();
 				Timestamp timestamp = new Timestamp(date.getTime());
 				Weight weightEntry = new Weight(timestamp, "", null,

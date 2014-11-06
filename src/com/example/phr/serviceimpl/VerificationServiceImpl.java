@@ -96,6 +96,7 @@ public class VerificationServiceImpl implements VerificationService {
 			OutdatedAccessTokenException {
 		try {
 			webVerificationDao.delete(entry);
+			mobileVerificationDao.decreaseUnverifiedPostsCount();
 		} catch (WebServerException e) {
 			throw new ServiceException("error", e);
 		}
@@ -107,6 +108,7 @@ public class VerificationServiceImpl implements VerificationService {
 			OutdatedAccessTokenException {
 		try {
 			webVerificationDao.delete(entry);
+			mobileVerificationDao.decreaseUnverifiedPostsCount();
 		} catch (WebServerException e) {
 			throw new ServiceException("error", e);
 		}
@@ -118,6 +120,7 @@ public class VerificationServiceImpl implements VerificationService {
 			OutdatedAccessTokenException {
 		try {
 			webVerificationDao.delete(entry);
+			mobileVerificationDao.decreaseUnverifiedPostsCount();
 		} catch (WebServerException e) {
 			throw new ServiceException("error", e);
 		}
@@ -127,12 +130,12 @@ public class VerificationServiceImpl implements VerificationService {
 	public List<TrackerEntry> getAll() throws ServiceException,
 			OutdatedAccessTokenException {
 		List<TrackerEntry> list = new ArrayList<TrackerEntry>();
-		
+
 		list.addAll(getAllUnverifiedActivityPosts());
 		list.addAll(getAllUnverifiedFoodPosts());
 		list.addAll(getAllUnverifiedRestaurantPosts());
 		list.addAll(getAllUnverifiedSportsEstablishmentPosts());
-		
+
 		Collections.sort(list, new Comparator<TrackerEntry>() {
 			@Override
 			public int compare(TrackerEntry e1, TrackerEntry e2) {
@@ -141,7 +144,7 @@ public class VerificationServiceImpl implements VerificationService {
 		});
 
 		Collections.reverse(list);
-		
+
 		return list;
 	}
 
