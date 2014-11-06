@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -61,6 +62,8 @@ public class RegisterFBLoginActivity extends Activity {
 	private UserService userService;
 	private WeightTrackerService weightService;
 
+	private boolean pendingPublishReauthorization = false;
+
 	private MobileSettingsDao settingDao;
 	private Boolean isRegister = true;
 
@@ -96,8 +99,10 @@ public class RegisterFBLoginActivity extends Activity {
 
 		userName = (TextView) findViewById(R.id.textViewRegistrationFBTitle);
 		btnLogin = (LoginButton) findViewById(R.id.fb_login_button);
-		// btnLogin.setReadPermissions(PERMISSIONS);
-		btnLogin.setPublishPermissions(PUBLISH_PERMISSIONS);
+
+		btnLogin.setReadPermissions(PERMISSIONS);
+
+		// btnLogin.setPublishPermissions(PUBLISH_PERMISSIONS);
 		btnLogin.setUserInfoChangedCallback(new UserInfoChangedCallback() {
 			@Override
 			public void onUserInfoFetched(GraphUser user) {
@@ -177,6 +182,31 @@ public class RegisterFBLoginActivity extends Activity {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		uiHelper.onActivityResult(requestCode, resultCode, data);
+
+		Session session = Session.getActiveSession();
+
+		if (session != null) {
+
+			// Check for publish permissions
+			List<String> permissions = session.getPermissions();
+			if (!isSubsetOf(PUBLISH_PERMISSIONS, permissions)) {
+				pendingPublishReauthorization = true;
+				Session.NewPermissionsRequest newPermissionsRequest = new Session.NewPermissionsRequest(
+						this, PUBLISH_PERMISSIONS);
+				session.requestNewPublishPermissions(newPermissionsRequest);
+				return;
+			}
+		}
+	}
+
+	private boolean isSubsetOf(Collection<String> subset,
+			Collection<String> superset) {
+		for (String string : subset) {
+			if (!superset.contains(string)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
