@@ -90,6 +90,8 @@ public class SummaryReportFragment extends Fragment {
 	LinearLayout bsHomeRecordHolderNull;
 	LinearLayout bpHomeRecordHolder;
 	LinearLayout bpHomeRecordHolderNull;
+	LinearLayout calorieRecordHolder;
+	LinearLayout dailyContainer;
 	TextView txtBigTotalCalRequire;
 	TextView txtSmallTotalCalRequire;
 	TextView txtTotalFoodCal;
@@ -290,7 +292,6 @@ public class SummaryReportFragment extends Fragment {
 		});
 
 		// calorie
-
 		cProgress = (ProgressBar) rootView.findViewById(R.id.progressBar2);
 		Drawable draw = getResources()
 				.getDrawable(R.drawable.customprogressbar);
@@ -306,6 +307,9 @@ public class SummaryReportFragment extends Fragment {
 		txtTotalActivityCal = (TextView) rootView
 				.findViewById(R.id.txtTotalActivityCal);
 		txtTotalCal = (TextView) rootView.findViewById(R.id.txtHomeTotalCal);
+		calorieRecordHolder = (LinearLayout) rootView
+				.findViewById(R.id.calorieHomeHolder);
+
 		// current date
 		dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
 		timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
@@ -320,6 +324,15 @@ public class SummaryReportFragment extends Fragment {
 			e.printStackTrace();
 		}
 		timestamp = new Timestamp(date.getTime());
+
+		calorieRecordHolder.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getActivity(),
+						CalorieTrackerActivity.class);
+				startActivity(i);
+			}
+		});
 
 		MobileFoodTrackerDao foodDao = new MobileFoodTrackerDaoImpl();
 		MobileActivityTrackerDao activityDao = new MobileActivityTrackerDaoImpl();
@@ -504,8 +517,7 @@ public class SummaryReportFragment extends Fragment {
 		dailyChart = ChartFactory.getBarChartView(getActivity()
 				.getBaseContext(), dataset, multiRenderer, Type.DEFAULT);
 
-		LinearLayout dailyContainer = (LinearLayout) rootView
-				.findViewById(R.id.piegraph);
+		dailyContainer = (LinearLayout) rootView.findViewById(R.id.piegraph);
 
 		dailyContainer.setOnClickListener(new OnClickListener() {
 			@Override
@@ -522,6 +534,20 @@ public class SummaryReportFragment extends Fragment {
 		});
 
 		dailyContainer.addView(dailyChart);
+
+		dailyChart.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getActivity(),
+						FoodTrackerDailyActivity.class);
+				SimpleDateFormat fmt = new SimpleDateFormat(
+						"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+				String txtdate = fmt.format(timestamp);
+				Log.e("home", txtdate);
+				i.putExtra("date", txtdate);
+				startActivity(i);
+			}
+		});
 
 		return rootView;
 	}

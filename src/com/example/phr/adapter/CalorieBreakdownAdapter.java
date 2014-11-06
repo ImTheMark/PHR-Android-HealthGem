@@ -92,8 +92,9 @@ public class CalorieBreakdownAdapter extends BaseAdapter {
 					.valueOf(((FoodTrackerEntry) mListOfCalorie.get(position))
 							.getServingCount()));
 
-			viewHolder.unit.setText(((FoodTrackerEntry) mListOfCalorie
-					.get(position)).getFood().getServing());
+			viewHolder.unit.setText(" X "
+					+ ((FoodTrackerEntry) mListOfCalorie.get(position))
+							.getFood().getServing());
 
 			viewHolder.time.setText(String.valueOf(DateTimeParser
 					.getTime(((FoodTrackerEntry) mListOfCalorie.get(position))
@@ -113,7 +114,7 @@ public class CalorieBreakdownAdapter extends BaseAdapter {
 			double hr = ((ActivityTrackerEntry) mListOfCalorie.get(position))
 					.getDurationInSeconds() / 3600;
 			viewHolder.servingCount.setText(String.valueOf(hr));
-			viewHolder.unit.setText("hr");
+			viewHolder.unit.setText(" hr");
 
 			viewHolder.time.setText(String.valueOf(DateTimeParser
 					.getTime(((ActivityTrackerEntry) mListOfCalorie
