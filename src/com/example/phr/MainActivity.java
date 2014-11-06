@@ -253,6 +253,12 @@ public class MainActivity extends FragmentActivity implements
 		// show respected fragment view
 		viewPager.setCurrentItem(tab.getPosition());
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		invalidateOptionsMenu();
+	}
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
