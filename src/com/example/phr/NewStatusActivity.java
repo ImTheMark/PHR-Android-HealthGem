@@ -1280,7 +1280,7 @@ public class NewStatusActivity extends android.app.Activity {
 				image = new PHRImage(encodedImage, PHRImageType.IMAGE);
 			} else {
 				image = null;
-				photo = null;
+
 			}
 
 			FacebookPostService fbPostService = new FacebookPostServiceImpl();
@@ -1288,14 +1288,11 @@ public class NewStatusActivity extends android.app.Activity {
 			if (((Boolean) mBtnFb.getTag()) == true)
 				try {
 					Log.e("fb", "call");
-					fbId = fbPostService.publish(
-							notesStatus.getText()
-									+ " - measuring blood presure at "
-									+ String.valueOf(systolicPicker
-											.getCurrent())
-									+ "/"
-									+ String.valueOf(diastolicPicker
-											.getCurrent()) + " mm hg", photo);
+					fbId = fbPostService.publish(notesStatus.getText()
+							+ " - measuring blood presure at "
+							+ String.valueOf(systolicPicker.getCurrent()) + "/"
+							+ String.valueOf(diastolicPicker.getCurrent())
+							+ " mm hg");
 					Log.e("fbId", fbId);
 				} catch (FacebookException e) {
 					Log.e("Unable to publish", e.getErrorMessage());

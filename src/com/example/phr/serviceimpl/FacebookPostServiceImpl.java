@@ -27,6 +27,14 @@ public class FacebookPostServiceImpl implements FacebookPostService {
 						SPreference.FBACCESSTOKEN), null));
 		// Media arg1 = null;
 		// facebook.postPhoto(message, arg1);
+
+		// File file = ImageHandler.ImageReturnFile(img);
+		// Media media = new Media(file);
+		// if (img != null)
+
+		// return facebook.postPhoto(message, media);
+		// else
+		// return facebook.postStatusMessage(message);
 		return facebook.postStatusMessage(message);
 	}
 }
