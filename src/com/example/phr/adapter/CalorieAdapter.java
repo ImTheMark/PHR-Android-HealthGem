@@ -58,6 +58,8 @@ public class CalorieAdapter extends BaseAdapter {
 		ViewHolder viewHolder;
 		Drawable drawRed = HealthGem.getContext().getResources()
 				.getDrawable(R.drawable.customprogressbarred);
+		Drawable drawBlue = HealthGem.getContext().getResources()
+				.getDrawable(R.drawable.customprogressbar);
 
 		if (convertView == null) {
 
@@ -104,10 +106,13 @@ public class CalorieAdapter extends BaseAdapter {
 
 		int progress = (int) Math.round((totalcal / mListOfCalorie
 				.get(position).getRequireCal()) * 100);
+
 		if (progress > 100) {
 			progress = 100;
 			viewHolder.bar.setProgressDrawable(drawRed);
-		}
+		} else
+			viewHolder.bar.setProgressDrawable(drawBlue);
+
 		viewHolder.bar.setProgress(progress);
 
 		return convertView;

@@ -126,7 +126,11 @@ public class StatusAdapter extends BaseAdapter {
 		} else if (mListOfStatus.get(position).getClass().equals(CheckUp.class)) {
 			viewHolder.actionHolder.setText("Checkup for  ");
 			viewHolder.actionName.setText(((CheckUp) mListOfStatus
-					.get(position)).getPurpose());
+					.get(position)).getPurpose()
+					+ " with "
+					+ ((CheckUp) mListOfStatus.get(position)).getDoctorsName());
+			viewHolder.status.setText(((CheckUp) mListOfStatus.get(position))
+					.getNotes());
 			viewHolder.imgAction.setImageResource(R.drawable.icon_checkup);
 		} else if (mListOfStatus.get(position).getClass()
 				.equals(FoodTrackerEntry.class)) {
@@ -136,9 +140,11 @@ public class StatusAdapter extends BaseAdapter {
 			viewHolder.imgAction.setImageResource(R.drawable.icon_food);
 		} else if (mListOfStatus.get(position).getClass().equals(Note.class)) {
 			viewHolder.actionHolder.setText("Note ");
-			viewHolder.actionName.setText(((Note) mListOfStatus.get(position))
-					.getStatus());
+			viewHolder.actionName.setText("");
+			viewHolder.status.setText(((Note) mListOfStatus.get(position))
+					.getNote());
 			viewHolder.imgAction.setImageResource(R.drawable.icon_note);
+
 		} else if (mListOfStatus.get(position).getClass().equals(Weight.class)) {
 			viewHolder.actionHolder.setText("Weight at ");
 			DecimalFormat df = new DecimalFormat("#.00");
