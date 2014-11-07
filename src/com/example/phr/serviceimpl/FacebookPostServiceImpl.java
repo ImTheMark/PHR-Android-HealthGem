@@ -25,6 +25,8 @@ public class FacebookPostServiceImpl implements FacebookPostService {
 		facebook.setOAuthAccessToken(new AccessToken(HealthGem
 				.getSharedPreferences().loadPreferences(
 						SPreference.FBACCESSTOKEN), null));
+		// Media arg1 = null;
+		// facebook.postPhoto(message, arg1);
 		return facebook.postStatusMessage(message);
 	}
 }

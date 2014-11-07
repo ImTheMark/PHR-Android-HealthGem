@@ -85,7 +85,9 @@ public class CalorieBreakdownAdapter extends BaseAdapter {
 
 			viewHolder.calorie.setText(df
 					.format(((FoodTrackerEntry) mListOfCalorie.get(position))
-							.getFood().getCalorie()));
+							.getFood().getCalorie()
+							* ((FoodTrackerEntry) mListOfCalorie.get(position))
+									.getServingCount()));
 			viewHolder.action.setText(((FoodTrackerEntry) mListOfCalorie
 					.get(position)).getFood().getName());
 			viewHolder.servingCount.setText(String
