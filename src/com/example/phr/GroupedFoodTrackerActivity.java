@@ -8,13 +8,17 @@ import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -110,10 +114,32 @@ public class GroupedFoodTrackerActivity extends Activity {
 		case android.R.id.home:
 			onBackPressed();
 			break;
+		case R.id.action_help:
+			displayhelp();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 		return true;
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu items for use in the action bar
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_tracker_help, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	private void displayhelp() {
+
+		Dialog dialog = new Dialog(this);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setContentView(R.layout.item_help);
+		ImageView image = (ImageView) dialog.findViewById(R.id.help_imageview);
+		image.setBackgroundResource(R.drawable.foodtracker_help);
+		dialog.getWindow().setBackgroundDrawable(null);
+		dialog.show();
 	}
 
 }
