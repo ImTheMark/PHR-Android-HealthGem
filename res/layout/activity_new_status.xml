@@ -29,7 +29,7 @@
 	              <requestFocus />
 	        </EditText>
 
-	        <LinearLayout
+	        <com.example.phr.PredicateLayout
 	            android:id="@+id/food_template"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content" 
@@ -81,7 +81,7 @@
 	                android:text="slice"
 	                android:textColor="#E05C5C"
 	                android:textStyle="bold" />
-	        </LinearLayout>
+	        </com.example.phr.PredicateLayout>
 
 	        <LinearLayout
 	            android:id="@+id/bloodpressure_template"
@@ -186,7 +186,7 @@
 	                android:text="  kg " />
 	        </LinearLayout>
 
-	        <LinearLayout
+	        <com.example.phr.PredicateLayout
 	            android:id="@+id/activity_template"
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
@@ -232,9 +232,9 @@
 	                android:text="min"
 	                android:textColor="#E05C5C"
 	                android:textStyle="bold" />
-	        </LinearLayout>
+	        </com.example.phr.PredicateLayout>
 
-	        <LinearLayout
+	        <com.example.phr.PredicateLayout
 	            android:id="@+id/checkup_template"
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content" 
@@ -271,7 +271,7 @@
 	                android:text="dengue"
 	                android:textColor="#E05C5C"
 	                android:textStyle="bold" />
-	        </LinearLayout>
+	        </com.example.phr.PredicateLayout>
 
 	        <RelativeLayout
 	            android:id="@+id/imageHolder"

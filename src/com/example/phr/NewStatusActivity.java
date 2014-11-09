@@ -129,9 +129,9 @@ public class NewStatusActivity extends android.app.Activity {
 	LinearLayout bpTemplate;
 	LinearLayout bsTemplate;
 	LinearLayout weightTemplate;
-	LinearLayout checkupTemplate;
-	LinearLayout foodTemplate;
-	LinearLayout activityTemplate;
+	com.example.phr.PredicateLayout checkupTemplate;
+	com.example.phr.PredicateLayout foodTemplate;
+	com.example.phr.PredicateLayout activityTemplate;
 	LinearLayout activityCal;
 	LinearLayout foodCal;
 	String currentTracker;
@@ -205,9 +205,9 @@ public class NewStatusActivity extends android.app.Activity {
 		bsTemplate = (LinearLayout) findViewById(R.id.bloodsugar_template);
 		bpTemplate = (LinearLayout) findViewById(R.id.bloodpressure_template);
 		weightTemplate = (LinearLayout) findViewById(R.id.weight_template);
-		checkupTemplate = (LinearLayout) findViewById(R.id.checkup_template);
-		foodTemplate = (LinearLayout) findViewById(R.id.food_template);
-		activityTemplate = (LinearLayout) findViewById(R.id.activity_template);
+		checkupTemplate = (com.example.phr.PredicateLayout) findViewById(R.id.checkup_template);
+		foodTemplate = (com.example.phr.PredicateLayout) findViewById(R.id.food_template);
+		activityTemplate = (com.example.phr.PredicateLayout) findViewById(R.id.activity_template);
 		// blood pressure post
 		txtSystolic = (TextView) findViewById(R.id.systolic);
 		txtDiastolic = (TextView) findViewById(R.id.diastolic);
