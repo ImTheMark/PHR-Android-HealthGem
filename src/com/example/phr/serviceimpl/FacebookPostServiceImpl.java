@@ -35,6 +35,7 @@ public class FacebookPostServiceImpl implements FacebookPostService {
 		// return facebook.postPhoto(message, media);
 		// else
 		// return facebook.postStatusMessage(message);
+
 		return facebook.postStatusMessage(message);
 	}
 }

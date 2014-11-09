@@ -66,6 +66,7 @@ public class FoodTrackerDailyActivity extends Activity {
 	FoodTrackerService foodServiceImpl;
 	AlertDialog alertD;
 	FoodTrackerEntry chosenItem;
+	String txtDate;
 
 	// --------------------------------------------------------
 
@@ -82,7 +83,7 @@ public class FoodTrackerDailyActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		Intent in = getIntent();
-		String txtDate = in.getExtras().getString("date");
+		txtDate = in.getExtras().getString("date");
 		Log.e("dailyFoodtracker", txtDate);
 		try {
 			timestamp = DateTimeParser.getTimestamp(txtDate);
@@ -120,6 +121,7 @@ public class FoodTrackerDailyActivity extends Activity {
 		foodServiceImpl = new FoodTrackerServiceImpl();
 		try {
 			list = foodDao.getAllFromDate(timestamp);
+			Log.e("fooddailylisttimestamp", String.valueOf(timestamp));
 			groupedFood = foodDao.getFromDateCalculated(timestamp);
 		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
@@ -297,7 +299,7 @@ public class FoodTrackerDailyActivity extends Activity {
 		multiRenderer.setXLabels(0);
 		multiRenderer.setChartTitle("Nutritional Value Chart Per Day \n\n\n");
 		multiRenderer.setAxisTitleTextSize(20);
-		multiRenderer.setXTitle("\n\n\n June 20, 2014");
+		multiRenderer.setXTitle("\n\n\n " + DateTimeParser.getDate(timestamp));
 		multiRenderer.setYTitle("");
 		multiRenderer.setZoomButtonsVisible(false);
 		multiRenderer.setZoomEnabled(false);
@@ -355,10 +357,8 @@ public class FoodTrackerDailyActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
-		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-		intent.putExtra("backToMenu", 2);
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-				| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		Intent intent = new Intent(getApplicationContext(),
+				GroupedFoodTrackerActivity.class);
 		startActivity(intent);
 	}
 

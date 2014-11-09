@@ -131,6 +131,15 @@ public class GroupedFoodTrackerActivity extends Activity {
 		return super.onCreateOptionsMenu(menu);
 	}
 
+	@Override
+	public void onBackPressed() {
+		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+		intent.putExtra("backToMenu", 2);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+				| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+	}
+
 	private void displayhelp() {
 
 		Dialog dialog = new Dialog(this);

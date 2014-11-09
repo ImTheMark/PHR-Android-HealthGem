@@ -376,16 +376,22 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 
 		Boolean dateHasPassedFromGivenDate = false;
 
-		while (foodList.size() != 0 && !dateHasPassedFromGivenDate) {
+		/*
+		 * while (foodList.size() != 0 && !dateHasPassedFromGivenDate) {
+		 * FoodTrackerEntry food = foodList.remove(0); // if
+		 * (foodList.get(0).getTimestamp().equals(date)) if
+		 * (DateTimeParser.getMonthDay(food.getTimestamp()).equals(
+		 * DateTimeParser.getMonthDay(date))) foodListFromDate.add(food); else
+		 * if (food.getTimestamp().after(date)) dateHasPassedFromGivenDate =
+		 * true; }
+		 */
+
+		while (foodList.size() != 0) {
 			FoodTrackerEntry food = foodList.remove(0);
-			// if (foodList.get(0).getTimestamp().equals(date))
 			if (DateTimeParser.getMonthDay(food.getTimestamp()).equals(
 					DateTimeParser.getMonthDay(date)))
 				foodListFromDate.add(food);
-			else if (food.getTimestamp().after(date))
-				dateHasPassedFromGivenDate = true;
 		}
-
 		return foodListFromDate;
 	}
 
@@ -443,7 +449,7 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 
 		Log.e("foodlistsize", String.valueOf(foodList.size()));
 
-		while (foodList.size() != 0 && !dateHasPassedFromGivenDate) {
+		while (foodList.size() != 0) {
 			FoodTrackerEntry food = foodList.remove(0);
 
 			if (DateTimeParser.getMonthDay(food.getTimestamp()).equals(
@@ -457,8 +463,7 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 						* food.getServingCount();
 				groupedFat += food.getFood().getFat() * food.getServingCount();
 				groupedDate = food.getTimestamp();
-			} else if (food.getTimestamp().after(date))
-				dateHasPassedFromGivenDate = true;
+			}
 		}
 		GroupedFood groupedFood = new GroupedFood(groupedDate,
 				Double.parseDouble(df.format(groupedCalorie)),
