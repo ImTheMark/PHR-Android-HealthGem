@@ -8,7 +8,8 @@
     <LinearLayout
         android:id="@+id/statusInformationHolder"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+         >
 
 	    <ImageView
 	        android:id="@+id/imageViewStatusAction"
@@ -21,7 +22,8 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
         	android:layout_gravity="center"
-	        android:orientation="vertical" >
+	        android:orientation="vertical" 
+	        android:padding="3dp" >
 
 	        <RelativeLayout
 	            android:layout_width="match_parent"
@@ -48,7 +50,7 @@
 			        android:id="@+id/textViewDateTime"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
-			        android:layout_below="@id/textViewStatusActionHolder"
+			        android:layout_below="@id/textViewStatusAction"
 			        android:text="June 28, 2014 12:34AM"
 			        android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -56,7 +58,7 @@
 			        android:id="@+id/imageViewViaPosted"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
-			        android:layout_below="@id/textViewStatusActionHolder"
+			        android:layout_below="@id/textViewStatusAction"
 			        android:padding="3dp"
 			        android:layout_toRightOf="@id/textViewDateTime"
 			        android:src="@drawable/icon_small_facebook" />
