@@ -1,5 +1,8 @@
 package com.example.phr;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
@@ -16,12 +19,16 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +46,7 @@ import com.example.phr.service.WeightTrackerService;
 import com.example.phr.serviceimpl.UserServiceImpl;
 import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
+import com.example.phr.tools.ImageHandler;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
@@ -57,6 +65,7 @@ public class RegisterFBLoginActivity extends Activity {
 	private static final List<String> PUBLISH_PERMISSIONS = Arrays
 			.asList("publish_actions");
 	private TextView userName;
+	private ImageView profilePicture;
 	public static GraphUser user;
 	public static String userID;
 	private UserService userService;
@@ -99,6 +108,7 @@ public class RegisterFBLoginActivity extends Activity {
 
 		userName = (TextView) findViewById(R.id.textViewRegistrationFBTitle);
 		btnLogin = (LoginButton) findViewById(R.id.fb_login_button);
+		profilePicture = (ImageView) findViewById(R.id.registerFBLogin_picture);
 
 		btnLogin.setReadPermissions(PERMISSIONS);
 
@@ -114,6 +124,7 @@ public class RegisterFBLoginActivity extends Activity {
 					HealthGem.getSharedPreferences().savePreferences(
 							SPreference.REGISTER_FBACCESSTOKEN,
 							s.getAccessToken());
+					new LoadFbImage(profilePicture).execute(user.getId());
 				} else {
 					Log.e("onUserInfoFetched", "user is null");
 					userName.setText("You are not logged right now");
@@ -320,25 +331,41 @@ public class RegisterFBLoginActivity extends Activity {
 		}
 
 	}
-	/*
-	 * private class LoadFbProfilePicture extends AsyncTask<String, Void,
-	 * Bitmap> { ImageView bmImage;
-	 * 
-	 * public LoadFbProfilePicture(ImageView bmImage) { this.bmImage = bmImage;
-	 * }
-	 * 
-	 * @Override protected Bitmap doInBackground(String... urls) { URL img_value
-	 * = null; Log.e("LoginAct", urls[0]); try { img_value = new
-	 * URL("https://graph.facebook.com/" + urls[0] + "/picture?type=large"); }
-	 * catch (MalformedURLException e) { // TODO Auto-generated catch block
-	 * e.printStackTrace(); } Bitmap mIcon1 = null; try { mIcon1 =
-	 * BitmapFactory.decodeStream(img_value.openConnection() .getInputStream());
-	 * } catch (IOException e) { // TODO Auto-generated catch block
-	 * e.printStackTrace(); }
-	 * 
-	 * return mIcon1; }
-	 * 
-	 * @Override protected void onPostExecute(Bitmap result) {
-	 * bmImage.setImageBitmap(result); } }
-	 */
+
+
+
+	
+	private class LoadFbImage extends AsyncTask<String, Void, Bitmap> {
+	    ImageView bmImage;
+	 
+	    public LoadFbImage(ImageView bmImage) {
+	        this.bmImage = bmImage;
+	    }
+	 
+	    protected Bitmap doInBackground(String... urls) {
+	        URL img_value = null;
+			 try {
+				img_value = new URL("https://graph.facebook.com/"+urls[0]+"/picture?type=large");
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Bitmap mIcon1 = null;
+			try {
+				mIcon1 = BitmapFactory.decodeStream(img_value.openConnection().getInputStream());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        
+	        return mIcon1;
+	    }
+	 
+	    protected void onPostExecute(Bitmap result) {
+	        bmImage.setImageBitmap(result);
+	        String dir = ImageHandler.saveImage(result);
+			HealthGem.getSharedPreferences().savePreferences(
+					SPreference.PROFILE_PICTURE, dir);
+	    }
+	}
 }

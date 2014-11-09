@@ -37,6 +37,7 @@ public class SPreference {
 	public static final String KNOWNHEALTHPROBLEMS = "Known";
 	public static final String FBUSERNAME = "FBUsername";
 	public static final String FBACCESSTOKEN = "FBAccessToken";
+	public static final String PROFILE_PICTURE = "ProfilePicture";
 
 	public static final String SETTINGS_WEIGHTUNIT = "weightUnit";
 	public static final String SETTINGS_HEIGHTUNIT = "heightUnit";

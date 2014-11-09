@@ -10,6 +10,8 @@ import com.example.phr.exceptions.ServiceException;
 import com.example.phr.local_db.SPreference;
 import com.example.phr.mobile.dao.MobileSettingsDao;
 import com.example.phr.mobile.dao.MobileUserDao;
+import com.example.phr.mobile.models.PHRImage;
+import com.example.phr.mobile.models.PHRImageType;
 import com.example.phr.mobile.models.User;
 import com.example.phr.mobile.models.Weight;
 import com.example.phr.service.WeightTrackerService;
@@ -136,6 +138,8 @@ public class MobileUserDaoImpl implements MobileUserDao {
 			double cm = Double.parseDouble(HealthGem.getSharedPreferences().loadPreferences(SPreference.HEIGHTINCHES));
 			user.setHeight(cm);
 		}
+		
+		user.setPhoto(new PHRImage(HealthGem.getSharedPreferences().loadPreferences(SPreference.PROFILE_PICTURE), PHRImageType.FILENAME));
 		
 		return user;
 	}

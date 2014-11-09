@@ -6,12 +6,19 @@
     android:gravity="center_horizontal|center_vertical"
     android:orientation="vertical" >
 
+    <ImageView
+        android:id="@+id/registerFBLogin_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/picture_placeholder" />
+
     <TextView
         android:id="@+id/textViewRegistrationFBTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:gravity="center"
+        android:layout_marginTop="5dp"
         android:text="Would you like to connect your social media account to HealthGem?"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -20,6 +27,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:padding="10dp"
         facebook:confirm_logout="false"
         facebook:fetch_user_info="true" />
 
