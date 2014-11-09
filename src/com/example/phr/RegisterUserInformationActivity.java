@@ -358,4 +358,13 @@ public class RegisterUserInformationActivity extends Activity {
 
 	}
 
+	@Override
+	public void onBackPressed() {
+		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+		intent.putExtra("backToMenu", 4);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+				| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+	}
+
 }
