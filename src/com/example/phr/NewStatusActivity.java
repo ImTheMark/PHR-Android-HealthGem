@@ -17,12 +17,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.provider.MediaStore.MediaColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,6 +41,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.phr.application.HealthGem;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
@@ -162,6 +166,7 @@ public class NewStatusActivity extends android.app.Activity {
 	UnverifiedRestaurantEntry unferifiedRestaurant;
 	UnverifiedSportsEstablishmentEntry unferifiedSport;
 	public static final int CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE = 1777;
+	public static final int SELECT_FILE = 2000;
 	DecimalFormat df = new DecimalFormat("#.00");
 
 	@SuppressLint("NewApi")
@@ -358,19 +363,17 @@ public class NewStatusActivity extends android.app.Activity {
 		mBtnAddPhoto.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+
 				/*
-				 * Intent cameraIntent = new Intent(
-				 * android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-				 * startActivityForResult(cameraIntent, CAMERA_REQUEST);
-				 */
-				Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-				File file = new File(Environment.getExternalStorageDirectory()
-						+ File.separator + "image.jpg");
-
-				intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-				startActivityForResult(intent,
-						CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE);
-
+				 * Intent intent = new
+				 * Intent("android.media.action.IMAGE_CAPTURE"); File file = new
+				 * File(Environment.getExternalStorageDirectory() +
+				 * File.separator + "image.jpg");
+				 * 
+				 * intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+				 * startActivityForResult(intent,
+				 * CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE); ??
+				 */selectImage();
 			}
 		});
 		mBtnFb = (ImageButton) findViewById(R.id.btnFb);
@@ -909,7 +912,18 @@ public class NewStatusActivity extends android.app.Activity {
 			statusImage.setImageBitmap(photo);
 			setImage = true;
 			imageTemplate.setVisibility(View.VISIBLE);
+		} else if (requestCode == SELECT_FILE) {
+			Uri selectedImageUri = data.getData();
+
+			String tempPath = getPath(selectedImageUri);
+			Bitmap bm;
+			BitmapFactory.Options btmapOptions = new BitmapFactory.Options();
+			photo = BitmapFactory.decodeFile(tempPath, btmapOptions);
+			statusImage.setImageBitmap(photo);
+			setImage = true;
+			imageTemplate.setVisibility(View.VISIBLE);
 		}
+
 	}
 
 	private void callFoodServingInput(final Food food, final double serving) {
@@ -2265,6 +2279,54 @@ public class NewStatusActivity extends android.app.Activity {
 		 * String stateToSave = txtCurrentTracker.getText().toString();
 		 * Log.e("stateToSave", stateToSave);
 		 */
+	}
+
+	private void selectImage() {
+		final CharSequence[] items = { "Take Photo", "Choose from Library",
+				"Cancel" };
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(
+				NewStatusActivity.this);
+		builder.setTitle("Add Photo!");
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int item) {
+				if (items[item].equals("Take Photo")) {
+
+					Intent intent = new Intent(
+							"android.media.action.IMAGE_CAPTURE");
+					File file = new File(Environment
+							.getExternalStorageDirectory()
+							+ File.separator
+							+ "image.jpg");
+
+					intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+					startActivityForResult(intent,
+							CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE);
+
+				} else if (items[item].equals("Choose from Library")) {
+					Intent intent = new Intent(
+							Intent.ACTION_PICK,
+							android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+					intent.setType("image/*");
+					startActivityForResult(
+							Intent.createChooser(intent, "Select File"),
+							SELECT_FILE);
+				} else if (items[item].equals("Cancel")) {
+					dialog.dismiss();
+				}
+			}
+		});
+		builder.show();
+	}
+
+	public String getPath(Uri uri) {
+		String[] projection = { MediaColumns.DATA };
+		Cursor cursor = HealthGem.getContext().getContentResolver()
+				.query(uri, projection, null, null, null);
+		int column_index = cursor.getColumnIndexOrThrow(MediaColumns.DATA);
+		cursor.moveToFirst();
+		return cursor.getString(column_index);
 	}
 
 }
