@@ -3,11 +3,17 @@ package com.example.phr.mobile.daoimpl;
 import java.text.ParseException;
 
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.example.phr.application.HealthGem;
+import com.example.phr.exceptions.ServiceException;
 import com.example.phr.local_db.SPreference;
+import com.example.phr.mobile.dao.MobileSettingsDao;
 import com.example.phr.mobile.dao.MobileUserDao;
 import com.example.phr.mobile.models.User;
+import com.example.phr.mobile.models.Weight;
+import com.example.phr.service.WeightTrackerService;
+import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
 
 public class MobileUserDaoImpl implements MobileUserDao {
@@ -93,25 +99,44 @@ public class MobileUserDaoImpl implements MobileUserDao {
 				SPreference.GENDER));
 		user.setFbAccessToken(HealthGem.getSharedPreferences().loadPreferences(
 				SPreference.FBACCESSTOKEN));
-		/*double height = getDouble(
-				PreferenceManager.getDefaultSharedPreferences(HealthGem
-						.getContext()), SPreference.HEIGHT, 100.0);*/
-		// user.setHeight(Double.parseDouble(HealthGem.getSharedPreferences()
-		// .loadPreferences(SPreference.HEIGHT)));
-		//user.setHeight(height);
 		user.setKnownHealthProblems(HealthGem.getSharedPreferences()
 				.loadPreferences(SPreference.KNOWNHEALTHPROBLEMS));
 		user.setName(HealthGem.getSharedPreferences().loadPreferences(
 				SPreference.NAME));
 		user.setUsername(HealthGem.getSharedPreferences().loadPreferences(
 				SPreference.USERNAME));
-		/*
-		 * double weight = getDouble(
-		 * PreferenceManager.getDefaultSharedPreferences(HealthGem
-		 * .getContext()), SPreference.WEIGHT, 100.0);
-		 * user.setWeight(Double.parseDouble(HealthGem.getSharedPreferences()
-		 * loadPreferences(SPreference.WEIGHT))); user.setWeight(weight);
-		 */
+		
+
+		WeightTrackerService weightService = new WeightTrackerServiceImpl();
+		MobileSettingsDao setting = new MobileSettingsDaoImpl();
+		
+		try {
+			
+			Weight weight = weightService.getLatest();
+
+			if (weight != null) {
+				Log.e("home weight", weight.getWeightInPounds() + "");
+				if (setting.isWeightSettingInPounds()) {
+					double lbs = weight.getWeightInPounds();
+					user.setWeight(lbs);
+				} else {
+					double kgs = weight.getWeightInKilograms();
+					user.setWeight(kgs);
+				}
+			}
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (setting.isHeightSettingInFeet()) {
+			Double ft = Double.parseDouble(HealthGem.getSharedPreferences().loadPreferences(SPreference.HEIGHTINCHES)) * 0.39370;
+			user.setHeight(ft);
+		} else {
+			double cm = Double.parseDouble(HealthGem.getSharedPreferences().loadPreferences(SPreference.HEIGHTINCHES));
+			user.setHeight(cm);
+		}
+		
 		return user;
 	}
 
