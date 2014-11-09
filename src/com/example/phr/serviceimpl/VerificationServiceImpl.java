@@ -33,7 +33,8 @@ public class VerificationServiceImpl implements VerificationService {
 		try {
 			webVerificationDao.updateListOfUnverifiedPosts();
 		} catch (WebServerException e) {
-			throw new ServiceException("Error", e);
+			// throw new ServiceException("Error", e);
+
 		}
 	}
 

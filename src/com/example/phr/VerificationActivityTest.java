@@ -12,6 +12,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.phr.adapter.UnverifiedStatusAdapter;
 import com.example.phr.application.HealthGem;
@@ -30,14 +31,14 @@ public class VerificationActivityTest extends Activity {
 	UnverifiedStatusAdapter adapter;
 	List<TrackerEntry> unverifiedList;
 	VerificationService verificationService;
-	
+
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
-		
+
 		verificationService = new VerificationServiceImpl();
 
 		StrictMode.setThreadPolicy(policy);
@@ -50,10 +51,10 @@ public class VerificationActivityTest extends Activity {
 				new GetPostsFromServer().execute();
 			}
 		});
-		swipeLayout.setColorScheme(android.R.color.holo_blue_bright, 
-                android.R.color.holo_green_light, 
-                android.R.color.holo_orange_light, 
-                android.R.color.holo_red_light);
+		swipeLayout.setColorScheme(android.R.color.holo_blue_bright,
+				android.R.color.holo_green_light,
+				android.R.color.holo_orange_light,
+				android.R.color.holo_red_light);
 
 		listView = (ListView) findViewById(R.id.verification_listview_test);
 		vService = new VerificationServiceImpl();
@@ -63,6 +64,14 @@ public class VerificationActivityTest extends Activity {
 			Log.e("size ", unverifiedList.size() + "");
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
+			this.runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"Hello, Pls connect to the wifi!",
+							Toast.LENGTH_SHORT).show();
+				}
+			});
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -108,10 +117,11 @@ public class VerificationActivityTest extends Activity {
 					unverifiedList.clear();
 					unverifiedList = list;
 					verificationService.setUnverifiedPostsCount(list.size());
-					//adapter.notifyDataSetChanged();
-					((UnverifiedStatusAdapter)listView.getAdapter()).notifyDataSetChanged();
+					// adapter.notifyDataSetChanged();
+					((UnverifiedStatusAdapter) listView.getAdapter())
+							.notifyDataSetChanged();
 				}
-				
+
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

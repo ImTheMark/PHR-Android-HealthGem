@@ -71,7 +71,9 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return aListOfStatus.size();
+		if (aListOfStatus != null)
+			return aListOfStatus.size();
+		return 0;
 	}
 
 	@Override
@@ -229,7 +231,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 
 		else if (aListOfStatus.get(position).getClass()
 				.equals(UnverifiedFoodEntry.class)) {
-			viewHolder.question.setText("Did you eat: ");
+			viewHolder.question.setText("Did you eat/drink: ");
 			viewHolder.word.setText(((UnverifiedFoodEntry) aListOfStatus
 					.get(position)).getFood().getName());
 			viewHolder.amount.setVisibility(View.VISIBLE);
@@ -309,7 +311,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 
 		else if (aListOfStatus.get(position).getClass()
 				.equals(UnverifiedRestaurantEntry.class)) {
-			viewHolder.question.setText("Did you eat at: ");
+			viewHolder.question.setText("Did you eat/drink at: ");
 			viewHolder.word.setText(((UnverifiedRestaurantEntry) aListOfStatus
 					.get(position)).getRestaurant().getName());
 			viewHolder.edit.setText("Edit");
@@ -381,7 +383,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 
 		else if (aListOfStatus.get(position).getClass()
 				.equals(UnverifiedSportsEstablishmentEntry.class)) {
-			viewHolder.question.setText("Did go at: ");
+			viewHolder.question.setText("Did you go to: ");
 			viewHolder.word
 					.setText(((UnverifiedSportsEstablishmentEntry) aListOfStatus
 							.get(position)).getSportEstablishment().getName());
