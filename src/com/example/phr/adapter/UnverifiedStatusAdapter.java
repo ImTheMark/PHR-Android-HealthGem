@@ -161,46 +161,55 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View v) {
 
-					UnverifiedActivityEntry unverified = (UnverifiedActivityEntry) aListOfStatus
-							.get(position);
-					if (aListOfStatus.get(position).getImage() != null) {
-
-						try {
-							verificationService
-									.storeEncodedImage(aListOfStatus
-											.get(position).getImage()
-											.getEncodedImage());
-							unverified.setImage(new PHRImage(
-									verificationService.getImageFileName(),
-									PHRImageType.FILENAME));
-						} catch (FileNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (ImageHandlerException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+					UnverifiedActivityEntry unverified;
+					try {
+						unverified = verificationService.getUnverifiedActivityPostFromWebDB((UnverifiedActivityEntry) aListOfStatus
+								.get(position));
+						
+						if (aListOfStatus.get(position).getImage() != null) {
+	
+							try {
+								verificationService
+										.storeEncodedImage(aListOfStatus
+												.get(position).getImage()
+												.getEncodedImage());
+								unverified.setImage(new PHRImage(
+										verificationService.getImageFileName(),
+										PHRImageType.FILENAME));
+							} catch (FileNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (ImageHandlerException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
+	
+						Intent i = new Intent(mContext, NewStatusActivity.class);
+						i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+						i.putExtra("unverified", TrackerInputType.ACTIVITY);
+						i.putExtra("object", unverified);
+						mContext.startActivity(i);
+						/*
+						 * ActivityTrackerEntry act = new ActivityTrackerEntry(
+						 * unverified.getFacebookID(), unverified.getTimestamp(),
+						 * unverified.getStatus(), unverified.getImage(),
+						 * ActivitySingle activity,
+						 * unverified.getCalorieBurnedPerHour() );
+						 * 
+						 * activityService.add(act);
+						 * 
+						 * 
+						 * verificationService.delete(unverified);
+						 */
+						notifyDataSetChanged();
+					} catch (ServiceException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (OutdatedAccessTokenException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
-
-					Intent i = new Intent(mContext, NewStatusActivity.class);
-					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					i.putExtra("unverified", TrackerInputType.ACTIVITY);
-					i.putExtra("object", unverified);
-					mContext.startActivity(i);
-					/*
-					 * ActivityTrackerEntry act = new ActivityTrackerEntry(
-					 * unverified.getFacebookID(), unverified.getTimestamp(),
-					 * unverified.getStatus(), unverified.getImage(),
-					 * ActivitySingle activity,
-					 * unverified.getCalorieBurnedPerHour() );
-					 * 
-					 * activityService.add(act);
-					 * 
-					 * 
-					 * verificationService.delete(unverified);
-					 */
-					notifyDataSetChanged();
-
 				}
 			});
 
@@ -243,44 +252,54 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View v) {
 
-					UnverifiedFoodEntry unverified = (UnverifiedFoodEntry) aListOfStatus
-							.get(position);
-					if (aListOfStatus.get(position).getImage() != null) {
-
-						try {
-							verificationService
-									.storeEncodedImage(aListOfStatus
-											.get(position).getImage()
-											.getEncodedImage());
-							unverified.setImage(new PHRImage(
-									verificationService.getImageFileName(),
-									PHRImageType.FILENAME));
-						} catch (FileNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (ImageHandlerException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+					UnverifiedFoodEntry unverified;
+					try {
+						unverified = verificationService.getUnverifiedFoodPostFromWebDB((UnverifiedFoodEntry) aListOfStatus
+								.get(position));
+						
+						if (aListOfStatus.get(position).getImage() != null) {
+	
+							try {
+								verificationService
+										.storeEncodedImage(aListOfStatus
+												.get(position).getImage()
+												.getEncodedImage());
+								unverified.setImage(new PHRImage(
+										verificationService.getImageFileName(),
+										PHRImageType.FILENAME));
+							} catch (FileNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (ImageHandlerException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
+	
+						Intent i = new Intent(mContext, NewStatusActivity.class);
+						i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+						i.putExtra("unverified", TrackerInputType.FOOD);
+						i.putExtra("object", unverified);
+						mContext.startActivity(i);
+						/*
+						 * FoodTrackerEntry food = new FoodTrackerEntry(
+						 * unverified.getFacebookID(), unverified.getTimestamp(),
+						 * unverified.getStatus(), unverified.getImage(),
+						 * unverified.getFood(), unverified.getServingSize());
+						 * 
+						 * foodService.add(food);
+						 * 
+						 * verificationService.delete(unverified);
+						 */
+	
+						notifyDataSetChanged();
+					} catch (ServiceException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (OutdatedAccessTokenException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
-
-					Intent i = new Intent(mContext, NewStatusActivity.class);
-					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					i.putExtra("unverified", TrackerInputType.FOOD);
-					i.putExtra("object", unverified);
-					mContext.startActivity(i);
-					/*
-					 * FoodTrackerEntry food = new FoodTrackerEntry(
-					 * unverified.getFacebookID(), unverified.getTimestamp(),
-					 * unverified.getStatus(), unverified.getImage(),
-					 * unverified.getFood(), unverified.getServingSize());
-					 * 
-					 * foodService.add(food);
-					 * 
-					 * verificationService.delete(unverified);
-					 */
-
-					notifyDataSetChanged();
 				}
 			});
 
@@ -321,38 +340,47 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View v) {
 
-					UnverifiedRestaurantEntry unverified = (UnverifiedRestaurantEntry) aListOfStatus
-							.get(position);
+					UnverifiedRestaurantEntry unverified;
+					try {
+						unverified = verificationService.getUnverifiedRestaurantPostFromWebDB((UnverifiedRestaurantEntry) aListOfStatus
+								.get(position));
 
-					if (aListOfStatus.get(position).getImage() != null) {
-
-						try {
-							verificationService
-									.storeEncodedImage(aListOfStatus
-											.get(position).getImage()
-											.getEncodedImage());
-							unverified.setImage(new PHRImage(
-									verificationService.getImageFileName(),
-									PHRImageType.FILENAME));
-						} catch (FileNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (ImageHandlerException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if (aListOfStatus.get(position).getImage() != null) {
+	
+							try {
+								verificationService
+										.storeEncodedImage(aListOfStatus
+												.get(position).getImage()
+												.getEncodedImage());
+								unverified.setImage(new PHRImage(
+										verificationService.getImageFileName(),
+										PHRImageType.FILENAME));
+							} catch (FileNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (ImageHandlerException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
+	
+						verificationService
+								.addFoodListToTemporaryDatabase(unverified
+										.getFoods());
+						unverified.setFoods(null);
+	
+						Intent i = new Intent(mContext,
+								VerificationListPickerActivity.class);
+						i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+						i.putExtra("restaurant", unverified);
+						mContext.startActivity(i);
+					} catch (ServiceException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (OutdatedAccessTokenException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
-
-					verificationService
-							.addFoodListToTemporaryDatabase(unverified
-									.getFoods());
-					unverified.setFoods(null);
-
-					Intent i = new Intent(mContext,
-							VerificationListPickerActivity.class);
-					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					i.putExtra("restaurant", unverified);
-					mContext.startActivity(i);
 				}
 			});
 
@@ -392,38 +420,48 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View v) {
 
-					UnverifiedSportsEstablishmentEntry unverified = (UnverifiedSportsEstablishmentEntry) aListOfStatus
-							.get(position);
+					UnverifiedSportsEstablishmentEntry unverified;
+					try {
+						unverified = verificationService.getUnverifiedSportsEstablishmentPostFromWebDB((UnverifiedSportsEstablishmentEntry) aListOfStatus
+								.get(position));
 
-					if (aListOfStatus.get(position).getImage() != null) {
-
-						try {
-							verificationService
-									.storeEncodedImage(aListOfStatus
-											.get(position).getImage()
-											.getEncodedImage());
-							unverified.setImage(new PHRImage(
-									verificationService.getImageFileName(),
-									PHRImageType.FILENAME));
-						} catch (FileNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (ImageHandlerException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+	
+						if (aListOfStatus.get(position).getImage() != null) {
+	
+							try {
+								verificationService
+										.storeEncodedImage(aListOfStatus
+												.get(position).getImage()
+												.getEncodedImage());
+								unverified.setImage(new PHRImage(
+										verificationService.getImageFileName(),
+										PHRImageType.FILENAME));
+							} catch (FileNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (ImageHandlerException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
+	
+						verificationService
+								.addActivityListToTemporaryDatabase(unverified
+										.getActivities());
+						unverified.setActivities(null);
+	
+						Intent i = new Intent(mContext,
+								VerificationListPickerActivity.class);
+						i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+						i.putExtra("sportestablishment", unverified);
+						mContext.startActivity(i);					
+					} catch (ServiceException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (OutdatedAccessTokenException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
-
-					verificationService
-							.addActivityListToTemporaryDatabase(unverified
-									.getActivities());
-					unverified.setActivities(null);
-
-					Intent i = new Intent(mContext,
-							VerificationListPickerActivity.class);
-					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					i.putExtra("sportestablishment", unverified);
-					mContext.startActivity(i);
 				}
 			});
 
