@@ -23,4 +23,8 @@ public interface UserService {
 			OutdatedAccessTokenException;
 
 	public User getUser();
+	
+	public void loginUser(String username) throws ServiceException, OutdatedAccessTokenException;
+	
+	public void logoutUser();
 }

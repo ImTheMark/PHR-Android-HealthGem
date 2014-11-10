@@ -97,4 +97,14 @@ public class UserServiceImpl implements UserService {
 
 		return Double.longBitsToDouble(prefs.getLong(key, (long) 0d));
 	}
+
+	@Override
+	public void logoutUser() {
+		mobileUserDao.logoutUser();
+	}
+
+	@Override
+	public void loginUser(String username) throws ServiceException, OutdatedAccessTokenException {
+		mobileUserDao.loginUser(getUserGivenUsername(username));
+	}
 }

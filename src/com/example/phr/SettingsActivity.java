@@ -16,6 +16,8 @@ import android.widget.ToggleButton;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileSettingsDao;
 import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
+import com.example.phr.service.UserService;
+import com.example.phr.serviceimpl.UserServiceImpl;
 
 @SuppressLint("NewApi")
 public class SettingsActivity extends Activity {
@@ -28,6 +30,7 @@ public class SettingsActivity extends Activity {
 	private ToggleButton bloodPressureButton;
 	private ToggleButton bloodSugarButton;
 	private MobileSettingsDao settingsDao;
+	private UserService userService;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -109,7 +112,8 @@ public class SettingsActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				DatabaseHandler.getDBHandler().deleteAccessToken();
+				userService = new UserServiceImpl();
+				userService.logoutUser();
 
 				Intent intent = new Intent(getApplicationContext(),
 						LoginActivity.class);

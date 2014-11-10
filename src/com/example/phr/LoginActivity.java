@@ -59,7 +59,6 @@ public class LoginActivity extends Activity {
 
 	private UserService userService;
 	private MobileSettingsDao settingDao;
-	private MobileUserDao userDao;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -101,13 +100,7 @@ public class LoginActivity extends Activity {
 								password);
 						if (isValid) {
 
-							userDao = new MobileUserDaoImpl();
-
-							userDao.saveUser(userService
-									.getUserGivenUsername(username));
-							settingDao = new MobileSettingsDaoImpl();
-							settingDao.initializeSettings();
-
+							userService.loginUser(username);
 							new GetPostsFromServer().execute();
 						} else {
 							mTextValid.setText("Invalid Username/Password");

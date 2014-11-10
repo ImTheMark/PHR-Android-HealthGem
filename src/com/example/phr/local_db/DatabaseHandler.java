@@ -307,6 +307,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		onCreate(db);
 	}
+	
+	public void clearDatabase() {
+		SQLiteDatabase db = dbHandler.getWritableDatabase();
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TEMP_FOODLIST);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TEMP_ACTIVITYLIST);
+		
+		
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACCESSTOKEN);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACTIVITYLIST);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACTIVITY);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_BLOODPRESSURE);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_BLOODSUGAR);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_CHECKUP);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_FOODLIST);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_FOOD);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTES);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_WEIGHT);
+
+		onCreate(db);
+	}
 
 	public AccessToken getAccessToken() {
 		AccessToken token = new AccessToken();

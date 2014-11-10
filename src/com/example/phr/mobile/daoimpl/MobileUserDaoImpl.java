@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.ServiceException;
+import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.local_db.SPreference;
 import com.example.phr.mobile.dao.MobileSettingsDao;
 import com.example.phr.mobile.dao.MobileUserDao;
@@ -229,6 +230,19 @@ public class MobileUserDaoImpl implements MobileUserDao {
 	@Override
 	public void editUser(User user) {
 		saveUser(user);
+	}
+
+	@Override
+	public void logoutUser() {
+		DatabaseHandler.getDBHandler().deleteAccessToken();
+		DatabaseHandler.getDBHandler().clearDatabase();
+	}
+
+	@Override
+	public void loginUser(User user) {
+		saveUser(user);
+		MobileSettingsDao settingDao = new MobileSettingsDaoImpl();
+		settingDao.initializeSettings();
 	}
 
 }
