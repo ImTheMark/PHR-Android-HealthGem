@@ -41,7 +41,8 @@ public class ActivityTrackerServiceImpl implements ActivityTrackerService {
 	}
 
 	@Override
-	public void edit(ActivityTrackerEntry activity) throws ServiceException, OutdatedAccessTokenException, EntryNotFoundException {
+	public void edit(ActivityTrackerEntry activity) throws ServiceException,
+			OutdatedAccessTokenException, EntryNotFoundException {
 		try {
 			webActivityTrackerDao.edit(activity);
 			mobileActivityTrackerDao.edit(activity);
@@ -50,11 +51,13 @@ public class ActivityTrackerServiceImpl implements ActivityTrackerService {
 		} catch (DataAccessException e) {
 			throw new ServiceException("Error", e);
 		}
-		
+
 	}
 
 	@Override
-	public void delete(ActivityTrackerEntry activity) throws OutdatedAccessTokenException, EntryNotFoundException, ServiceException {
+	public void delete(ActivityTrackerEntry activity)
+			throws OutdatedAccessTokenException, EntryNotFoundException,
+			ServiceException {
 		try {
 			webActivityTrackerDao.delete(activity);
 			mobileActivityTrackerDao.delete(activity);
@@ -81,12 +84,36 @@ public class ActivityTrackerServiceImpl implements ActivityTrackerService {
 	}
 
 	@Override
-	public ActivityTrackerEntry getLatest() throws ServiceException{
+	public ActivityTrackerEntry getLatest() throws ServiceException {
 		try {
 			return mobileActivityTrackerDao.getLatest();
 		} catch (DataAccessException e) {
 			throw new ServiceException(
-					"An error occured while trying to get latest actTracker from local db", e);
+					"An error occured while trying to get latest actTracker from local db",
+					e);
 		}
+	}
+
+	@Override
+	public void initializeMobileDatabase() throws ServiceException {
+		try {
+			List<ActivityTrackerEntry> list = webActivityTrackerDao.getAll();
+			for (ActivityTrackerEntry entry : list) {
+				mobileActivityTrackerDao.add(entry);
+			}
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest actTracker from local db",
+					e);
+		} catch (OutdatedAccessTokenException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest actTracker from local db",
+					e);
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest actTracker from local db",
+					e);
+		}
+
 	}
 }

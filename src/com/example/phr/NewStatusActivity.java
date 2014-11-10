@@ -1464,8 +1464,7 @@ public class NewStatusActivity extends android.app.Activity {
 
 	}
 
-	private void addFoodToDatabase() throws ServiceException,
-			OutdatedAccessTokenException {
+	private void addFoodToDatabase() {
 
 		try {
 			FacebookPostService fbPostService = new FacebookPostServiceImpl();
@@ -1499,6 +1498,12 @@ public class NewStatusActivity extends android.app.Activity {
 			foodTrackerService.add(foodEntry);
 
 		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

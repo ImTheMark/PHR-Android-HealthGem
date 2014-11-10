@@ -88,12 +88,35 @@ public class WeightTrackerServiceImpl implements WeightTrackerService {
 	}
 
 	@Override
-	public Weight getLatest()throws ServiceException{
+	public Weight getLatest() throws ServiceException {
 		try {
 			return mobileWeightTrackerDao.getLatest();
 		} catch (DataAccessException e) {
 			throw new ServiceException(
-					"An error occured while trying to get latest weight from local db", e);
+					"An error occured while trying to get latest weight from local db",
+					e);
+		}
+	}
+
+	@Override
+	public void initializeMobileDatabase() throws ServiceException {
+		try {
+			List<Weight> list = webWeightTrackerDao.getAll();
+			for (Weight entry : list) {
+				mobileWeightTrackerDao.add(entry);
+			}
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest weight from local db",
+					e);
+		} catch (OutdatedAccessTokenException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest weight from local db",
+					e);
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest weight from local db",
+					e);
 		}
 	}
 

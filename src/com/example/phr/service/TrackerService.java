@@ -22,4 +22,6 @@ public interface TrackerService<T> {
 	public T get(int entryID) throws ServiceException;
 
 	public T getLatest() throws ServiceException;
+
+	public void initializeMobileDatabase() throws ServiceException;
 }

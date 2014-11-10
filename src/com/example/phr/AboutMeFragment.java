@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.ServiceException;
+import com.example.phr.local_db.SPreference;
 import com.example.phr.mobile.dao.MobileSettingsDao;
 import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
 import com.example.phr.mobile.models.BloodPressure;
@@ -121,8 +123,11 @@ public class AboutMeFragment extends Fragment {
 		knownHealthProblems.setText(user.getKnownHealthProblems());
 		emergencyContactNumber.setText(user.getContactNumber());
 		emergencyPerson.setText(user.getEmergencyPerson());
-		image.setImageBitmap(ImageHandler.loadImage(user.getPhoto()
-				.getFileName()));
+
+		if (user.getPhoto() != null)
+			image.setImageBitmap(ImageHandler.loadImage(HealthGem
+					.getSharedPreferences().loadPreferences(
+							SPreference.PROFILE_PICTURE)));
 		BloodPressureTrackerService bpService = new BloodPressureTrackerServiceImpl();
 		BloodSugarTrackerService bsService = new BloodSugarTrackerServiceImpl();
 		CheckUpTrackerService checkupService = new CheckUpTrackerServiceImpl();

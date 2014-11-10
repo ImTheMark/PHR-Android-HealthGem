@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.example.phr.mobile.models.User;
-
 public class SPreference {
 
 	public static final String REGISTER_USERNAME = "rUsername";
@@ -24,6 +22,7 @@ public class SPreference {
 	public static final String REGISTER_FBUSERNAME = "rFBUsername";
 	public static final String REGISTER_FBACCESSTOKEN = "rFBAccessToken";
 
+	public static final String USERID = "UserID";
 	public static final String USERNAME = "Username";
 	public static final String NAME = "Name";
 	public static final String NUMBER = "Number";
@@ -43,7 +42,7 @@ public class SPreference {
 	public static final String SETTINGS_HEIGHTUNIT = "heightUnit";
 	public static final String SETTINGS_NOTIF_BLOODPRESSURE = "notifBloodPressure";
 	public static final String SETTINGS_NOTIF_BLOODSUGAR = "notifBloodSugar";
-	
+
 	public static final String VERIFICATION_COUNT = "unverifiedPostsCount";
 	public static final String VERIFICATION_TEMP_IMAGE = "verificationTemporaryImage";
 

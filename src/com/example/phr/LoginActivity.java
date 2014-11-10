@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -19,8 +20,24 @@ import com.example.phr.mobile.dao.MobileSettingsDao;
 import com.example.phr.mobile.dao.MobileUserDao;
 import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
 import com.example.phr.mobile.daoimpl.MobileUserDaoImpl;
+import com.example.phr.service.ActivityTrackerService;
+import com.example.phr.service.BloodPressureTrackerService;
+import com.example.phr.service.BloodSugarTrackerService;
+import com.example.phr.service.CheckUpTrackerService;
+import com.example.phr.service.FoodTrackerService;
+import com.example.phr.service.NoteTrackerService;
 import com.example.phr.service.UserService;
+import com.example.phr.service.VerificationService;
+import com.example.phr.service.WeightTrackerService;
+import com.example.phr.serviceimpl.ActivityTrackerServiceImpl;
+import com.example.phr.serviceimpl.BloodPressureTrackerServiceImpl;
+import com.example.phr.serviceimpl.BloodSugarTrackerServiceImpl;
+import com.example.phr.serviceimpl.CheckUpTrackerServiceImpl;
+import com.example.phr.serviceimpl.FoodTrackerServiceImpl;
+import com.example.phr.serviceimpl.NoteTrackerServiceImpl;
 import com.example.phr.serviceimpl.UserServiceImpl;
+import com.example.phr.serviceimpl.VerificationServiceImpl;
+import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
 import com.example.phr.tools.PasswordValidator;
 
 public class LoginActivity extends Activity {
@@ -75,10 +92,6 @@ public class LoginActivity extends Activity {
 						boolean isValid = userService.validateUser(username,
 								password);
 						if (isValid) {
-							Intent intent = new Intent(getApplicationContext(),
-									MainActivity.class);
-							intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-									| Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 							userDao = new MobileUserDaoImpl();
 
@@ -86,7 +99,8 @@ public class LoginActivity extends Activity {
 									.getUserGivenUsername(username));
 							settingDao = new MobileSettingsDaoImpl();
 							settingDao.initializeSettings();
-							startActivity(intent);
+
+							new GetPostsFromServer().execute();
 						} else {
 							mTextValid.setText("Invalid Username/Password");
 						}
@@ -122,6 +136,60 @@ public class LoginActivity extends Activity {
 			 * c.setClientPassword("Y9xSazM4fHrkNd8tMKPkbjeqKAl4YE8QXGiJ");
 			 * DatabaseHandler.getDBHandler().setClient(c);
 			 */
+	}
+
+	class GetPostsFromServer extends AsyncTask<Void, Void, Void> {
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			Log.e("LOGIN", "pre-exe");
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+
+			Log.e("LOGIN", "do-in");
+			ActivityTrackerService actService = new ActivityTrackerServiceImpl();
+			BloodPressureTrackerService bpService = new BloodPressureTrackerServiceImpl();
+			BloodSugarTrackerService bsService = new BloodSugarTrackerServiceImpl();
+			CheckUpTrackerService cuService = new CheckUpTrackerServiceImpl();
+			FoodTrackerService foodService = new FoodTrackerServiceImpl();
+			NoteTrackerService noteService = new NoteTrackerServiceImpl();
+			WeightTrackerService wService = new WeightTrackerServiceImpl();
+			VerificationService vService = new VerificationServiceImpl();
+
+			try {
+				actService.initializeMobileDatabase();
+				bpService.initializeMobileDatabase();
+				bsService.initializeMobileDatabase();
+				cuService.initializeMobileDatabase();
+				foodService.initializeMobileDatabase();
+				noteService.initializeMobileDatabase();
+				wService.initializeMobileDatabase();
+				vService.updateListOfUnverifiedPosts();
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (OutdatedAccessTokenException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			Log.e("LOGIN", "post-exe");
+			Intent intent = new Intent(getApplicationContext(),
+					MainActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+					| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+			startActivity(intent);
+		}
 	}
 
 	/**

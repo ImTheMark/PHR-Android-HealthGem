@@ -89,12 +89,35 @@ public class BloodSugarTrackerServiceImpl implements BloodSugarTrackerService {
 	}
 
 	@Override
-	public BloodSugar getLatest() throws ServiceException{
+	public BloodSugar getLatest() throws ServiceException {
 		try {
 			return mobileBloodSugarTrackerDao.getLatest();
 		} catch (DataAccessException e) {
 			throw new ServiceException(
-					"An error occured while trying to get latest bloodsugar from local db", e);
+					"An error occured while trying to get latest bloodsugar from local db",
+					e);
+		}
+	}
+
+	@Override
+	public void initializeMobileDatabase() throws ServiceException {
+		try {
+			List<BloodSugar> list = webBloodSugarTrackerDao.getAll();
+			for (BloodSugar entry : list) {
+				mobileBloodSugarTrackerDao.add(entry);
+			}
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest bloodsugar from local db",
+					e);
+		} catch (OutdatedAccessTokenException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest bloodsugar from local db",
+					e);
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest bloodsugar from local db",
+					e);
 		}
 	}
 

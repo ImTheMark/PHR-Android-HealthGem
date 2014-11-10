@@ -88,12 +88,35 @@ public class NoteTrackerServiceImpl implements NoteTrackerService {
 	}
 
 	@Override
-	public Note getLatest() throws ServiceException{
+	public Note getLatest() throws ServiceException {
 		try {
 			return mobileNoteTrackerDao.getLatest();
 		} catch (DataAccessException e) {
 			throw new ServiceException(
-					"An error occured while trying to get latest note from local db", e);
+					"An error occured while trying to get latest note from local db",
+					e);
+		}
+	}
+
+	@Override
+	public void initializeMobileDatabase() throws ServiceException {
+		try {
+			List<Note> list = webNoteTrackerDao.getAll();
+			for (Note entry : list) {
+				mobileNoteTrackerDao.add(entry);
+			}
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest note from local db",
+					e);
+		} catch (OutdatedAccessTokenException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest note from local db",
+					e);
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest note from local db",
+					e);
 		}
 	}
 

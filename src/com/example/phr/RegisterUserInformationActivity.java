@@ -339,6 +339,13 @@ public class RegisterUserInformationActivity extends Activity {
 					e.printStackTrace();
 				}
 
+				/*
+				 * User currUser = userService.getUser(); editedUser
+				 * .setPhoto(new PHRImage(ImageHandler
+				 * .encodeImageToBase64(ImageHandler
+				 * .loadImage(currUser.getPhoto() .getFileName())),
+				 * PHRImageType.IMAGE));
+				 */
 				try {
 					userService.edit(editedUser);
 				} catch (ServiceException e) {

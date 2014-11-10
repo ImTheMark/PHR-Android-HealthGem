@@ -92,12 +92,35 @@ public class CheckUpTrackerServiceImpl implements CheckUpTrackerService {
 	}
 
 	@Override
-	public CheckUp getLatest() throws ServiceException{
+	public CheckUp getLatest() throws ServiceException {
 		try {
 			return mobileCheckUpTrackerDao.getLatest();
 		} catch (DataAccessException e) {
 			throw new ServiceException(
-					"An error occured while trying to get latest checkup from local db", e);
+					"An error occured while trying to get latest checkup from local db",
+					e);
+		}
+	}
+
+	@Override
+	public void initializeMobileDatabase() throws ServiceException {
+		try {
+			List<CheckUp> list = webCheckUpTrackerDao.getAll();
+			for (CheckUp entry : list) {
+				mobileCheckUpTrackerDao.add(entry);
+			}
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest checkup from local db",
+					e);
+		} catch (OutdatedAccessTokenException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest checkup from local db",
+					e);
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest checkup from local db",
+					e);
 		}
 	}
 

@@ -233,7 +233,7 @@ public class User {
 
 	public double getHeightInCM() {
 		MobileSettingsDao settings = new MobileSettingsDaoImpl();
-		if (settings.isHeightSettingInFeet()) {
+		if (!settings.isHeightSettingInFeet()) {
 			Double cm = height / 0.39370;
 			return cm;
 		} else

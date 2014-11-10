@@ -98,4 +98,26 @@ public class FoodTrackerServiceImpl implements FoodTrackerService {
 					e);
 		}
 	}
+
+	@Override
+	public void initializeMobileDatabase() throws ServiceException {
+		try {
+			List<FoodTrackerEntry> list = webFoodTrackerDao.getAll();
+			for (FoodTrackerEntry entry : list) {
+				mobileFoodTrackerDao.add(entry);
+			}
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest foodTracker from local db",
+					e);
+		} catch (OutdatedAccessTokenException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest foodTracker from local db",
+					e);
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest foodTracker from local db",
+					e);
+		}
+	}
 }

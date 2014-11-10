@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -114,12 +115,18 @@ public class VerificationActivityTest extends Activity {
 				list = vService.getAll();
 
 				if (list != null && !list.isEmpty()) {
-					unverifiedList.clear();
 					unverifiedList = list;
 					verificationService.setUnverifiedPostsCount(list.size());
+					Log.e("VERIFICATION size after post execute",
+							unverifiedList.size() + "");
 					// adapter.notifyDataSetChanged();
-					((UnverifiedStatusAdapter) listView.getAdapter())
-							.notifyDataSetChanged();
+					/*
+					 * ((UnverifiedStatusAdapter) listView.getAdapter())
+					 * .notifyDataSetChanged();
+					 */
+					Intent intent = getIntent();
+					finish();
+					startActivity(intent);
 				}
 
 			} catch (ServiceException e) {

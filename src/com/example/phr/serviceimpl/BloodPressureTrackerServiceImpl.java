@@ -95,12 +95,35 @@ public class BloodPressureTrackerServiceImpl implements
 	}
 
 	@Override
-	public BloodPressure getLatest() throws ServiceException{
+	public BloodPressure getLatest() throws ServiceException {
 		try {
 			return mobileBloodPressureTrackerDao.getLatest();
 		} catch (DataAccessException e) {
 			throw new ServiceException(
-					"An error occured while trying to get latest bp from local db", e);
+					"An error occured while trying to get latest bp from local db",
+					e);
+		}
+	}
+
+	@Override
+	public void initializeMobileDatabase() throws ServiceException {
+		try {
+			List<BloodPressure> list = webBloodPressureTrackerDao.getAll();
+			for (BloodPressure entry : list) {
+				mobileBloodPressureTrackerDao.add(entry);
+			}
+		} catch (WebServerException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest bp from local db",
+					e);
+		} catch (OutdatedAccessTokenException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest bp from local db",
+					e);
+		} catch (DataAccessException e) {
+			throw new ServiceException(
+					"An error occured while trying to get latest bp from local db",
+					e);
 		}
 	}
 

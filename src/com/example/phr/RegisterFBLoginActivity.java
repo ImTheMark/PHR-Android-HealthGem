@@ -332,40 +332,44 @@ public class RegisterFBLoginActivity extends Activity {
 
 	}
 
-
-
-	
 	private class LoadFbImage extends AsyncTask<String, Void, Bitmap> {
-	    ImageView bmImage;
-	 
-	    public LoadFbImage(ImageView bmImage) {
-	        this.bmImage = bmImage;
-	    }
-	 
-	    protected Bitmap doInBackground(String... urls) {
-	        URL img_value = null;
-			 try {
-				img_value = new URL("https://graph.facebook.com/"+urls[0]+"/picture?type=large");
+		ImageView bmImage;
+
+		public LoadFbImage(ImageView bmImage) {
+			this.bmImage = bmImage;
+		}
+
+		@Override
+		protected Bitmap doInBackground(String... urls) {
+			URL img_value = null;
+			try {
+				img_value = new URL("https://graph.facebook.com/" + urls[0]
+						+ "/picture?type=large");
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			Bitmap mIcon1 = null;
 			try {
-				mIcon1 = BitmapFactory.decodeStream(img_value.openConnection().getInputStream());
+				mIcon1 = BitmapFactory.decodeStream(img_value.openConnection()
+						.getInputStream());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	        
-	        return mIcon1;
-	    }
-	 
-	    protected void onPostExecute(Bitmap result) {
-	        bmImage.setImageBitmap(result);
-	        String dir = ImageHandler.saveImage(result);
+
+			return mIcon1;
+		}
+
+		@Override
+		protected void onPostExecute(Bitmap result) {
+			bmImage.setImageBitmap(result);
+			String dir = ImageHandler.saveImage(result);
 			HealthGem.getSharedPreferences().savePreferences(
 					SPreference.PROFILE_PICTURE, dir);
-	    }
+			Log.e("FB LOGIN",
+					HealthGem.getSharedPreferences().loadPreferences(
+							SPreference.PROFILE_PICTURE));
+		}
 	}
 }
