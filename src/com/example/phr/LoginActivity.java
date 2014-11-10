@@ -74,15 +74,16 @@ public class LoginActivity extends Activity {
 					try {
 						boolean isValid = userService.validateUser(username,
 								password);
-						if (true) {
+						if (isValid) {
 							Intent intent = new Intent(getApplicationContext(),
 									MainActivity.class);
 							intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
 									| Intent.FLAG_ACTIVITY_CLEAR_TOP);
-							
+
 							userDao = new MobileUserDaoImpl();
-							
-							userDao.saveUser(userService.getUserGivenUsername(username));
+
+							userDao.saveUser(userService
+									.getUserGivenUsername(username));
 							settingDao = new MobileSettingsDaoImpl();
 							settingDao.initializeSettings();
 							startActivity(intent);

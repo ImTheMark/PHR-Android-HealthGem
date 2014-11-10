@@ -1,5 +1,7 @@
 package com.example.phr;
 
+import java.text.DecimalFormat;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,18 +11,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.phr.exceptions.ServiceException;
+import com.example.phr.mobile.dao.MobileSettingsDao;
+import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.mobile.models.BloodSugar;
 import com.example.phr.mobile.models.CheckUp;
 import com.example.phr.mobile.models.User;
+import com.example.phr.mobile.models.Weight;
 import com.example.phr.service.BloodPressureTrackerService;
 import com.example.phr.service.BloodSugarTrackerService;
 import com.example.phr.service.CheckUpTrackerService;
 import com.example.phr.service.UserService;
+import com.example.phr.service.WeightTrackerService;
 import com.example.phr.serviceimpl.BloodPressureTrackerServiceImpl;
 import com.example.phr.serviceimpl.BloodSugarTrackerServiceImpl;
 import com.example.phr.serviceimpl.CheckUpTrackerServiceImpl;
 import com.example.phr.serviceimpl.UserServiceImpl;
+import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
 import com.example.phr.tools.ImageHandler;
 
@@ -46,6 +53,7 @@ public class AboutMeFragment extends Fragment {
 	BloodPressure bp;
 	BloodSugar bs;
 	CheckUp checkup;
+	DecimalFormat df = new DecimalFormat("#.00");
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,13 +93,36 @@ public class AboutMeFragment extends Fragment {
 		email.setText(user.getEmail());
 		fb.setText(user.getFbAccessToken());
 		contact.setText(user.getContactNumber());
-		weight.setText(String.valueOf(user.getWeight()));
-		height.setText(String.valueOf(user.getHeight()));
+
+		MobileSettingsDao settings = new MobileSettingsDaoImpl();
+		if (settings.isHeightSettingInFeet()) {
+			height.setText(df.format(user.getHeight()) + " in");
+		} else {
+			height.setText(df.format(user.getHeightInCM()) + " cm");
+		}
+
+		WeightTrackerService weightDao = new WeightTrackerServiceImpl();
+		Weight weightTracker;
+		try {
+			weightTracker = weightDao.getLatest();
+			if (settings.isWeightSettingInPounds()) {
+				weight.setText(df.format(weightTracker.getWeightInPounds())
+						+ " lbs");
+			} else {
+				weight.setText(df.format(weightTracker.getWeightInKilograms())
+						+ " kgs");
+			}
+		} catch (ServiceException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 		allergies.setText(user.getAllergies());
 		knownHealthProblems.setText(user.getKnownHealthProblems());
 		emergencyContactNumber.setText(user.getContactNumber());
 		emergencyPerson.setText(user.getEmergencyPerson());
-		image.setImageBitmap(ImageHandler.loadImage(user.getPhoto().getFileName()));
+		image.setImageBitmap(ImageHandler.loadImage(user.getPhoto()
+				.getFileName()));
 		BloodPressureTrackerService bpService = new BloodPressureTrackerServiceImpl();
 		BloodSugarTrackerService bsService = new BloodSugarTrackerServiceImpl();
 		CheckUpTrackerService checkupService = new CheckUpTrackerServiceImpl();

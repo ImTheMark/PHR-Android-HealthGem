@@ -2,6 +2,9 @@ package com.example.phr.mobile.models;
 
 import java.sql.Timestamp;
 
+import com.example.phr.mobile.dao.MobileSettingsDao;
+import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
+
 public class User {
 
 	private int id;
@@ -76,7 +79,6 @@ public class User {
 		this.knownHealthProblems = knownHealthProblems;
 	}
 
-	
 	public User(int id, String username, String password, String name,
 			Timestamp dateOfBirth, String gender, double height, double weight,
 			String contactNumber, String email, String emergencyPerson,
@@ -228,5 +230,22 @@ public class User {
 	public void setPhoto(PHRImage photo) {
 		this.photo = photo;
 	}
-	
+
+	public double getHeightInCM() {
+		MobileSettingsDao settings = new MobileSettingsDaoImpl();
+		if (settings.isHeightSettingInFeet()) {
+			Double cm = height / 0.39370;
+			return cm;
+		} else
+			return height;
+	}
+
+	public double getWeightInKGS() {
+		MobileSettingsDao settings = new MobileSettingsDaoImpl();
+		if (!settings.isWeightSettingInPounds()) {
+			Double kgs = weight / 2.2046;
+			return kgs;
+		} else
+			return weight;
+	}
 }

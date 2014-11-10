@@ -6,9 +6,11 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -253,7 +255,7 @@ public class MainActivity extends FragmentActivity implements
 		// show respected fragment view
 		viewPager.setCurrentItem(tab.getPosition());
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -315,6 +317,36 @@ public class MainActivity extends FragmentActivity implements
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setTitle("Close Application");
+		alertDialogBuilder
+				.setMessage("Do you want to close HealthGem?")
+				.setCancelable(false)
+				.setPositiveButton("Yes",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int id) {
+								moveTaskToBack(true);
+								android.os.Process
+										.killProcess(android.os.Process.myPid());
+								System.exit(1);
+							}
+						})
+
+				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+
+						dialog.cancel();
+					}
+				});
+
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
 	}
 
 }

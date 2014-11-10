@@ -153,6 +153,17 @@ public class SettingsActivity extends Activity {
 		});
 	}
 
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+
+		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+				| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+
+	}
+
 	private String getItemSelectedRadioGroupWeight() {
 		int selected = radioGroupWeight.getCheckedRadioButtonId();
 		Button radioBtn = (RadioButton) findViewById(selected);
