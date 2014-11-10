@@ -7,11 +7,12 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/loginLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">"
+        android:layout_centerHorizontal="true">
 
         <EditText
             android:id="@+id/txtUsername"
@@ -90,5 +91,25 @@
             android:textColor="#E05C5C" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/loadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/loginLayout"
+        android:layout_alignLeft="@id/loginLayout"
+        android:layout_alignTop="@id/loginLayout"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="gone"
+        android:orientation="vertical" >
+        
+	    <ProgressBar
+	        style="?android:attr/progressBarStyleLarge"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:indeterminate="true" />
+	    
+    </LinearLayout>
+    
     
 </RelativeLayout>

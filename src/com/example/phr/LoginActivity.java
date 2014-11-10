@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.phr.application.HealthGem;
@@ -48,6 +49,9 @@ public class LoginActivity extends Activity {
 	private ImageButton mBtnLogin;
 	private ImageButton mBtnRegister;
 
+	private LinearLayout loginLayout;
+	private LinearLayout loadingLayout;
+
 	private String username;
 	private String password;
 	private PasswordValidator passwordValidator;
@@ -67,6 +71,10 @@ public class LoginActivity extends Activity {
 		StrictMode.setThreadPolicy(policy);
 
 		setContentView(R.layout.activity_login);
+
+		loginLayout = (LinearLayout) findViewById(R.id.loginLayout);
+		loadingLayout = (LinearLayout) findViewById(R.id.loadingLayout);
+		
 		mBtnLogin = (ImageButton) findViewById(R.id.btnLogin);
 		mTextValid = (TextView) findViewById(R.id.checkLogin);
 
@@ -144,6 +152,8 @@ public class LoginActivity extends Activity {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			Log.e("LOGIN", "pre-exe");
+			loginLayout.setVisibility(View.GONE);
+			loadingLayout.setVisibility(View.VISIBLE);
 		}
 
 		@Override
@@ -187,7 +197,6 @@ public class LoginActivity extends Activity {
 					MainActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
 					| Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
 			startActivity(intent);
 		}
 	}
