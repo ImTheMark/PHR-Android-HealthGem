@@ -10,7 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.phr.application.HealthGem;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
@@ -90,8 +92,13 @@ public class CheckupTrackerReadModeActivity extends Activity {
 				checkupServiceImpl = new CheckUpTrackerServiceImpl();
 				checkupServiceImpl.delete(chosenItem);
 				Log.e("checkup", "del_done");
+				Intent in = new Intent(getApplicationContext(),
+						CheckupTrackerActivity.class);
+				startActivity(in);
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block
+				Toast.makeText(HealthGem.getContext(),
+						"No Internet Connection !", Toast.LENGTH_LONG).show();
 				e.printStackTrace();
 			} catch (OutdatedAccessTokenException e) {
 				// TODO Auto-generated catch block
@@ -101,9 +108,6 @@ public class CheckupTrackerReadModeActivity extends Activity {
 				e.printStackTrace();
 			}
 
-			Intent in = new Intent(getApplicationContext(),
-					CheckupTrackerActivity.class);
-			startActivity(in);
 			return true;
 
 		default:

@@ -99,6 +99,8 @@ public class VerificationActivityTest extends Activity {
 				vService.updateListOfUnverifiedPosts();
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block
+				Toast.makeText(HealthGem.getContext(),
+						"No Internet Connection !", Toast.LENGTH_LONG).show();
 				e.printStackTrace();
 			} catch (OutdatedAccessTokenException e) {
 				// TODO Auto-generated catch block

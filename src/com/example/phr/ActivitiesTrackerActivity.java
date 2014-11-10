@@ -124,6 +124,9 @@ public class ActivitiesTrackerActivity extends Activity {
 								Log.e("activity", "del");
 								activityServiceImpl.delete(chosenItem);
 								Log.e("activity", "del_done");
+								Intent i = new Intent(getApplicationContext(),
+										ActivitiesTrackerActivity.class);
+								startActivity(i);
 							} catch (ServiceException e) {
 								// TODO Auto-generated catch block
 								Toast.makeText(HealthGem.getContext(),
@@ -138,9 +141,6 @@ public class ActivitiesTrackerActivity extends Activity {
 								e.printStackTrace();
 							}
 
-							Intent i = new Intent(getApplicationContext(),
-									ActivitiesTrackerActivity.class);
-							startActivity(i);
 						}
 					}
 

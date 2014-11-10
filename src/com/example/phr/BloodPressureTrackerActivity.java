@@ -145,6 +145,10 @@ public class BloodPressureTrackerActivity extends Activity {
 								Log.e("bloodpressure", "del");
 								bpService.delete(chosenItem);
 								Log.e("bloodpressure", "del_done");
+
+								Intent i = new Intent(getApplicationContext(),
+										BloodPressureTrackerActivity.class);
+								startActivity(i);
 							} catch (OutdatedAccessTokenException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -159,9 +163,6 @@ public class BloodPressureTrackerActivity extends Activity {
 								e.printStackTrace();
 							}
 
-							Intent i = new Intent(getApplicationContext(),
-									BloodPressureTrackerActivity.class);
-							startActivity(i);
 						}
 					}
 

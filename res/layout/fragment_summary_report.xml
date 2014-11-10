@@ -672,16 +672,21 @@
         android:layout_alignParentBottom="true"
         android:layout_alignBottom="@id/viewDisplay"
         android:gravity="center"
-        android:background="#319DF5" >
-        
-        <Button
-            android:id="@+id/btnStatus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#319DF5"
-            style="?android:attr/buttonStyleSmall"
-            android:text="Post a Status" />
+        android:padding="8dp"
+        android:background="#1BBADE" >
 
+    <ImageView
+        android:id="@+id/img_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/post_status" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="   Status" />
+       
     </LinearLayout>
     
 </RelativeLayout>

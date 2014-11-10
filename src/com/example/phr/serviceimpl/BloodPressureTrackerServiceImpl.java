@@ -70,8 +70,8 @@ public class BloodPressureTrackerServiceImpl implements
 			webBloodPressureTrackerDao.delete(bloodPressure);
 			mobileBloodPressureTrackerDao.delete(bloodPressure);
 		} catch (WebServerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ServiceException(
+					"An error occured while trying to delete bp to web", e);
 		} catch (DataAccessException e) {
 			throw new ServiceException(
 					"An error occured while trying to delete bp to web", e);

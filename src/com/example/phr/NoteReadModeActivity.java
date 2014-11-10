@@ -10,7 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.phr.application.HealthGem;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
@@ -84,8 +86,14 @@ public class NoteReadModeActivity extends Activity {
 				noteServiceImpl = new NoteTrackerServiceImpl();
 				noteServiceImpl.delete(chosenItem);
 				Log.e("note", "del_done");
+				Intent in = new Intent(getApplicationContext(),
+						NoteTrackerActivity.class);
+				startActivity(in);
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block
+				Toast.makeText(HealthGem.getContext(),
+						"No Internet Connection !", Toast.LENGTH_LONG).show();
+				e.printStackTrace();
 				e.printStackTrace();
 			} catch (OutdatedAccessTokenException e) {
 				// TODO Auto-generated catch block
@@ -95,9 +103,6 @@ public class NoteReadModeActivity extends Activity {
 				e.printStackTrace();
 			}
 
-			Intent in = new Intent(getApplicationContext(),
-					NoteTrackerActivity.class);
-			startActivity(in);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

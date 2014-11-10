@@ -136,6 +136,10 @@ public class BloodSugarTrackerActivity extends Activity {
 								Log.e("bloosugar", "del");
 								bsServiceImpl.delete(chosenItem);
 								Log.e("bloodsugar", "del_done");
+
+								Intent i = new Intent(getApplicationContext(),
+										BloodSugarTrackerActivity.class);
+								startActivity(i);
 							} catch (ServiceException e) {
 								// TODO Auto-generated catch block
 								Toast.makeText(HealthGem.getContext(),
@@ -150,9 +154,6 @@ public class BloodSugarTrackerActivity extends Activity {
 								e.printStackTrace();
 							}
 
-							Intent i = new Intent(getApplicationContext(),
-									BloodSugarTrackerActivity.class);
-							startActivity(i);
 						}
 					}
 

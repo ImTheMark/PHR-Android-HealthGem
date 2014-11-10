@@ -68,7 +68,7 @@ public class SummaryReportFragment extends Fragment {
 
 	Button mBtnRetrieve;
 	Button mBtnWrite;
-	Button mBtnStatus;
+	LinearLayout postHolder;
 	TextView txtBsDate;
 	TextView txtBsTime;
 	TextView txtBsSugarLvl;
@@ -421,8 +421,9 @@ public class SummaryReportFragment extends Fragment {
 			}
 		});
 
-		mBtnStatus = (Button) rootView.findViewById(R.id.btnStatus);
-		mBtnStatus.setOnClickListener(new OnClickListener() {
+		postHolder = (LinearLayout) rootView
+				.findViewById(R.id.journalTabsPlaceholder);
+		postHolder.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(),

@@ -158,6 +158,10 @@ public class FoodTrackerDailyActivity extends Activity {
 								Log.e("fooddel", "start");
 								foodServiceImpl.delete(chosenItem);
 								Log.e("fooddel", "done");
+
+								Intent i = new Intent(getApplicationContext(),
+										GroupedFoodTrackerActivity.class);
+								startActivity(i);
 							} catch (OutdatedAccessTokenException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -172,9 +176,6 @@ public class FoodTrackerDailyActivity extends Activity {
 								e.printStackTrace();
 							}
 
-							Intent i = new Intent(getApplicationContext(),
-									GroupedFoodTrackerActivity.class);
-							startActivity(i);
 						}
 					}
 

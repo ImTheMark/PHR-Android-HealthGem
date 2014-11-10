@@ -36,7 +36,8 @@ public class FoodTrackerServiceImpl implements FoodTrackerService {
 			webFoodTrackerDao.add_ReturnEntryIdInWeb(foodTrackerEntry);
 			mobileFoodTrackerDao.add(foodTrackerEntry);
 		} catch (WebServerException e) {
-			e.printStackTrace();
+			throw new ServiceException(
+					"An error occured while trying to add food to web", e);
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}
@@ -51,7 +52,8 @@ public class FoodTrackerServiceImpl implements FoodTrackerService {
 			webFoodTrackerDao.edit(foodTrackerEntry);
 			mobileFoodTrackerDao.edit(foodTrackerEntry);
 		} catch (WebServerException e) {
-			e.printStackTrace();
+			throw new ServiceException(
+					"An error occured while trying to edit food to web", e);
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}
@@ -64,7 +66,8 @@ public class FoodTrackerServiceImpl implements FoodTrackerService {
 			webFoodTrackerDao.delete(foodTrackerEntry);
 			mobileFoodTrackerDao.delete(foodTrackerEntry);
 		} catch (WebServerException e) {
-			e.printStackTrace();
+			throw new ServiceException(
+					"An error occured while trying to delete food to web", e);
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		} catch (EntryNotFoundException e) {
