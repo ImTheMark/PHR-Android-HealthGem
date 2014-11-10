@@ -32,9 +32,9 @@ public class VerificationActivity extends Activity {
 		vList = (ListView) findViewById(R.id.verification_listview);
 		vService = new VerificationServiceImpl();
 
-		try {
+		/*try {
 			UnverifiedStatusAdapter adapter = new UnverifiedStatusAdapter(
-					HealthGem.getContext(), vService.getAll());
+					HealthGem.getContext(), vService.getAllFromWebDB());
 			vList.setAdapter(adapter);
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
@@ -50,7 +50,7 @@ public class VerificationActivity extends Activity {
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 }

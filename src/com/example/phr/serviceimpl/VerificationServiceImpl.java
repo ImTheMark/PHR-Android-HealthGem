@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
@@ -86,7 +87,7 @@ public class VerificationServiceImpl implements VerificationService {
 			OutdatedAccessTokenException {
 		try {
 			webVerificationDao.delete(entry);
-			mobileVerificationDao.decreaseUnverifiedPostsCount();
+			mobileVerificationDao.deleteUnverifiedFoodPost(entry);
 		} catch (WebServerException e) {
 			throw new ServiceException("error", e);
 		}
@@ -98,7 +99,7 @@ public class VerificationServiceImpl implements VerificationService {
 			OutdatedAccessTokenException {
 		try {
 			webVerificationDao.delete(entry);
-			mobileVerificationDao.decreaseUnverifiedPostsCount();
+			mobileVerificationDao.deleteUnverifiedActivityPost(entry);
 		} catch (WebServerException e) {
 			throw new ServiceException("error", e);
 		}
@@ -110,7 +111,7 @@ public class VerificationServiceImpl implements VerificationService {
 			OutdatedAccessTokenException {
 		try {
 			webVerificationDao.delete(entry);
-			mobileVerificationDao.decreaseUnverifiedPostsCount();
+			mobileVerificationDao.deleteUnverifiedRestaurantPost(entry);
 		} catch (WebServerException e) {
 			throw new ServiceException("error", e);
 		}
@@ -122,14 +123,14 @@ public class VerificationServiceImpl implements VerificationService {
 			OutdatedAccessTokenException {
 		try {
 			webVerificationDao.delete(entry);
-			mobileVerificationDao.decreaseUnverifiedPostsCount();
+			mobileVerificationDao.deleteUnverifiedSportEstablishmentPost(entry);
 		} catch (WebServerException e) {
 			throw new ServiceException("error", e);
 		}
 	}
 
 	@Override
-	public List<TrackerEntry> getAll() throws ServiceException,
+	public void getAllFromWebDB() throws ServiceException,
 			OutdatedAccessTokenException {
 		List<TrackerEntry> list = new ArrayList<TrackerEntry>();
 
@@ -138,36 +139,41 @@ public class VerificationServiceImpl implements VerificationService {
 		list.addAll(getAllUnverifiedRestaurantPosts());
 		list.addAll(getAllUnverifiedSportsEstablishmentPosts());
 
-		Collections.sort(list, new Comparator<TrackerEntry>() {
-			@Override
-			public int compare(TrackerEntry e1, TrackerEntry e2) {
-				return e1.getTimestamp().compareTo(e2.getTimestamp());
+		try {
+			for(TrackerEntry entry:list){
+				if(entry.getClass().equals(UnverifiedFoodEntry.class))
+					mobileVerificationDao.addUnverifiedFoodPost((UnverifiedFoodEntry) entry);
+				else if(entry.getClass().equals(UnverifiedActivityEntry.class))
+						mobileVerificationDao.addUnverifiedActivityPost((UnverifiedActivityEntry) entry);
+				else if(entry.getClass().equals(UnverifiedRestaurantEntry.class))
+					mobileVerificationDao.addUnverifiedRestaurantPost((UnverifiedRestaurantEntry) entry);
+				else if(entry.getClass().equals(UnverifiedSportsEstablishmentEntry.class))
+					mobileVerificationDao.addUnverifiedSportEstablishmentPost((UnverifiedSportsEstablishmentEntry) entry);
 			}
-		});
-
-		Collections.reverse(list);
-
-		return list;
+		} catch (DataAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void addFoodListToTemporaryDatabase(List<Food> foodList) {
-		mobileVerificationDao.addFoodList(foodList);
+		mobileVerificationDao.addFoodListToTempDB(foodList);
 	}
 
 	@Override
 	public void addActivityListToTemporaryDatabase(List<Activity> activityList) {
-		mobileVerificationDao.addActivityList(activityList);
+		mobileVerificationDao.addActivityListToTempDB(activityList);
 	}
 
 	@Override
 	public List<Food> getFoodList() {
-		return mobileVerificationDao.getFoodList();
+		return mobileVerificationDao.getFoodListFromTempDB();
 	}
 
 	@Override
 	public List<Activity> getActivityList() {
-		return mobileVerificationDao.getActivityList();
+		return mobileVerificationDao.getActivityListFromTempDB();
 	}
 
 	@Override
@@ -181,18 +187,51 @@ public class VerificationServiceImpl implements VerificationService {
 	}
 
 	@Override
-	public void setUnverifiedPostsCount(int count) {
-		mobileVerificationDao.setUnverifiedPostsCount(count);
-	}
-
-	@Override
-	public void decreaseUnverifiedPostsCount() {
-		mobileVerificationDao.decreaseUnverifiedPostsCount();
-	}
-
-	@Override
 	public int getUnverifiedPostsCount() {
 		return mobileVerificationDao.getUnverifiedPostsCount();
+	}
+
+	@Override
+	public List<TrackerEntry> getAllFromMobileDB() {
+		try {
+			return mobileVerificationDao.getAllUnverifiedPosts();
+		} catch (DataAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<TrackerEntry>();
+	}
+
+	@Override
+	public UnverifiedFoodEntry getUnverifiedFoodPostFromWebDB(
+			UnverifiedFoodEntry entry) throws ServiceException,
+			OutdatedAccessTokenException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UnverifiedActivityEntry getUnverifiedActivityPostFromWebDB(
+			UnverifiedActivityEntry entry) throws ServiceException,
+			OutdatedAccessTokenException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UnverifiedRestaurantEntry getUnverifiedRestaurantPostFromWebDB(
+			UnverifiedRestaurantEntry entry) throws ServiceException,
+			OutdatedAccessTokenException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UnverifiedSportsEstablishmentEntry getUnverifiedSportsEstablishmentPostFromWebDB(
+			UnverifiedSportsEstablishmentEntry entry) throws ServiceException,
+			OutdatedAccessTokenException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

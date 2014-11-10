@@ -123,6 +123,54 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public static final String WEIGHT_PHOTO = "photo";
 	public static final String WEIGHT_FBPOSTID = "fbPostID";
 	
+	
+	
+	
+	
+	
+	// UNVERIFIED FOOD
+	public static final String TABLE_UNVERIFIED_FOOD = "tempfoodtracker";
+	public static final String UNVERIFIED_FOOD_ID = "id";
+	public static final String UNVERIFIED_FOOD_DATEADDED = "dateAdded";
+	public static final String UNVERIFIED_FOOD_EXTRACTEDWORD = "extractedWord";
+	public static final String UNVERIFIED_FOOD_FOODID = "foodID";
+	public static final String UNVERIFIED_FOOD_SERVINGCOUNT = "servingSize";
+	public static final String UNVERIFIED_FOOD_STATUS = "status";
+	public static final String UNVERIFIED_FOOD_PHOTO = "photo";
+	public static final String UNVERIFIED_FOOD_FBPOSTID = "fbPostID";
+	
+	// UNVERIFIED RESTO
+	public static final String TABLE_UNVERIFIED_RESTO = "temprestaurant";
+	public static final String UNVERIFIED_RESTO_ID = "id";
+	public static final String UNVERIFIED_RESTO_DATEADDED = "dateAdded";
+	public static final String UNVERIFIED_RESTO_EXTRACTEDWORD = "extractedWord";
+	public static final String UNVERIFIED_RESTO_RESTOID = "restaurantID";
+	public static final String UNVERIFIED_RESTO_STATUS = "status";
+	public static final String UNVERIFIED_RESTO_PHOTO = "photo";
+	public static final String UNVERIFIED_RESTO_FBPOSTID = "fbPostID";
+	
+	// UNVERIFIED ACTIVITY
+	public static final String TABLE_UNVERIFIED_ACTIVITY = "tempactivitytracker";
+	public static final String UNVERIFIED_ACTIVITY_ID = "id";
+	public static final String UNVERIFIED_ACTIVITY_DATEADDED = "dateAdded";
+	public static final String UNVERIFIED_ACTIVITY_EXTRACTEDWORD = "extractedWord";
+	public static final String UNVERIFIED_ACTIVITY_ACTIVITYID = "activityID";
+	public static final String UNVERIFIED_ACTIVITY_DURATIONINSECONDS = "durationInSeconds";
+	public static final String UNVERIFIED_ACTIVITY_CALORIEBURNED = "calorieBurnedPerHour";
+	public static final String UNVERIFIED_ACTIVITY_STATUS = "status";
+	public static final String UNVERIFIED_ACTIVITY_PHOTO = "photo";
+	public static final String UNVERIFIED_ACTIVITY_FBPOSTID = "fbPostID";
+	
+	// UNVERIFIED SPORT ESTABLISHMENT
+	public static final String TABLE_UNVERIFIED_SPORTEST = "tempsportestablishment";
+	public static final String UNVERIFIED_SPORTEST_ID = "id";
+	public static final String UNVERIFIED_SPORTEST_DATEADDED = "dateAdded";
+	public static final String UNVERIFIED_SPORTEST_EXTRACTEDWORD = "extractedWord";
+	public static final String UNVERIFIED_SPORTEST_GYMID = "gymID";
+	public static final String UNVERIFIED_SPORTEST_STATUS = "status";
+	public static final String UNVERIFIED_SPORTEST_PHOTO = "photo";
+	public static final String UNVERIFIED_SPORTEST_FBPOSTID = "fbPostID";
+	
 
 	private static final DatabaseHandler dbHandler = new DatabaseHandler(HealthGem.getContext());
 
@@ -136,6 +184,56 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+
+		String CREATE_UNVERIFIED_SPORTEST_TABLE = "CREATE TABLE "
+				+ TABLE_UNVERIFIED_SPORTEST + "(" 
+				+ UNVERIFIED_SPORTEST_ID + " INTEGER PRIMARY KEY ," 
+				+ UNVERIFIED_SPORTEST_DATEADDED + " TEXT,"
+				+ UNVERIFIED_SPORTEST_EXTRACTEDWORD + " TEXT,"
+				+ UNVERIFIED_SPORTEST_GYMID + " INTEGER," 
+				+ UNVERIFIED_SPORTEST_STATUS + " TEXT,"
+				+ UNVERIFIED_SPORTEST_PHOTO + " TEXT,"  
+				+ UNVERIFIED_SPORTEST_FBPOSTID + " TEXT"  
+				+ ")";
+
+		String CREATE_UNVERIFIED_ACTIVITY_TABLE = "CREATE TABLE "
+				+ TABLE_UNVERIFIED_ACTIVITY + "(" 
+				+ UNVERIFIED_ACTIVITY_ID + " INTEGER PRIMARY KEY ," 
+				+ UNVERIFIED_ACTIVITY_DATEADDED + " TEXT,"
+				+ UNVERIFIED_ACTIVITY_EXTRACTEDWORD + " TEXT,"
+				+ UNVERIFIED_ACTIVITY_ACTIVITYID + " INTEGER," 
+				+ UNVERIFIED_ACTIVITY_DURATIONINSECONDS + " INTEGER," 
+				+ UNVERIFIED_ACTIVITY_CALORIEBURNED + " INTEGER," 
+				+ UNVERIFIED_ACTIVITY_STATUS + " TEXT,"
+				+ UNVERIFIED_ACTIVITY_PHOTO + " TEXT,"  
+				+ UNVERIFIED_ACTIVITY_FBPOSTID + " TEXT"  
+				+ ")";
+		
+		String CREATE_UNVERIFIED_RESTO_TABLE = "CREATE TABLE "
+				+ TABLE_UNVERIFIED_RESTO + "(" 
+				+ UNVERIFIED_RESTO_ID + " INTEGER PRIMARY KEY ," 
+				+ UNVERIFIED_RESTO_DATEADDED + " TEXT,"
+				+ UNVERIFIED_RESTO_EXTRACTEDWORD + " TEXT,"
+				+ UNVERIFIED_RESTO_RESTOID + " INTEGER," 
+				+ UNVERIFIED_RESTO_STATUS + " TEXT,"
+				+ UNVERIFIED_RESTO_PHOTO + " TEXT,"  
+				+ UNVERIFIED_RESTO_FBPOSTID + " TEXT"  
+				+ ")";
+		
+		String CREATE_UNVERIFIED_FOOD_TABLE = "CREATE TABLE "
+				+ TABLE_UNVERIFIED_FOOD + "(" 
+				+ UNVERIFIED_FOOD_ID + " INTEGER PRIMARY KEY ," 
+				+ UNVERIFIED_FOOD_DATEADDED + " TEXT,"
+				+ UNVERIFIED_FOOD_EXTRACTEDWORD + " TEXT,"
+				+ UNVERIFIED_FOOD_FOODID + " INTEGER," 
+				+ UNVERIFIED_FOOD_SERVINGCOUNT + " REAL," 
+				+ UNVERIFIED_FOOD_STATUS + " TEXT,"
+				+ UNVERIFIED_FOOD_PHOTO + " TEXT,"  
+				+ UNVERIFIED_FOOD_FBPOSTID + " TEXT"  
+				+ ")";
+		
+		
+		
 		
 		String CREATE_TEMP_ACTIVITYLIST_TABLE = "CREATE TABLE "
 				+ TABLE_TEMP_ACTIVITYLIST + "(" 
@@ -271,7 +369,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ WEIGHT_PHOTO + " TEXT,"  
 				+ WEIGHT_FBPOSTID + " TEXT"  
 				+ ")";
-		
+
+		db.execSQL(CREATE_UNVERIFIED_SPORTEST_TABLE);
+		db.execSQL(CREATE_UNVERIFIED_ACTIVITY_TABLE);
+		db.execSQL(CREATE_UNVERIFIED_RESTO_TABLE);
+		db.execSQL(CREATE_UNVERIFIED_FOOD_TABLE);
 
 		db.execSQL(CREATE_TEMP_ACTIVITYLIST_TABLE);
 		db.execSQL(CREATE_TEMP_FOODLIST_TABLE);
@@ -290,6 +392,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_UNVERIFIED_ACTIVITY);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_UNVERIFIED_FOOD);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_UNVERIFIED_RESTO);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_UNVERIFIED_SPORTEST);
+		
+		
+		
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TEMP_FOODLIST);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TEMP_ACTIVITYLIST);
 		
@@ -310,6 +419,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	
 	public void clearDatabase() {
 		SQLiteDatabase db = dbHandler.getWritableDatabase();
+		
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_UNVERIFIED_ACTIVITY);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_UNVERIFIED_FOOD);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_UNVERIFIED_RESTO);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_UNVERIFIED_SPORTEST);
+		
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TEMP_FOODLIST);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TEMP_ACTIVITYLIST);
 		

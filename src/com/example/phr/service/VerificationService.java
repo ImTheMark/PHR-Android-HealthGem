@@ -23,21 +23,38 @@ public interface VerificationService {
 	
 	public List<Activity> getActivityList();
 	
+	
+	
 	public void storeEncodedImage(String encodedImage);
 	
 	public String getImageFileName();
 	
-	public void setUnverifiedPostsCount(int count);
-	
-	public void decreaseUnverifiedPostsCount();
-	
-	public int getUnverifiedPostsCount();
+
 	
 	public void updateListOfUnverifiedPosts() throws ServiceException,
 			OutdatedAccessTokenException;
+	
+	public int getUnverifiedPostsCount();
+	
+	
+	public void getAllFromWebDB() throws ServiceException, OutdatedAccessTokenException;
+	public List<TrackerEntry> getAllFromMobileDB();
+	
 
-	public List<TrackerEntry> getAll() throws ServiceException,
-			OutdatedAccessTokenException;
+
+	public UnverifiedFoodEntry getUnverifiedFoodPostFromWebDB(UnverifiedFoodEntry entry)
+			throws ServiceException, OutdatedAccessTokenException;
+
+	public UnverifiedActivityEntry getUnverifiedActivityPostFromWebDB(UnverifiedActivityEntry entry)
+			throws ServiceException, OutdatedAccessTokenException;
+
+	public UnverifiedRestaurantEntry getUnverifiedRestaurantPostFromWebDB(UnverifiedRestaurantEntry entry)
+			throws ServiceException, OutdatedAccessTokenException;
+
+	public UnverifiedSportsEstablishmentEntry getUnverifiedSportsEstablishmentPostFromWebDB(UnverifiedSportsEstablishmentEntry entry)
+			throws ServiceException, OutdatedAccessTokenException;
+	
+	
 
 	public List<UnverifiedFoodEntry> getAllUnverifiedFoodPosts()
 			throws ServiceException, OutdatedAccessTokenException;

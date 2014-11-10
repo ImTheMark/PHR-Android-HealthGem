@@ -19,9 +19,9 @@ import com.example.phr.mobile.models.UnverifiedRestaurantEntry;
 import com.example.phr.mobile.models.UnverifiedSportsEstablishmentEntry;
 import com.example.phr.service.VerificationService;
 
-public class VerificationServiceDummyImpl implements VerificationService {
+public class VerificationServiceDummyImpl  {
 
-	@Override
+/*	@Override
 	public void addFoodListToTemporaryDatabase(List<Food> foodList) {
 		// TODO Auto-generated method stub
 
@@ -53,7 +53,7 @@ public class VerificationServiceDummyImpl implements VerificationService {
 	}
 
 	@Override
-	public List<TrackerEntry> getAll() throws ServiceException,
+	public List<TrackerEntry> getAllFromWebDB() throws ServiceException,
 			OutdatedAccessTokenException {
 		List<TrackerEntry> list = new ArrayList<TrackerEntry>();
 
@@ -255,5 +255,5 @@ public class VerificationServiceDummyImpl implements VerificationService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+*/
 }

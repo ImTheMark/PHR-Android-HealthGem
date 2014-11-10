@@ -59,25 +59,8 @@ public class VerificationActivityTest extends Activity {
 
 		listView = (ListView) findViewById(R.id.verification_listview_test);
 		vService = new VerificationServiceImpl();
-		try {
-			unverifiedList = vService.getAll();
-			verificationService.setUnverifiedPostsCount(unverifiedList.size());
-			Log.e("size ", unverifiedList.size() + "");
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			this.runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					Toast.makeText(HealthGem.getContext(),
-							"Hello, Pls connect to the wifi!",
-							Toast.LENGTH_SHORT).show();
-				}
-			});
-			e.printStackTrace();
-		} catch (OutdatedAccessTokenException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		unverifiedList = vService.getAllFromMobileDB();
+		Log.e("size ", unverifiedList.size() + "");
 		adapter = new UnverifiedStatusAdapter(HealthGem.getContext(),
 				unverifiedList);
 		listView.setAdapter(adapter);
@@ -97,6 +80,7 @@ public class VerificationActivityTest extends Activity {
 		protected Void doInBackground(Void... params) {
 			try {
 				vService.updateListOfUnverifiedPosts();
+				vService.getAllFromWebDB();
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block
 				runOnUiThread(new Runnable() {
@@ -119,24 +103,23 @@ public class VerificationActivityTest extends Activity {
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
 
-			try {
-				list = vService.getAll();
+			//try {
+				list = vService.getAllFromMobileDB();
 
-				if (list != null && !list.isEmpty()) {
-					unverifiedList = list;
-					verificationService.setUnverifiedPostsCount(list.size());
-					Log.e("VERIFICATION size after post execute",
-							unverifiedList.size() + "");
-					// adapter.notifyDataSetChanged();
-					/*
-					 * ((UnverifiedStatusAdapter) listView.getAdapter())
-					 * .notifyDataSetChanged();
-					 */
-					Intent intent = getIntent();
-					finish();
-					startActivity(intent);
-				}
-
+			if (list != null && !list.isEmpty()) {
+				unverifiedList = list;
+				Log.e("VERIFICATION size after post execute",
+						unverifiedList.size() + "");
+				// adapter.notifyDataSetChanged();
+				/*
+				 * ((UnverifiedStatusAdapter) listView.getAdapter())
+				 * .notifyDataSetChanged();
+				 */
+				Intent intent = getIntent();
+				finish();
+				startActivity(intent);
+			}
+/*
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block
 				Toast.makeText(HealthGem.getContext(),
@@ -145,7 +128,7 @@ public class VerificationActivityTest extends Activity {
 			} catch (OutdatedAccessTokenException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 
 			swipeLayout.setRefreshing(false);
 		}

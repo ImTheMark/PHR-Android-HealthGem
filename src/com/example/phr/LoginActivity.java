@@ -171,6 +171,7 @@ public class LoginActivity extends Activity {
 				noteService.initializeMobileDatabase();
 				wService.initializeMobileDatabase();
 				vService.updateListOfUnverifiedPosts();
+				vService.getAllFromWebDB();
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
