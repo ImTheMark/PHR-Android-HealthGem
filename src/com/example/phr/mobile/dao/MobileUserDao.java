@@ -1,5 +1,8 @@
 package com.example.phr.mobile.dao;
 
+import android.app.Activity;
+import android.content.Context;
+
 import com.example.phr.mobile.models.User;
 
 public interface MobileUserDao {
@@ -7,6 +10,8 @@ public interface MobileUserDao {
 	public void loginUser(User user);
 	
 	public void logoutUser();
+	
+	public void logoutUser(Context context);
 	
 	public void clearRegisterInformation();
 	

@@ -2,8 +2,12 @@ package com.example.phr.mobile.daoimpl;
 
 import java.text.ParseException;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
+import com.example.phr.LoginActivity;
 import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.local_db.DatabaseHandler;
@@ -243,6 +247,15 @@ public class MobileUserDaoImpl implements MobileUserDao {
 		saveUser(user);
 		MobileSettingsDao settingDao = new MobileSettingsDaoImpl();
 		settingDao.initializeSettings();
+	}
+
+	@Override
+	public void logoutUser(Context context) {
+		Intent intent = new Intent(context,
+				LoginActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+				| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		context.startActivity(intent);
 	}
 
 }
