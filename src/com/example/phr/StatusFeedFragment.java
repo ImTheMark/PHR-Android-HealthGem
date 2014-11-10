@@ -12,8 +12,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.phr.adapter.StatusAdapter;
+import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.TrackerEntry;
 import com.example.phr.model.Status;
@@ -34,17 +36,19 @@ public class StatusFeedFragment extends Fragment {
 				container, false);
 
 		mSatusFeedList = (ListView) rootView.findViewById(R.id.statusFeedList);
-		
+
 		timelineService = new TimelineServiceImpl();
 
 		List<TrackerEntry> list = new ArrayList<TrackerEntry>();
-		
+
 		try {
 			list = timelineService.getAll();
 		} catch (ServiceException e) {
 			e.printStackTrace();
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
 		}
-		
+
 		statusAdapter = new StatusAdapter(this.getActivity()
 				.getApplicationContext(), list);
 		mSatusFeedList.setAdapter(statusAdapter);

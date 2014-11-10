@@ -52,22 +52,6 @@ public class GroupedFoodTrackerActivity extends Activity {
 		setTitle("Food Tracker");
 		mGroupedFoodList = (ListView) findViewById(R.id.listView_groupedfood);
 		List<GroupedFood> list = new ArrayList<GroupedFood>();
-		// FAKE DATA
-		/*
-		 * List<GroupedFood> list = new ArrayList<GroupedFood>(); GroupedFood
-		 * data1 = new GroupedFood(null, 459, 20.41, 24.89, 43.07);
-		 * 
-		 * GroupedFood data2 = new GroupedFood(null, 679, 30.3, 18, 50);
-		 * GroupedFood data3 = new GroupedFood(null, 152, 883, 23, 344);
-		 * 
-		 * GroupedFood data4 = new GroupedFood(null, 1100, 30.3, 18, 50);
-		 * GroupedFood data5 = new GroupedFood(null, 400, 883, 23, 344);
-		 * GroupedFood data6 = new GroupedFood(null, 598, 30.3, 18, 50);
-		 * GroupedFood data7 = new GroupedFood(null, 152, 883, 23, 344);
-		 * 
-		 * list.add(data1); list.add(data2); list.add(data3); list.add(data4);
-		 * list.add(data5); list.add(data6); list.add(data7);
-		 */
 
 		MobileFoodTrackerDao foodTrackerDao = new MobileFoodTrackerDaoImpl();
 		try {

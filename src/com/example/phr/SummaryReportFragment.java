@@ -34,7 +34,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.phr.application.HealthGem;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.ServiceException;
@@ -131,6 +133,8 @@ public class SummaryReportFragment extends Fragment {
 			bs = bsService.getLatest();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		}
 		if (bs != null) {
@@ -187,6 +191,8 @@ public class SummaryReportFragment extends Fragment {
 			bp = bpService.getLatest();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		}
 		if (bp != null) {
@@ -242,6 +248,8 @@ public class SummaryReportFragment extends Fragment {
 			weight = weightService.getLatest();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		}
 

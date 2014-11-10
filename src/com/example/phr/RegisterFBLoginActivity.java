@@ -303,8 +303,7 @@ public class RegisterFBLoginActivity extends Activity {
 				startActivity(intent);
 			} catch (ServiceException e) {
 				Toast.makeText(HealthGem.getContext(),
-						"An error has occured, cannot perform action!",
-						Toast.LENGTH_LONG).show();
+						"No Internet Connection !", Toast.LENGTH_LONG).show();
 			} catch (UserAlreadyExistsException e) {
 				e.printStackTrace();
 			}
@@ -318,6 +317,9 @@ public class RegisterFBLoginActivity extends Activity {
 					userService.edit(editedUser);
 				} catch (ServiceException e) {
 					// TODO Auto-generated catch block
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
 					e.printStackTrace();
 				} catch (OutdatedAccessTokenException e) {
 					// TODO Auto-generated catch block

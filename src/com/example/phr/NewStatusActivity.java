@@ -43,10 +43,9 @@ import android.widget.Toast;
 
 import com.example.phr.application.HealthGem;
 import com.example.phr.enums.TrackerInputType;
-import com.example.phr.exceptions.DataAccessException;
+import com.example.phr.exceptions.EntryNotFoundException;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
-import com.example.phr.exceptions.WebServerException;
 import com.example.phr.mobile.models.Activity;
 import com.example.phr.mobile.models.ActivityTrackerEntry;
 import com.example.phr.mobile.models.BloodPressure;
@@ -181,22 +180,6 @@ public class NewStatusActivity extends android.app.Activity {
 		setContentView(R.layout.activity_new_status);
 		Log.e("in", "ew status");
 
-		/*
-		 * mBtnTagFriend = (ImageButton)findViewById(R.id.btnTagFriend);
-		 * mBtnTagFriend.setOnClickListener(new OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { Intent intent = new
-		 * Intent(getApplicationContext(), TagFriendActivity.class);
-		 * startActivity(intent); } });
-		 * 
-		 * mBtnCheckinLocation =
-		 * (ImageButton)findViewById(R.id.btnCheckinLocation);
-		 * mBtnCheckinLocation.setOnClickListener(new OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { Intent intent = new
-		 * Intent(getApplicationContext(), CheckinLocationActivity.class);
-		 * startActivity(intent); } });
-		 */
 		dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
 		timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
 		fmt = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss", Locale.ENGLISH);
@@ -363,17 +346,7 @@ public class NewStatusActivity extends android.app.Activity {
 		mBtnAddPhoto.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
-				/*
-				 * Intent intent = new
-				 * Intent("android.media.action.IMAGE_CAPTURE"); File file = new
-				 * File(Environment.getExternalStorageDirectory() +
-				 * File.separator + "image.jpg");
-				 * 
-				 * intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-				 * startActivityForResult(intent,
-				 * CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE); ??
-				 */selectImage();
+				selectImage();
 			}
 		});
 		mBtnFb = (ImageButton) findViewById(R.id.btnFb);
@@ -1280,9 +1253,7 @@ public class NewStatusActivity extends android.app.Activity {
 		alertD.show();
 	}
 
-	private void addBloodPressureToDatabase() throws ServiceException,
-			OutdatedAccessTokenException, WebServerException,
-			DataAccessException {
+	private void addBloodPressureToDatabase() {
 
 		try {
 			Date date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
@@ -1322,13 +1293,19 @@ public class NewStatusActivity extends android.app.Activity {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+		} catch (OutdatedAccessTokenException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
 
-	private void addBloodSugarToDatabase() throws ServiceException,
-			OutdatedAccessTokenException, WebServerException,
-			DataAccessException {
+	private void addBloodSugarToDatabase() {
 
 		try {
 
@@ -1364,18 +1341,24 @@ public class NewStatusActivity extends android.app.Activity {
 					String.valueOf(sugarTypeSpinner.getSelectedItem()));
 			bs.setFacebookID(fbId);
 			BloodSugarTrackerService bsTrackerService = new BloodSugarTrackerServiceImpl();
-			bsTrackerService.add(bs);
 
-		} catch (Exception e) {
+			bsTrackerService.add(bs);
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 
 	}
 
-	private void addWeightToDatabase() throws ServiceException,
-			OutdatedAccessTokenException, WebServerException,
-			DataAccessException {
+	private void addWeightToDatabase() {
 
 		try {
 
@@ -1420,13 +1403,19 @@ public class NewStatusActivity extends android.app.Activity {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+		} catch (OutdatedAccessTokenException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
 
-	private void addNoteToDatabase() throws ServiceException,
-			OutdatedAccessTokenException, WebServerException,
-			DataAccessException {
+	private void addNoteToDatabase() {
 
 		try {
 
@@ -1458,6 +1447,14 @@ public class NewStatusActivity extends android.app.Activity {
 			noteTrackerService.add(note);
 
 		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -1502,6 +1499,8 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -1510,8 +1509,7 @@ public class NewStatusActivity extends android.app.Activity {
 
 	}
 
-	private void addCheckUpToDatabase() throws ServiceException,
-			OutdatedAccessTokenException {
+	private void addCheckUpToDatabase() {
 
 		try {
 
@@ -1551,12 +1549,19 @@ public class NewStatusActivity extends android.app.Activity {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+		} catch (OutdatedAccessTokenException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
 
-	private void addActivityToDatabase() throws ServiceException,
-			OutdatedAccessTokenException {
+	private void addActivityToDatabase() {
 
 		try {
 
@@ -1613,6 +1618,14 @@ public class NewStatusActivity extends android.app.Activity {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+		} catch (OutdatedAccessTokenException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
@@ -1643,203 +1656,165 @@ public class NewStatusActivity extends android.app.Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_item_status_post:
-			try {
-				if (currentTracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
 
-					addBloodPressureToDatabase();
-					Log.e("added", "bp");
-					Intent intent = new Intent(getApplicationContext(),
-							BloodPressureTrackerActivity.class);
-					startActivity(intent);
-				}
+			if (currentTracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
 
-				else if (currentTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
-
-					addBloodSugarToDatabase();
-					Intent intent = new Intent(getApplicationContext(),
-							BloodSugarTrackerActivity.class);
-					startActivity(intent);
-				} else if (currentTracker.equals(TrackerInputType.WEIGHT)) {
-
-					addWeightToDatabase();
-					Intent intent = new Intent(getApplicationContext(),
-							WeightTrackerActivity.class);
-					startActivity(intent);
-				} else if (currentTracker.equals(TrackerInputType.CHECKUP)) {
-
-					addCheckUpToDatabase();
-					Intent intent = new Intent(getApplicationContext(),
-							CheckupTrackerActivity.class);
-					startActivity(intent);
-				} else if (currentTracker.equals(TrackerInputType.NOTES)) {
-
-					addNoteToDatabase();
-					Intent intent = new Intent(getApplicationContext(),
-							NoteTrackerActivity.class);
-					startActivity(intent);
-				} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
-
-					addActivityToDatabase();
-					Intent intent = new Intent(getApplicationContext(),
-							ActivitiesTrackerActivity.class);
-					startActivity(intent);
-				} else if (currentTracker.equals(TrackerInputType.FOOD)) {
-
-					addFoodToDatabase();
-					Date date = null;
-					try {
-						date = fmt.parse(dateFormat.format(calobj.getTime())
-								+ " " + timeFormat.format(calobj.getTime()));
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					Timestamp timestamp = new Timestamp(date.getTime());
-					SimpleDateFormat fmtFood = new SimpleDateFormat(
-							"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-					String txtdate = fmtFood.format(timestamp);
-					Intent intent = new Intent(getApplicationContext(),
-							FoodTrackerDailyActivity.class);
-					Log.e("newstatus", txtdate);
-					intent.putExtra("date", txtdate);
-					startActivity(intent);
-				}
-			} catch (ServiceException e) {
-				// output error message or something
-				System.out.println(e.getMessage());
-			} catch (OutdatedAccessTokenException e) {
-				// Message - > Log user out
-				e.printStackTrace();
-			} catch (WebServerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (DataAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				addBloodPressureToDatabase();
+				Log.e("added", "bp");
+				Intent intent = new Intent(getApplicationContext(),
+						BloodPressureTrackerActivity.class);
+				startActivity(intent);
 			}
+
+			else if (currentTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
+
+				addBloodSugarToDatabase();
+				Intent intent = new Intent(getApplicationContext(),
+						BloodSugarTrackerActivity.class);
+				startActivity(intent);
+			} else if (currentTracker.equals(TrackerInputType.WEIGHT)) {
+
+				addWeightToDatabase();
+				Intent intent = new Intent(getApplicationContext(),
+						WeightTrackerActivity.class);
+				startActivity(intent);
+			} else if (currentTracker.equals(TrackerInputType.CHECKUP)) {
+
+				addCheckUpToDatabase();
+				Intent intent = new Intent(getApplicationContext(),
+						CheckupTrackerActivity.class);
+				startActivity(intent);
+			} else if (currentTracker.equals(TrackerInputType.NOTES)) {
+
+				addNoteToDatabase();
+				Intent intent = new Intent(getApplicationContext(),
+						NoteTrackerActivity.class);
+				startActivity(intent);
+			} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
+
+				addActivityToDatabase();
+				Intent intent = new Intent(getApplicationContext(),
+						ActivitiesTrackerActivity.class);
+				startActivity(intent);
+			} else if (currentTracker.equals(TrackerInputType.FOOD)) {
+
+				addFoodToDatabase();
+				Date date = null;
+				try {
+					date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
+							+ timeFormat.format(calobj.getTime()));
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Timestamp timestamp = new Timestamp(date.getTime());
+				SimpleDateFormat fmtFood = new SimpleDateFormat(
+						"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+				String txtdate = fmtFood.format(timestamp);
+				Intent intent = new Intent(getApplicationContext(),
+						FoodTrackerDailyActivity.class);
+				Log.e("newstatus", txtdate);
+				intent.putExtra("date", txtdate);
+				startActivity(intent);
+			}
+
 			return true;
 
 		case R.id.menu_item_status_edit:
-			try {
-				if (currentTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
-					Log.e("call", "edit");
-					editBloodSugarToDatabase();
-					Log.e("call", "bsActivity");
-					Intent intent = new Intent(getApplicationContext(),
-							BloodSugarTrackerActivity.class);
-					startActivity(intent);
-				} else if (currentTracker
-						.equals(TrackerInputType.BLOOD_PRESSURE)) {
-					editBloodPressureToDatabase();
-					Log.e("call", "bpActivity");
-					Intent intent = new Intent(getApplicationContext(),
-							BloodPressureTrackerActivity.class);
-					startActivity(intent);
-				} else if (currentTracker.equals(TrackerInputType.WEIGHT)) {
-					editWeightToDatabase();
-					Log.e("call", "weightActivity");
-					Intent intent = new Intent(getApplicationContext(),
-							WeightTrackerActivity.class);
-					startActivity(intent);
-				} else if (currentTracker.equals(TrackerInputType.CHECKUP)) {
-					editCheckUpToDatabase();
-					Log.e("call", "checkupActivity");
-					Intent intent = new Intent(getApplicationContext(),
-							CheckupTrackerActivity.class);
-					startActivity(intent);
-				} else if (currentTracker.equals(TrackerInputType.NOTES)) {
-					editNoteToDatabase();
-					Log.e("call", "noteActivity");
-					Intent intent = new Intent(getApplicationContext(),
-							NoteTrackerActivity.class);
-					startActivity(intent);
-				} else if (currentTracker.equals(TrackerInputType.FOOD)) {
-					editFoodToDatabase();
-					Log.e("call", "foodActivity");
-					Intent intent = new Intent(getApplicationContext(),
-							FoodTrackerDailyActivity.class);
-					SimpleDateFormat fmtFood = new SimpleDateFormat(
-							"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-					String txtdate = fmtFood.format(editFoodTrackerEntry
-							.getTimestamp());
-					Log.e("newstatus", txtdate);
-					intent.putExtra("date", txtdate);
-					startActivity(intent);
-				} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
-					editActivityToDatabase();
-					Log.e("call", "acitivityActivity");
-					Intent intent = new Intent(getApplicationContext(),
-							ActivitiesTrackerActivity.class);
-					startActivity(intent);
-				}
-			} catch (ServiceException e) {
-				// output error message or something
-				System.out.println(e.getMessage());
-			} catch (OutdatedAccessTokenException e) {
-				// Message - > Log user out
-				e.printStackTrace();
-			} catch (WebServerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (DataAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+			if (currentTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
+				Log.e("call", "edit");
+				editBloodSugarToDatabase();
+				Log.e("call", "bsActivity");
+				Intent intent = new Intent(getApplicationContext(),
+						BloodSugarTrackerActivity.class);
+				startActivity(intent);
+			} else if (currentTracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
+				editBloodPressureToDatabase();
+				Log.e("call", "bpActivity");
+				Intent intent = new Intent(getApplicationContext(),
+						BloodPressureTrackerActivity.class);
+				startActivity(intent);
+			} else if (currentTracker.equals(TrackerInputType.WEIGHT)) {
+				editWeightToDatabase();
+				Log.e("call", "weightActivity");
+				Intent intent = new Intent(getApplicationContext(),
+						WeightTrackerActivity.class);
+				startActivity(intent);
+			} else if (currentTracker.equals(TrackerInputType.CHECKUP)) {
+				editCheckUpToDatabase();
+				Log.e("call", "checkupActivity");
+				Intent intent = new Intent(getApplicationContext(),
+						CheckupTrackerActivity.class);
+				startActivity(intent);
+			} else if (currentTracker.equals(TrackerInputType.NOTES)) {
+				editNoteToDatabase();
+				Log.e("call", "noteActivity");
+				Intent intent = new Intent(getApplicationContext(),
+						NoteTrackerActivity.class);
+				startActivity(intent);
+			} else if (currentTracker.equals(TrackerInputType.FOOD)) {
+				editFoodToDatabase();
+				Log.e("call", "foodActivity");
+				Intent intent = new Intent(getApplicationContext(),
+						FoodTrackerDailyActivity.class);
+				SimpleDateFormat fmtFood = new SimpleDateFormat(
+						"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+				String txtdate = fmtFood.format(editFoodTrackerEntry
+						.getTimestamp());
+				Log.e("newstatus", txtdate);
+				intent.putExtra("date", txtdate);
+				startActivity(intent);
+			} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
+				editActivityToDatabase();
+				Log.e("call", "acitivityActivity");
+				Intent intent = new Intent(getApplicationContext(),
+						ActivitiesTrackerActivity.class);
+				startActivity(intent);
 			}
+
 			return true;
 
 		case R.id.menu_item_status_verify:
-			try {
-				if (currentTracker.equals(TrackerInputType.FOOD)) {
-					Log.e("call", "verify");
-					verifyFoodToDatabase();
-					Log.e("call", "foodActivity");
-					Intent intent = new Intent(getApplicationContext(),
-							FoodTrackerDailyActivity.class);
-					SimpleDateFormat fmtFood = new SimpleDateFormat(
-							"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-					String txtdate = fmtFood.format(unferifiedFood
-							.getTimestamp());
-					Log.e("newstatus", txtdate);
-					intent.putExtra("date", txtdate);
-					startActivity(intent);
-				} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
-					verifyActivityToDatabase();
-					Log.e("call", "acitivityActivity");
-					Intent intent = new Intent(getApplicationContext(),
-							ActivitiesTrackerActivity.class);
-					startActivity(intent);
-				} else if (currentTracker.equals(TrackerInputType.RESTAURANT)) {
-					verifyRestaurantToDatabase();
-					Log.e("call", "foodActivity");
-					Intent intent = new Intent(getApplicationContext(),
-							FoodTrackerDailyActivity.class);
-					SimpleDateFormat fmtFood = new SimpleDateFormat(
-							"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-					String txtdate = fmtFood.format(verifyFoodTrackerEntry
-							.getTimestamp());
-					Log.e("newstatus", txtdate);
-					intent.putExtra("date", txtdate);
-					startActivity(intent);
-				} else if (currentTracker.equals(TrackerInputType.SPORTS)) {
-					verifySportToDatabase();
-					Log.e("call", "sportActivity");
-					Intent intent = new Intent(getApplicationContext(),
-							ActivitiesTrackerActivity.class);
-					startActivity(intent);
-				}
-			} catch (ServiceException e) {
-				// output error message or something
-				System.out.println(e.getMessage());
-			} catch (OutdatedAccessTokenException e) {
-				// Message - > Log user out
-				e.printStackTrace();
-			} catch (WebServerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (DataAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+			if (currentTracker.equals(TrackerInputType.FOOD)) {
+				Log.e("call", "verify");
+				verifyFoodToDatabase();
+				Log.e("call", "foodActivity");
+				Intent intent = new Intent(getApplicationContext(),
+						FoodTrackerDailyActivity.class);
+				SimpleDateFormat fmtFood = new SimpleDateFormat(
+						"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+				String txtdate = fmtFood.format(unferifiedFood.getTimestamp());
+				Log.e("newstatus", txtdate);
+				intent.putExtra("date", txtdate);
+				startActivity(intent);
+			} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
+				verifyActivityToDatabase();
+				Log.e("call", "acitivityActivity");
+				Intent intent = new Intent(getApplicationContext(),
+						ActivitiesTrackerActivity.class);
+				startActivity(intent);
+			} else if (currentTracker.equals(TrackerInputType.RESTAURANT)) {
+				verifyRestaurantToDatabase();
+				Log.e("call", "foodActivity");
+				Intent intent = new Intent(getApplicationContext(),
+						FoodTrackerDailyActivity.class);
+				SimpleDateFormat fmtFood = new SimpleDateFormat(
+						"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+				String txtdate = fmtFood.format(verifyFoodTrackerEntry
+						.getTimestamp());
+				Log.e("newstatus", txtdate);
+				intent.putExtra("date", txtdate);
+				startActivity(intent);
+			} else if (currentTracker.equals(TrackerInputType.SPORTS)) {
+				verifySportToDatabase();
+				Log.e("call", "sportActivity");
+				Intent intent = new Intent(getApplicationContext(),
+						ActivitiesTrackerActivity.class);
+				startActivity(intent);
 			}
+
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -1847,9 +1822,7 @@ public class NewStatusActivity extends android.app.Activity {
 
 	}
 
-	private void editBloodSugarToDatabase() throws ServiceException,
-			OutdatedAccessTokenException, WebServerException,
-			DataAccessException {
+	private void editBloodSugarToDatabase() {
 
 		try {
 			Log.e("in", "edit");
@@ -1864,20 +1837,25 @@ public class NewStatusActivity extends android.app.Activity {
 					image, Double.parseDouble(txtSugar.getText().toString()),
 					txtSugarType.getText().toString());
 			BloodSugarTrackerService bsTrackerService = new BloodSugarTrackerServiceImpl();
-			bsTrackerService.edit(bs);
-			Log.e("in", "edited");
 
-		} catch (Exception e) {
+			bsTrackerService.edit(bs);
+		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (EntryNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
+			e.printStackTrace();
 		}
+		Log.e("in", "edited");
 
 	}
 
-	private void editBloodPressureToDatabase() throws ServiceException,
-			OutdatedAccessTokenException, WebServerException,
-			DataAccessException {
-
+	private void editBloodPressureToDatabase() {
 		try {
 			Log.e("edit", "bloodpressure");
 			PHRImage image;
@@ -1892,22 +1870,28 @@ public class NewStatusActivity extends android.app.Activity {
 					Integer.parseInt(txtDiastolic.getText().toString()));
 
 			BloodPressureTrackerService bpTrackerService = new BloodPressureTrackerServiceImpl();
+
 			bpTrackerService.edit(bp);
-
-			Log.e("in", "edited");
-
-		} catch (Exception e) {
+		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EntryNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		}
 
+		Log.e("in", "edited");
+
 	}
 
-	private void editWeightToDatabase() throws ServiceException,
-			OutdatedAccessTokenException, WebServerException,
-			DataAccessException {
-
+	private void editWeightToDatabase() {
 		try {
+
 			Log.e("in", "edit");
 			double newWeight;
 			if (txtWeightUnit.equals("kg")) {
@@ -1930,16 +1914,23 @@ public class NewStatusActivity extends android.app.Activity {
 
 			WeightTrackerService weightTrackerService = new WeightTrackerServiceImpl();
 			weightTrackerService.edit(weight);
-		} catch (Exception e) {
+
+		} catch (EntryNotFoundException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (OutdatedAccessTokenException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		}
 
 	}
 
-	private void editCheckUpToDatabase() throws ServiceException,
-			OutdatedAccessTokenException, WebServerException,
-			DataAccessException {
+	private void editCheckUpToDatabase() {
 
 		try {
 			Log.e("in", "edit");
@@ -1955,19 +1946,24 @@ public class NewStatusActivity extends android.app.Activity {
 							.toString(), notesStatus.getText().toString());
 
 			CheckUpTrackerService checkupTrackerService = new CheckUpTrackerServiceImpl();
-			checkupTrackerService.edit(checkup);
 
-		} catch (Exception e) {
+			checkupTrackerService.edit(checkup);
+		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EntryNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		}
 
 	}
 
-	private void editNoteToDatabase() throws ServiceException,
-			OutdatedAccessTokenException, WebServerException,
-			DataAccessException {
-
+	private void editNoteToDatabase() {
 		try {
 			Log.e("in", "edit");
 			PHRImage image;
@@ -1981,18 +1977,24 @@ public class NewStatusActivity extends android.app.Activity {
 							.toString());
 
 			NoteTrackerService noteTrackerService = new NoteTrackerServiceImpl();
-			noteTrackerService.edit(note);
 
-		} catch (Exception e) {
+			noteTrackerService.edit(note);
+		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EntryNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		}
 
 	}
 
-	private void editFoodToDatabase() throws ServiceException,
-			OutdatedAccessTokenException, WebServerException,
-			DataAccessException {
+	private void editFoodToDatabase() {
 
 		try {
 			Log.e("in", "edit");
@@ -2014,20 +2016,26 @@ public class NewStatusActivity extends android.app.Activity {
 					Double.parseDouble(txtFoodQuantity.getText().toString()));
 
 			FoodTrackerService foodTrackerService = new FoodTrackerServiceImpl();
-			foodTrackerService.edit(foodEntry);
 
-		} catch (Exception e) {
+			foodTrackerService.edit(foodEntry);
+		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EntryNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		}
 
 	}
 
-	private void editActivityToDatabase() throws ServiceException,
-			OutdatedAccessTokenException, WebServerException,
-			DataAccessException {
-
+	private void editActivityToDatabase() {
 		try {
+
 			Log.e("in", "edit");
 			PHRImage image;
 			if (setImage == true) {
@@ -2044,12 +2052,8 @@ public class NewStatusActivity extends android.app.Activity {
 
 			Weight weight = null;
 			WeightTrackerService weightService = new WeightTrackerServiceImpl();
-			try {
-				weight = weightService.getLatest();
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			weight = weightService.getLatest();
+
 			double calBurned = chosenActivity.getMET()
 					* weight.getWeightInKilograms();
 			ActivityTrackerEntry activityEntry = new ActivityTrackerEntry(
@@ -2059,19 +2063,24 @@ public class NewStatusActivity extends android.app.Activity {
 					calBurned, sec);
 
 			ActivityTrackerService activityTrackerService = new ActivityTrackerServiceImpl();
-			activityTrackerService.edit(activityEntry);
 
-		} catch (Exception e) {
+			activityTrackerService.edit(activityEntry);
+		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EntryNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		}
 
 	}
 
-	private void verifyFoodToDatabase() throws ServiceException,
-			OutdatedAccessTokenException, WebServerException,
-			DataAccessException {
-
+	private void verifyFoodToDatabase() {
 		try {
 			Log.e("in", "verify");
 			PHRImage image;
@@ -2092,20 +2101,26 @@ public class NewStatusActivity extends android.app.Activity {
 					Double.parseDouble(txtFoodQuantity.getText().toString()));
 			FoodTrackerService foodTrackerService = new FoodTrackerServiceImpl();
 			foodTrackerService.add(foodEntry);
-			verificationService.delete(unferifiedFood);
 
-		} catch (Exception e) {
+			verificationService.delete(unferifiedFood);
+		} catch (EntryNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
-	private void verifyRestaurantToDatabase() throws ServiceException,
-			OutdatedAccessTokenException, WebServerException,
-			DataAccessException {
-
+	private void verifyRestaurantToDatabase() {
 		try {
+
 			Log.e("in", "verify");
 			PHRImage image;
 			Log.e("verifyfoodsetimage", setImage.toString());
@@ -2125,18 +2140,24 @@ public class NewStatusActivity extends android.app.Activity {
 					Double.parseDouble(txtFoodQuantity.getText().toString()));
 			FoodTrackerService foodTrackerService = new FoodTrackerServiceImpl();
 			foodTrackerService.add(foodEntry);
-			verificationService.delete(unferifiedRestaurant);
 
-		} catch (Exception e) {
+			verificationService.delete(unferifiedRestaurant);
+		} catch (EntryNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
-	private void verifySportToDatabase() throws ServiceException,
-			OutdatedAccessTokenException, WebServerException,
-			DataAccessException {
+	private void verifySportToDatabase() {
 
 		try {
 			Log.e("in", "verify");
@@ -2176,18 +2197,24 @@ public class NewStatusActivity extends android.app.Activity {
 					calBurned, sec);
 			ActivityTrackerService activityTrackerService = new ActivityTrackerServiceImpl();
 			activityTrackerService.add(activityEntry);
-			verificationService.delete(unferifiedSport);
 
-		} catch (Exception e) {
+			verificationService.delete(unferifiedSport);
+		} catch (EntryNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
-	private void verifyActivityToDatabase() throws ServiceException,
-			OutdatedAccessTokenException, WebServerException,
-			DataAccessException {
+	private void verifyActivityToDatabase() {
 
 		try {
 			Log.e("in", "verify");
@@ -2212,12 +2239,9 @@ public class NewStatusActivity extends android.app.Activity {
 
 			Weight weight = null;
 			WeightTrackerService weightService = new WeightTrackerServiceImpl();
-			try {
-				weight = weightService.getLatest();
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+			weight = weightService.getLatest();
+
 			double calBurned = chosenActivity.getMET()
 					* weight.getWeightInKilograms();
 
@@ -2228,9 +2252,17 @@ public class NewStatusActivity extends android.app.Activity {
 
 			ActivityTrackerService activityTrackerService = new ActivityTrackerServiceImpl();
 			activityTrackerService.add(activityEntry);
-			verificationService.delete(unferifiedActivity);
 
-		} catch (Exception e) {
+			verificationService.delete(unferifiedActivity);
+		} catch (EntryNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -2242,48 +2274,12 @@ public class NewStatusActivity extends android.app.Activity {
 		// TODO Auto-generated method stub
 		super.onRestoreInstanceState(savedInstanceState);
 
-		/*
-		 * String stateSaved = savedInstanceState.getString("saved_state");
-		 * Log.e("txtCuurent camera back",
-		 * txtCurrentTracker.getText().toString()); if (stateSaved != null) {
-		 * 
-		 * if (stateSaved.equals(TrackerInputType.FOOD)) {
-		 * foodTemplate.setVisibility(View.VISIBLE); currentTracker =
-		 * TrackerInputType.FOOD; } else if
-		 * (txtCurrentTracker.getText().toString()
-		 * .equals(TrackerInputType.ACTIVITY)) {
-		 * activityTemplate.setVisibility(View.VISIBLE); currentTracker =
-		 * TrackerInputType.ACTIVITY; } else if
-		 * (txtCurrentTracker.getText().toString()
-		 * .equals(TrackerInputType.BLOOD_PRESSURE)) {
-		 * bpTemplate.setVisibility(View.VISIBLE); currentTracker =
-		 * TrackerInputType.BLOOD_PRESSURE; } else if
-		 * (stateSaved.equals(TrackerInputType.BLOOD_SUGAR)) { Log.e("bs",
-		 * "camera"); bsTemplate.setVisibility(View.VISIBLE); currentTracker =
-		 * TrackerInputType.BLOOD_SUGAR; } else if
-		 * (txtCurrentTracker.getText().toString()
-		 * .equals(TrackerInputType.WEIGHT)) {
-		 * weightTemplate.setVisibility(View.VISIBLE); currentTracker =
-		 * TrackerInputType.WEIGHT; } else if
-		 * (txtCurrentTracker.getText().toString()
-		 * .equals(TrackerInputType.CHECKUP)) {
-		 * checkupTemplate.setVisibility(View.VISIBLE); currentTracker =
-		 * TrackerInputType.CHECKUP; }
-		 * 
-		 * }
-		 */
-
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
-
-		/*
-		 * String stateToSave = txtCurrentTracker.getText().toString();
-		 * Log.e("stateToSave", stateToSave);
-		 */
 	}
 
 	private void selectImage() {

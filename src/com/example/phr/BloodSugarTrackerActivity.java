@@ -32,8 +32,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.phr.adapter.BloodSugarAdapter;
+import com.example.phr.application.HealthGem;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.EntryNotFoundException;
@@ -136,6 +138,9 @@ public class BloodSugarTrackerActivity extends Activity {
 								Log.e("bloodsugar", "del_done");
 							} catch (ServiceException e) {
 								// TODO Auto-generated catch block
+								Toast.makeText(HealthGem.getContext(),
+										"No Internet Connection !",
+										Toast.LENGTH_LONG).show();
 								e.printStackTrace();
 							} catch (OutdatedAccessTokenException e) {
 								// TODO Auto-generated catch block

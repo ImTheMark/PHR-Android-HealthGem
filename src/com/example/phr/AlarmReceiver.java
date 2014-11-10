@@ -59,7 +59,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		String tracker = intent.getExtras().getString("tracker");
-		// myIntent = new Intent(context, MainActivity.class);
+
 		// get current time
 		thisContext = context;
 		dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);

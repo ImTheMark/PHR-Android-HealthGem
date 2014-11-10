@@ -17,7 +17,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.Activity;
@@ -53,11 +55,6 @@ public class ActivitiesSearchListActivity extends android.app.Activity {
 			@Override
 			public void onClick(View v) {
 
-				/*
-				 * result = new ArrayList<ActivitySingle>(); result.add(new
-				 * ActivitySingle(1, "jogging", 150.5)); result.add(new
-				 * ActivitySingle(2, "running", 200.5));
-				 */
 				ActivityService service = new ActivityServiceImpl();
 				Log.e("search word", searchWord.getText().toString());
 				result = new ArrayList<Activity>();
@@ -66,6 +63,9 @@ public class ActivitiesSearchListActivity extends android.app.Activity {
 							.getText().toString());
 				} catch (ServiceException e) {
 					// TODO Auto-generated catch block
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
 					e.printStackTrace();
 				} catch (OutdatedAccessTokenException e) {
 					// TODO Auto-generated catch block

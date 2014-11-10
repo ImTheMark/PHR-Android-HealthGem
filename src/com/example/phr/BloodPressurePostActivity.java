@@ -19,7 +19,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.BloodPressure;
@@ -88,7 +90,8 @@ public class BloodPressurePostActivity extends Activity {
 				addBloodPressureToDatabase();
 			} catch (ServiceException e) {
 				// output error message or something
-				System.out.println(e.getMessage());
+				Toast.makeText(HealthGem.getContext(),
+						"No Internet Connection !", Toast.LENGTH_LONG).show();
 			} catch (OutdatedAccessTokenException e) {
 				// Message - > Log user out
 				e.printStackTrace();

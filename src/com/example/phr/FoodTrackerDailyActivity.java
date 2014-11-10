@@ -31,8 +31,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.phr.adapter.DailyFoodAdapter;
+import com.example.phr.application.HealthGem;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.EntryNotFoundException;
@@ -94,28 +96,6 @@ public class FoodTrackerDailyActivity extends Activity {
 
 		mFoodSingleList = (ListView) findViewById(R.id.listView_food_single);
 
-		// FAKE DATA
-		/*
-		 * Food food1 = new Food("Sinigang", 2.0, 3.0, 5.3, 10.4, "cup", 1.0, 1,
-		 * true); Food food2 = new Food("Bacon", 3.0, 5.0, 2.3, 9.4, "slice",
-		 * 1.0, 1, true); Food food3 = new Food("Hashbrown", 1.0, 5.0, 8.3, 9.4,
-		 * "piece", 1.0, 1, true);
-		 * 
-		 * List<FoodTrackerEntry> list = new ArrayList<FoodTrackerEntry>();
-		 * FoodTrackerEntry data1 = new FoodTrackerEntry(
-		 * Timestamp.valueOf("2011-10-02 18:48:05.123456"), "status", null,
-		 * food1, 1.0);
-		 * 
-		 * FoodTrackerEntry data2 = new FoodTrackerEntry(
-		 * Timestamp.valueOf("2011-10-02 12:48:05.123456"), "status", null,
-		 * food2, 1.0);
-		 * 
-		 * FoodTrackerEntry data3 = new FoodTrackerEntry(
-		 * Timestamp.valueOf("2011-10-4 15:48:05.123456"), "status", null,
-		 * food3, 1.0);
-		 * 
-		 * list.add(data3); list.add(data2); list.add(data1);
-		 */
 		List<FoodTrackerEntry> list = new ArrayList<FoodTrackerEntry>();
 		foodDao = new MobileFoodTrackerDaoImpl();
 		foodServiceImpl = new FoodTrackerServiceImpl();
@@ -186,6 +166,9 @@ public class FoodTrackerDailyActivity extends Activity {
 								e.printStackTrace();
 							} catch (ServiceException e) {
 								// TODO Auto-generated catch block
+								Toast.makeText(HealthGem.getContext(),
+										"No Internet Connection !",
+										Toast.LENGTH_LONG).show();
 								e.printStackTrace();
 							}
 

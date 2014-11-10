@@ -21,8 +21,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.phr.adapter.CheckupAdapter;
+import com.example.phr.application.HealthGem;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.CheckUp;
@@ -59,6 +61,8 @@ public class CheckupTrackerActivity extends Activity {
 
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		}
 		Log.e(String.valueOf(list.size()), "size");

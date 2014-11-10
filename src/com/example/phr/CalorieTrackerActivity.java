@@ -19,8 +19,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.phr.adapter.CalorieAdapter;
+import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.CalorieTrackerEntry;
 import com.example.phr.service.CalorieTrackerService;
@@ -46,22 +48,6 @@ public class CalorieTrackerActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		mCalorieList = (ListView) findViewById(R.id.listview_calorie);
 
-		// FAKE DATA
-		/*
-		 * List<Calorie> list = new ArrayList<Calorie>(); Calorie data1 = new
-		 * Calorie("Jul","12",459,246,1100,1565,"213/1650",13); Calorie data2 =
-		 * new Calorie("Jul","11",679,80,1100,1565,"679/1565",33); Calorie data3
-		 * = new Calorie("Jul","10",152,80,1100,1565,"152/1565",14); Calorie
-		 * data4 = new Calorie("Jul","8",1100,80.0,1100,1565,"1100/1565",80);
-		 * Calorie data5 = new
-		 * Calorie("Jul","7",400,80,1100,1565,"400/1565",40); Calorie data6 =
-		 * new Calorie("Jul","6",598,80,1100,1565,"598/1565",50); Calorie data7
-		 * = new Calorie("Jul","4",152,80,1100,1565,"152/1565",14);
-		 * 
-		 * list.add(data1); list.add(data2); list.add(data3); list.add(data4);
-		 * list.add(data5); list.add(data6); list.add(data7);
-		 */
-
 		calorieTrackerList = new ArrayList<CalorieTrackerEntry>();
 
 		CalorieTrackerService calService = new CalorieTrackerEntryServiceImpl();
@@ -70,6 +56,8 @@ public class CalorieTrackerActivity extends Activity {
 			calorieTrackerList = calService.getAll();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		}
 		calorieAdapter = new CalorieAdapter(getApplicationContext(),

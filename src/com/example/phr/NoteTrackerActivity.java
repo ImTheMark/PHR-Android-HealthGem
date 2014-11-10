@@ -20,8 +20,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.phr.adapter.NoteAdapter;
+import com.example.phr.application.HealthGem;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.Note;
@@ -48,23 +50,7 @@ public class NoteTrackerActivity extends Activity {
 		setTitle("Notes");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		mNoteList = (ListView) findViewById(R.id.listView_notes);
-		/*
-		 * // FAKE DATA List<Note> list = new ArrayList<Note>(); Note data1 =
-		 * new Note("Foods to avoid", "","Jul 10, 2014","11:40 am");
-		 * 
-		 * Note data2 = new Note("Medicine List", "","Jul 08, 2014","10:40 am");
-		 * 
-		 * Note data3 = new Note("Workout plan", "","Jun 06, 2014","11:40 pm");
-		 * 
-		 * Note data4 = new Note("Dengue prevention",
-		 * "","Jun 05, 2014","5:40 am");
-		 * 
-		 * Note data5 = new Note("My Medicine Checklist",
-		 * "","Jul 12, 2014","7:45 am");
-		 * 
-		 * list.add(data5); list.add(data1); list.add(data2); list.add(data3);
-		 * list.add(data4);
-		 */
+
 		list = new ArrayList<Note>();
 		noteServiceImpl = new NoteTrackerServiceImpl();
 		try {
@@ -73,6 +59,8 @@ public class NoteTrackerActivity extends Activity {
 
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		}
 		Log.e(String.valueOf(list.size()), "size");

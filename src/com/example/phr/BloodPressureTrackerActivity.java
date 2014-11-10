@@ -34,8 +34,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.phr.adapter.BloodPressureAdapter;
+import com.example.phr.application.HealthGem;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.EntryNotFoundException;
@@ -151,6 +153,9 @@ public class BloodPressureTrackerActivity extends Activity {
 								e.printStackTrace();
 							} catch (ServiceException e) {
 								// TODO Auto-generated catch block
+								Toast.makeText(HealthGem.getContext(),
+										"No Internet Connection !",
+										Toast.LENGTH_LONG).show();
 								e.printStackTrace();
 							}
 

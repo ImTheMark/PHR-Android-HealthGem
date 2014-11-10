@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.ServiceException;
@@ -41,7 +42,7 @@ public class RegisterActivity extends Activity {
 		setContentView(R.layout.activity_register);
 
 		userService = new UserServiceImpl();
-		userDao =  new MobileUserDaoImpl();
+		userDao = new MobileUserDaoImpl();
 
 		mBtnRegister = (ImageButton) findViewById(R.id.btnRegister);
 		mTextValid = (TextView) findViewById(R.id.valid);
@@ -123,6 +124,9 @@ public class RegisterActivity extends Activity {
 					}
 				} catch (ServiceException e) {
 					// TODO Auto-generated catch block
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
 					e.printStackTrace();
 				}
 

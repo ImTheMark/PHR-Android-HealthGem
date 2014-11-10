@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.ServiceException;
@@ -116,6 +117,8 @@ public class AboutMeFragment extends Fragment {
 			}
 		} catch (ServiceException e1) {
 			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
 			e1.printStackTrace();
 		}
 
@@ -137,6 +140,8 @@ public class AboutMeFragment extends Fragment {
 			checkup = checkupService.getLatest();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		}
 		if (bp != null) {

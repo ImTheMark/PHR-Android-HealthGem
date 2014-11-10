@@ -59,15 +59,7 @@ public class AddNewActivityActivity extends android.app.Activity {
 					.parseDouble(newActivityDuration.getText().toString()));
 			i.putExtra("activity_unit",
 					String.valueOf(newActivityDurationUnit.getSelectedItem()));
-			/*
-			 * i.putExtra("activity_name",newActivity.getText().toString());
-			 * i.putExtra("activity_cal",newActivityCal.getText().toString());
-			 * i.
-			 * putExtra("activity_duration",newActivityDuration.getText().toString
-			 * ());
-			 * i.putExtra("activity_unit",String.valueOf(newActivityDurationUnit
-			 * .getSelectedItem()));
-			 */
+
 			startActivity(i);
 			return true;
 
