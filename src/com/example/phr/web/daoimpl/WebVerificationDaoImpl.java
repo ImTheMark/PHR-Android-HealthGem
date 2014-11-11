@@ -43,12 +43,7 @@ public class WebVerificationDaoImpl extends BasicDaoImpl implements
 			JSONObject response = performHttpRequest_JSON(command, jsonToSend);
 			System.out.println("JSON Response Received: " + response);
 
-			if (response.getJSONObject("data").has("isValidAccessToken")
-					&& response.getJSONObject("data")
-							.getString("isValidAccessToken").equals("false")) {
-				throw new OutdatedAccessTokenException(
-						"The access token used in the request is outdated, please ask the user to log in again.");
-			} else if (response.get("status").equals("success")) {
+			if (response.get("status").equals("success")) {
 				;
 			} else {
 				throw new WebServerException(
