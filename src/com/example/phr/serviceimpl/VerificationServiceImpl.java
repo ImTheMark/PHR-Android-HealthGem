@@ -140,6 +140,7 @@ public class VerificationServiceImpl implements VerificationService {
 		list.addAll(getAllUnverifiedSportsEstablishmentPosts());
 
 		try {
+			mobileVerificationDao.emptyVerificationDatabase();
 			for(TrackerEntry entry:list){
 				if(entry.getClass().equals(UnverifiedFoodEntry.class))
 					mobileVerificationDao.addUnverifiedFoodPost((UnverifiedFoodEntry) entry);

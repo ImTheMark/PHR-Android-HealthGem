@@ -561,4 +561,17 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 		return list;
 	}
 
+	@Override
+	public void emptyVerificationDatabase() {
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+
+		db.delete(DatabaseHandler.TABLE_UNVERIFIED_ACTIVITY, null, null);
+		db.delete(DatabaseHandler.TABLE_UNVERIFIED_FOOD, null, null);
+		db.delete(DatabaseHandler.TABLE_UNVERIFIED_RESTO, null, null);
+		db.delete(DatabaseHandler.TABLE_UNVERIFIED_SPORTEST, null, null);
+		
+		db.close();
+	}
+
 }

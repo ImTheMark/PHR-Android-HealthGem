@@ -44,6 +44,8 @@ public interface MobileVerificationDao {
 	public List<UnverifiedSportsEstablishmentEntry> getAllUnverifiedSportsEstablishmentPosts() throws DataAccessException;
 	
 	
+	public void emptyVerificationDatabase();
+	
 	
 	public List<TrackerEntry> getAllUnverifiedPosts() throws DataAccessException;
 	
