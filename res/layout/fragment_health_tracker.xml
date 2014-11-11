@@ -125,7 +125,7 @@
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Blood Sugar" />
+                        android:text="Blood\nSugar" />
                 </LinearLayout>
                 
             </LinearLayout>

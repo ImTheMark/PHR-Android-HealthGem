@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:clickable="false"
         android:src="@drawable/notification_facebook"
-        android:padding="11dp" />
+        android:padding="4dp" />
 
     <!-- Badge Count -->    
     <TextView
