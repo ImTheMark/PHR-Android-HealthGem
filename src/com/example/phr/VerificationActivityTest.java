@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -103,32 +102,29 @@ public class VerificationActivityTest extends Activity {
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
 
-			//try {
-				list = vService.getAllFromMobileDB();
+			// try {
+			list = vService.getAllFromMobileDB();
 
 			if (list != null && !list.isEmpty()) {
 				unverifiedList = list;
 				Log.e("VERIFICATION size after post execute",
 						unverifiedList.size() + "");
-				// adapter.notifyDataSetChanged();
-				/*
-				 * ((UnverifiedStatusAdapter) listView.getAdapter())
-				 * .notifyDataSetChanged();
-				 */
-				Intent intent = getIntent();
-				finish();
-				startActivity(intent);
+				adapter.notifyDataSetChanged();
+
+				((UnverifiedStatusAdapter) listView.getAdapter())
+						.notifyDataSetChanged();
+
+				// Intent intent = getIntent();
+				// finish();
+				// startActivity(intent);
 			}
-/*
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				Toast.makeText(HealthGem.getContext(),
-						"No Internet Connection !", Toast.LENGTH_LONG).show();
-				e.printStackTrace();
-			} catch (OutdatedAccessTokenException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
+			/*
+			 * } catch (ServiceException e) { // TODO Auto-generated catch block
+			 * Toast.makeText(HealthGem.getContext(),
+			 * "No Internet Connection !", Toast.LENGTH_LONG).show();
+			 * e.printStackTrace(); } catch (OutdatedAccessTokenException e) {
+			 * // TODO Auto-generated catch block e.printStackTrace(); }
+			 */
 
 			swipeLayout.setRefreshing(false);
 		}
