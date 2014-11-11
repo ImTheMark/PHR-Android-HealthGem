@@ -157,8 +157,9 @@ public class MobileUserDaoImpl implements MobileUserDao {
 		Log.e("GETUSER",
 				HealthGem.getSharedPreferences().loadPreferences(
 						SPreference.USERID));
-		user.setId(Integer.parseInt(HealthGem.getSharedPreferences()
-				.loadPreferences(SPreference.USERID)));
+		if(HealthGem.getSharedPreferences().getPreferences().contains(SPreference.USERID))
+			user.setId(Integer.parseInt(HealthGem.getSharedPreferences()
+					.loadPreferences(SPreference.USERID)));
 		user.setAllergies(HealthGem.getSharedPreferences().loadPreferences(
 				SPreference.ALLERGIES));
 		user.setContactNumber(HealthGem.getSharedPreferences().loadPreferences(
