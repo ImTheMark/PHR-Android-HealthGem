@@ -138,54 +138,56 @@ public class RegisterUserInformationActivity extends Activity {
 		// REGISTER MODE
 
 		else {
-			fullName.setText(HealthGem.getSharedPreferences().loadPreferences(
-					SPreference.REGISTER_NAME));
-			contactNumber.setText(HealthGem.getSharedPreferences()
-					.loadPreferences(SPreference.REGISTER_CONTACTNUMBER));
-			email.setText(HealthGem.getSharedPreferences().loadPreferences(
-					SPreference.REGISTER_EMAIL));
-			contactPerson.setText(HealthGem.getSharedPreferences()
-					.loadPreferences(SPreference.REGISTER_CONTACTPERSON));
-			contactPersonNumber.setText(HealthGem.getSharedPreferences()
-					.loadPreferences(SPreference.REGISTER_CONTACTPERSONNUMBER));
-			allergies.setText(HealthGem.getSharedPreferences().loadPreferences(
-					SPreference.REGISTER_ALLERGIES));
-			knownHealthProblems.setText(HealthGem.getSharedPreferences()
-					.loadPreferences(SPreference.REGISTER_KNOWNHEALTHPROBLEMS));
+			if(HealthGem.getSharedPreferences().getPreferences().contains(SPreference.REGISTER_NAME)){
+				fullName.setText(HealthGem.getSharedPreferences().loadPreferences(
+						SPreference.REGISTER_NAME));
+				contactNumber.setText(HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_CONTACTNUMBER));
+				email.setText(HealthGem.getSharedPreferences().loadPreferences(
+						SPreference.REGISTER_EMAIL));
+				contactPerson.setText(HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_CONTACTPERSON));
+				contactPersonNumber.setText(HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_CONTACTPERSONNUMBER));
+				allergies.setText(HealthGem.getSharedPreferences().loadPreferences(
+						SPreference.REGISTER_ALLERGIES));
+				knownHealthProblems.setText(HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_KNOWNHEALTHPROBLEMS));
 
-			if (settingsDao.isWeightSettingInPounds()) {
-				weightUnit.setSelection(0);
-				weight.setText(HealthGem.getSharedPreferences()
-						.loadPreferences(SPreference.REGISTER_WEIGHTPOUNDS));
-			} else {
-				weightUnit.setSelection(1);
-				Double kg = Double.parseDouble(HealthGem.getSharedPreferences()
-						.loadPreferences(SPreference.REGISTER_WEIGHTPOUNDS)) / 2.2;
-				weight.setText(kg + "");
+				if (settingsDao.isWeightSettingInPounds()) {
+					weightUnit.setSelection(0);
+					weight.setText(HealthGem.getSharedPreferences()
+							.loadPreferences(SPreference.REGISTER_WEIGHTPOUNDS));
+				} else {
+					weightUnit.setSelection(1);
+					Double kg = Double.parseDouble(HealthGem.getSharedPreferences()
+							.loadPreferences(SPreference.REGISTER_WEIGHTPOUNDS)) / 2.2;
+					weight.setText(kg + "");
+				}
+
+				if (settingsDao.isHeightSettingInFeet()) {
+					heightUnit.setSelection(0);
+					height.setText(HealthGem.getSharedPreferences()
+							.loadPreferences(SPreference.REGISTER_HEIGHTINCHES));
+				}
+
+				else {
+					heightUnit.setSelection(1);
+					Double cm = Double.parseDouble(HealthGem.getSharedPreferences()
+							.loadPreferences(SPreference.REGISTER_HEIGHTINCHES)) / 0.39370;
+					height.setText(cm + "");
+				}
+
+				Resources res = getResources();
+				String[] genderArray = res.getStringArray(R.array.gender);
+
+				if (HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_GENDER)
+						.equals(genderArray[0]))
+					gender.setSelection(0);
+				else
+					gender.setSelection(1);
 			}
-
-			if (settingsDao.isHeightSettingInFeet()) {
-				heightUnit.setSelection(0);
-				height.setText(HealthGem.getSharedPreferences()
-						.loadPreferences(SPreference.REGISTER_HEIGHTINCHES));
-			}
-
-			else {
-				heightUnit.setSelection(1);
-				Double cm = Double.parseDouble(HealthGem.getSharedPreferences()
-						.loadPreferences(SPreference.REGISTER_HEIGHTINCHES)) / 0.39370;
-				height.setText(cm + "");
-			}
-
-			Resources res = getResources();
-			String[] genderArray = res.getStringArray(R.array.gender);
-
-			if (HealthGem.getSharedPreferences()
-					.loadPreferences(SPreference.REGISTER_GENDER)
-					.equals(genderArray[0]))
-				gender.setSelection(0);
-			else
-				gender.setSelection(1);
 		}
 	}
 
