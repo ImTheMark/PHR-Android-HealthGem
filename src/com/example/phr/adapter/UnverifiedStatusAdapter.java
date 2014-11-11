@@ -154,7 +154,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 				.equals(UnverifiedActivityEntry.class)) {
 			viewHolder.question.setText("Did you perform: ");
 			viewHolder.word.setText(((UnverifiedActivityEntry) aListOfStatus
-					.get(position)).getActivity().getName());
+					.get(position)).getExtractedWord());
 
 			viewHolder.confirm.setOnClickListener(new OnClickListener() {
 
@@ -242,7 +242,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 				.equals(UnverifiedFoodEntry.class)) {
 			viewHolder.question.setText("Did you eat/drink: ");
 			viewHolder.word.setText(((UnverifiedFoodEntry) aListOfStatus
-					.get(position)).getFood().getName());
+					.get(position)).getExtractedWord());
 			viewHolder.amount.setVisibility(View.VISIBLE);
 			viewHolder.amount.setText(((UnverifiedFoodEntry) aListOfStatus
 					.get(position)).getServingCount() + "");
@@ -332,7 +332,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 				.equals(UnverifiedRestaurantEntry.class)) {
 			viewHolder.question.setText("Did you eat/drink at: ");
 			viewHolder.word.setText(((UnverifiedRestaurantEntry) aListOfStatus
-					.get(position)).getRestaurant().getName());
+					.get(position)).getExtractedWord());
 			viewHolder.edit.setText("Edit");
 
 			viewHolder.confirm.setOnClickListener(new OnClickListener() {
@@ -414,7 +414,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 			viewHolder.question.setText("Did you go to: ");
 			viewHolder.word
 					.setText(((UnverifiedSportsEstablishmentEntry) aListOfStatus
-							.get(position)).getSportEstablishment().getName());
+							.get(position)).getExtractedWord());
 			viewHolder.confirm.setOnClickListener(new OnClickListener() {
 
 				@Override
