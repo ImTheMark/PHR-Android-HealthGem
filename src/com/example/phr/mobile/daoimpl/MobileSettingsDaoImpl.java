@@ -29,15 +29,18 @@ public class MobileSettingsDaoImpl implements MobileSettingsDao {
 
 	@Override
 	public Boolean getBloodPressureNotificationSetting() {
-		int x = Integer
+		if(HealthGem.getSharedPreferences().getPreferences().contains(HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODPRESSURE)){
+			int x = Integer
 				.parseInt(HealthGem
 						.getSharedPreferences()
 						.loadPreferences(
 								HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODPRESSURE));
-		if (x == 1)
-			return true;
-		else
-			return false;
+			if (x == 1)
+				return true;
+			else
+				return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -60,15 +63,18 @@ public class MobileSettingsDaoImpl implements MobileSettingsDao {
 
 	@Override
 	public Boolean getBloodSugarNotificationSetting() {
-		int x = Integer
-				.parseInt(HealthGem
-						.getSharedPreferences()
-						.loadPreferences(
-								HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODSUGAR));
-		if (x == 1)
-			return true;
-		else
-			return false;
+		if(HealthGem.getSharedPreferences().getPreferences().contains(HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODSUGAR)){
+			int x = Integer
+					.parseInt(HealthGem
+							.getSharedPreferences()
+							.loadPreferences(
+									HealthGem.getSharedPreferences().SETTINGS_NOTIF_BLOODSUGAR));
+			if (x == 1)
+				return true;
+			else
+				return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -85,13 +91,16 @@ public class MobileSettingsDaoImpl implements MobileSettingsDao {
 
 	@Override
 	public Boolean isWeightSettingInPounds() {
-		int x = Integer.parseInt(HealthGem.getSharedPreferences()
-				.loadPreferences(
-						HealthGem.getSharedPreferences().SETTINGS_WEIGHTUNIT));
-		if (x == 1)
-			return false;
-		else
-			return true;
+		if(HealthGem.getSharedPreferences().getPreferences().contains(HealthGem.getSharedPreferences().SETTINGS_WEIGHTUNIT)){
+			int x = Integer.parseInt(HealthGem.getSharedPreferences()
+					.loadPreferences(
+							HealthGem.getSharedPreferences().SETTINGS_WEIGHTUNIT));
+			if (x == 1)
+				return false;
+			else
+				return true;
+		}
+		return true;
 	}
 
 	@Override
@@ -108,12 +117,15 @@ public class MobileSettingsDaoImpl implements MobileSettingsDao {
 
 	@Override
 	public Boolean isHeightSettingInFeet() {
-		int x = Integer.parseInt(HealthGem.getSharedPreferences()
-				.loadPreferences(
-						HealthGem.getSharedPreferences().SETTINGS_HEIGHTUNIT));
-		if (x == 1)
-			return true;
-		else
-			return false;
+		if(HealthGem.getSharedPreferences().getPreferences().contains(HealthGem.getSharedPreferences().SETTINGS_HEIGHTUNIT)){
+				int x = Integer.parseInt(HealthGem.getSharedPreferences()
+					.loadPreferences(
+							HealthGem.getSharedPreferences().SETTINGS_HEIGHTUNIT));
+			if (x == 1)
+				return true;
+			else
+				return false;
+		}
+		return true;
 	}
 }
