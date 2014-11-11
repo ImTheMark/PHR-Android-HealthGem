@@ -374,7 +374,7 @@ public class NewStatusActivity extends android.app.Activity {
 				startActivityForResult(intent, 2);
 			}
 		});
-
+		mBtnAddActions.setVisibility(View.VISIBLE);
 		mode = "add";
 
 		Intent in = getIntent();
@@ -384,30 +384,37 @@ public class NewStatusActivity extends android.app.Activity {
 			String tracker = extras.getString("tracker");
 
 			if (tracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
+				mBtnAddActions.setVisibility(View.GONE);
 				currentTracker = TrackerInputType.BLOOD_PRESSURE;
 				txtCurrentTracker.setText(TrackerInputType.BLOOD_PRESSURE);
 				callBloodPressureInput(100, 70);
 			} else if (tracker.equals(TrackerInputType.BLOOD_SUGAR)) {
+				mBtnAddActions.setVisibility(View.GONE);
 				currentTracker = TrackerInputType.BLOOD_SUGAR;
 				txtCurrentTracker.setText(TrackerInputType.BLOOD_SUGAR);
 				callBloodSugarInput(4, "before meal");
 			} else if (tracker.equals(TrackerInputType.NOTES)) {
+				mBtnAddActions.setVisibility(View.GONE);
 				txtCurrentTracker.setText(TrackerInputType.NOTES);
 				currentTracker = TrackerInputType.NOTES;
 				callNotesInput();
 			} else if (tracker.equals(TrackerInputType.WEIGHT)) {
+				mBtnAddActions.setVisibility(View.GONE);
 				txtCurrentTracker.setText(TrackerInputType.WEIGHT);
 				currentTracker = TrackerInputType.WEIGHT;
 				callWeightInput("100", "lb");
 			} else if (tracker.equals(TrackerInputType.FOOD)) {
+				mBtnAddActions.setVisibility(View.GONE);
 				txtCurrentTracker.setText(TrackerInputType.FOOD);
 				currentTracker = TrackerInputType.FOOD;
 				callFoodInput();
 			} else if (tracker.equals(TrackerInputType.CHECKUP)) {
+				mBtnAddActions.setVisibility(View.GONE);
 				txtCurrentTracker.setText(TrackerInputType.CHECKUP);
 				currentTracker = TrackerInputType.CHECKUP;
 				callCheckUpInput("", "");
 			} else if (tracker.equals(TrackerInputType.ACTIVITY)) {
+				mBtnAddActions.setVisibility(View.GONE);
 				txtCurrentTracker.setText(TrackerInputType.ACTIVITY);
 				currentTracker = TrackerInputType.ACTIVITY;
 				callActivityInput();
@@ -416,6 +423,7 @@ public class NewStatusActivity extends android.app.Activity {
 			String from = extras.getString("from");
 
 			if (from.equals("new activity")) {
+				mBtnAddActions.setVisibility(View.GONE);
 				currentTracker = TrackerInputType.ACTIVITY;
 				txtCurrentTracker.setText(TrackerInputType.ACTIVITY);
 
@@ -428,6 +436,7 @@ public class NewStatusActivity extends android.app.Activity {
 						extras.getString("activity_unit"), "", photo);
 
 			} else if (from.equals("new food")) {
+				mBtnAddActions.setVisibility(View.GONE);
 				currentTracker = TrackerInputType.FOOD;
 				txtCurrentTracker.setText(TrackerInputType.FOOD);
 
@@ -638,7 +647,7 @@ public class NewStatusActivity extends android.app.Activity {
 	}
 
 	private void setAddTemplate() {
-		mBtnAddActions.setVisibility(View.VISIBLE);
+
 		mBtnFb.setVisibility(View.VISIBLE);
 	}
 
@@ -1131,9 +1140,8 @@ public class NewStatusActivity extends android.app.Activity {
 		if (index != -1)
 			weightUnitSpinner.setSelection(index);
 
-		alertDialogBuilder
-				.setCancelable(false)
-				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		alertDialogBuilder.setCancelable(false).setPositiveButton("OK",
+				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 
@@ -1147,14 +1155,14 @@ public class NewStatusActivity extends android.app.Activity {
 											.getText().toString(), photo);
 
 					}
-				})
-				.setNegativeButton("Cancel",
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int id) {
-								dialog.cancel();
-							}
-						});
+					/*
+					 * }) .setNegativeButton("Cancel", new
+					 * DialogInterface.OnClickListener() {
+					 * 
+					 * @Override public void onClick(DialogInterface dialog, int
+					 * id) { dialog.cancel(); }
+					 */
+				});
 
 		// create an alert dialog
 		AlertDialog alertD = alertDialogBuilder.create();
@@ -1181,9 +1189,8 @@ public class NewStatusActivity extends android.app.Activity {
 		int index = list.indexOf(txttype);
 		if (index != -1)
 			sugarTypeSpinner.setSelection(index);
-		alertDialogBuilder
-				.setCancelable(false)
-				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		alertDialogBuilder.setCancelable(false).setPositiveButton("OK",
+				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 
@@ -1194,14 +1201,14 @@ public class NewStatusActivity extends android.app.Activity {
 								.getSelectedItem()), notesStatus.getText()
 								.toString(), photo);
 					}
-				})
-				.setNegativeButton("Cancel",
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int id) {
-								dialog.cancel();
-							}
-						});
+					/*
+					 * }) .setNegativeButton("Cancel", new
+					 * DialogInterface.OnClickListener() {
+					 * 
+					 * @Override public void onClick(DialogInterface dialog, int
+					 * id) { dialog.cancel(); }
+					 */
+				});
 
 		// create an alert dialog
 		AlertDialog alertD = alertDialogBuilder.create();
@@ -1225,9 +1232,8 @@ public class NewStatusActivity extends android.app.Activity {
 				.findViewById(R.id.diastolicPicker);
 		systolicPicker.setCurrent(systolic);
 		diastolicPicker.setCurrent(diastolic);
-		alertDialogBuilder
-				.setCancelable(false)
-				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		alertDialogBuilder.setCancelable(false).setPositiveButton("OK",
+				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 
@@ -1239,14 +1245,14 @@ public class NewStatusActivity extends android.app.Activity {
 								notesStatus.getText().toString(), photo);
 
 					}
-				})
-				.setNegativeButton("Cancel",
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int id) {
-								dialog.cancel();
-							}
-						});
+					/*
+					 * }) .setNegativeButton("Cancel", new
+					 * DialogInterface.OnClickListener() {
+					 * 
+					 * @Override public void onClick(DialogInterface dialog, int
+					 * id) { dialog.cancel(); }
+					 */
+				});
 
 		// create an alert dialog
 		AlertDialog alertD = alertDialogBuilder.create();
@@ -1289,6 +1295,11 @@ public class NewStatusActivity extends android.app.Activity {
 			bp.setFacebookID(fbId);
 			BloodPressureTrackerService bpTrackerService = new BloodPressureTrackerServiceImpl();
 			bpTrackerService.add(bp);
+
+			Intent intent = new Intent(getApplicationContext(),
+					BloodPressureTrackerActivity.class);
+			startActivity(intent);
+			finish();
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -1343,6 +1354,10 @@ public class NewStatusActivity extends android.app.Activity {
 			BloodSugarTrackerService bsTrackerService = new BloodSugarTrackerServiceImpl();
 
 			bsTrackerService.add(bs);
+			Intent intent = new Intent(getApplicationContext(),
+					BloodSugarTrackerActivity.class);
+			startActivity(intent);
+			finish();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
@@ -1400,6 +1415,11 @@ public class NewStatusActivity extends android.app.Activity {
 			WeightTrackerService weightTrackerService = new WeightTrackerServiceImpl();
 			weightTrackerService.add(weight);
 
+			Intent intent = new Intent(getApplicationContext(),
+					WeightTrackerActivity.class);
+			startActivity(intent);
+			finish();
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1445,6 +1465,11 @@ public class NewStatusActivity extends android.app.Activity {
 			note.setFacebookID(fbId);
 			NoteTrackerService noteTrackerService = new NoteTrackerServiceImpl();
 			noteTrackerService.add(note);
+
+			Intent intent = new Intent(getApplicationContext(),
+					NoteTrackerActivity.class);
+			startActivity(intent);
+			finish();
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -1493,6 +1518,25 @@ public class NewStatusActivity extends android.app.Activity {
 			foodEntry.setFacebookID(fbId);
 			FoodTrackerService foodTrackerService = new FoodTrackerServiceImpl();
 			foodTrackerService.add(foodEntry);
+
+			Date date1 = null;
+			try {
+				date1 = fmt.parse(dateFormat.format(calobj.getTime()) + " "
+						+ timeFormat.format(calobj.getTime()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Timestamp timestamp1 = new Timestamp(date1.getTime());
+			SimpleDateFormat fmtFood = new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+			String txtdate = fmtFood.format(timestamp1);
+			Intent intent = new Intent(getApplicationContext(),
+					FoodTrackerDailyActivity.class);
+			Log.e("newstatus", txtdate);
+			intent.putExtra("date", txtdate);
+			startActivity(intent);
+			finish();
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -1545,6 +1589,11 @@ public class NewStatusActivity extends android.app.Activity {
 			checkup.setFacebookID(fbId);
 			CheckUpTrackerService checkupTrackerService = new CheckUpTrackerServiceImpl();
 			checkupTrackerService.add(checkup);
+
+			Intent intent = new Intent(getApplicationContext(),
+					CheckupTrackerActivity.class);
+			startActivity(intent);
+			finish();
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -1615,6 +1664,11 @@ public class NewStatusActivity extends android.app.Activity {
 			ActivityTrackerService activityTrackerService = new ActivityTrackerServiceImpl();
 			activityTrackerService.add(activityEntry);
 
+			Intent intent = new Intent(getApplicationContext(),
+					ActivitiesTrackerActivity.class);
+			startActivity(intent);
+			finish();
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1661,61 +1715,33 @@ public class NewStatusActivity extends android.app.Activity {
 
 				addBloodPressureToDatabase();
 				Log.e("added", "bp");
-				Intent intent = new Intent(getApplicationContext(),
-						BloodPressureTrackerActivity.class);
-				startActivity(intent);
+
 			}
 
 			else if (currentTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
 
 				addBloodSugarToDatabase();
-				Intent intent = new Intent(getApplicationContext(),
-						BloodSugarTrackerActivity.class);
-				startActivity(intent);
+
 			} else if (currentTracker.equals(TrackerInputType.WEIGHT)) {
 
 				addWeightToDatabase();
-				Intent intent = new Intent(getApplicationContext(),
-						WeightTrackerActivity.class);
-				startActivity(intent);
+
 			} else if (currentTracker.equals(TrackerInputType.CHECKUP)) {
 
 				addCheckUpToDatabase();
-				Intent intent = new Intent(getApplicationContext(),
-						CheckupTrackerActivity.class);
-				startActivity(intent);
+
 			} else if (currentTracker.equals(TrackerInputType.NOTES)) {
 
 				addNoteToDatabase();
-				Intent intent = new Intent(getApplicationContext(),
-						NoteTrackerActivity.class);
-				startActivity(intent);
+
 			} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
 
 				addActivityToDatabase();
-				Intent intent = new Intent(getApplicationContext(),
-						ActivitiesTrackerActivity.class);
-				startActivity(intent);
+
 			} else if (currentTracker.equals(TrackerInputType.FOOD)) {
 
 				addFoodToDatabase();
-				Date date = null;
-				try {
-					date = fmt.parse(dateFormat.format(calobj.getTime()) + " "
-							+ timeFormat.format(calobj.getTime()));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Timestamp timestamp = new Timestamp(date.getTime());
-				SimpleDateFormat fmtFood = new SimpleDateFormat(
-						"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-				String txtdate = fmtFood.format(timestamp);
-				Intent intent = new Intent(getApplicationContext(),
-						FoodTrackerDailyActivity.class);
-				Log.e("newstatus", txtdate);
-				intent.putExtra("date", txtdate);
-				startActivity(intent);
+
 			}
 
 			return true;
@@ -1725,52 +1751,31 @@ public class NewStatusActivity extends android.app.Activity {
 			if (currentTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
 				Log.e("call", "edit");
 				editBloodSugarToDatabase();
-				Log.e("call", "bsActivity");
-				Intent intent = new Intent(getApplicationContext(),
-						BloodSugarTrackerActivity.class);
-				startActivity(intent);
+
 			} else if (currentTracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
 				editBloodPressureToDatabase();
 				Log.e("call", "bpActivity");
-				Intent intent = new Intent(getApplicationContext(),
-						BloodPressureTrackerActivity.class);
-				startActivity(intent);
+
 			} else if (currentTracker.equals(TrackerInputType.WEIGHT)) {
 				editWeightToDatabase();
 				Log.e("call", "weightActivity");
-				Intent intent = new Intent(getApplicationContext(),
-						WeightTrackerActivity.class);
-				startActivity(intent);
+
 			} else if (currentTracker.equals(TrackerInputType.CHECKUP)) {
 				editCheckUpToDatabase();
 				Log.e("call", "checkupActivity");
-				Intent intent = new Intent(getApplicationContext(),
-						CheckupTrackerActivity.class);
-				startActivity(intent);
+
 			} else if (currentTracker.equals(TrackerInputType.NOTES)) {
 				editNoteToDatabase();
 				Log.e("call", "noteActivity");
-				Intent intent = new Intent(getApplicationContext(),
-						NoteTrackerActivity.class);
-				startActivity(intent);
+
 			} else if (currentTracker.equals(TrackerInputType.FOOD)) {
 				editFoodToDatabase();
 				Log.e("call", "foodActivity");
-				Intent intent = new Intent(getApplicationContext(),
-						FoodTrackerDailyActivity.class);
-				SimpleDateFormat fmtFood = new SimpleDateFormat(
-						"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-				String txtdate = fmtFood.format(editFoodTrackerEntry
-						.getTimestamp());
-				Log.e("newstatus", txtdate);
-				intent.putExtra("date", txtdate);
-				startActivity(intent);
+
 			} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
 				editActivityToDatabase();
 				Log.e("call", "acitivityActivity");
-				Intent intent = new Intent(getApplicationContext(),
-						ActivitiesTrackerActivity.class);
-				startActivity(intent);
+
 			}
 
 			return true;
@@ -1781,38 +1786,19 @@ public class NewStatusActivity extends android.app.Activity {
 				Log.e("call", "verify");
 				verifyFoodToDatabase();
 				Log.e("call", "foodActivity");
-				Intent intent = new Intent(getApplicationContext(),
-						FoodTrackerDailyActivity.class);
-				SimpleDateFormat fmtFood = new SimpleDateFormat(
-						"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-				String txtdate = fmtFood.format(unferifiedFood.getTimestamp());
-				Log.e("newstatus", txtdate);
-				intent.putExtra("date", txtdate);
-				startActivity(intent);
+
 			} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
 				verifyActivityToDatabase();
 				Log.e("call", "acitivityActivity");
-				Intent intent = new Intent(getApplicationContext(),
-						ActivitiesTrackerActivity.class);
-				startActivity(intent);
+
 			} else if (currentTracker.equals(TrackerInputType.RESTAURANT)) {
 				verifyRestaurantToDatabase();
 				Log.e("call", "foodActivity");
-				Intent intent = new Intent(getApplicationContext(),
-						FoodTrackerDailyActivity.class);
-				SimpleDateFormat fmtFood = new SimpleDateFormat(
-						"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-				String txtdate = fmtFood.format(verifyFoodTrackerEntry
-						.getTimestamp());
-				Log.e("newstatus", txtdate);
-				intent.putExtra("date", txtdate);
-				startActivity(intent);
+
 			} else if (currentTracker.equals(TrackerInputType.SPORTS)) {
 				verifySportToDatabase();
 				Log.e("call", "sportActivity");
-				Intent intent = new Intent(getApplicationContext(),
-						ActivitiesTrackerActivity.class);
-				startActivity(intent);
+
 			}
 
 			return true;
@@ -1839,6 +1825,12 @@ public class NewStatusActivity extends android.app.Activity {
 			BloodSugarTrackerService bsTrackerService = new BloodSugarTrackerServiceImpl();
 
 			bsTrackerService.edit(bs);
+
+			Log.e("call", "bsActivity");
+			Intent intent = new Intent(getApplicationContext(),
+					BloodSugarTrackerActivity.class);
+			startActivity(intent);
+			finish();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1872,6 +1864,11 @@ public class NewStatusActivity extends android.app.Activity {
 			BloodPressureTrackerService bpTrackerService = new BloodPressureTrackerServiceImpl();
 
 			bpTrackerService.edit(bp);
+
+			Intent intent = new Intent(getApplicationContext(),
+					BloodPressureTrackerActivity.class);
+			startActivity(intent);
+			finish();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1914,6 +1911,10 @@ public class NewStatusActivity extends android.app.Activity {
 
 			WeightTrackerService weightTrackerService = new WeightTrackerServiceImpl();
 			weightTrackerService.edit(weight);
+			Intent intent = new Intent(getApplicationContext(),
+					WeightTrackerActivity.class);
+			startActivity(intent);
+			finish();
 
 		} catch (EntryNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -1948,6 +1949,10 @@ public class NewStatusActivity extends android.app.Activity {
 			CheckUpTrackerService checkupTrackerService = new CheckUpTrackerServiceImpl();
 
 			checkupTrackerService.edit(checkup);
+			Intent intent = new Intent(getApplicationContext(),
+					CheckupTrackerActivity.class);
+			startActivity(intent);
+			finish();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1979,6 +1984,10 @@ public class NewStatusActivity extends android.app.Activity {
 			NoteTrackerService noteTrackerService = new NoteTrackerServiceImpl();
 
 			noteTrackerService.edit(note);
+			Intent intent = new Intent(getApplicationContext(),
+					NoteTrackerActivity.class);
+			startActivity(intent);
+			finish();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2018,6 +2027,17 @@ public class NewStatusActivity extends android.app.Activity {
 			FoodTrackerService foodTrackerService = new FoodTrackerServiceImpl();
 
 			foodTrackerService.edit(foodEntry);
+
+			Intent intent = new Intent(getApplicationContext(),
+					FoodTrackerDailyActivity.class);
+			SimpleDateFormat fmtFood = new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+			String txtdate = fmtFood
+					.format(editFoodTrackerEntry.getTimestamp());
+			Log.e("newstatus", txtdate);
+			intent.putExtra("date", txtdate);
+			startActivity(intent);
+			finish();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2065,6 +2085,10 @@ public class NewStatusActivity extends android.app.Activity {
 			ActivityTrackerService activityTrackerService = new ActivityTrackerServiceImpl();
 
 			activityTrackerService.edit(activityEntry);
+			Intent intent = new Intent(getApplicationContext(),
+					ActivitiesTrackerActivity.class);
+			startActivity(intent);
+			finish();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2103,6 +2127,16 @@ public class NewStatusActivity extends android.app.Activity {
 			foodTrackerService.add(foodEntry);
 
 			verificationService.delete(unferifiedFood);
+
+			Intent intent = new Intent(getApplicationContext(),
+					FoodTrackerDailyActivity.class);
+			SimpleDateFormat fmtFood = new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+			String txtdate = fmtFood.format(unferifiedFood.getTimestamp());
+			Log.e("newstatus", txtdate);
+			intent.putExtra("date", txtdate);
+			startActivity(intent);
+			finish();
 		} catch (EntryNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2142,6 +2176,17 @@ public class NewStatusActivity extends android.app.Activity {
 			foodTrackerService.add(foodEntry);
 
 			verificationService.delete(unferifiedRestaurant);
+
+			Intent intent = new Intent(getApplicationContext(),
+					FoodTrackerDailyActivity.class);
+			SimpleDateFormat fmtFood = new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+			String txtdate = fmtFood.format(verifyFoodTrackerEntry
+					.getTimestamp());
+			Log.e("newstatus", txtdate);
+			intent.putExtra("date", txtdate);
+			startActivity(intent);
+			finish();
 		} catch (EntryNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2199,6 +2244,11 @@ public class NewStatusActivity extends android.app.Activity {
 			activityTrackerService.add(activityEntry);
 
 			verificationService.delete(unferifiedSport);
+
+			Intent intent = new Intent(getApplicationContext(),
+					ActivitiesTrackerActivity.class);
+			startActivity(intent);
+			finish();
 		} catch (EntryNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2254,6 +2304,10 @@ public class NewStatusActivity extends android.app.Activity {
 			activityTrackerService.add(activityEntry);
 
 			verificationService.delete(unferifiedActivity);
+			Intent intent = new Intent(getApplicationContext(),
+					ActivitiesTrackerActivity.class);
+			startActivity(intent);
+			finish();
 		} catch (EntryNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
