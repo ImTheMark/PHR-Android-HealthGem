@@ -111,13 +111,12 @@ public class VerificationActivityTest extends Activity {
 				Log.e("VERIFICATION size after post execute",
 						unverifiedList.size() + "");
 				// adapter.notifyDataSetChanged();
-				/*
-				 * ((UnverifiedStatusAdapter) listView.getAdapter())
-				 * .notifyDataSetChanged();
-				 */
-				Intent intent = getIntent();
+				
+				 ((UnverifiedStatusAdapter) listView.getAdapter()).notifyDataSetChanged();
+				 
+/*				Intent intent = getIntent();
 				finish();
-				startActivity(intent);
+				startActivity(intent);*/
 			}
 /*
 			} catch (ServiceException e) {
