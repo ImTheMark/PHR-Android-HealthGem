@@ -33,9 +33,11 @@ public class UserServiceImpl implements UserService {
 	public void registerUser(User user) throws ServiceException,
 			UserAlreadyExistsException {
 		try {
-			mobileUserDao.registerUser();
 			userDao.registerUser(user);
+			mobileUserDao.saveUser(getUserGivenUsername(user.getUsername()));
 		} catch (WebServerException e) {
+			throw new ServiceException("Error in registration", e);
+		} catch (OutdatedAccessTokenException e) {
 			throw new ServiceException("Error in registration", e);
 		}
 	}
