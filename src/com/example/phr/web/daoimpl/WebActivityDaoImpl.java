@@ -37,4 +37,11 @@ public class WebActivityDaoImpl extends GenericListsFetcherDaoImpl<Activity>
 		return searchUsingHttp(command, type, query);
 	}
 
+	@Override
+	public void delete(Activity activity) throws WebServerException,
+			OutdatedAccessTokenException {
+		String command = "activitylist/delete";
+		deleteUsingHttp(command, activity);
+	}
+
 }

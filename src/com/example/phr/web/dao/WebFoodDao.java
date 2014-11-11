@@ -16,4 +16,7 @@ public interface WebFoodDao {
 
 	public List<Food> search(String query) throws WebServerException,
 			OutdatedAccessTokenException;
+
+	public void delete(Food food) throws WebServerException,
+			OutdatedAccessTokenException;
 }

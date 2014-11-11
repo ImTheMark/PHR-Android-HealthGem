@@ -111,4 +111,39 @@ public class GenericListsFetcherDaoImpl<T> extends BasicDaoImpl {
 			throw new WebServerException("Error has occurred", e);
 		}
 	}
+
+	public void deleteUsingHttp(String command, T object)
+			throws WebServerException, OutdatedAccessTokenException {
+		try {
+			JSONObject data = new JSONObject();
+			data.put("accessToken", accessDao.getAccessToken().getAccessToken());
+			data.put("username", accessDao.getAccessToken().getUserName());
+			data.put("objectToDelete",
+					GSONConverter.convertObjectToJSON(object));
+			String jsonToSend = jsonRequestCreator
+					.createJSONRequest(data, null);
+			System.out.println("JSON Request Sent: " + jsonToSend);
+			JSONObject response = performHttpRequest_JSON(command, jsonToSend);
+			System.out.println("JSON Response Received: " + response);
+
+			if (response.has("data")
+					&& response.getJSONObject("data").has("isValidAccessToken")
+					&& response.getJSONObject("data")
+							.getString("isValidAccessToken").equals("false")) {
+				throw new OutdatedAccessTokenException(
+						"The access token used in the request is outdated, please ask the user to log in again.");
+			} else if (response.get("status").equals("success")) {
+				System.out.println("Deleting successful");
+			} else {
+				throw new WebServerException(
+						"An error has occurred while communicating"
+								+ "with the web server.");
+			}
+
+		} catch (JSONException e) {
+			throw new WebServerException(
+					"An error has occurred while communicating"
+							+ "with the web server.");
+		}
+	}
 }

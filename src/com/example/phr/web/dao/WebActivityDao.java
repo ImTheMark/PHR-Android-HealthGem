@@ -8,12 +8,15 @@ import com.example.phr.mobile.models.Activity;
 
 public interface WebActivityDao {
 
-	public int addReturnEntryId(Activity activity)
-			throws WebServerException, OutdatedAccessTokenException;
+	public int addReturnEntryId(Activity activity) throws WebServerException,
+			OutdatedAccessTokenException;
 
 	public List<Activity> getAll() throws WebServerException,
 			OutdatedAccessTokenException;
 
 	public List<Activity> search(String query) throws WebServerException,
+			OutdatedAccessTokenException;
+
+	public void delete(Activity activity) throws WebServerException,
 			OutdatedAccessTokenException;
 }

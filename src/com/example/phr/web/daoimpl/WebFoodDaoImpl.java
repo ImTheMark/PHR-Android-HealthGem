@@ -37,4 +37,11 @@ public class WebFoodDaoImpl extends GenericListsFetcherDaoImpl<Food> implements
 		return searchUsingHttp(command, type, query);
 	}
 
+	@Override
+	public void delete(Food food) throws WebServerException,
+			OutdatedAccessTokenException {
+		String command = "foodlist/delete";
+		deleteUsingHttp(command, food);
+	}
+
 }
