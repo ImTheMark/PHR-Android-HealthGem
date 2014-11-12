@@ -1,9 +1,9 @@
 package com.example.phr.serviceimpl;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+
+import android.util.Log;
 
 import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.EntryNotFoundException;
@@ -139,17 +139,25 @@ public class VerificationServiceImpl implements VerificationService {
 		list.addAll(getAllUnverifiedRestaurantPosts());
 		list.addAll(getAllUnverifiedSportsEstablishmentPosts());
 
+		Log.e("LIST SIZE " + list.size() + "", null);
+
 		try {
 			mobileVerificationDao.emptyVerificationDatabase();
-			for(TrackerEntry entry:list){
-				if(entry.getClass().equals(UnverifiedFoodEntry.class))
-					mobileVerificationDao.addUnverifiedFoodPost((UnverifiedFoodEntry) entry);
-				else if(entry.getClass().equals(UnverifiedActivityEntry.class))
-						mobileVerificationDao.addUnverifiedActivityPost((UnverifiedActivityEntry) entry);
-				else if(entry.getClass().equals(UnverifiedRestaurantEntry.class))
-					mobileVerificationDao.addUnverifiedRestaurantPost((UnverifiedRestaurantEntry) entry);
-				else if(entry.getClass().equals(UnverifiedSportsEstablishmentEntry.class))
-					mobileVerificationDao.addUnverifiedSportEstablishmentPost((UnverifiedSportsEstablishmentEntry) entry);
+			for (TrackerEntry entry : list) {
+				if (entry.getClass().equals(UnverifiedFoodEntry.class))
+					mobileVerificationDao
+							.addUnverifiedFoodPost((UnverifiedFoodEntry) entry);
+				else if (entry.getClass().equals(UnverifiedActivityEntry.class))
+					mobileVerificationDao
+							.addUnverifiedActivityPost((UnverifiedActivityEntry) entry);
+				else if (entry.getClass().equals(
+						UnverifiedRestaurantEntry.class))
+					mobileVerificationDao
+							.addUnverifiedRestaurantPost((UnverifiedRestaurantEntry) entry);
+				else if (entry.getClass().equals(
+						UnverifiedSportsEstablishmentEntry.class))
+					mobileVerificationDao
+							.addUnverifiedSportEstablishmentPost((UnverifiedSportsEstablishmentEntry) entry);
 			}
 		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block

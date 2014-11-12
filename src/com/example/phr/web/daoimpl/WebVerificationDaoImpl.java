@@ -190,4 +190,169 @@ public class WebVerificationDaoImpl extends BasicDaoImpl implements
 							+ "with the web server.");
 		}
 	}
+
+	@Override
+	public UnverifiedFoodEntry get(UnverifiedFoodEntry entry)
+			throws EntryNotFoundException, WebServerException,
+			OutdatedAccessTokenException {
+		String command = "verification/getFood";
+		try {
+			JSONObject data = new JSONObject();
+			data.put("accessToken", accessDao.getAccessToken().getAccessToken());
+			data.put("username", accessDao.getAccessToken().getUserName());
+			data.put("object", GSONConverter.convertObjectToJSON(entry));
+			String jsonToSend = jsonRequestCreator
+					.createJSONRequest(data, null);
+			System.out.println("" + "JSON Request Sent: " + jsonToSend);
+			JSONObject response = performHttpRequest_JSON(command, jsonToSend);
+			System.out.println("JSON Response Received: " + response);
+
+			if (response.getJSONObject("data").has("isValidAccessToken")
+					&& response.getJSONObject("data")
+							.getString("isValidAccessToken").equals("false")) {
+				throw new OutdatedAccessTokenException(
+						"The access token used in the request is outdated, please ask the user to log in again.");
+			} else if (response.get("status").equals("success")) {
+				JSONObject obj = response.getJSONObject("data").getJSONObject(
+						"object");
+				UnverifiedFoodEntry complete = GSONConverter
+						.getGSONObjectGivenJsonObject(obj,
+								UnverifiedFoodEntry.class);
+				return complete;
+			} else {
+				throw new WebServerException(
+						"An error has occurred while communicating"
+								+ "with the web server.");
+			}
+
+		} catch (JSONException e) {
+			throw new WebServerException(
+					"An error has occurred while communicating"
+							+ "with the web server.");
+		}
+	}
+
+	@Override
+	public UnverifiedActivityEntry get(UnverifiedActivityEntry entry)
+			throws EntryNotFoundException, WebServerException,
+			OutdatedAccessTokenException {
+		String command = "verification/getActivity";
+		try {
+			JSONObject data = new JSONObject();
+			data.put("accessToken", accessDao.getAccessToken().getAccessToken());
+			data.put("username", accessDao.getAccessToken().getUserName());
+			data.put("object", GSONConverter.convertObjectToJSON(entry));
+			String jsonToSend = jsonRequestCreator
+					.createJSONRequest(data, null);
+			System.out.println("" + "JSON Request Sent: " + jsonToSend);
+			JSONObject response = performHttpRequest_JSON(command, jsonToSend);
+			System.out.println("JSON Response Received: " + response);
+
+			if (response.getJSONObject("data").has("isValidAccessToken")
+					&& response.getJSONObject("data")
+							.getString("isValidAccessToken").equals("false")) {
+				throw new OutdatedAccessTokenException(
+						"The access token used in the request is outdated, please ask the user to log in again.");
+			} else if (response.get("status").equals("success")) {
+				JSONObject obj = response.getJSONObject("data").getJSONObject(
+						"object");
+				UnverifiedActivityEntry complete = GSONConverter
+						.getGSONObjectGivenJsonObject(obj,
+								UnverifiedActivityEntry.class);
+				return complete;
+			} else {
+				throw new WebServerException(
+						"An error has occurred while communicating"
+								+ "with the web server.");
+			}
+
+		} catch (JSONException e) {
+			throw new WebServerException(
+					"An error has occurred while communicating"
+							+ "with the web server.");
+		}
+	}
+
+	@Override
+	public UnverifiedRestaurantEntry get(UnverifiedRestaurantEntry entry)
+			throws EntryNotFoundException, WebServerException,
+			OutdatedAccessTokenException {
+		String command = "verification/getRestaurant";
+		try {
+			JSONObject data = new JSONObject();
+			data.put("accessToken", accessDao.getAccessToken().getAccessToken());
+			data.put("username", accessDao.getAccessToken().getUserName());
+			data.put("object", GSONConverter.convertObjectToJSON(entry));
+			String jsonToSend = jsonRequestCreator
+					.createJSONRequest(data, null);
+			System.out.println("" + "JSON Request Sent: " + jsonToSend);
+			JSONObject response = performHttpRequest_JSON(command, jsonToSend);
+			System.out.println("JSON Response Received: " + response);
+
+			if (response.getJSONObject("data").has("isValidAccessToken")
+					&& response.getJSONObject("data")
+							.getString("isValidAccessToken").equals("false")) {
+				throw new OutdatedAccessTokenException(
+						"The access token used in the request is outdated, please ask the user to log in again.");
+			} else if (response.get("status").equals("success")) {
+				JSONObject obj = response.getJSONObject("data").getJSONObject(
+						"object");
+				UnverifiedRestaurantEntry complete = GSONConverter
+						.getGSONObjectGivenJsonObject(obj,
+								UnverifiedRestaurantEntry.class);
+				return complete;
+			} else {
+				throw new WebServerException(
+						"An error has occurred while communicating"
+								+ "with the web server.");
+			}
+
+		} catch (JSONException e) {
+			throw new WebServerException(
+					"An error has occurred while communicating"
+							+ "with the web server.");
+		}
+	}
+
+	@Override
+	public UnverifiedSportsEstablishmentEntry get(
+			UnverifiedSportsEstablishmentEntry entry)
+			throws EntryNotFoundException, WebServerException,
+			OutdatedAccessTokenException {
+		String command = "verification/getSportsEstablishment";
+		try {
+			JSONObject data = new JSONObject();
+			data.put("accessToken", accessDao.getAccessToken().getAccessToken());
+			data.put("username", accessDao.getAccessToken().getUserName());
+			data.put("object", GSONConverter.convertObjectToJSON(entry));
+			String jsonToSend = jsonRequestCreator
+					.createJSONRequest(data, null);
+			System.out.println("" + "JSON Request Sent: " + jsonToSend);
+			JSONObject response = performHttpRequest_JSON(command, jsonToSend);
+			System.out.println("JSON Response Received: " + response);
+
+			if (response.getJSONObject("data").has("isValidAccessToken")
+					&& response.getJSONObject("data")
+							.getString("isValidAccessToken").equals("false")) {
+				throw new OutdatedAccessTokenException(
+						"The access token used in the request is outdated, please ask the user to log in again.");
+			} else if (response.get("status").equals("success")) {
+				JSONObject obj = response.getJSONObject("data").getJSONObject(
+						"object");
+				UnverifiedSportsEstablishmentEntry complete = GSONConverter
+						.getGSONObjectGivenJsonObject(obj,
+								UnverifiedSportsEstablishmentEntry.class);
+				return complete;
+			} else {
+				throw new WebServerException(
+						"An error has occurred while communicating"
+								+ "with the web server.");
+			}
+
+		} catch (JSONException e) {
+			throw new WebServerException(
+					"An error has occurred while communicating"
+							+ "with the web server.");
+		}
+	}
 }

@@ -42,4 +42,21 @@ public interface WebVerificationDao {
 	public void delete(UnverifiedSportsEstablishmentEntry entry)
 			throws EntryNotFoundException, WebServerException,
 			OutdatedAccessTokenException;
+
+	public UnverifiedFoodEntry get(UnverifiedFoodEntry entry)
+			throws EntryNotFoundException, WebServerException,
+			OutdatedAccessTokenException;
+
+	public UnverifiedActivityEntry get(UnverifiedActivityEntry entry)
+			throws EntryNotFoundException, WebServerException,
+			OutdatedAccessTokenException;
+
+	public UnverifiedRestaurantEntry get(UnverifiedRestaurantEntry entry)
+			throws EntryNotFoundException, WebServerException,
+			OutdatedAccessTokenException;
+
+	public UnverifiedSportsEstablishmentEntry get(
+			UnverifiedSportsEstablishmentEntry entry)
+			throws EntryNotFoundException, WebServerException,
+			OutdatedAccessTokenException;
 }

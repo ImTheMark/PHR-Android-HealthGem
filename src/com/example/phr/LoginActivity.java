@@ -18,9 +18,6 @@ import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.dao.MobileSettingsDao;
-import com.example.phr.mobile.dao.MobileUserDao;
-import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
-import com.example.phr.mobile.daoimpl.MobileUserDaoImpl;
 import com.example.phr.service.ActivityTrackerService;
 import com.example.phr.service.BloodPressureTrackerService;
 import com.example.phr.service.BloodSugarTrackerService;
@@ -73,7 +70,7 @@ public class LoginActivity extends Activity {
 
 		loginLayout = (LinearLayout) findViewById(R.id.loginLayout);
 		loadingLayout = (LinearLayout) findViewById(R.id.loadingLayout);
-		
+
 		mBtnLogin = (ImageButton) findViewById(R.id.btnLogin);
 		mTextValid = (TextView) findViewById(R.id.checkLogin);
 
