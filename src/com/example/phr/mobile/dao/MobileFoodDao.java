@@ -15,6 +15,6 @@ public interface MobileFoodDao {
 
 	public Food get(int id) throws DataAccessException;
 
-	public List<Food> getFoodListGivenRestaurantID(int id) throws DataAccessException;
+	public List<Food> getFoodListGivenRestaurantID(int id);
 
 }

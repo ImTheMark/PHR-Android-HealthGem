@@ -597,8 +597,8 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 
 	@Override
 	public List<Food> getFoodListGivenRestaurantID(int ID) {
-		// TODO Auto-generated method stub
-		return null;
+		MobileFoodDao foodDao = new MobileFoodDaoImpl();
+		return foodDao.getFoodListGivenRestaurantID(ID);
 	}
 
 	@Override

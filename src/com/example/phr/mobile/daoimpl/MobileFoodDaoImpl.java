@@ -97,7 +97,7 @@ public class MobileFoodDaoImpl implements MobileFoodDao {
 	}
 
 	@Override
-	public List<Food> getFoodListGivenRestaurantID(int id) throws DataAccessException {
+	public List<Food> getFoodListGivenRestaurantID(int id) {
 		List<Food> list = new ArrayList<Food>();
 		String selectQuery = "SELECT  * FROM " +
 				DatabaseHandler.TABLE_FOODLIST
