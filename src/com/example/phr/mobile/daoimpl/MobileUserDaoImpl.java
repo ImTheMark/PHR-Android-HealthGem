@@ -14,6 +14,7 @@ import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.local_db.SPreference;
 import com.example.phr.mobile.dao.MobileSettingsDao;
 import com.example.phr.mobile.dao.MobileUserDao;
+import com.example.phr.mobile.dao.MobileVerificationDao;
 import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.mobile.models.PHRImageType;
 import com.example.phr.mobile.models.User;
@@ -241,6 +242,8 @@ public class MobileUserDaoImpl implements MobileUserDao {
 	public void logoutUser() {
 		DatabaseHandler.getDBHandler().deleteAccessToken();
 		DatabaseHandler.getDBHandler().clearDatabase();
+		MobileVerificationDao mobileVerificationDao = new MobileVerificationDaoImpl();
+		mobileVerificationDao.emptyVerificationDatabase();
 	}
 
 	@Override
