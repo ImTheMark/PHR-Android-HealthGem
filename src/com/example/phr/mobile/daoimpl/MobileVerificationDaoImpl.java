@@ -20,6 +20,8 @@ import com.example.phr.exceptions.DataAccessException;
 import com.example.phr.exceptions.ImageHandlerException;
 import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.local_db.SPreference;
+import com.example.phr.mobile.dao.MobileActivityDao;
+import com.example.phr.mobile.dao.MobileFoodDao;
 import com.example.phr.mobile.dao.MobileVerificationDao;
 import com.example.phr.mobile.models.Activity;
 import com.example.phr.mobile.models.Food;
@@ -36,8 +38,11 @@ import com.example.phr.tools.DateTimeParser;
 import com.example.phr.tools.ImageHandler;
 
 public class MobileVerificationDaoImpl implements MobileVerificationDao {
+	
+	MobileFoodDao mobileFoodDao = new MobileFoodDaoImpl();
+	MobileActivityDao mobileActivityDao = new MobileActivityDaoImpl();
 
-	@Override
+	/*@Override
 	public void addFoodListToTempDB(List<Food> foodList) {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
@@ -128,7 +133,7 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 
 		db.close();
 		return list;
-	}
+	}*/
 
 	@Override
 	public void storeEncodedImage(String encodedImage) {
@@ -163,6 +168,10 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 		values.put(DatabaseHandler.UNVERIFIED_FOOD_FOODID, entry.getFood().getEntryID());
 		values.put(DatabaseHandler.UNVERIFIED_FOOD_SERVINGCOUNT, entry.getServingCount());
 		values.put(DatabaseHandler.UNVERIFIED_FOOD_STATUS, entry.getStatus());
+
+		if (!mobileFoodDao.exists(entry.getFood())) {
+			mobileFoodDao.add(entry.getFood());
+		}
 
 		try {
 			if (entry.getImage() != null) {
@@ -201,6 +210,12 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 		values.put(DatabaseHandler.UNVERIFIED_RESTO_EXTRACTEDWORD, entry.getExtractedWord());
 		values.put(DatabaseHandler.UNVERIFIED_RESTO_RESTOID, entry.getRestaurant().getEntryID());
 		values.put(DatabaseHandler.UNVERIFIED_RESTO_STATUS, entry.getStatus());
+		
+		for(Food food:entry.getFoods()){
+			if (!mobileFoodDao.exists(food)) {
+				mobileFoodDao.add(food);
+			}
+		}
 
 		try {
 			if (entry.getImage() != null) {
@@ -242,6 +257,8 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 		values.put(DatabaseHandler.UNVERIFIED_ACTIVITY_CALORIEBURNED, entry.getCalorieBurnedPerHour());
 		values.put(DatabaseHandler.UNVERIFIED_ACTIVITY_STATUS, entry.getStatus());
 
+		mobileActivityDao.addReturnsEntryId(entry.getActivity());
+
 		try {
 			if (entry.getImage() != null) {
 				String encoded = entry.getImage().getEncodedImage();
@@ -280,6 +297,10 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 		values.put(DatabaseHandler.UNVERIFIED_SPORTEST_EXTRACTEDWORD, entry.getExtractedWord());
 		values.put(DatabaseHandler.UNVERIFIED_SPORTEST_GYMID, entry.getSportEstablishment().getEntryID());
 		values.put(DatabaseHandler.UNVERIFIED_SPORTEST_STATUS, entry.getStatus());
+		
+		for(Activity activity : entry.getActivities()){
+			mobileActivityDao.addReturnsEntryId(activity);
+		}
 
 		try {
 			if (entry.getImage() != null) {
@@ -572,6 +593,18 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 		db.delete(DatabaseHandler.TABLE_UNVERIFIED_SPORTEST, null, null);
 		
 		db.close();
+	}
+
+	@Override
+	public List<Food> getFoodListGivenRestaurantID(int ID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Activity> getActivityListGivenEstablishmentID(int ID) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

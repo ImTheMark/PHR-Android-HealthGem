@@ -166,26 +166,6 @@ public class VerificationServiceImpl implements VerificationService {
 	}
 
 	@Override
-	public void addFoodListToTemporaryDatabase(List<Food> foodList) {
-		mobileVerificationDao.addFoodListToTempDB(foodList);
-	}
-
-	@Override
-	public void addActivityListToTemporaryDatabase(List<Activity> activityList) {
-		mobileVerificationDao.addActivityListToTempDB(activityList);
-	}
-
-	@Override
-	public List<Food> getFoodList() {
-		return mobileVerificationDao.getFoodListFromTempDB();
-	}
-
-	@Override
-	public List<Activity> getActivityList() {
-		return mobileVerificationDao.getActivityListFromTempDB();
-	}
-
-	@Override
 	public void storeEncodedImage(String encodedImage) {
 		mobileVerificationDao.storeEncodedImage(encodedImage);
 	}
@@ -241,6 +221,16 @@ public class VerificationServiceImpl implements VerificationService {
 			OutdatedAccessTokenException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Food> getFoodListGivenRestaurantID(int ID) {
+		return mobileVerificationDao.getFoodListGivenRestaurantID(ID);
+	}
+
+	@Override
+	public List<Activity> getActivityListGivenEstablishmentID(int ID) {
+		return mobileVerificationDao.getActivityListGivenEstablishmentID(ID);
 	}
 
 }

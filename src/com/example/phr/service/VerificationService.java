@@ -15,15 +15,10 @@ import com.example.phr.mobile.models.UnverifiedSportsEstablishmentEntry;
 
 public interface VerificationService {
 	
-	public void addFoodListToTemporaryDatabase(List<Food> foodList);
+
+	public List<Food> getFoodListGivenRestaurantID(int id);
 	
-	public void addActivityListToTemporaryDatabase(List<Activity> activityList);
-	
-	public List<Food> getFoodList();
-	
-	public List<Activity> getActivityList();
-	
-	
+	public List<Activity> getActivityListGivenEstablishmentID(int ID);
 	
 	public void storeEncodedImage(String encodedImage);
 	

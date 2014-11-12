@@ -56,7 +56,7 @@ public class VerificationListPickerActivity extends android.app.Activity {
 		if (extras != null && in.hasExtra("restaurant")) {
 			restaurantEntry = (UnverifiedRestaurantEntry) in.getExtras()
 					.getSerializable("restaurant");
-			foodList = verificationService.getFoodList();
+			foodList = verificationService.getFoodListGivenRestaurantID(restaurantEntry.getRestaurant().getEntryID());
 			Log.e("verification", foodList.size() + "");
 
 			SingleFoodAdapter adapter = new SingleFoodAdapter(
@@ -89,7 +89,7 @@ public class VerificationListPickerActivity extends android.app.Activity {
 			sportsEntry = (UnverifiedSportsEstablishmentEntry) in.getExtras()
 					.getSerializable("sportestablishment");
 
-			activityList = verificationService.getActivityList();
+			activityList = verificationService.getActivityListGivenEstablishmentID(sportsEntry.getSportEstablishment().getEntryID());
 			List<String> actListNameOnly = new ArrayList<String>();
 
 			for (Activity act : activityList)

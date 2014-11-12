@@ -51,15 +51,21 @@ public interface MobileVerificationDao {
 	
 	public int getUnverifiedPostsCount();
 	
+
+	
+	public List<Food> getFoodListGivenRestaurantID(int ID);
+	
+	public List<Activity> getActivityListGivenEstablishmentID(int ID);
 	
 	
-	public void addFoodListToTempDB(List<Food> foodList);
+	
+/*	public void addFoodListToTempDB(List<Food> foodList);
 	
 	public void addActivityListToTempDB(List<Activity> activityList);
 	
 	public List<Food> getFoodListFromTempDB();
 	
-	public List<Activity> getActivityListFromTempDB();
+	public List<Activity> getActivityListFromTempDB();*/
 	
 	
 	
