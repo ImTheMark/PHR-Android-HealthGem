@@ -99,8 +99,8 @@
         android:layout_alignBottom="@id/loginLayout"
         android:layout_alignLeft="@id/loginLayout"
         android:layout_alignTop="@id/loginLayout"
-        android:gravity="center_vertical|center_horizontal"
         android:visibility="gone"
+        android:gravity="center_vertical|center_horizontal"
         android:orientation="vertical" >
         
 	    <ProgressBar
@@ -108,6 +108,13 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:indeterminate="true" />
+
+	    <TextView
+	        android:id="@+id/txtLoadingInformation"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Retrieving your tracker posts from the server"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />
 	    
     </LinearLayout>
     

@@ -48,6 +48,7 @@ public class LoginActivity extends Activity {
 
 	private LinearLayout loginLayout;
 	private LinearLayout loadingLayout;
+	private TextView loadingText;
 
 	private String username;
 	private String password;
@@ -70,6 +71,7 @@ public class LoginActivity extends Activity {
 
 		loginLayout = (LinearLayout) findViewById(R.id.loginLayout);
 		loadingLayout = (LinearLayout) findViewById(R.id.loadingLayout);
+		loadingText = (TextView) findViewById(R.id.txtLoadingInformation);
 
 		mBtnLogin = (ImageButton) findViewById(R.id.btnLogin);
 		mTextValid = (TextView) findViewById(R.id.checkLogin);
@@ -142,7 +144,7 @@ public class LoginActivity extends Activity {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			Log.e("LOGIN", "pre-exe");
-			loginLayout.setVisibility(View.GONE);
+			loginLayout.setVisibility(View.INVISIBLE);
 			loadingLayout.setVisibility(View.VISIBLE);
 		}
 
@@ -167,7 +169,9 @@ public class LoginActivity extends Activity {
 				foodService.initializeMobileDatabase();
 				noteService.initializeMobileDatabase();
 				wService.initializeMobileDatabase();
+				loadingText.setText("Retrieving Health-Related Posts from Facebook");
 				vService.updateListOfUnverifiedPosts();
+				loadingText.setText("Updating your mobile information");
 				vService.getAllFromWebDB();
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block
