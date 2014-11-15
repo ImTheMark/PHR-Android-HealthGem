@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.phr.application.HealthGem;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
@@ -169,9 +170,19 @@ public class LoginActivity extends Activity {
 				foodService.initializeMobileDatabase();
 				noteService.initializeMobileDatabase();
 				wService.initializeMobileDatabase();
-				loadingText.setText("Retrieving Health-Related Posts from Facebook");
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						loadingText.setText("Retrieving Health-Related Posts from Facebook");
+					}
+				});
 				vService.updateListOfUnverifiedPosts();
-				loadingText.setText("Updating your mobile information");
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						loadingText.setText("Updating your mobile information");
+					}
+				});
 				vService.getAllFromWebDB();
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block

@@ -106,14 +106,15 @@ public class VerificationActivityTest extends Activity {
 			list = vService.getAllFromMobileDB();
 
 			if (list != null && !list.isEmpty()) {
-				unverifiedList = list;
+				unverifiedList.clear();
+				unverifiedList.addAll(list);
 				Log.e("VERIFICATION size after post execute",
 						unverifiedList.size() + "");
 				adapter.notifyDataSetChanged();
 
-				((UnverifiedStatusAdapter) listView.getAdapter())
+				/*((UnverifiedStatusAdapter) listView.getAdapter())
 						.notifyDataSetChanged();
-
+*/
 				// Intent intent = getIntent();
 				// finish();
 				// startActivity(intent);
