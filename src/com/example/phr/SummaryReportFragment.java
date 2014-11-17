@@ -268,7 +268,9 @@ public class SummaryReportFragment extends Fragment {
 				txtWeight.setText(df.format(weight.getWeightInKilograms()));
 				txtWeightUnit.setText("kgs");
 			}
-			double heightInMeter = user.getHeightInCM() / 100;
+
+			double heightInMeter = user.getHeightInMeter();
+
 			double bmi = weight.getWeightInKilograms()
 					/ (heightInMeter * heightInMeter);
 

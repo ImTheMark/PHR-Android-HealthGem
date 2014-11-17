@@ -240,6 +240,11 @@ public class User {
 			return height;
 	}
 
+	public double getHeightInMeter() {
+		Double m = height / 0.39370 / 100;
+		return m;
+	}
+
 	public double getWeightInKGS() {
 		MobileSettingsDao settings = new MobileSettingsDaoImpl();
 		if (!settings.isWeightSettingInPounds()) {
