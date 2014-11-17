@@ -113,8 +113,9 @@
 	        android:id="@+id/txtLoadingInformation"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
 	        android:text="Retrieving your tracker posts from the server"
-	        android:textAppearance="?android:attr/textAppearanceLarge" />
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
 	    
     </LinearLayout>
     
