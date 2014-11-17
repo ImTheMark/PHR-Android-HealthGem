@@ -1420,6 +1420,7 @@ public class NewStatusActivity extends android.app.Activity {
 
 			Intent intent = new Intent(getApplicationContext(),
 					WeightTrackerActivity.class);
+			intent.putExtra("mode", "add");
 			startActivity(intent);
 			finish();
 

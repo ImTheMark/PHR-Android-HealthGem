@@ -427,9 +427,9 @@ containing a value of this type.
         public static final int actionImage=0x7f0401a6;
         public static final int actionList=0x7f040006;
         public static final int actionName=0x7f0401a8;
-        public static final int action_help=0x7f0401f6;
-        public static final int action_notifications=0x7f0401f7;
-        public static final int action_settings=0x7f0401f8;
+        public static final int action_help=0x7f0401f7;
+        public static final int action_notifications=0x7f0401f8;
+        public static final int action_settings=0x7f0401f9;
         public static final int actionbar_notifcation_textview=0x7f040003;
         public static final int activitiesPlaceholder=0x7f0401ce;
         public static final int activity=0x7f04006d;
@@ -526,7 +526,7 @@ containing a value of this type.
         public static final int confirmPasswordReg=0x7f040090;
         public static final int container=0x7f040052;
         public static final int dateholder=0x7f040182;
-        public static final int decrement=0x7f0401f4;
+        public static final int decrement=0x7f0401f5;
         public static final int diaPlaceholder=0x7f040188;
         public static final int dialogList=0x7f0401b6;
         public static final int diastolic=0x7f040065;
@@ -588,7 +588,7 @@ containing a value of this type.
         public static final int imgHomeWeight=0x7f040159;
         public static final int imgSplash=0x7f0400ef;
         public static final int img_post=0x7f040174;
-        public static final int increment=0x7f0401f2;
+        public static final int increment=0x7f0401f3;
         public static final int journalTabsPlaceholder=0x7f040173;
         public static final int large=0x7f040002;
         public static final int lblAct=0x7f0401a3;
@@ -619,21 +619,21 @@ containing a value of this type.
         public static final int listview_calorie=0x7f04003b;
         public static final int loadingLayout=0x7f040059;
         public static final int loginLayout=0x7f040053;
-        public static final int menu_add_activity=0x7f0401fa;
-        public static final int menu_delete=0x7f0401fd;
-        public static final int menu_edit=0x7f0401fc;
-        public static final int menu_item_add_new_activity=0x7f0401fb;
-        public static final int menu_item_next=0x7f0401ff;
-        public static final int menu_item_save=0x7f040200;
-        public static final int menu_item_status_edit=0x7f0401fe;
-        public static final int menu_item_status_post=0x7f0401f9;
-        public static final int menu_item_status_verify=0x7f040201;
+        public static final int menu_add_activity=0x7f0401fb;
+        public static final int menu_delete=0x7f0401fe;
+        public static final int menu_edit=0x7f0401fd;
+        public static final int menu_item_add_new_activity=0x7f0401fc;
+        public static final int menu_item_next=0x7f040200;
+        public static final int menu_item_save=0x7f040201;
+        public static final int menu_item_status_edit=0x7f0401ff;
+        public static final int menu_item_status_post=0x7f0401fa;
+        public static final int menu_item_status_verify=0x7f040202;
         public static final int normal=0x7f040001;
         public static final int noteBanner=0x7f04008b;
         public static final int pager=0x7f04005b;
         public static final int picker_subtitle=0x7f040107;
         public static final int piegraph=0x7f04015d;
-        public static final int pref_num_picker=0x7f0401f5;
+        public static final int pref_num_picker=0x7f0401f6;
         public static final int profAllergies=0x7f040126;
         public static final int profBday=0x7f040117;
         public static final int profBlank=0x7f040120;
@@ -732,7 +732,7 @@ containing a value of this type.
         public static final int textViewbloodpressureStatus=0x7f040025;
         public static final int thirdRowHolder=0x7f040138;
         public static final int time=0x7f0401c1;
-        public static final int timepicker_input=0x7f0401f3;
+        public static final int timepicker_input=0x7f0401f4;
         public static final int titleHolder=0x7f04015e;
         public static final int togglebuttonBloodPressureSharing=0x7f040032;
         public static final int trackerAveragePlaceholder=0x7f0401e1;
@@ -830,6 +830,7 @@ containing a value of this type.
         public static final int txtUsername=0x7f040054;
         public static final int txtUsernameReg=0x7f04008d;
         public static final int txtWeight=0x7f0401c9;
+        public static final int txtWeightFeedback=0x7f0401f1;
         public static final int txtWeightUnit=0x7f04006b;
         public static final int txtfoodCal=0x7f04007d;
         public static final int txtfoodCarbs=0x7f040080;
@@ -859,7 +860,7 @@ containing a value of this type.
         public static final int weightPost=0x7f0400f4;
         public static final int weightQuantityDivider=0x7f04017d;
         public static final int weightRecordHolder=0x7f040156;
-        public static final int weightUnitSpinner=0x7f0401f1;
+        public static final int weightUnitSpinner=0x7f0401f2;
         public static final int weight_template=0x7f040069;
         public static final int what=0x7f0400c9;
     }
@@ -939,9 +940,10 @@ containing a value of this type.
         public static final int item_status=0x7f030048;
         public static final int item_status_grouped=0x7f030049;
         public static final int item_verification=0x7f03004a;
-        public static final int item_weight_input=0x7f03004b;
-        public static final int number_picker=0x7f03004c;
-        public static final int number_picker_pref=0x7f03004d;
+        public static final int item_weight_feedback=0x7f03004b;
+        public static final int item_weight_input=0x7f03004c;
+        public static final int number_picker=0x7f03004d;
+        public static final int number_picker_pref=0x7f03004e;
     }
     public static final class menu {
         public static final int activitycheckup_menu_tracker_help=0x7f0a0000;

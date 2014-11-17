@@ -153,49 +153,49 @@ public class WeightTrackerServiceImpl implements WeightTrackerService {
 
 			if (latest.equals(WeightType.OVERWEIGHT)
 					&& second.equals(WeightType.OVERWEIGHT))
-				return "You have been overweight for a period of time. It is recommended for you to eat healthier and exercise.";
+				return "	You have been overweight for a period of time. It is recommended for you to eat healthier and exercise.";
 			else if (latest.equals(WeightType.UNDERWEIGHT)
 					&& second.equals(WeightType.UNDERWEIGHT))
-				return "You have been underweight for a period of time. It is recommended for you to consult your doctor.";
+				return "	You have been underweight for a period of time. It is recommended for you to consult your doctor.";
 			else if (latest.equals(WeightType.OBESE)
 					&& second.equals(WeightType.OBESE))
-				return "You have been obese for a period of time.  It is recommended for you to eat healthier,exercise and consult a nutritionist.";
+				return "	You have been obese for a period of time.  It is recommended for you to eat healthier,exercise and consult a nutritionist.";
 			else if (latest.equals(WeightType.UNDERWEIGHT)
 					&& second.equals(WeightType.NORMAL))
-				return "You seem to drop from the recommended weight. It is recommended for you to eat more nutritious food and have exercise.";
+				return "	You seem to drop from the recommended weight. It is recommended for you to eat more nutritious food and have exercise.";
 			else if (latest.equals(WeightType.OVERWEIGHT)
 					&& second.equals(WeightType.NORMAL))
-				return "You suddenly gained a few pounds. Take on a light diet to get you back to shape";
+				return "	You suddenly gained a few pounds. Take on a light diet to get you back to shape";
 			else if (latest.equals(WeightType.OBESE)
 					&& second.equals(WeightType.NORMAL))
-				return "You drastically gained a surprising amount of weight. Please fix your diet.";
+				return "	You drastically gained a surprising amount of weight. Please fix your diet.";
 			else if (latest.equals(WeightType.OBESE)
 					&& second.equals(WeightType.OVERWEIGHT))
-				return "You suddenly gained a few pounds. It is recommended to to consult your nutritionist.";
+				return "	You suddenly gained a few pounds. It is recommended to to consult your nutritionist.";
 			else if (latest.equals(WeightType.NORMAL)
 					&& second.equals(WeightType.OVERWEIGHT))
-				return "Hurray for a healthy lifestyle!";
+				return "	Hurray for a healthy lifestyle!";
 			else if (latest.equals(WeightType.UNDERWEIGHT)
 					&& second.equals(WeightType.OVERWEIGHT))
-				return "Your weight has dropped significantly. Kindly consult your doctor.";
+				return "	Your weight has dropped significantly. Kindly consult your doctor.";
 			else if (latest.equals(WeightType.OVERWEIGHT)
 					&& second.equals(WeightType.OBESE))
-				return "Great job for losing some weight continue to eat healthy and exercise.";
+				return "	Great job for losing some weight continue to eat healthy and exercise.";
 			else if (latest.equals(WeightType.NORMAL)
 					&& second.equals(WeightType.OBESE))
-				return "Great job for losing some weight and maintain your weight.";
+				return "	Great job for losing some weight and maintain your weight.";
 			else if (latest.equals(WeightType.UNDERWEIGHT)
 					&& second.equals(WeightType.OBESE))
-				return "Your weight has dropped significantly. Kindly consult your doctor.";
+				return "	Your weight has dropped significantly. Kindly consult your doctor.";
 			else if (latest.equals(WeightType.NORMAL)
 					&& second.equals(WeightType.UNDERWEIGHT))
-				return "Good job! Continue to eat healthy.";
+				return "	Good job! Continue to eat healthy.";
 			else if (latest.equals(WeightType.OVERWEIGHT)
 					&& second.equals(WeightType.UNDERWEIGHT))
-				return "Your weight has increased significantly. Kindly consult your doctor.";
+				return "	Your weight has increased significantly. Kindly consult your doctor.";
 			else if (latest.equals(WeightType.OBESE)
 					&& second.equals(WeightType.UNDERWEIGHT))
-				return " Your weight has increased significantly. Kindly consult your doctor.";
+				return "	Your weight has increased significantly. Kindly consult your doctor.";
 			else
 				return "";
 		} catch (DataAccessException e) {

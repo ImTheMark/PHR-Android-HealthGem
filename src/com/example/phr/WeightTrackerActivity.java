@@ -28,15 +28,21 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.phr.adapter.WeightAdapter;
+import com.example.phr.application.HealthGem;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.DataAccessException;
+import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.dao.MobileSettingsDao;
 import com.example.phr.mobile.dao.MobileWeightTrackerDao;
 import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
 import com.example.phr.mobile.daoimpl.MobileWeightTrackerDaoImpl;
 import com.example.phr.mobile.models.Weight;
+import com.example.phr.service.WeightTrackerService;
+import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
 
 public class WeightTrackerActivity extends Activity {
@@ -61,6 +67,7 @@ public class WeightTrackerActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		MobileWeightTrackerDao daoImpl = new MobileWeightTrackerDaoImpl();
+		WeightTrackerService weightService = new WeightTrackerServiceImpl();
 		setting = new MobileSettingsDaoImpl();
 		List<List<Weight>> weightList = new ArrayList<List<Weight>>();
 		;
@@ -73,6 +80,22 @@ public class WeightTrackerActivity extends Activity {
 
 		weightAdapter = new WeightAdapter(getApplicationContext(), weightList);
 		mWeightList.setAdapter(weightAdapter);
+
+		Intent in = getIntent();
+		Bundle extras = getIntent().getExtras();
+		if (extras != null && extras.getString("mode").equals("add")) {
+			String feedback = null;
+			try {
+				feedback = weightService.getFeedback();
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				Toast.makeText(HealthGem.getContext(),
+						"No Internet Connection !", Toast.LENGTH_LONG).show();
+				e.printStackTrace();
+			}
+
+			displayFeedback(feedback);
+		}
 
 		mBtnAddWeight = (ImageView) findViewById(R.id.btnAddWeight);
 		mBtnAddWeight.setOnClickListener(new OnClickListener() {
@@ -231,6 +254,18 @@ public class WeightTrackerActivity extends Activity {
 		dialog.setContentView(R.layout.item_help);
 		ImageView image = (ImageView) dialog.findViewById(R.id.help_imageview);
 		image.setBackgroundResource(R.drawable.weighttracker_help);
+		dialog.getWindow().setBackgroundDrawable(null);
+		dialog.show();
+	}
+
+	private void displayFeedback(String feedback) {
+
+		Dialog dialog = new Dialog(this);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setContentView(R.layout.item_weight_feedback);
+		TextView txtFeedback = (TextView) dialog
+				.findViewById(R.id.txtWeightFeedback);
+		txtFeedback.setText(feedback);
 		dialog.getWindow().setBackgroundDrawable(null);
 		dialog.show();
 	}

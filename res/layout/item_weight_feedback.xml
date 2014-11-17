@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="#FAE6B6"
+    android:padding="10dp">
+
+     <TextView
+       android:id="@+id/textViewAboutMePersonalInformationTitle"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:textAppearance="?android:attr/textAppearanceMedium" 
+       android:text="Feedback" 
+       android:textColor="#CC6C06"
+       android:gravity="center"/>
+
+    <View
+        android:id="@+id/AboutMePersonalInformationDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/textViewAboutMePersonalInformationTitle"
+        android:background="#000000" />
+    
+    <TextView
+        android:id="@+id/txtWeightFeedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Medium Text"
+        android:padding="10dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</LinearLayout>
