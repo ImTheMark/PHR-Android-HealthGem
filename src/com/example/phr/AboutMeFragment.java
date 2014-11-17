@@ -128,9 +128,9 @@ public class AboutMeFragment extends Fragment {
 		emergencyPerson.setText(user.getEmergencyPerson());
 
 		if (user.getPhoto() != null)
-			image.setImageBitmap(ImageHandler.loadImage(HealthGem
-					.getSharedPreferences().loadPreferences(
-							SPreference.PROFILE_PICTURE)));
+			image.setImageBitmap(ImageHandler.loadImage(user.getPhoto().getFileName()));
+		else
+			image.setVisibility(View.GONE);
 		BloodPressureTrackerService bpService = new BloodPressureTrackerServiceImpl();
 		BloodSugarTrackerService bsService = new BloodSugarTrackerServiceImpl();
 		CheckUpTrackerService checkupService = new CheckUpTrackerServiceImpl();

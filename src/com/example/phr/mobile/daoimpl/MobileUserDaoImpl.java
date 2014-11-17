@@ -216,7 +216,8 @@ public class MobileUserDaoImpl implements MobileUserDao {
 		user.setHeight(Double.parseDouble(HealthGem.getSharedPreferences()
 				.loadPreferences(SPreference.HEIGHTINCHES)));
 
-		if (!HealthGem.getSharedPreferences()
+		if (HealthGem.getSharedPreferences().getPreferences().contains(SPreference.PROFILE_PICTURE) &&
+				!HealthGem.getSharedPreferences()
 				.loadPreferences(SPreference.PROFILE_PICTURE).equals("")) {
 			Log.e("GETUSER mobile", HealthGem.getSharedPreferences()
 					.loadPreferences(SPreference.PROFILE_PICTURE));
@@ -226,7 +227,9 @@ public class MobileUserDaoImpl implements MobileUserDao {
 									.loadPreferences(
 											SPreference.PROFILE_PICTURE))),
 					PHRImageType.IMAGE);
-
+			img.setFileName(HealthGem.getSharedPreferences()
+									.loadPreferences(
+											SPreference.PROFILE_PICTURE));
 			user.setPhoto(img);
 		} else
 			user.setPhoto(null);
