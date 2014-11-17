@@ -294,4 +294,46 @@ public class MobileWeightTrackerDaoImpl implements MobileWeightTrackerDao {
 		db.close();
 		return null;
 	}
+
+	@Override
+	public List<Weight> getLastTwoEntries() throws DataAccessException {
+		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_WEIGHT
+				+ " ORDER BY " + DatabaseHandler.WEIGHT_DATEADDED
+				+ " DESC LIMIT 2";
+		List<Weight> list = new ArrayList<Weight>();
+
+		SQLiteDatabase db = DatabaseHandler.getDBHandler()
+				.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+				Timestamp timestamp;
+				try {
+					timestamp = DateTimeParser
+							.getTimestamp(cursor.getString(1));
+				} catch (ParseException e) {
+					throw new DataAccessException(
+							"Cannot complete operation due to parse failure", e);
+				}
+				PHRImage image = new PHRImage();
+
+				if (cursor.getString(4) == null)
+					image = null;
+				else {
+					image.setFileName(cursor.getString(4));
+					Bitmap bitmap = ImageHandler.loadImage(image.getFileName());
+					String encoded = ImageHandler.encodeImageToBase64(bitmap);
+					image.setEncodedImage(encoded);
+				}
+
+				Weight weight = new Weight(cursor.getInt(0),
+						cursor.getString(5), timestamp, cursor.getString(3),
+						image, cursor.getDouble(2));
+				list.add(weight);
+			} while (cursor.moveToNext());
+		}
+		db.close();
+		return list;
+	}
 }

@@ -667,7 +667,10 @@ public class NewStatusActivity extends android.app.Activity {
 		txtFoodCarbs.setText(df.format(carbs));
 		txtFoodFat.setText(df.format(fats));
 		txtFood.setText(food.getName());
-		txtFoodQuantityUnit.setText(food.getServing());
+		if (food.getServing() == null || food.getServing().equals(""))
+			txtFoodQuantityUnit.setText("1 serving");
+		else
+			txtFoodQuantityUnit.setText(food.getServing());
 
 		txtFoodQuantity.setText(String.valueOf(serving));
 		if (image != null) {

@@ -108,6 +108,9 @@ public class SummaryReportFragment extends Fragment {
 	Timestamp timestamp;
 	MobileSettingsDao setting;
 
+	UserService userService;
+	User user;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -116,6 +119,9 @@ public class SummaryReportFragment extends Fragment {
 				container, false);
 		setting = new MobileSettingsDaoImpl();
 		DecimalFormat df = new DecimalFormat("#.00");
+
+		userService = new UserServiceImpl();
+		user = userService.getUser();
 
 		// blood sugar
 		txtBsDate = (TextView) rootView.findViewById(R.id.txtHomeBsDate);
@@ -262,7 +268,7 @@ public class SummaryReportFragment extends Fragment {
 				txtWeight.setText(df.format(weight.getWeightInKilograms()));
 				txtWeightUnit.setText("kgs");
 			}
-			double heightInMeter = 1.75;
+			double heightInMeter = user.getHeightInCM() / 100;
 			double bmi = weight.getWeightInKilograms()
 					/ (heightInMeter * heightInMeter);
 
@@ -365,9 +371,6 @@ public class SummaryReportFragment extends Fragment {
 		// inches ) - ( 4.7 x age in years )
 		// Men: BMR = 66 + ( 6.23 x weight in pounds ) + ( 12.7 x height in
 		// inches ) - ( 6.8 x age in year )
-
-		UserService userService = new UserServiceImpl();
-		User user = userService.getUser();
 
 		Timestamp bdaytimestamp = user.getDateOfBirth();
 

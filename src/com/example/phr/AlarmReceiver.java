@@ -20,7 +20,9 @@ import android.util.Log;
 import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.dao.MobileSettingsDao;
+import com.example.phr.mobile.dao.MobileUserDao;
 import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
+import com.example.phr.mobile.daoimpl.MobileUserDaoImpl;
 import com.example.phr.mobile.models.ActivityTrackerEntry;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.mobile.models.BloodSugar;
@@ -30,12 +32,14 @@ import com.example.phr.mobile.models.Weight;
 import com.example.phr.service.ActivityTrackerService;
 import com.example.phr.service.CheckUpTrackerService;
 import com.example.phr.service.FoodTrackerService;
+import com.example.phr.service.VerificationService;
 import com.example.phr.service.WeightTrackerService;
 import com.example.phr.serviceimpl.ActivityTrackerServiceImpl;
 import com.example.phr.serviceimpl.BloodPressureTrackerServiceImpl;
 import com.example.phr.serviceimpl.BloodSugarTrackerServiceImpl;
 import com.example.phr.serviceimpl.CheckUpTrackerServiceImpl;
 import com.example.phr.serviceimpl.FoodTrackerServiceImpl;
+import com.example.phr.serviceimpl.VerificationServiceImpl;
 import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
 
@@ -76,68 +80,82 @@ public class AlarmReceiver extends BroadcastReceiver {
 		}
 		Timestamp timestamp = new Timestamp(date.getTime());
 		setting = new MobileSettingsDaoImpl();
+		MobileUserDao user = new MobileUserDaoImpl();
 
-		// check condition
-		if (tracker.equals(TrackerInputType.BLOOD_SUGAR)
-				&& setting.getBloodSugarNotificationSetting()
-				&& showBsNotif(timestamp)) {
-			Log.e("callnotif", "bs");
-			title = "HealthGem";
-			content = "What's your sugar level?";
-			ticker = "It's time to measure sugar level!";
-			myIntent = new Intent(context, BloodSugarTrackerActivity.class);
-			pendingIntent = PendingIntent.getActivity(context, 1, myIntent,
-					Intent.FLAG_ACTIVITY_NEW_TASK);
-			showNotification();
-		} else if (tracker.equals(TrackerInputType.BLOOD_PRESSURE)
-				&& setting.getBloodPressureNotificationSetting()
-				&& showBpNotif(timestamp)) {
-			Log.e("callnotif", "bp");
-			title = "HealthGem";
-			content = "What's your blood pressure?";
-			ticker = "It's time to measure blood pressure!";
-			myIntent = new Intent(context, BloodPressureTrackerActivity.class);
-			pendingIntent = PendingIntent.getActivity(context, 2, myIntent,
-					Intent.FLAG_ACTIVITY_NEW_TASK);
-			showNotification();
-		} else if (tracker.equals(TrackerInputType.CHECKUP)
-				&& showCheckupNotif(date)) {
-			title = "HealthGem";
-			content = "Did you check up between this 6 months?";
-			ticker = "It's time to have a check up!";
-			myIntent = new Intent(context, CheckupTrackerActivity.class);
-			pendingIntent = PendingIntent.getActivity(context, 3, myIntent,
-					Intent.FLAG_ACTIVITY_NEW_TASK);
-			showNotification();
-		} else if (tracker.equals(TrackerInputType.WEIGHT)
-				&& showWeightNotif(date)) {
-			title = "HealthGem";
-			content = "What's your weight?";
-			ticker = "It's time to measure your weight!";
-			myIntent = new Intent(context, WeightTrackerActivity.class);
-			pendingIntent = PendingIntent.getActivity(context, 4, myIntent,
-					Intent.FLAG_ACTIVITY_NEW_TASK);
-			showNotification();
-		} else if (tracker.equals(TrackerInputType.FOOD)
-				&& showFoodNotif(timestamp)) {
-			title = "HealthGem";
-			content = "What did you ate?";
-			ticker = "It's time record the food you ate!";
-			myIntent = new Intent(context, GroupedFoodTrackerActivity.class);
-			pendingIntent = PendingIntent.getActivity(context, 5, myIntent,
-					Intent.FLAG_ACTIVITY_NEW_TASK);
-			showNotification();
-		} else if (tracker.equals(TrackerInputType.ACTIVITY)
-				&& showActivityNotif(date)) {
-			title = "HealthGem";
-			content = "Did you excercise?";
-			ticker = "It's time to record your activity!";
-			myIntent = new Intent(context, ActivitiesTrackerActivity.class);
-			pendingIntent = PendingIntent.getActivity(context, 6, myIntent,
-					Intent.FLAG_ACTIVITY_NEW_TASK);
-			showNotification();
+		if (user.isUserLoggedIn()) {
+
+			// check condition
+			if (tracker.equals(TrackerInputType.BLOOD_SUGAR)
+					&& setting.getBloodSugarNotificationSetting()
+					&& showBsNotif(timestamp)) {
+				Log.e("callnotif", "bs");
+				title = "HealthGem";
+				content = "What's your sugar level?";
+				ticker = "It's time to measure sugar level!";
+				myIntent = new Intent(context, BloodSugarTrackerActivity.class);
+				pendingIntent = PendingIntent.getActivity(context, 1, myIntent,
+						Intent.FLAG_ACTIVITY_NEW_TASK);
+				showNotification();
+			} else if (tracker.equals(TrackerInputType.BLOOD_PRESSURE)
+					&& setting.getBloodPressureNotificationSetting()
+					&& showBpNotif(timestamp)) {
+				Log.e("callnotif", "bp");
+				title = "HealthGem";
+				content = "What's your blood pressure?";
+				ticker = "It's time to measure blood pressure!";
+				myIntent = new Intent(context,
+						BloodPressureTrackerActivity.class);
+				pendingIntent = PendingIntent.getActivity(context, 2, myIntent,
+						Intent.FLAG_ACTIVITY_NEW_TASK);
+				showNotification();
+			} else if (tracker.equals(TrackerInputType.CHECKUP)
+					&& showCheckupNotif(date)) {
+				title = "HealthGem";
+				content = "Did you check up between this 6 months?";
+				ticker = "It's time to have a check up!";
+				myIntent = new Intent(context, CheckupTrackerActivity.class);
+				pendingIntent = PendingIntent.getActivity(context, 3, myIntent,
+						Intent.FLAG_ACTIVITY_NEW_TASK);
+				showNotification();
+			} else if (tracker.equals(TrackerInputType.WEIGHT)
+					&& showWeightNotif(date)) {
+				title = "HealthGem";
+				content = "What's your weight?";
+				ticker = "It's time to measure your weight!";
+				myIntent = new Intent(context, WeightTrackerActivity.class);
+				pendingIntent = PendingIntent.getActivity(context, 4, myIntent,
+						Intent.FLAG_ACTIVITY_NEW_TASK);
+				showNotification();
+			} else if (tracker.equals(TrackerInputType.FOOD)
+					&& showFoodNotif(timestamp)) {
+				title = "HealthGem";
+				content = "What did you eat?";
+				ticker = "It's time record the food you ate!";
+				myIntent = new Intent(context, GroupedFoodTrackerActivity.class);
+				pendingIntent = PendingIntent.getActivity(context, 5, myIntent,
+						Intent.FLAG_ACTIVITY_NEW_TASK);
+				showNotification();
+			} else if (tracker.equals(TrackerInputType.ACTIVITY)
+					&& showActivityNotif(date)) {
+				title = "HealthGem";
+				content = "Did you excercise?";
+				ticker = "It's time to record your activity!";
+				myIntent = new Intent(context, ActivitiesTrackerActivity.class);
+				pendingIntent = PendingIntent.getActivity(context, 6, myIntent,
+						Intent.FLAG_ACTIVITY_NEW_TASK);
+				showNotification();
+			} else if (tracker.equals(TrackerInputType.VERIFY)
+					&& showVerifyNotif()) {
+				title = "HealthGem";
+				content = "You post something in Facebook";
+				ticker = "It's time to verify!";
+				myIntent = new Intent(context, VerificationActivityTest.class);
+				pendingIntent = PendingIntent.getActivity(context, 7, myIntent,
+						Intent.FLAG_ACTIVITY_NEW_TASK);
+				showNotification();
+			}
+
 		}
-
 		/*
 		 * Date d1 = null; Date d2 = null;
 		 * 
@@ -156,6 +174,17 @@ public class AlarmReceiver extends BroadcastReceiver {
 		 * } catch (Exception e) { e.printStackTrace(); }
 		 */
 
+	}
+
+	private boolean showVerifyNotif() {
+		// TODO Auto-generated method stub
+
+		VerificationService verify = new VerificationServiceImpl();
+
+		if (verify.getUnverifiedPostsCount() > 0)
+			return true;
+
+		return false;
 	}
 
 	public boolean showBsNotif(Timestamp current) {

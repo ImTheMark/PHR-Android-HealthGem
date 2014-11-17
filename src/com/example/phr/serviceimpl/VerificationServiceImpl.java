@@ -139,7 +139,7 @@ public class VerificationServiceImpl implements VerificationService {
 		list.addAll(getAllUnverifiedRestaurantPosts());
 		list.addAll(getAllUnverifiedSportsEstablishmentPosts());
 
-		Log.e("LIST SIZE " + list.size() + "", null);
+		Log.e("LIST SIZE ", list.size() + "");
 
 		try {
 			mobileVerificationDao.emptyVerificationDatabase();
@@ -218,9 +218,12 @@ public class VerificationServiceImpl implements VerificationService {
 	@Override
 	public UnverifiedSportsEstablishmentEntry getUnverifiedSportsEstablishmentPostFromWebDB(
 			UnverifiedSportsEstablishmentEntry entry) throws ServiceException,
-			OutdatedAccessTokenException {
-		// TODO Auto-generated method stub
-		return null;
+			OutdatedAccessTokenException, EntryNotFoundException {
+		try {
+			return webVerificationDao.get(entry);
+		} catch (WebServerException e) {
+			throw new ServiceException("An error has occurred", e);
+		}
 	}
 
 	@Override

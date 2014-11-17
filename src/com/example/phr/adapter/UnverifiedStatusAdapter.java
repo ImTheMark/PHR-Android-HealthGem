@@ -162,8 +162,9 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 				public void onClick(View v) {
 
 					UnverifiedActivityEntry unverified;
-					unverified = (UnverifiedActivityEntry) aListOfStatus.get(position);
-					
+					unverified = (UnverifiedActivityEntry) aListOfStatus
+							.get(position);
+
 					if (aListOfStatus.get(position).getImage() != null) {
 
 						try {
@@ -233,10 +234,18 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 				.equals(UnverifiedFoodEntry.class)) {
 			viewHolder.question.setText("Did you eat/drink: ");
 			viewHolder.word.setText(((UnverifiedFoodEntry) aListOfStatus
-					.get(position)).getExtractedWord());
-			viewHolder.amount.setVisibility(View.VISIBLE);
-			viewHolder.amount.setText(((UnverifiedFoodEntry) aListOfStatus
-					.get(position)).getServingCount() + "");
+					.get(position)).getExtractedWord());/*
+														 * viewHolder.amount.
+														 * setVisibility
+														 * (View.VISIBLE);
+														 * viewHolder
+														 * .amount.setText
+														 * (((UnverifiedFoodEntry
+														 * ) aListOfStatus
+														 * .get(position
+														 * )).getServingCount()
+														 * + "");
+														 */
 
 			viewHolder.confirm.setOnClickListener(new OnClickListener() {
 
@@ -246,7 +255,7 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 					UnverifiedFoodEntry unverified;
 					unverified = (UnverifiedFoodEntry) aListOfStatus
 							.get(position);
-					
+
 					if (aListOfStatus.get(position).getImage() != null) {
 
 						try {
@@ -324,7 +333,8 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 				public void onClick(View v) {
 
 					UnverifiedRestaurantEntry unverified;
-					unverified = (UnverifiedRestaurantEntry) aListOfStatus.get(position);
+					unverified = (UnverifiedRestaurantEntry) aListOfStatus
+							.get(position);
 
 					if (aListOfStatus.get(position).getImage() != null) {
 
@@ -394,7 +404,6 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 					UnverifiedSportsEstablishmentEntry unverified;
 					unverified = (UnverifiedSportsEstablishmentEntry) aListOfStatus
 							.get(position);
-
 
 					if (aListOfStatus.get(position).getImage() != null) {
 

@@ -10,5 +10,6 @@ public class TrackerInputType {
 	public static final String CHECKUP = "Record a Checkup";
 	public static final String RESTAURANT = "Restaurant";
 	public static final String SPORTS = "Sport Establishment";
+	public static final String VERIFY = "verify";
 
 }

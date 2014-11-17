@@ -103,10 +103,15 @@ public class DailyFoodAdapter extends BaseAdapter {
 
 		viewHolder.servingNumber.setText(String.valueOf(mListOfFoodSingle.get(
 				position).getServingCount()
-				+ " X"));
+				+ " x"));
 
-		viewHolder.servingUnit.setText(String.valueOf(mListOfFoodSingle
-				.get(position).getFood().getServing()));
+		if (mListOfFoodSingle.get(position).getFood().getServing() == null
+				|| mListOfFoodSingle.get(position).getFood().getServing()
+						.equals(""))
+			viewHolder.servingUnit.setText("1 serving");
+		else
+			viewHolder.servingUnit.setText(String.valueOf(mListOfFoodSingle
+					.get(position).getFood().getServing()));
 
 		return convertView;
 	}

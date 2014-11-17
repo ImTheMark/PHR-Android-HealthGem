@@ -25,7 +25,6 @@ import com.example.phr.mobile.dao.MobileFoodDao;
 import com.example.phr.mobile.dao.MobileVerificationDao;
 import com.example.phr.mobile.models.Activity;
 import com.example.phr.mobile.models.Food;
-import com.example.phr.mobile.models.FoodTrackerEntry;
 import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.mobile.models.Restaurant;
 import com.example.phr.mobile.models.SportEstablishment;
@@ -38,102 +37,77 @@ import com.example.phr.tools.DateTimeParser;
 import com.example.phr.tools.ImageHandler;
 
 public class MobileVerificationDaoImpl implements MobileVerificationDao {
-	
+
 	MobileFoodDao mobileFoodDao = new MobileFoodDaoImpl();
 	MobileActivityDao mobileActivityDao = new MobileActivityDaoImpl();
 
-	/*@Override
-	public void addFoodListToTempDB(List<Food> foodList) {
-		SQLiteDatabase db = DatabaseHandler.getDBHandler()
-				.getWritableDatabase();
-
-		db.delete(DatabaseHandler.TABLE_TEMP_FOODLIST, null, null);
-
-		for (Food food : foodList) {
-			ContentValues values = new ContentValues();
-			values.put(DatabaseHandler.FOODLIST_ID, food.getEntryID());
-			values.put(DatabaseHandler.FOODLIST_NAME, food.getName());
-			values.put(DatabaseHandler.FOODLIST_CALORIE, food.getCalorie());
-			values.put(DatabaseHandler.FOODLIST_SERVING, food.getServing());
-			values.put(DatabaseHandler.FOODLIST_RESTAURANTID,
-					food.getRestaurantID());
-			values.put(DatabaseHandler.FOODLIST_FROMFATSECRET,
-					food.getFromFatsecret());
-			values.put(DatabaseHandler.FOODLIST_PROTEIN, food.getProtein());
-			values.put(DatabaseHandler.FOODLIST_FAT, food.getFat());
-			values.put(DatabaseHandler.FOODLIST_CARBOHYDRATE,
-					food.getCarbohydrate());
-			db.insert(DatabaseHandler.TABLE_TEMP_FOODLIST, null, values);
-		}
-
-		db.close();
-
-	}
-
-	@Override
-	public void addActivityListToTempDB(List<Activity> activityList) {
-		SQLiteDatabase db = DatabaseHandler.getDBHandler()
-				.getWritableDatabase();
-
-		db.delete(DatabaseHandler.TABLE_TEMP_ACTIVITYLIST, null, null);
-
-		for (Activity act : activityList) {
-			ContentValues values = new ContentValues();
-			values.put(DatabaseHandler.ACTLIST_ID, act.getEntryID());
-			values.put(DatabaseHandler.ACTLIST_NAME, act.getName());
-			values.put(DatabaseHandler.ACTLIST_MET, act.getMET());
-
-			db.insert(DatabaseHandler.TABLE_TEMP_ACTIVITYLIST, null, values);
-		}
-
-		db.close();
-	}
-
-	@Override
-	public List<Food> getFoodListFromTempDB() {
-		List<Food> list = new ArrayList<Food>();
-		String selectQuery = "SELECT  * FROM "
-				+ DatabaseHandler.TABLE_TEMP_FOODLIST;
-
-		SQLiteDatabase db = DatabaseHandler.getDBHandler()
-				.getWritableDatabase();
-		Cursor cursor = db.rawQuery(selectQuery, null);
-
-		if (cursor.moveToFirst()) {
-			do {
-				Boolean bool = cursor.getInt(5) != 0;
-				Food food = new Food(cursor.getInt(0), cursor.getString(1),
-						cursor.getDouble(2), cursor.getDouble(6),
-						cursor.getDouble(7), cursor.getDouble(8),
-						cursor.getString(3), cursor.getInt(4), bool);
-				list.add(food);
-			} while (cursor.moveToNext());
-		}
-
-		db.close();
-		return list;
-	}
-
-	@Override
-	public List<Activity> getActivityListFromTempDB() {
-		List<Activity> list = new ArrayList<Activity>();
-		String selectQuery = "SELECT  * FROM "
-				+ DatabaseHandler.TABLE_TEMP_ACTIVITYLIST;
-
-		SQLiteDatabase db = DatabaseHandler.getDBHandler()
-				.getWritableDatabase();
-		Cursor cursor = db.rawQuery(selectQuery, null);
-		if (cursor.moveToFirst()) {
-			do {
-				Activity act = new Activity(cursor.getInt(0),
-						cursor.getString(1), cursor.getDouble(2));
-				list.add(act);
-			} while (cursor.moveToNext());
-		}
-
-		db.close();
-		return list;
-	}*/
+	/*
+	 * @Override public void addFoodListToTempDB(List<Food> foodList) {
+	 * SQLiteDatabase db = DatabaseHandler.getDBHandler()
+	 * .getWritableDatabase();
+	 * 
+	 * db.delete(DatabaseHandler.TABLE_TEMP_FOODLIST, null, null);
+	 * 
+	 * for (Food food : foodList) { ContentValues values = new ContentValues();
+	 * values.put(DatabaseHandler.FOODLIST_ID, food.getEntryID());
+	 * values.put(DatabaseHandler.FOODLIST_NAME, food.getName());
+	 * values.put(DatabaseHandler.FOODLIST_CALORIE, food.getCalorie());
+	 * values.put(DatabaseHandler.FOODLIST_SERVING, food.getServing());
+	 * values.put(DatabaseHandler.FOODLIST_RESTAURANTID,
+	 * food.getRestaurantID());
+	 * values.put(DatabaseHandler.FOODLIST_FROMFATSECRET,
+	 * food.getFromFatsecret()); values.put(DatabaseHandler.FOODLIST_PROTEIN,
+	 * food.getProtein()); values.put(DatabaseHandler.FOODLIST_FAT,
+	 * food.getFat()); values.put(DatabaseHandler.FOODLIST_CARBOHYDRATE,
+	 * food.getCarbohydrate()); db.insert(DatabaseHandler.TABLE_TEMP_FOODLIST,
+	 * null, values); }
+	 * 
+	 * db.close();
+	 * 
+	 * }
+	 * 
+	 * @Override public void addActivityListToTempDB(List<Activity>
+	 * activityList) { SQLiteDatabase db = DatabaseHandler.getDBHandler()
+	 * .getWritableDatabase();
+	 * 
+	 * db.delete(DatabaseHandler.TABLE_TEMP_ACTIVITYLIST, null, null);
+	 * 
+	 * for (Activity act : activityList) { ContentValues values = new
+	 * ContentValues(); values.put(DatabaseHandler.ACTLIST_ID,
+	 * act.getEntryID()); values.put(DatabaseHandler.ACTLIST_NAME,
+	 * act.getName()); values.put(DatabaseHandler.ACTLIST_MET, act.getMET());
+	 * 
+	 * db.insert(DatabaseHandler.TABLE_TEMP_ACTIVITYLIST, null, values); }
+	 * 
+	 * db.close(); }
+	 * 
+	 * @Override public List<Food> getFoodListFromTempDB() { List<Food> list =
+	 * new ArrayList<Food>(); String selectQuery = "SELECT  * FROM " +
+	 * DatabaseHandler.TABLE_TEMP_FOODLIST;
+	 * 
+	 * SQLiteDatabase db = DatabaseHandler.getDBHandler()
+	 * .getWritableDatabase(); Cursor cursor = db.rawQuery(selectQuery, null);
+	 * 
+	 * if (cursor.moveToFirst()) { do { Boolean bool = cursor.getInt(5) != 0;
+	 * Food food = new Food(cursor.getInt(0), cursor.getString(1),
+	 * cursor.getDouble(2), cursor.getDouble(6), cursor.getDouble(7),
+	 * cursor.getDouble(8), cursor.getString(3), cursor.getInt(4), bool);
+	 * list.add(food); } while (cursor.moveToNext()); }
+	 * 
+	 * db.close(); return list; }
+	 * 
+	 * @Override public List<Activity> getActivityListFromTempDB() {
+	 * List<Activity> list = new ArrayList<Activity>(); String selectQuery =
+	 * "SELECT  * FROM " + DatabaseHandler.TABLE_TEMP_ACTIVITYLIST;
+	 * 
+	 * SQLiteDatabase db = DatabaseHandler.getDBHandler()
+	 * .getWritableDatabase(); Cursor cursor = db.rawQuery(selectQuery, null);
+	 * if (cursor.moveToFirst()) { do { Activity act = new
+	 * Activity(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2));
+	 * list.add(act); } while (cursor.moveToNext()); }
+	 * 
+	 * db.close(); return list; }
+	 */
 
 	@Override
 	public void storeEncodedImage(String encodedImage) {
@@ -154,7 +128,8 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 	}
 
 	@Override
-	public void addUnverifiedFoodPost(UnverifiedFoodEntry entry) throws DataAccessException {
+	public void addUnverifiedFoodPost(UnverifiedFoodEntry entry)
+			throws DataAccessException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
 
@@ -163,10 +138,14 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHandler.UNVERIFIED_FOOD_ID, entry.getEntryID());
-		values.put(DatabaseHandler.UNVERIFIED_FOOD_DATEADDED, fmt.format(entry.getTimestamp()));
-		values.put(DatabaseHandler.UNVERIFIED_FOOD_EXTRACTEDWORD, entry.getExtractedWord());
-		values.put(DatabaseHandler.UNVERIFIED_FOOD_FOODID, entry.getFood().getEntryID());
-		values.put(DatabaseHandler.UNVERIFIED_FOOD_SERVINGCOUNT, entry.getServingCount());
+		values.put(DatabaseHandler.UNVERIFIED_FOOD_DATEADDED,
+				fmt.format(entry.getTimestamp()));
+		values.put(DatabaseHandler.UNVERIFIED_FOOD_EXTRACTEDWORD,
+				entry.getExtractedWord());
+		values.put(DatabaseHandler.UNVERIFIED_FOOD_FOODID, entry.getFood()
+				.getEntryID());
+		values.put(DatabaseHandler.UNVERIFIED_FOOD_SERVINGCOUNT,
+				entry.getServingCount());
 		values.put(DatabaseHandler.UNVERIFIED_FOOD_STATUS, entry.getStatus());
 
 		if (!mobileFoodDao.exists(entry.getFood())) {
@@ -178,8 +157,8 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 				String encoded = entry.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				entry.getImage().setFileName(fileName);
-				values.put(DatabaseHandler.UNVERIFIED_FOOD_PHOTO, entry.getImage()
-						.getFileName());
+				values.put(DatabaseHandler.UNVERIFIED_FOOD_PHOTO, entry
+						.getImage().getFileName());
 			} else
 				values.putNull(DatabaseHandler.UNVERIFIED_FOOD_PHOTO);
 		} catch (FileNotFoundException e) {
@@ -190,14 +169,16 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 					e);
 		}
 		if (entry.getFacebookID() != null)
-			values.put(DatabaseHandler.UNVERIFIED_FOOD_FBPOSTID, entry.getFacebookID());
+			values.put(DatabaseHandler.UNVERIFIED_FOOD_FBPOSTID,
+					entry.getFacebookID());
 
 		db.insert(DatabaseHandler.TABLE_UNVERIFIED_FOOD, null, values);
 		db.close();
 	}
 
 	@Override
-	public void addUnverifiedRestaurantPost(UnverifiedRestaurantEntry entry) throws DataAccessException {
+	public void addUnverifiedRestaurantPost(UnverifiedRestaurantEntry entry)
+			throws DataAccessException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
 
@@ -206,12 +187,15 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHandler.UNVERIFIED_RESTO_ID, entry.getEntryID());
-		values.put(DatabaseHandler.UNVERIFIED_RESTO_DATEADDED, fmt.format(entry.getTimestamp()));
-		values.put(DatabaseHandler.UNVERIFIED_RESTO_EXTRACTEDWORD, entry.getExtractedWord());
-		values.put(DatabaseHandler.UNVERIFIED_RESTO_RESTOID, entry.getRestaurant().getEntryID());
+		values.put(DatabaseHandler.UNVERIFIED_RESTO_DATEADDED,
+				fmt.format(entry.getTimestamp()));
+		values.put(DatabaseHandler.UNVERIFIED_RESTO_EXTRACTEDWORD,
+				entry.getExtractedWord());
+		values.put(DatabaseHandler.UNVERIFIED_RESTO_RESTOID, entry
+				.getRestaurant().getEntryID());
 		values.put(DatabaseHandler.UNVERIFIED_RESTO_STATUS, entry.getStatus());
-		
-		for(Food food:entry.getFoods()){
+
+		for (Food food : entry.getFoods()) {
 			if (!mobileFoodDao.exists(food)) {
 				mobileFoodDao.add(food);
 			}
@@ -222,8 +206,8 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 				String encoded = entry.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				entry.getImage().setFileName(fileName);
-				values.put(DatabaseHandler.UNVERIFIED_RESTO_PHOTO, entry.getImage()
-						.getFileName());
+				values.put(DatabaseHandler.UNVERIFIED_RESTO_PHOTO, entry
+						.getImage().getFileName());
 			} else
 				values.putNull(DatabaseHandler.UNVERIFIED_RESTO_PHOTO);
 		} catch (FileNotFoundException e) {
@@ -234,14 +218,16 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 					e);
 		}
 		if (entry.getFacebookID() != null)
-			values.put(DatabaseHandler.UNVERIFIED_RESTO_FBPOSTID, entry.getFacebookID());
+			values.put(DatabaseHandler.UNVERIFIED_RESTO_FBPOSTID,
+					entry.getFacebookID());
 
 		db.insert(DatabaseHandler.TABLE_UNVERIFIED_RESTO, null, values);
 		db.close();
 	}
 
 	@Override
-	public void addUnverifiedActivityPost(UnverifiedActivityEntry entry) throws DataAccessException {
+	public void addUnverifiedActivityPost(UnverifiedActivityEntry entry)
+			throws DataAccessException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
 
@@ -250,12 +236,18 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHandler.UNVERIFIED_ACTIVITY_ID, entry.getEntryID());
-		values.put(DatabaseHandler.UNVERIFIED_ACTIVITY_DATEADDED, fmt.format(entry.getTimestamp()));
-		values.put(DatabaseHandler.UNVERIFIED_ACTIVITY_EXTRACTEDWORD, entry.getExtractedWord());
-		values.put(DatabaseHandler.UNVERIFIED_ACTIVITY_ACTIVITYID, entry.getActivity().getEntryID());
-		values.put(DatabaseHandler.UNVERIFIED_ACTIVITY_DURATIONINSECONDS, entry.getDurationInSeconds());
-		values.put(DatabaseHandler.UNVERIFIED_ACTIVITY_CALORIEBURNED, entry.getCalorieBurnedPerHour());
-		values.put(DatabaseHandler.UNVERIFIED_ACTIVITY_STATUS, entry.getStatus());
+		values.put(DatabaseHandler.UNVERIFIED_ACTIVITY_DATEADDED,
+				fmt.format(entry.getTimestamp()));
+		values.put(DatabaseHandler.UNVERIFIED_ACTIVITY_EXTRACTEDWORD,
+				entry.getExtractedWord());
+		values.put(DatabaseHandler.UNVERIFIED_ACTIVITY_ACTIVITYID, entry
+				.getActivity().getEntryID());
+		values.put(DatabaseHandler.UNVERIFIED_ACTIVITY_DURATIONINSECONDS,
+				entry.getDurationInSeconds());
+		values.put(DatabaseHandler.UNVERIFIED_ACTIVITY_CALORIEBURNED,
+				entry.getCalorieBurnedPerHour());
+		values.put(DatabaseHandler.UNVERIFIED_ACTIVITY_STATUS,
+				entry.getStatus());
 
 		mobileActivityDao.addReturnsEntryId(entry.getActivity());
 
@@ -264,8 +256,8 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 				String encoded = entry.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				entry.getImage().setFileName(fileName);
-				values.put(DatabaseHandler.UNVERIFIED_ACTIVITY_PHOTO, entry.getImage()
-						.getFileName());
+				values.put(DatabaseHandler.UNVERIFIED_ACTIVITY_PHOTO, entry
+						.getImage().getFileName());
 			} else
 				values.putNull(DatabaseHandler.UNVERIFIED_ACTIVITY_PHOTO);
 		} catch (FileNotFoundException e) {
@@ -276,7 +268,8 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 					e);
 		}
 		if (entry.getFacebookID() != null)
-			values.put(DatabaseHandler.UNVERIFIED_ACTIVITY_FBPOSTID, entry.getFacebookID());
+			values.put(DatabaseHandler.UNVERIFIED_ACTIVITY_FBPOSTID,
+					entry.getFacebookID());
 
 		db.insert(DatabaseHandler.TABLE_UNVERIFIED_ACTIVITY, null, values);
 		db.close();
@@ -284,7 +277,8 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 
 	@Override
 	public void addUnverifiedSportEstablishmentPost(
-			UnverifiedSportsEstablishmentEntry entry) throws DataAccessException {
+			UnverifiedSportsEstablishmentEntry entry)
+			throws DataAccessException {
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
 
@@ -293,12 +287,16 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHandler.UNVERIFIED_SPORTEST_ID, entry.getEntryID());
-		values.put(DatabaseHandler.UNVERIFIED_SPORTEST_DATEADDED, fmt.format(entry.getTimestamp()));
-		values.put(DatabaseHandler.UNVERIFIED_SPORTEST_EXTRACTEDWORD, entry.getExtractedWord());
-		values.put(DatabaseHandler.UNVERIFIED_SPORTEST_GYMID, entry.getSportEstablishment().getEntryID());
-		values.put(DatabaseHandler.UNVERIFIED_SPORTEST_STATUS, entry.getStatus());
-		
-		for(Activity activity : entry.getActivities()){
+		values.put(DatabaseHandler.UNVERIFIED_SPORTEST_DATEADDED,
+				fmt.format(entry.getTimestamp()));
+		values.put(DatabaseHandler.UNVERIFIED_SPORTEST_EXTRACTEDWORD,
+				entry.getExtractedWord());
+		values.put(DatabaseHandler.UNVERIFIED_SPORTEST_GYMID, entry
+				.getSportEstablishment().getEntryID());
+		values.put(DatabaseHandler.UNVERIFIED_SPORTEST_STATUS,
+				entry.getStatus());
+
+		for (Activity activity : entry.getActivities()) {
 			mobileActivityDao.addReturnsEntryId(activity);
 		}
 
@@ -307,8 +305,8 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 				String encoded = entry.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				entry.getImage().setFileName(fileName);
-				values.put(DatabaseHandler.UNVERIFIED_SPORTEST_PHOTO, entry.getImage()
-						.getFileName());
+				values.put(DatabaseHandler.UNVERIFIED_SPORTEST_PHOTO, entry
+						.getImage().getFileName());
 			} else
 				values.putNull(DatabaseHandler.UNVERIFIED_SPORTEST_PHOTO);
 		} catch (FileNotFoundException e) {
@@ -319,16 +317,17 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 					e);
 		}
 		if (entry.getFacebookID() != null)
-			values.put(DatabaseHandler.UNVERIFIED_SPORTEST_FBPOSTID, entry.getFacebookID());
+			values.put(DatabaseHandler.UNVERIFIED_SPORTEST_FBPOSTID,
+					entry.getFacebookID());
 
 		db.insert(DatabaseHandler.TABLE_UNVERIFIED_SPORTEST, null, values);
 		db.close();
 	}
 
 	@Override
-	public List<TrackerEntry> getAllUnverifiedPosts(){
+	public List<TrackerEntry> getAllUnverifiedPosts() {
 		List<TrackerEntry> list = new ArrayList<TrackerEntry>();
-		
+
 		try {
 			list.addAll(getAllUnverifiedActivityPosts());
 			list.addAll(getAllUnverifiedFoodPosts());
@@ -347,7 +346,7 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return list;
 	}
 
@@ -358,8 +357,9 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 
 		if (entry.getImage() != null)
 			ImageHandler.deleteImage(entry.getImage().getFileName());
-		db.delete(DatabaseHandler.TABLE_UNVERIFIED_FOOD, DatabaseHandler.UNVERIFIED_FOOD_ID + "="
-				+ entry.getEntryID(), null);
+		db.delete(DatabaseHandler.TABLE_UNVERIFIED_FOOD,
+				DatabaseHandler.UNVERIFIED_FOOD_ID + "=" + entry.getEntryID(),
+				null);
 		db.close();
 	}
 
@@ -370,8 +370,9 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 
 		if (entry.getImage() != null)
 			ImageHandler.deleteImage(entry.getImage().getFileName());
-		db.delete(DatabaseHandler.TABLE_UNVERIFIED_RESTO, DatabaseHandler.UNVERIFIED_RESTO_ID + "="
-				+ entry.getEntryID(), null);
+		db.delete(DatabaseHandler.TABLE_UNVERIFIED_RESTO,
+				DatabaseHandler.UNVERIFIED_RESTO_ID + "=" + entry.getEntryID(),
+				null);
 		db.close();
 	}
 
@@ -382,8 +383,10 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 
 		if (entry.getImage() != null)
 			ImageHandler.deleteImage(entry.getImage().getFileName());
-		db.delete(DatabaseHandler.TABLE_UNVERIFIED_ACTIVITY, DatabaseHandler.UNVERIFIED_ACTIVITY_ID + "="
-				+ entry.getEntryID(), null);
+		db.delete(
+				DatabaseHandler.TABLE_UNVERIFIED_ACTIVITY,
+				DatabaseHandler.UNVERIFIED_ACTIVITY_ID + "="
+						+ entry.getEntryID(), null);
 		db.close();
 	}
 
@@ -395,17 +398,20 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 
 		if (entry.getImage() != null)
 			ImageHandler.deleteImage(entry.getImage().getFileName());
-		db.delete(DatabaseHandler.TABLE_UNVERIFIED_SPORTEST, DatabaseHandler.UNVERIFIED_SPORTEST_ID + "="
-				+ entry.getEntryID(), null);
+		db.delete(
+				DatabaseHandler.TABLE_UNVERIFIED_SPORTEST,
+				DatabaseHandler.UNVERIFIED_SPORTEST_ID + "="
+						+ entry.getEntryID(), null);
 		db.close();
 	}
 
 	@Override
-	public List<UnverifiedFoodEntry> getAllUnverifiedFoodPosts() throws DataAccessException {
+	public List<UnverifiedFoodEntry> getAllUnverifiedFoodPosts()
+			throws DataAccessException {
 		List<UnverifiedFoodEntry> list = new ArrayList<UnverifiedFoodEntry>();
-		
 
-		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_UNVERIFIED_FOOD;
+		String selectQuery = "SELECT  * FROM "
+				+ DatabaseHandler.TABLE_UNVERIFIED_FOOD;
 
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
@@ -426,9 +432,13 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 								.getFileName());
 					}
 
-					UnverifiedFoodEntry entry = new UnverifiedFoodEntry(cursor.getInt(0), cursor.getString(7),
-							timestamp, cursor.getString(5), image, new Food(cursor.getInt(3)),
-							cursor.getDouble(4), cursor.getString(2));
+					MobileFoodDao foodDao = new MobileFoodDaoImpl();
+
+					UnverifiedFoodEntry entry = new UnverifiedFoodEntry(
+							cursor.getInt(0), cursor.getString(7), timestamp,
+							cursor.getString(5), image, foodDao.get(cursor
+									.getInt(3)), cursor.getDouble(4),
+							cursor.getString(2));
 
 					list.add(entry);
 
@@ -441,16 +451,17 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 		}
 
 		db.close();
-		
+
 		return list;
 	}
 
 	@Override
-	public List<UnverifiedActivityEntry> getAllUnverifiedActivityPosts() throws DataAccessException {
+	public List<UnverifiedActivityEntry> getAllUnverifiedActivityPosts()
+			throws DataAccessException {
 		List<UnverifiedActivityEntry> list = new ArrayList<UnverifiedActivityEntry>();
-		
 
-		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_UNVERIFIED_ACTIVITY;
+		String selectQuery = "SELECT  * FROM "
+				+ DatabaseHandler.TABLE_UNVERIFIED_ACTIVITY;
 
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
@@ -471,9 +482,10 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 								.getFileName());
 					}
 
-					UnverifiedActivityEntry entry = new UnverifiedActivityEntry(cursor.getInt(0), cursor.getString(8),
-							timestamp, cursor.getString(6), image,
-							new Activity(cursor.getInt(3)), cursor.getInt(4),
+					UnverifiedActivityEntry entry = new UnverifiedActivityEntry(
+							cursor.getInt(0), cursor.getString(8), timestamp,
+							cursor.getString(6), image, new Activity(
+									cursor.getInt(3)), cursor.getInt(4),
 							cursor.getDouble(5), cursor.getString(2));
 
 					list.add(entry);
@@ -487,15 +499,17 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 		}
 
 		db.close();
-		
+
 		return list;
 	}
 
 	@Override
-	public List<UnverifiedRestaurantEntry> getAllUnverifiedRestaurantPosts() throws DataAccessException {
+	public List<UnverifiedRestaurantEntry> getAllUnverifiedRestaurantPosts()
+			throws DataAccessException {
 		List<UnverifiedRestaurantEntry> list = new ArrayList<UnverifiedRestaurantEntry>();
 
-		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_UNVERIFIED_RESTO;
+		String selectQuery = "SELECT  * FROM "
+				+ DatabaseHandler.TABLE_UNVERIFIED_RESTO;
 
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
@@ -517,9 +531,9 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 					}
 
 					UnverifiedRestaurantEntry entry = new UnverifiedRestaurantEntry(
-							cursor.getInt(0), cursor.getString(6),
-							timestamp, cursor.getString(4), image,
-							cursor.getString(2), new Restaurant(cursor.getInt(3)), null);
+							cursor.getInt(0), cursor.getString(6), timestamp,
+							cursor.getString(4), image, cursor.getString(2),
+							new Restaurant(cursor.getInt(3)), null);
 
 					list.add(entry);
 
@@ -532,15 +546,17 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 		}
 
 		db.close();
-		
+
 		return list;
 	}
 
 	@Override
-	public List<UnverifiedSportsEstablishmentEntry> getAllUnverifiedSportsEstablishmentPosts() throws DataAccessException {
+	public List<UnverifiedSportsEstablishmentEntry> getAllUnverifiedSportsEstablishmentPosts()
+			throws DataAccessException {
 		List<UnverifiedSportsEstablishmentEntry> list = new ArrayList<UnverifiedSportsEstablishmentEntry>();
 
-		String selectQuery = "SELECT  * FROM " + DatabaseHandler.TABLE_UNVERIFIED_SPORTEST;
+		String selectQuery = "SELECT  * FROM "
+				+ DatabaseHandler.TABLE_UNVERIFIED_SPORTEST;
 
 		SQLiteDatabase db = DatabaseHandler.getDBHandler()
 				.getWritableDatabase();
@@ -562,9 +578,8 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 					}
 
 					UnverifiedSportsEstablishmentEntry entry = new UnverifiedSportsEstablishmentEntry(
-							cursor.getInt(0),
-							cursor.getString(6), timestamp, cursor.getString(4),
-							image, cursor.getString(2),
+							cursor.getInt(0), cursor.getString(6), timestamp,
+							cursor.getString(4), image, cursor.getString(2),
 							new SportEstablishment(cursor.getInt(3)), null);
 
 					list.add(entry);
@@ -578,7 +593,7 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 		}
 
 		db.close();
-		
+
 		return list;
 	}
 
@@ -591,7 +606,7 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 		db.delete(DatabaseHandler.TABLE_UNVERIFIED_FOOD, null, null);
 		db.delete(DatabaseHandler.TABLE_UNVERIFIED_RESTO, null, null);
 		db.delete(DatabaseHandler.TABLE_UNVERIFIED_SPORTEST, null, null);
-		
+
 		db.close();
 	}
 

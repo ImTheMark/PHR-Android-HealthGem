@@ -2,7 +2,6 @@ package com.example.phr.mobile.daoimpl;
 
 import java.text.ParseException;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -19,6 +18,7 @@ import com.example.phr.mobile.models.PHRImage;
 import com.example.phr.mobile.models.PHRImageType;
 import com.example.phr.mobile.models.User;
 import com.example.phr.mobile.models.Weight;
+import com.example.phr.model.AccessToken;
 import com.example.phr.service.WeightTrackerService;
 import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
@@ -158,7 +158,8 @@ public class MobileUserDaoImpl implements MobileUserDao {
 		Log.e("GETUSER",
 				HealthGem.getSharedPreferences().loadPreferences(
 						SPreference.USERID));
-		if(HealthGem.getSharedPreferences().getPreferences().contains(SPreference.USERID))
+		if (HealthGem.getSharedPreferences().getPreferences()
+				.contains(SPreference.USERID))
 			user.setId(Integer.parseInt(HealthGem.getSharedPreferences()
 					.loadPreferences(SPreference.USERID)));
 		user.setAllergies(HealthGem.getSharedPreferences().loadPreferences(
@@ -255,11 +256,18 @@ public class MobileUserDaoImpl implements MobileUserDao {
 
 	@Override
 	public void logoutUser(Context context) {
-		Intent intent = new Intent(context,
-				LoginActivity.class);
+		Intent intent = new Intent(context, LoginActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
 				| Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		context.startActivity(intent);
 	}
 
+	@Override
+	public Boolean isUserLoggedIn() {
+		AccessToken token = DatabaseHandler.getDBHandler().getAccessToken();
+		if (token.getAccessToken() != null)
+			return true;
+		else
+			return false;
+	}
 }

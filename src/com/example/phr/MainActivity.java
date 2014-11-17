@@ -179,9 +179,22 @@ public class MainActivity extends FragmentActivity implements
 		}
 		setAlarm(_alarm, TrackerInputType.WEIGHT, 4);
 
+		// check if there's entry for verify
+		Calendar verifyAlarmTime = Calendar.getInstance();
+		verifyAlarmTime.set(Calendar.HOUR_OF_DAY, 18);
+		verifyAlarmTime.set(Calendar.MINUTE, 0);
+		verifyAlarmTime.set(Calendar.SECOND, 0);
+		if (verifyAlarmTime.getTimeInMillis() <= now.getTimeInMillis()) {
+			_alarm = verifyAlarmTime.getTimeInMillis()
+					+ (AlarmManager.INTERVAL_DAY + 1);
+		} else {
+			_alarm = verifyAlarmTime.getTimeInMillis();
+		}
+		setAlarm(_alarm, TrackerInputType.VERIFY, 5);
+
 		// check if user post activty this week at this time
 		Calendar activityAlarmTime = Calendar.getInstance();
-		activityAlarmTime.set(Calendar.HOUR_OF_DAY, 18);
+		activityAlarmTime.set(Calendar.HOUR_OF_DAY, 19);
 		activityAlarmTime.set(Calendar.MINUTE, 0);
 		activityAlarmTime.set(Calendar.SECOND, 0);
 		if (activityAlarmTime.getTimeInMillis() <= now.getTimeInMillis()) {
@@ -190,7 +203,7 @@ public class MainActivity extends FragmentActivity implements
 		} else {
 			_alarm = activityAlarmTime.getTimeInMillis();
 		}
-		setAlarm(_alarm, TrackerInputType.ACTIVITY, 5);
+		setAlarm(_alarm, TrackerInputType.ACTIVITY, 6);
 
 		// check if user post food today in fb, if not notif user to post food
 		Calendar foodAlarmTime = Calendar.getInstance();
@@ -203,7 +216,7 @@ public class MainActivity extends FragmentActivity implements
 		} else {
 			_alarm = foodAlarmTime.getTimeInMillis();
 		}
-		setAlarm(_alarm, TrackerInputType.FOOD, 6);
+		setAlarm(_alarm, TrackerInputType.FOOD, 7);
 
 		Intent in = getIntent();
 		Bundle extras = getIntent().getExtras();

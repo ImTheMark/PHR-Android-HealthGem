@@ -21,7 +21,8 @@ public class GSONConverter {
 
 	public static <T> T getGSONObjectGivenJsonObject(JSONObject json,
 			Class<T> classTypeToGenerate) {
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss")
+				.create();
 		String jsonString = json.toString();
 		return gson.fromJson(jsonString, classTypeToGenerate);
 	}

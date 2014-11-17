@@ -14,42 +14,40 @@ import com.example.phr.mobile.models.UnverifiedRestaurantEntry;
 import com.example.phr.mobile.models.UnverifiedSportsEstablishmentEntry;
 
 public interface VerificationService {
-	
 
 	public List<Food> getFoodListGivenRestaurantID(int id);
-	
-	public List<Activity> getActivityListGivenEstablishmentID(int ID);
-	
-	public void storeEncodedImage(String encodedImage);
-	
-	public String getImageFileName();
-	
 
-	
+	public List<Activity> getActivityListGivenEstablishmentID(int ID);
+
+	public void storeEncodedImage(String encodedImage);
+
+	public String getImageFileName();
+
 	public void updateListOfUnverifiedPosts() throws ServiceException,
 			OutdatedAccessTokenException;
-	
+
 	public int getUnverifiedPostsCount();
-	
-	
-	public void getAllFromWebDB() throws ServiceException, OutdatedAccessTokenException;
+
+	public void getAllFromWebDB() throws ServiceException,
+			OutdatedAccessTokenException;
+
 	public List<TrackerEntry> getAllFromMobileDB();
-	
 
+	public UnverifiedFoodEntry getUnverifiedFoodPostFromWebDB(
+			UnverifiedFoodEntry entry) throws ServiceException,
+			OutdatedAccessTokenException;
 
-	public UnverifiedFoodEntry getUnverifiedFoodPostFromWebDB(UnverifiedFoodEntry entry)
-			throws ServiceException, OutdatedAccessTokenException;
+	public UnverifiedActivityEntry getUnverifiedActivityPostFromWebDB(
+			UnverifiedActivityEntry entry) throws ServiceException,
+			OutdatedAccessTokenException;
 
-	public UnverifiedActivityEntry getUnverifiedActivityPostFromWebDB(UnverifiedActivityEntry entry)
-			throws ServiceException, OutdatedAccessTokenException;
+	public UnverifiedRestaurantEntry getUnverifiedRestaurantPostFromWebDB(
+			UnverifiedRestaurantEntry entry) throws ServiceException,
+			OutdatedAccessTokenException;
 
-	public UnverifiedRestaurantEntry getUnverifiedRestaurantPostFromWebDB(UnverifiedRestaurantEntry entry)
-			throws ServiceException, OutdatedAccessTokenException;
-
-	public UnverifiedSportsEstablishmentEntry getUnverifiedSportsEstablishmentPostFromWebDB(UnverifiedSportsEstablishmentEntry entry)
-			throws ServiceException, OutdatedAccessTokenException;
-	
-	
+	public UnverifiedSportsEstablishmentEntry getUnverifiedSportsEstablishmentPostFromWebDB(
+			UnverifiedSportsEstablishmentEntry entry) throws ServiceException,
+			OutdatedAccessTokenException, EntryNotFoundException;
 
 	public List<UnverifiedFoodEntry> getAllUnverifiedFoodPosts()
 			throws ServiceException, OutdatedAccessTokenException;
