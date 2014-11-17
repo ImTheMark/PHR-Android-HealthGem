@@ -926,9 +926,8 @@ public class NewStatusActivity extends android.app.Activity {
 		txtFoodSize.setText(String.valueOf(serving));
 		txtFoodUnit = (TextView) foodView.findViewById(R.id.foodUnit);
 		txtFoodUnit.setText(food.getServing());
-		alertDialogBuilder
-				.setCancelable(false)
-				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		alertDialogBuilder.setCancelable(false).setPositiveButton("OK",
+				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 
@@ -937,14 +936,7 @@ public class NewStatusActivity extends android.app.Activity {
 								.getText().toString(), photo);
 
 					}
-				})
-				.setNegativeButton("Cancel",
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int id) {
-								dialog.cancel();
-							}
-						});
+				});
 
 		// create an alert dialog
 		AlertDialog alertD = alertDialogBuilder.create();
@@ -1032,9 +1024,8 @@ public class NewStatusActivity extends android.app.Activity {
 		int index = list.indexOf(unit);
 		if (index != -1)
 			activityUnitSpinner.setSelection(index);
-		alertDialogBuilder
-				.setCancelable(false)
-				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		alertDialogBuilder.setCancelable(false).setPositiveButton("OK",
+				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						// set activity met -- get from database
@@ -1046,14 +1037,8 @@ public class NewStatusActivity extends android.app.Activity {
 												.getSelectedItem()),
 								"How you feel? ", photo);
 					}
-				})
-				.setNegativeButton("Cancel",
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int id) {
-								dialog.cancel();
-							}
-						});
+
+				});
 
 		// create an alert dialog
 		AlertDialog alertD = alertDialogBuilder.create();
@@ -1085,24 +1070,19 @@ public class NewStatusActivity extends android.app.Activity {
 		doctor.setText(txtDoctor);
 		purpose = (EditText) checkupView.findViewById(R.id.txtPurpose);
 		purpose.setText(txtPurpose);
-		alertDialogBuilder
-				.setCancelable(false)
-				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		alertDialogBuilder.setCancelable(false).setPositiveButton("OK",
+				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
-
+						if (doctor.getText().toString().equals(""))
+							doctor.setText("N/A");
+						if (purpose.getText().toString().equals(""))
+							purpose.setText("N/A");
 						setCheckupTemplate(doctor.getText().toString(), purpose
 								.getText().toString(), notesStatus.getText()
 								.toString(), photo);
 					}
-				})
-				.setNegativeButton("Cancel",
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int id) {
-								dialog.cancel();
-							}
-						});
+				});
 
 		// create an alert dialog
 		AlertDialog alertD = alertDialogBuilder.create();

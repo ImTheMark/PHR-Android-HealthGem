@@ -23,6 +23,14 @@
 		<item>slice</item>
 		<item>kg</item>
 		<item>serving</item>
+		<item>oz</item>
+		<item>bag</item>
+		<item>g</item>
+		<item>cup</item>
+		<item>bar</item>
+		<item>cup</item>
+		<item>can</item>
+		<item>tsp</item>
 	</string-array>
     
      <string-array name="weightUnit">

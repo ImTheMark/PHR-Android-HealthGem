@@ -10,7 +10,11 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.phr.exceptions.ServiceException;
 import com.example.phr.mobile.models.Activity;
+import com.example.phr.mobile.models.Weight;
+import com.example.phr.service.WeightTrackerService;
+import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
 
 public class AddNewActivityActivity extends android.app.Activity {
 
@@ -49,7 +53,27 @@ public class AddNewActivityActivity extends android.app.Activity {
 
 			Intent i = new Intent(getApplicationContext(),
 					NewStatusActivity.class);
-			Double computedMet = 100.0;
+
+			Double calBurnedHr = 0.0;
+			if (newActivityDurationUnit.getSelectedItem().equals("min"))
+				calBurnedHr = (Double.parseDouble(newActivityCal.getText()
+						.toString()) / Double.parseDouble(newActivityDuration
+						.getText().toString())) * 60;
+			else
+				calBurnedHr = Double.parseDouble(newActivityCal.getText()
+						.toString())
+						/ Double.parseDouble(newActivityDuration.getText()
+								.toString());
+			WeightTrackerService weightService = new WeightTrackerServiceImpl();
+			Weight weight = null;
+			try {
+				weight = weightService.getLatest();
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Double computedMet = calBurnedHr / weight.getWeightInKilograms();
+
 			Activity addActivity = new Activity(newActivity.getText()
 					.toString(), computedMet);
 			Log.e("new", addActivity.getName());

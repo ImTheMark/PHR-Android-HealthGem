@@ -63,8 +63,8 @@ public class AddNewFoodActivity extends Activity {
 					Double.parseDouble(newFoodProtein.getText().toString()),
 					Double.parseDouble(newFoodFat.getText().toString()),
 					Double.parseDouble(newFoodCarbs.getText().toString()),
-					String.valueOf(newServingUnit.getSelectedItem()) + " "
-							+ newFoodServing.getText().toString(), null, true);
+					String.valueOf(newFoodServing.getText().toString() + " "
+							+ newServingUnit.getSelectedItem()), null, true);
 			i.putExtra("food added", addFood);
 			startActivity(i);
 			return true;
