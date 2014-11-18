@@ -11,6 +11,7 @@ import android.os.StrictMode;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -43,6 +44,8 @@ public class VerificationActivityTest extends Activity {
 
 		StrictMode.setThreadPolicy(policy);
 		setContentView(R.layout.activity_verification_test);
+		setTitle("Verification");
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
 		swipeLayout.setOnRefreshListener(new OnRefreshListener() {
 
@@ -63,6 +66,18 @@ public class VerificationActivityTest extends Activity {
 		adapter = new UnverifiedStatusAdapter(HealthGem.getContext(),
 				unverifiedList);
 		listView.setAdapter(adapter);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				onBackPressed();
+				break;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+		return true;
 	}
 
 	class GetPostsFromServer extends AsyncTask<Void, Void, Void> {
