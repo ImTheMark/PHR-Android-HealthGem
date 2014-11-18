@@ -12,7 +12,9 @@ import com.example.phr.mobile.daoimpl.MobileFoodTrackerDaoImpl;
 import com.example.phr.mobile.models.FoodTrackerEntry;
 import com.example.phr.service.FoodService;
 import com.example.phr.service.FoodTrackerService;
+import com.example.phr.web.dao.WebFoodDao;
 import com.example.phr.web.dao.WebFoodTrackerDao;
+import com.example.phr.web.daoimpl.WebFoodDaoImpl;
 import com.example.phr.web.daoimpl.WebFoodTrackerDaoImpl;
 
 public class FoodTrackerServiceImpl implements FoodTrackerService {
@@ -20,11 +22,13 @@ public class FoodTrackerServiceImpl implements FoodTrackerService {
 	FoodService foodService;
 	WebFoodTrackerDao webFoodTrackerDao;
 	MobileFoodTrackerDao mobileFoodTrackerDao;
+	WebFoodDao webFoodDao;
 
 	public FoodTrackerServiceImpl() {
 		foodService = new FoodServiceImpl();
 		webFoodTrackerDao = new WebFoodTrackerDaoImpl();
 		mobileFoodTrackerDao = new MobileFoodTrackerDaoImpl();
+		webFoodDao = new WebFoodDaoImpl();
 	}
 
 	@Override
@@ -33,7 +37,9 @@ public class FoodTrackerServiceImpl implements FoodTrackerService {
 		try {
 			int foodId = foodService.add(foodTrackerEntry.getFood());
 			foodTrackerEntry.getFood().setEntryID(foodId);
-			webFoodTrackerDao.add_ReturnEntryIdInWeb(foodTrackerEntry);
+			int trackerId = webFoodTrackerDao
+					.add_ReturnEntryIdInWeb(foodTrackerEntry);
+			foodTrackerEntry.setEntryID(trackerId);
 			mobileFoodTrackerDao.add(foodTrackerEntry);
 		} catch (WebServerException e) {
 			throw new ServiceException(
@@ -49,6 +55,12 @@ public class FoodTrackerServiceImpl implements FoodTrackerService {
 			throws ServiceException, OutdatedAccessTokenException,
 			EntryNotFoundException {
 		try {
+			if (foodTrackerEntry.getFood().getEntryID() == null) {
+				Integer entryID = webFoodDao.addReturnEntryId(foodTrackerEntry
+						.getFood());
+				foodTrackerEntry.getFood().setEntryID(entryID);
+			}
+
 			webFoodTrackerDao.edit(foodTrackerEntry);
 			mobileFoodTrackerDao.edit(foodTrackerEntry);
 		} catch (WebServerException e) {

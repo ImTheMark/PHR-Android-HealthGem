@@ -954,7 +954,6 @@ public class NewStatusActivity extends android.app.Activity {
 				context);
 		alertDialogBuilder.setView(foodInfoView);
 
-		chosenFood.setEntryID(null); // to change to new food entry
 		editFoodCal = (EditText) foodInfoView.findViewById(R.id.txtEditFoodCal);
 		editFoodCal.setText(String.valueOf(chosenFood.getCalorie()));
 		editFoodProtein = (EditText) foodInfoView
@@ -982,7 +981,8 @@ public class NewStatusActivity extends android.app.Activity {
 								.parseDouble(editFoodCarbs.getText().toString()));
 						chosenFood.setFat(Double.parseDouble(editFoodFats
 								.getText().toString()));
-
+						chosenFood.setEntryID(null); // to change to new food
+														// entry
 						setFoodTemplate(Double.parseDouble(txtFoodQuantity
 								.getText().toString()), chosenFood, notesStatus
 								.getText().toString(), photo);
@@ -2009,7 +2009,6 @@ public class NewStatusActivity extends android.app.Activity {
 					Double.parseDouble(txtFoodQuantity.getText().toString()));
 
 			FoodTrackerService foodTrackerService = new FoodTrackerServiceImpl();
-
 			foodTrackerService.edit(foodEntry);
 
 			Intent intent = new Intent(getApplicationContext(),
