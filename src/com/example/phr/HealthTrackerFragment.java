@@ -24,11 +24,11 @@ public class HealthTrackerFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View rootView = inflater.inflate(R.layout.fragment_health_tracker,
+		View rootView = inflater.inflate(R.layout.fragment_health_tracker_menu,
 				container, false);
 
 		mBtnFoodTracker = (LinearLayout) rootView
-				.findViewById(R.id.btnFoodTracker);
+				.findViewById(R.id.menu_food);
 		mBtnFoodTracker.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -39,7 +39,7 @@ public class HealthTrackerFragment extends Fragment {
 		});
 
 		mBtnCheckupTracker = (LinearLayout) rootView
-				.findViewById(R.id.btnCheckupTracker);
+				.findViewById(R.id.menu_checkup);
 		mBtnCheckupTracker.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -50,7 +50,7 @@ public class HealthTrackerFragment extends Fragment {
 		});
 
 		mBtnBloodPressureTracker = (LinearLayout) rootView
-				.findViewById(R.id.btnBloodPressureTracker);
+				.findViewById(R.id.menu_bp);
 		mBtnBloodPressureTracker.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -61,7 +61,7 @@ public class HealthTrackerFragment extends Fragment {
 		});
 
 		mBtnBloodSugarTracker = (LinearLayout) rootView
-				.findViewById(R.id.btnBloodSugarTracker);
+				.findViewById(R.id.menu_bs);
 		mBtnBloodSugarTracker.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -72,7 +72,7 @@ public class HealthTrackerFragment extends Fragment {
 		});
 
 		mBtnNoteTracker = (LinearLayout) rootView
-				.findViewById(R.id.btnNotesTracker);
+				.findViewById(R.id.menu_note);
 		mBtnNoteTracker.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -83,7 +83,7 @@ public class HealthTrackerFragment extends Fragment {
 		});
 
 		mBtnWeightTracker = (LinearLayout) rootView
-				.findViewById(R.id.btnWeightTracker);
+				.findViewById(R.id.menu_weight);
 		mBtnWeightTracker.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -94,7 +94,7 @@ public class HealthTrackerFragment extends Fragment {
 		});
 
 		mBtnCalorieTracker = (LinearLayout) rootView
-				.findViewById(R.id.btnCalorieTracker);
+				.findViewById(R.id.menu_calorie);
 		mBtnCalorieTracker.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -105,7 +105,7 @@ public class HealthTrackerFragment extends Fragment {
 		});
 
 		mBtnActivityTracker = (LinearLayout) rootView
-				.findViewById(R.id.btnActivitiesTracker);
+				.findViewById(R.id.menu_activity);
 		mBtnActivityTracker.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
