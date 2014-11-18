@@ -481,12 +481,13 @@ public class MobileVerificationDaoImpl implements MobileVerificationDao {
 						Bitmap bitmap = ImageHandler.loadImage(image
 								.getFileName());
 					}
+					
+					MobileActivityDao actDao = new MobileActivityDaoImpl();
 
 					UnverifiedActivityEntry entry = new UnverifiedActivityEntry(
 							cursor.getInt(0), cursor.getString(8), timestamp,
-							cursor.getString(6), image, new Activity(
-									cursor.getInt(3)), cursor.getInt(4),
-							cursor.getDouble(5), cursor.getString(2));
+							cursor.getString(6), image, actDao.get(cursor.getInt(3)), 
+							cursor.getInt(4), cursor.getDouble(5), cursor.getString(2));
 
 					list.add(entry);
 
