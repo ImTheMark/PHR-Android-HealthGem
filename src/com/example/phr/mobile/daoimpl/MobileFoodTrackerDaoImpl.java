@@ -100,7 +100,7 @@ public class MobileFoodTrackerDaoImpl implements MobileFoodTrackerDao {
 		values.put(DatabaseHandler.FOOD_STATUS, food.getStatus());
 
 		try {
-			if (food.getImage().getFileName() != null) {
+			if (food.getImage() != null) {
 				String encoded = food.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				food.getImage().setFileName(fileName);

@@ -1613,7 +1613,7 @@ public class NewStatusActivity extends android.app.Activity {
 				sec = (int) Math.round(Double.parseDouble(txtActivityDuration
 						.getText().toString()) * 3600);
 			else if (txtActivityDurationUnit.getText().toString().equals("min"))
-				sec = (int) Math.round(Double.parseDouble(activityDuration
+				sec = (int) Math.round(Double.parseDouble(txtActivityDuration
 						.getText().toString()) * 60);
 
 			FacebookPostService fbPostService = new FacebookPostServiceImpl();
@@ -2049,10 +2049,12 @@ public class NewStatusActivity extends android.app.Activity {
 				image = null;
 
 			int sec = 0;
-			if (txtActivityDurationUnit.toString().equals("hr"))
-				sec = Integer.parseInt(txtActivityDuration.toString()) * 3600;
-			else if (txtActivityDurationUnit.toString().equals("min"))
-				sec = Integer.parseInt(activityDuration.toString()) * 60;
+			if (txtActivityDurationUnit.getText().toString().equals("hr"))
+				sec = (int) Math.round(Double.parseDouble(txtActivityDuration
+						.getText().toString()) * 3600);
+			else if (txtActivityDurationUnit.getText().toString().equals("min"))
+				sec = (int) Math.round(Double.parseDouble(txtActivityDuration
+						.getText().toString()) * 60);
 
 			Weight weight = null;
 			WeightTrackerService weightService = new WeightTrackerServiceImpl();

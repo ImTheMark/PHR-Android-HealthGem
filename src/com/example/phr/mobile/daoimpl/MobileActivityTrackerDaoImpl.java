@@ -102,7 +102,7 @@ public class MobileActivityTrackerDaoImpl implements MobileActivityTrackerDao {
 		values.put(DatabaseHandler.ACT_STATUS, activity.getStatus());
 
 		try {
-			if (activity.getImage() == null) {
+			if (activity.getImage() != null) {
 				String encoded = activity.getImage().getEncodedImage();
 				String fileName = ImageHandler.saveImageReturnFileName(encoded);
 				activity.getImage().setFileName(fileName);
