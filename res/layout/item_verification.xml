@@ -3,52 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/container_dropshadow"
-    android:padding="15dp"
+    android:padding="10dp"
     android:orientation="vertical" >
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-        
-	    <TextView
-	        android:id="@+id/verification_date"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-			android:textColor="@android:color/black"
-	        android:text="June 28, 2014" />
-	    
-	    <TextView
-	        android:id="@+id/verification_time"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentRight="true"
-			android:textColor="@android:color/black"
-	        android:text="12:34AM" />
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/verification_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="I just ate some delicious chocolate cake today. YUM YUM YUM!"
-		android:textColor="@android:color/black"
-        android:paddingTop="5dp" />
-
-    <ImageView
-        android:id="@+id/verification_statusPhotoHolder"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-		android:padding="10dp"
-		android:visibility="gone"
-        android:src="@drawable/sample_image" />
-
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_weight="2"
-        android:paddingTop="5dp" >
+        android:paddingBottom="5dp" >
 
         <TextView
             android:id="@+id/verification_question"
@@ -75,16 +38,64 @@
             android:layout_weight="1"
 			android:textColor="@android:color/black"
             android:paddingLeft="2dp"
+            android:visibility="gone"
             android:textAppearance="?android:attr/textAppearanceMedium" />
         
     </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F0F0F0"
+        android:layout_margin="10dp"
+        android:padding="5dp"
+        android:orientation="vertical">
 
+	    <RelativeLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+	        
+		    <TextView
+		        android:id="@+id/verification_date"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentLeft="true"
+				android:textColor="@android:color/black"
+		        android:text="June 28, 2014" />
+		    
+		    <TextView
+		        android:id="@+id/verification_time"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentRight="true"
+				android:textColor="@android:color/black"
+		        android:text="12:34AM" />
+	    </RelativeLayout>
+	
+	    <TextView
+	        android:id="@+id/verification_status"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="I just ate some delicious chocolate cake today. YUM YUM YUM!"
+			android:textColor="@android:color/black"
+	        android:paddingTop="5dp" />
+	
+	    <ImageView
+	        android:id="@+id/verification_statusPhotoHolder"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+			android:padding="5dp"
+			android:visibility="gone"
+	        android:src="@drawable/sample_image" />
+	        
+        
+    </LinearLayout>    
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_weight="2"
-        android:paddingTop="5dp" >
+        android:layout_weight="2" >
 
 	    <Button
 		    android:id="@+id/verification_confirm" 
@@ -92,6 +103,7 @@
 		    android:layout_height="wrap_content"
 		    android:drawableLeft="@drawable/activityretrievepost_icon_check"
 		    android:text="Confirm"
+		    android:background="@null"
            	android:layout_weight="1"
            	android:textAppearance="?android:attr/textAppearanceSmall"/>
 
@@ -101,6 +113,7 @@
 		    android:layout_height="wrap_content"
 		    android:drawableLeft="@drawable/activityretrievepost_icon_edit"
 		    android:text="Edit"
+		    android:background="@null"
            	android:layout_weight="1"
            	android:visibility="gone"
            	android:textAppearance="?android:attr/textAppearanceSmall"/>
@@ -111,6 +124,7 @@
 		    android:layout_height="wrap_content"
 		    android:drawableLeft="@drawable/activityretrievepost_icon_delete"
 		    android:text="Ignore"
+		    android:background="@null"
            	android:layout_weight="1"
            	android:textAppearance="?android:attr/textAppearanceSmall"/>
         
