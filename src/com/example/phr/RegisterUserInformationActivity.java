@@ -18,8 +18,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -57,6 +61,8 @@ public class RegisterUserInformationActivity extends Activity {
 	Boolean isRegister = true;
 	UserService userService;
 	WeightTrackerService weightService;
+	LinearLayout registrationHeightInputFeetInches;
+	EditText heightInches;
 	
 	DatePicker datePicker;
 	int year;
@@ -78,10 +84,30 @@ public class RegisterUserInformationActivity extends Activity {
 
 		StrictMode.setThreadPolicy(policy);
 		setContentView(R.layout.activity_registration_user_information);
+		
+		registrationHeightInputFeetInches = (LinearLayout) findViewById(R.id.registrationHeightInputFeetInches);
+		heightInches = (EditText) findViewById(R.id.txtRegistrationHeightInches);
 
 		settingsDao = new MobileSettingsDaoImpl();
 
 		heightUnit = (Spinner) findViewById(R.id.dropdownRegistrationHeight);
+		
+		heightUnit.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				if(position == 0)
+					registrationHeightInputFeetInches.setVisibility(View.VISIBLE);
+				else
+					registrationHeightInputFeetInches.setVisibility(View.GONE);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
+		
 		weightUnit = (Spinner) findViewById(R.id.dropdownRegistrationWeight);
 
 		fullName = (EditText) findViewById(R.id.editTextRegistrationFullName);
@@ -160,11 +186,16 @@ public class RegisterUserInformationActivity extends Activity {
 			}
 
 			if (settingsDao.isHeightSettingInFeet()) {
+				registrationHeightInputFeetInches.setVisibility(View.VISIBLE);
 				heightUnit.setSelection(0);
-				height.setText(currUser.getHeight() + "");
+				double feet = currUser.getHeight() / 12;
+				double inches = currUser.getHeight() % 12;
+				height.setText(feet + "");
+				heightInches.setText(inches + "");
 			}
 
 			else {
+				registrationHeightInputFeetInches.setVisibility(View.GONE);
 				heightUnit.setSelection(1);
 				Double cm = currUser.getHeight() / 0.39370;
 				height.setText(cm + "");
@@ -202,12 +233,18 @@ public class RegisterUserInformationActivity extends Activity {
 				}
 
 				if (settingsDao.isHeightSettingInFeet()) {
+					registrationHeightInputFeetInches.setVisibility(View.VISIBLE);
 					heightUnit.setSelection(0);
-					height.setText(HealthGem.getSharedPreferences()
-							.loadPreferences(SPreference.REGISTER_HEIGHTINCHES));
+					double feet = Double.parseDouble(HealthGem.getSharedPreferences()
+							.loadPreferences(SPreference.REGISTER_HEIGHTINCHES)) / 12;
+					double inches = Double.parseDouble(HealthGem.getSharedPreferences()
+							.loadPreferences(SPreference.REGISTER_HEIGHTINCHES)) % 12;
+					height.setText(feet+"");
+					heightInches.setText(inches +"");
 				}
 
 				else {
+					registrationHeightInputFeetInches.setVisibility(View.GONE);
 					heightUnit.setSelection(1);
 					Double cm = Double.parseDouble(HealthGem.getSharedPreferences()
 							.loadPreferences(SPreference.REGISTER_HEIGHTINCHES)) / 0.39370;
@@ -309,9 +346,10 @@ public class RegisterUserInformationActivity extends Activity {
 						birthdate.getText().toString() + " 00:00:00");
 
 				if (heightUnit.getSelectedItemPosition() == 0) {
+					double inches = Double.parseDouble(height.getText().toString()) * 12 + Double.parseDouble(heightInches.getText().toString());
 					HealthGem.getSharedPreferences().savePreferences(
 							SPreference.REGISTER_HEIGHTINCHES,
-							height.getText().toString());
+							inches+"");
 					settingsDao.setHeightToFeet();
 				} else {
 					Double ft = Double.parseDouble(height.getText().toString()) * 0.39370;
@@ -374,8 +412,8 @@ public class RegisterUserInformationActivity extends Activity {
 				}
 
 				if (heightUnit.getSelectedItemPosition() == 0) {
-					editedUser.setHeight(Double.parseDouble(height.getText()
-							.toString()));
+					double inches = Double.parseDouble(height.getText().toString()) * 12 + Double.parseDouble(heightInches.getText().toString());
+					editedUser.setHeight(inches);
 					settingsDao.setHeightToFeet();
 				} else {
 					Double ft = Double.parseDouble(height.getText().toString()) * 0.39370;
