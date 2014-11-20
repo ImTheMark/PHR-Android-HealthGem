@@ -2,16 +2,23 @@ package com.example.phr;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -50,6 +57,15 @@ public class RegisterUserInformationActivity extends Activity {
 	Boolean isRegister = true;
 	UserService userService;
 	WeightTrackerService weightService;
+	
+	DatePicker datePicker;
+	int year;
+	int month;
+	int day;
+	String yyyy = "";
+	String mm = "";
+	String dd = "";
+	Calendar calendar;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -79,6 +95,18 @@ public class RegisterUserInformationActivity extends Activity {
 		knownHealthProblems = (EditText) findViewById(R.id.EditTextRegistrationHealthProblems);
 		gender = (Spinner) findViewById(R.id.textViewRegistrationGender);
 		birthdate = (EditText) findViewById(R.id.editTextRegistrationBirthDate);
+		birthdate.setInputType(InputType.TYPE_NULL);
+		birthdate.setOnClickListener(new OnClickListener() {
+			@SuppressWarnings("deprecation")
+			@Override
+			public void onClick(View arg0) {
+				showDialog(999);
+			}
+		});
+		calendar = Calendar.getInstance();
+		year = calendar.get(Calendar.YEAR);
+	    month = calendar.get(Calendar.MONTH);
+	    day = calendar.get(Calendar.DAY_OF_MONTH);
 
 		Intent in = getIntent();
 		Bundle extras = getIntent().getExtras();
@@ -97,8 +125,16 @@ public class RegisterUserInformationActivity extends Activity {
 			contactPersonNumber.setText(currUser.getEmergencyContactNumber());
 			allergies.setText(currUser.getAllergies());
 			knownHealthProblems.setText(currUser.getKnownHealthProblems());
-			birthdate.setText((currUser.getDateOfBirth() + "")
-					.subSequence(0, 9));
+			
+			year = Integer.parseInt((String) (currUser.getDateOfBirth() + "").subSequence(0, 3));
+			month = Integer.parseInt((String) (currUser.getDateOfBirth() + "").subSequence(5, 6));
+			day = Integer.parseInt((String) (currUser.getDateOfBirth() + "").subSequence(8, 9));
+			
+			yyyy = (String) (currUser.getDateOfBirth() + "").subSequence(0, 3);
+			mm = (String) (currUser.getDateOfBirth() + "").subSequence(5, 6);
+			dd = (String) (currUser.getDateOfBirth() + "").subSequence(8, 9);
+			
+			//birthdate.setText((currUser.getDateOfBirth() + "").subSequence(0, 9));
 
 			if (currUser.getGender().equals("M"))
 				gender.setSelection(0);
@@ -189,7 +225,36 @@ public class RegisterUserInformationActivity extends Activity {
 					gender.setSelection(1);
 			}
 		}
+		showDate(year, month+1, day);
 	}
+	
+    @Override
+    protected Dialog onCreateDialog(int id) {
+    	if (id == 999)
+    	   return new DatePickerDialog(this, myDateListener, year, month, day);
+       
+    	return null;
+    }
+    
+    private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
+
+	    @Override
+	    public void onDateSet(DatePicker arg0, int year, int month, int day) {
+	       showDate(year, month+1, day);
+	    }
+    };
+    
+    private void showDate(int year, int month, int day) {
+    	yyyy = String.valueOf(year);
+    	mm = String.valueOf(month);
+    	dd = String.valueOf(day);
+    	
+    	if(month < 10)
+    		mm = "0" + mm;
+    	if(day < 10)
+    		dd = "0" + dd;
+    	birthdate.setText(new StringBuilder().append(yyyy).append("-").append(mm).append("-").append(dd));
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
