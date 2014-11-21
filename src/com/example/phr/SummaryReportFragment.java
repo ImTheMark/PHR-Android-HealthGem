@@ -5,17 +5,16 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import org.achartengine.ChartFactory;
-import org.achartengine.chart.BarChart.Type;
-import org.achartengine.model.CategorySeries;
+import org.achartengine.chart.PointStyle;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
-import org.achartengine.renderer.SimpleSeriesRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
@@ -32,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,16 +48,19 @@ import com.example.phr.mobile.daoimpl.MobileFoodTrackerDaoImpl;
 import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
 import com.example.phr.mobile.models.BloodPressure;
 import com.example.phr.mobile.models.BloodSugar;
+import com.example.phr.mobile.models.CalorieTrackerEntry;
 import com.example.phr.mobile.models.GroupedActivity;
 import com.example.phr.mobile.models.GroupedFood;
 import com.example.phr.mobile.models.User;
 import com.example.phr.mobile.models.Weight;
 import com.example.phr.service.BloodPressureTrackerService;
 import com.example.phr.service.BloodSugarTrackerService;
+import com.example.phr.service.CalorieTrackerService;
 import com.example.phr.service.UserService;
 import com.example.phr.service.WeightTrackerService;
 import com.example.phr.serviceimpl.BloodPressureTrackerServiceImpl;
 import com.example.phr.serviceimpl.BloodSugarTrackerServiceImpl;
+import com.example.phr.serviceimpl.CalorieTrackerEntryServiceImpl;
 import com.example.phr.serviceimpl.UserServiceImpl;
 import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
@@ -107,6 +110,11 @@ public class SummaryReportFragment extends Fragment {
 	Calendar calobj;
 	Timestamp timestamp;
 	MobileSettingsDao setting;
+	XYMultipleSeriesDataset calorieListDataset;
+	XYMultipleSeriesRenderer calorieListMultiRenderer;
+	View calorieChart;
+	View rootView;
+	List<CalorieTrackerEntry> calorieTrackerList;
 
 	UserService userService;
 	User user;
@@ -115,7 +123,7 @@ public class SummaryReportFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View rootView = inflater.inflate(R.layout.fragment_summary_report,
+		rootView = inflater.inflate(R.layout.fragment_summary_report,
 				container, false);
 		setting = new MobileSettingsDaoImpl();
 		DecimalFormat df = new DecimalFormat("#.00");
@@ -437,179 +445,281 @@ public class SummaryReportFragment extends Fragment {
 			}
 		});
 
-		View dailyChart;
-		// 300g carbohydrates, 50g of protein and 65g fat
-		// RDI2K(protein) / 2000 = x / BMR
-		double recommendFats = Double.parseDouble(df
-				.format((50 / 2000.0) * bmr));
-		double recommendCarbs = Double.parseDouble(df.format((300 / 2000.0)
-				* bmr));
-		double recommendProtein = Double.parseDouble(df.format((65 / 2000.0)
-				* bmr));
+		calorieTrackerList = new ArrayList<CalorieTrackerEntry>();
 
-		int[] x = { 0, 1, 2 };
-		double[] intake = { groupedFood.getProtein(), groupedFood.getFat(),
-				groupedFood.getCarbohydrates() };
-		double[] recommeded = { recommendProtein, recommendFats, recommendCarbs };
+		CalorieTrackerService calService = new CalorieTrackerEntryServiceImpl();
 
-		String[] mMonth = new String[] { "Protein", "Fats", "Carbohydrates" };
-
-		XYSeries incomeSeries = new XYSeries("Current Intake");
-
-		XYSeries expenseSeries = new XYSeries("Recommended Intake");
-
-		for (int i = 0; i < x.length; i++) {
-			incomeSeries.add(i, intake[i]);
-			expenseSeries.add(i, recommeded[i]);
+		try {
+			calorieTrackerList = calService.getAll();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
+			e.printStackTrace();
 		}
 
-		// Creating a dataset to hold each series
-		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
-		// Adding Income Series to the dataset
-		dataset.addSeries(incomeSeries);
-		// Adding Expense Series to dataset
-		dataset.addSeries(expenseSeries);
-
-		// Creating XYSeriesRenderer to customize incomeSeries
-		XYSeriesRenderer incomeRenderer = new XYSeriesRenderer();
-		incomeRenderer.setColor(Color.parseColor("#C177C9"));
-		incomeRenderer.setFillPoints(true);
-		incomeRenderer.setLineWidth(2);
-		incomeRenderer.setDisplayChartValues(true);
-		incomeRenderer.setChartValuesTextSize(20);
-
-		// Creating XYSeriesRenderer to customize expenseSeries
-		XYSeriesRenderer expenseRenderer = new XYSeriesRenderer();
-		expenseRenderer.setColor(Color.parseColor("#5C77D1"));
-		expenseRenderer.setFillPoints(true);
-		expenseRenderer.setLineWidth(2);
-
-		expenseRenderer.setDisplayChartValues(true);
-		expenseRenderer.setChartValuesTextSize(20);
-
-		// Creating a XYMultipleSeriesRenderer to customize the whole chart
-		XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
-		multiRenderer.setXLabels(0);
-		multiRenderer.setChartTitle("My Daily Nutritional Value Chart \n\n\n");
-		multiRenderer.setAxisTitleTextSize(20);
-		multiRenderer.setXTitle("\n\n\n Year 2014");
-		multiRenderer.setYTitle("");
-		multiRenderer.setZoomButtonsVisible(false);
-		multiRenderer.setZoomEnabled(false);
-		multiRenderer.setMargins(new int[] { 60, 30, 15, 0 });
-		multiRenderer.setXAxisMin(-1);
-		multiRenderer.setXAxisMax(3);
-		multiRenderer.setYAxisMin(0);
-		// multiRenderer.setAxisTitleTextSize(30);
-		multiRenderer.setChartTitleTextSize(25);
-		multiRenderer.setLabelsTextSize(15);
-		multiRenderer.setAxesColor(Color.BLACK);
-		multiRenderer.setLabelsColor(Color.BLACK);
-		multiRenderer.setXLabelsColor(Color.BLACK);
-		multiRenderer.setYLabelsColor(0, Color.BLACK);
-		// multiRenderer.setLegendTextSize(15);
-		multiRenderer.setLabelsTextSize(20);
-		// multiRenderer.setLegendHeight(20);
-		multiRenderer.setLegendTextSize(20);
-		multiRenderer.setApplyBackgroundColor(true);
-		multiRenderer.setBackgroundColor(Color.argb(0x00, 0x01, 0x01, 0x01));
-		multiRenderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
-
-		for (int i = 0; i < x.length; i++) {
-			multiRenderer.addXTextLabel(i, mMonth[i]);
-		}
-
-		// Adding incomeRenderer and expenseRenderer to multipleRenderer
-		// Note: The order of adding dataseries to dataset and renderers to
-		// multipleRenderer
-		// should be same
-		multiRenderer.addSeriesRenderer(incomeRenderer);
-		multiRenderer.addSeriesRenderer(expenseRenderer);
-
-		// Creating an intent to plot bar chart using dataset and
-		// multipleRenderer
-		dailyChart = ChartFactory.getBarChartView(getActivity()
-				.getBaseContext(), dataset, multiRenderer, Type.DEFAULT);
-
-		dailyContainer = (LinearLayout) rootView.findViewById(R.id.piegraph);
+		createGraph();
 
 		dailyContainer.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(getActivity(),
-						FoodTrackerDailyActivity.class);
-				SimpleDateFormat fmt = new SimpleDateFormat(
-						"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-				String txtdate = fmt.format(timestamp);
-				Log.e("home", txtdate);
-				i.putExtra("date", txtdate);
+						CalorieTrackerActivity.class);
 				startActivity(i);
 			}
 		});
 
-		dailyContainer.addView(dailyChart);
+		calorieChart.setOnClickListener(new OnClickListener() {
 
-		dailyChart.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(getActivity(),
-						FoodTrackerDailyActivity.class);
-				SimpleDateFormat fmt = new SimpleDateFormat(
-						"yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-				String txtdate = fmt.format(timestamp);
-				Log.e("home", txtdate);
-				i.putExtra("date", txtdate);
+						CalorieTrackerActivity.class);
 				startActivity(i);
 			}
 		});
 
+		/*
+		 * View dailyChart; // 300g carbohydrates, 50g of protein and 65g fat //
+		 * RDI2K(protein) / 2000 = x / BMR double recommendFats =
+		 * Double.parseDouble(df .format((50 / 2000.0) * bmr)); double
+		 * recommendCarbs = Double.parseDouble(df.format((300 / 2000.0) bmr));
+		 * double recommendProtein = Double.parseDouble(df.format((65 / 2000.0)
+		 * bmr));
+		 * 
+		 * int[] x = { 0, 1, 2 }; double[] intake = { groupedFood.getProtein(),
+		 * groupedFood.getFat(), groupedFood.getCarbohydrates() }; double[]
+		 * recommeded = { recommendProtein, recommendFats, recommendCarbs };
+		 * 
+		 * String[] mMonth = new String[] { "Protein", "Fats", "Carbohydrates"
+		 * };
+		 * 
+		 * XYSeries incomeSeries = new XYSeries("Current Intake");
+		 * 
+		 * XYSeries expenseSeries = new XYSeries("Recommended Intake");
+		 * 
+		 * for (int i = 0; i < x.length; i++) { incomeSeries.add(i, intake[i]);
+		 * expenseSeries.add(i, recommeded[i]); }
+		 * 
+		 * // Creating a dataset to hold each series XYMultipleSeriesDataset
+		 * dataset = new XYMultipleSeriesDataset(); // Adding Income Series to
+		 * the dataset dataset.addSeries(incomeSeries); // Adding Expense Series
+		 * to dataset dataset.addSeries(expenseSeries);
+		 * 
+		 * // Creating XYSeriesRenderer to customize incomeSeries
+		 * XYSeriesRenderer incomeRenderer = new XYSeriesRenderer();
+		 * incomeRenderer.setColor(Color.parseColor("#C177C9"));
+		 * incomeRenderer.setFillPoints(true); incomeRenderer.setLineWidth(2);
+		 * incomeRenderer.setDisplayChartValues(true);
+		 * incomeRenderer.setChartValuesTextSize(20);
+		 * 
+		 * // Creating XYSeriesRenderer to customize expenseSeries
+		 * XYSeriesRenderer expenseRenderer = new XYSeriesRenderer();
+		 * expenseRenderer.setColor(Color.parseColor("#5C77D1"));
+		 * expenseRenderer.setFillPoints(true); expenseRenderer.setLineWidth(2);
+		 * 
+		 * expenseRenderer.setDisplayChartValues(true);
+		 * expenseRenderer.setChartValuesTextSize(20);
+		 * 
+		 * // Creating a XYMultipleSeriesRenderer to customize the whole chart
+		 * XYMultipleSeriesRenderer multiRenderer = new
+		 * XYMultipleSeriesRenderer(); multiRenderer.setXLabels(0);
+		 * multiRenderer
+		 * .setChartTitle("My Daily Nutritional Value Chart \n\n\n");
+		 * multiRenderer.setAxisTitleTextSize(20);
+		 * multiRenderer.setXTitle("\n\n\n Year 2014");
+		 * multiRenderer.setYTitle("");
+		 * multiRenderer.setZoomButtonsVisible(false);
+		 * multiRenderer.setZoomEnabled(false); multiRenderer.setMargins(new
+		 * int[] { 60, 30, 15, 0 }); multiRenderer.setXAxisMin(-1);
+		 * multiRenderer.setXAxisMax(3); multiRenderer.setYAxisMin(0); //
+		 * multiRenderer.setAxisTitleTextSize(30);
+		 * multiRenderer.setChartTitleTextSize(25);
+		 * multiRenderer.setLabelsTextSize(15);
+		 * multiRenderer.setAxesColor(Color.BLACK);
+		 * multiRenderer.setLabelsColor(Color.BLACK);
+		 * multiRenderer.setXLabelsColor(Color.BLACK);
+		 * multiRenderer.setYLabelsColor(0, Color.BLACK); //
+		 * multiRenderer.setLegendTextSize(15);
+		 * multiRenderer.setLabelsTextSize(20); //
+		 * multiRenderer.setLegendHeight(20);
+		 * multiRenderer.setLegendTextSize(20);
+		 * multiRenderer.setApplyBackgroundColor(true);
+		 * multiRenderer.setBackgroundColor(Color.argb(0x00, 0x01, 0x01, 0x01));
+		 * multiRenderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
+		 * 
+		 * for (int i = 0; i < x.length; i++) { multiRenderer.addXTextLabel(i,
+		 * mMonth[i]); }
+		 * 
+		 * // Adding incomeRenderer and expenseRenderer to multipleRenderer //
+		 * Note: The order of adding dataseries to dataset and renderers to //
+		 * multipleRenderer // should be same
+		 * multiRenderer.addSeriesRenderer(incomeRenderer);
+		 * multiRenderer.addSeriesRenderer(expenseRenderer);
+		 * 
+		 * // Creating an intent to plot bar chart using dataset and //
+		 * multipleRenderer dailyChart =
+		 * ChartFactory.getBarChartView(getActivity() .getBaseContext(),
+		 * dataset, multiRenderer, Type.DEFAULT);
+		 * 
+		 * dailyContainer = (LinearLayout) rootView.findViewById(R.id.piegraph);
+		 * 
+		 * dailyContainer.setOnClickListener(new OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) { Intent i = new
+		 * Intent(getActivity(), FoodTrackerDailyActivity.class);
+		 * SimpleDateFormat fmt = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss",
+		 * Locale.ENGLISH); String txtdate = fmt.format(timestamp);
+		 * Log.e("home", txtdate); i.putExtra("date", txtdate);
+		 * startActivity(i); } });
+		 * 
+		 * dailyContainer.addView(dailyChart);
+		 * 
+		 * 
+		 * dailyChart.setOnClickListener(new OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) { Intent i = new
+		 * Intent(getActivity(), FoodTrackerDailyActivity.class);
+		 * SimpleDateFormat fmt = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss",
+		 * Locale.ENGLISH); String txtdate = fmt.format(timestamp);
+		 * Log.e("home", txtdate); i.putExtra("date", txtdate);
+		 * startActivity(i); } });
+		 */
 		return rootView;
 	}
 
-	protected void setChartSettings(XYMultipleSeriesRenderer renderer,
-			String title, String xTitle, String yTitle, double xMin,
-			double xMax, double yMin, double yMax, int axesColor,
-			int labelsColor) {
-		renderer.setChartTitle(title);
-		renderer.setXTitle(xTitle);
-		renderer.setYTitle(yTitle);
-		renderer.setXAxisMin(xMin);
-		renderer.setXAxisMax(xMax);
-		renderer.setYAxisMin(yMin);
-		renderer.setYAxisMax(yMax);
-		renderer.setAxesColor(axesColor);
-		renderer.setLabelsColor(labelsColor);
+	public void createGraph() {
+
+		ArrayList<String> calorieMonth = getLastSevenDateTime();
+		ArrayList<Integer> caloriex = getGraphElement();
+		ArrayList<Integer> calIntake = getLastSevenIntake();
+		ArrayList<Integer> calBurned = getLastSevenBurned();
+
+		XYSeries intakeSeries = new XYSeries("Intake");
+		XYSeries burnedSeries = new XYSeries("Burned");
+
+		for (int i = 0; i < caloriex.size(); i++) {
+			intakeSeries.add(caloriex.get(i), calIntake.get(i));
+			burnedSeries.add(caloriex.get(i), calBurned.get(i));
+		}
+
+		XYMultipleSeriesDataset calorieDataset = new XYMultipleSeriesDataset();
+
+		calorieDataset.addSeries(intakeSeries);
+		calorieDataset.addSeries(burnedSeries);
+
+		XYSeriesRenderer intakeRenderer = new XYSeriesRenderer();
+		intakeRenderer.setColor(Color.parseColor("#B559BA"));
+		intakeRenderer.setPointStyle(PointStyle.CIRCLE);
+		intakeRenderer.setFillPoints(true);
+		intakeRenderer.setLineWidth(10);
+		intakeRenderer.setDisplayChartValues(true);
+		intakeRenderer.setChartValuesTextSize(25);
+		intakeRenderer.setChartValuesSpacing(20);
+
+		XYSeriesRenderer burnedRenderer = new XYSeriesRenderer();
+		burnedRenderer.setColor(Color.parseColor("#5C77D1"));
+		burnedRenderer.setPointStyle(PointStyle.CIRCLE);
+		burnedRenderer.setFillPoints(true);
+		burnedRenderer.setLineWidth(10);
+		burnedRenderer.setDisplayChartValues(true);
+		burnedRenderer.setChartValuesTextSize(25);
+		burnedRenderer.setChartValuesSpacing(20);
+
+		calorieListMultiRenderer = new
+
+		XYMultipleSeriesRenderer();
+		calorieListMultiRenderer.setXLabels(0);
+		calorieListMultiRenderer.setChartTitle("Calorie Graph");
+		calorieListMultiRenderer.setXTitle("\n\n\n\n\n\n Year 2014");
+		calorieListMultiRenderer.setYTitle("Kcal");
+		calorieListMultiRenderer.setZoomButtonsVisible(false);
+		calorieListMultiRenderer.setAxisTitleTextSize(30);
+		calorieListMultiRenderer.setChartTitleTextSize(30);
+		calorieListMultiRenderer.setLegendTextSize(30);
+		calorieListMultiRenderer.setPointSize(10);
+		calorieListMultiRenderer.setXAxisMin(calorieTrackerList.size() - 6);
+		calorieListMultiRenderer.setXAxisMax(calorieTrackerList.size());
+		calorieListMultiRenderer.setPanEnabled(true, false);
+		calorieListMultiRenderer.setZoomEnabled(false, false);
+		calorieListMultiRenderer.setClickEnabled(false);
+		calorieListMultiRenderer.setInScroll(true);
+
+		// margin --- top, left, bottom, right
+		calorieListMultiRenderer.setMargins(new int[] { 90, 150, 100, 50 });
+		calorieListMultiRenderer.setLegendHeight(60);
+
+		for (int i = 0; i < calorieMonth.size(); i++) {
+			calorieListMultiRenderer.addXTextLabel(i + 1, calorieMonth.get(i));
+		}
+
+		calorieListMultiRenderer.setApplyBackgroundColor(true);
+		calorieListMultiRenderer.setBackgroundColor(Color.argb(0x00, 0x01,
+				0x01, 0x01));
+		calorieListMultiRenderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01,
+				0x01));
+		calorieListMultiRenderer.setAxesColor(Color.BLACK);
+		calorieListMultiRenderer.setLabelsColor(Color.BLACK);
+		calorieListMultiRenderer.setXLabelsColor(Color.BLACK);
+		calorieListMultiRenderer.setYLabelsColor(0, Color.BLACK);
+		calorieListMultiRenderer.setAxisTitleTextSize(30);
+		calorieListMultiRenderer.setLabelsTextSize(30);
+
+		calorieListMultiRenderer.addSeriesRenderer(intakeRenderer);
+		calorieListMultiRenderer.addSeriesRenderer(burnedRenderer);
+
+		dailyContainer = (LinearLayout) rootView.findViewById(R.id.piegraph);
+
+		calorieChart = ChartFactory.getLineChartView(getActivity(),
+				calorieDataset, calorieListMultiRenderer);
+
+		dailyContainer.addView(calorieChart, new LayoutParams(
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
 	}
 
-	protected XYMultipleSeriesRenderer buildBarRenderer(int[] colors) {
-		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
-		renderer.setAxisTitleTextSize(16);
-		renderer.setChartTitleTextSize(20);
-		renderer.setLabelsTextSize(15);
-		renderer.setLegendTextSize(15);
-		int length = colors.length;
-		for (int i = 0; i < length; i++) {
-			SimpleSeriesRenderer r = new SimpleSeriesRenderer();
-			r.setColor(colors[i]);
-			renderer.addSeriesRenderer(r);
-		}
-		return renderer;
+	public ArrayList<String> getLastSevenDateTime() {
+		ArrayList<String> calorieDate = new ArrayList<String>();
+
+		for (int i = calorieTrackerList.size() - 1; i >= 0; i--)
+			calorieDate.add(DateTimeParser.getMonthDay(calorieTrackerList
+					.get(i).getDate())
+					+ " \n "
+					+ DateTimeParser.getTime(calorieTrackerList.get(i)
+							.getDate()));
+
+		return calorieDate;
+
 	}
 
-	protected XYMultipleSeriesDataset buildBarDataset(String[] titles,
-			List<double[]> values) {// The data source and the pie chart almost,
-									// is by some key value pairs
-		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
-		int length = titles.length;
-		for (int i = 0; i < length; i++) {
-			CategorySeries series = new CategorySeries(titles[i]);
-			double[] v = values.get(i);
-			int seriesLength = v.length;
-			for (int k = 0; k < seriesLength; k++) {
-				series.add(v[k]);
-			}
-			dataset.addSeries(series.toXYSeries());
-		}
-		return dataset;
+	public ArrayList<Integer> getLastSevenIntake() {
+		ArrayList<Integer> intake = new ArrayList<Integer>();
+
+		for (int i = calorieTrackerList.size() - 1; i >= 0; i--)
+			intake.add((int) Math.round(calorieTrackerList.get(i)
+					.getTotalCalIntake()));
+
+		return intake;
 	}
+
+	public ArrayList<Integer> getLastSevenBurned() {
+		ArrayList<Integer> burned = new ArrayList<Integer>();
+
+		for (int i = calorieTrackerList.size() - 1; i >= 0; i--)
+			burned.add((int) Math.round(calorieTrackerList.get(i)
+					.getTotalCalBurned()));
+
+		return burned;
+	}
+
+	public ArrayList<Integer> getGraphElement() {
+		ArrayList<Integer> number = new ArrayList<Integer>();
+
+		for (int i = 0; i < calorieTrackerList.size(); i++)
+			number.add(i + 1);
+
+		return number;
+	}
+
 }
