@@ -14,12 +14,12 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -63,7 +63,7 @@ public class RegisterUserInformationActivity extends Activity {
 	WeightTrackerService weightService;
 	LinearLayout registrationHeightInputFeetInches;
 	EditText heightInches;
-	
+
 	DatePicker datePicker;
 	int year;
 	int month;
@@ -84,21 +84,22 @@ public class RegisterUserInformationActivity extends Activity {
 
 		StrictMode.setThreadPolicy(policy);
 		setContentView(R.layout.activity_registration_user_information);
-		
+
 		registrationHeightInputFeetInches = (LinearLayout) findViewById(R.id.registrationHeightInputFeetInches);
 		heightInches = (EditText) findViewById(R.id.txtRegistrationHeightInches);
 
 		settingsDao = new MobileSettingsDaoImpl();
 
 		heightUnit = (Spinner) findViewById(R.id.dropdownRegistrationHeight);
-		
+
 		heightUnit.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				if(position == 0)
-					registrationHeightInputFeetInches.setVisibility(View.VISIBLE);
+				if (position == 0)
+					registrationHeightInputFeetInches
+							.setVisibility(View.VISIBLE);
 				else
 					registrationHeightInputFeetInches.setVisibility(View.GONE);
 			}
@@ -107,7 +108,7 @@ public class RegisterUserInformationActivity extends Activity {
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 		});
-		
+
 		weightUnit = (Spinner) findViewById(R.id.dropdownRegistrationWeight);
 
 		fullName = (EditText) findViewById(R.id.editTextRegistrationFullName);
@@ -131,8 +132,8 @@ public class RegisterUserInformationActivity extends Activity {
 		});
 		calendar = Calendar.getInstance();
 		year = calendar.get(Calendar.YEAR);
-	    month = calendar.get(Calendar.MONTH);
-	    day = calendar.get(Calendar.DAY_OF_MONTH);
+		month = calendar.get(Calendar.MONTH);
+		day = calendar.get(Calendar.DAY_OF_MONTH);
 
 		Intent in = getIntent();
 		Bundle extras = getIntent().getExtras();
@@ -151,16 +152,29 @@ public class RegisterUserInformationActivity extends Activity {
 			contactPersonNumber.setText(currUser.getEmergencyContactNumber());
 			allergies.setText(currUser.getAllergies());
 			knownHealthProblems.setText(currUser.getKnownHealthProblems());
-			
-			year = Integer.parseInt((String) (currUser.getDateOfBirth() + "").subSequence(0, 3));
-			month = Integer.parseInt((String) (currUser.getDateOfBirth() + "").subSequence(5, 6));
-			day = Integer.parseInt((String) (currUser.getDateOfBirth() + "").subSequence(8, 9));
-			
-			yyyy = (String) (currUser.getDateOfBirth() + "").subSequence(0, 3);
-			mm = (String) (currUser.getDateOfBirth() + "").subSequence(5, 6);
-			dd = (String) (currUser.getDateOfBirth() + "").subSequence(8, 9);
-			
-			//birthdate.setText((currUser.getDateOfBirth() + "").subSequence(0, 9));
+
+			Log.e("DATE", currUser.getDateOfBirth() + "");
+
+			year = Integer.parseInt((String) (currUser.getDateOfBirth() + "")
+					.subSequence(0, 4));
+			month = Integer.parseInt((String) (currUser.getDateOfBirth() + "")
+					.subSequence(5, 7));
+			day = Integer.parseInt((String) (currUser.getDateOfBirth() + "")
+					.subSequence(8, 10));
+
+			Log.e("DATEyear", year + "");
+			Log.e("DATEmonth", month + "");
+			Log.e("DATEday", day + "");
+
+			yyyy = (String) (currUser.getDateOfBirth() + "").subSequence(0, 4);
+			mm = (String) (currUser.getDateOfBirth() + "").subSequence(5, 7);
+			dd = (String) (currUser.getDateOfBirth() + "").subSequence(8, 10);
+
+			Log.e("DATEyear", yyyy + "");
+			Log.e("DATEmonth", mm + "");
+			Log.e("DATEday", dd + "");
+			// birthdate.setText((currUser.getDateOfBirth() + "").subSequence(0,
+			// 9));
 
 			if (currUser.getGender().equals("M"))
 				gender.setSelection(0);
@@ -205,9 +219,10 @@ public class RegisterUserInformationActivity extends Activity {
 		// REGISTER MODE
 
 		else {
-			if(HealthGem.getSharedPreferences().getPreferences().contains(SPreference.REGISTER_NAME)){
-				fullName.setText(HealthGem.getSharedPreferences().loadPreferences(
-						SPreference.REGISTER_NAME));
+			if (HealthGem.getSharedPreferences().getPreferences()
+					.contains(SPreference.REGISTER_NAME)) {
+				fullName.setText(HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_NAME));
 				contactNumber.setText(HealthGem.getSharedPreferences()
 						.loadPreferences(SPreference.REGISTER_CONTACTNUMBER));
 				email.setText(HealthGem.getSharedPreferences().loadPreferences(
@@ -215,11 +230,13 @@ public class RegisterUserInformationActivity extends Activity {
 				contactPerson.setText(HealthGem.getSharedPreferences()
 						.loadPreferences(SPreference.REGISTER_CONTACTPERSON));
 				contactPersonNumber.setText(HealthGem.getSharedPreferences()
-						.loadPreferences(SPreference.REGISTER_CONTACTPERSONNUMBER));
-				allergies.setText(HealthGem.getSharedPreferences().loadPreferences(
-						SPreference.REGISTER_ALLERGIES));
+						.loadPreferences(
+								SPreference.REGISTER_CONTACTPERSONNUMBER));
+				allergies.setText(HealthGem.getSharedPreferences()
+						.loadPreferences(SPreference.REGISTER_ALLERGIES));
 				knownHealthProblems.setText(HealthGem.getSharedPreferences()
-						.loadPreferences(SPreference.REGISTER_KNOWNHEALTHPROBLEMS));
+						.loadPreferences(
+								SPreference.REGISTER_KNOWNHEALTHPROBLEMS));
 
 				if (settingsDao.isWeightSettingInPounds()) {
 					weightUnit.setSelection(0);
@@ -227,27 +244,32 @@ public class RegisterUserInformationActivity extends Activity {
 							.loadPreferences(SPreference.REGISTER_WEIGHTPOUNDS));
 				} else {
 					weightUnit.setSelection(1);
-					Double kg = Double.parseDouble(HealthGem.getSharedPreferences()
-							.loadPreferences(SPreference.REGISTER_WEIGHTPOUNDS)) / 2.2;
+					Double kg = Double.parseDouble(HealthGem
+							.getSharedPreferences().loadPreferences(
+									SPreference.REGISTER_WEIGHTPOUNDS)) / 2.2;
 					weight.setText(kg + "");
 				}
 
 				if (settingsDao.isHeightSettingInFeet()) {
-					registrationHeightInputFeetInches.setVisibility(View.VISIBLE);
+					registrationHeightInputFeetInches
+							.setVisibility(View.VISIBLE);
 					heightUnit.setSelection(0);
-					double feet = Double.parseDouble(HealthGem.getSharedPreferences()
-							.loadPreferences(SPreference.REGISTER_HEIGHTINCHES)) / 12;
-					double inches = Double.parseDouble(HealthGem.getSharedPreferences()
-							.loadPreferences(SPreference.REGISTER_HEIGHTINCHES)) % 12;
-					height.setText(feet+"");
-					heightInches.setText(inches +"");
+					double feet = Double.parseDouble(HealthGem
+							.getSharedPreferences().loadPreferences(
+									SPreference.REGISTER_HEIGHTINCHES)) / 12;
+					double inches = Double.parseDouble(HealthGem
+							.getSharedPreferences().loadPreferences(
+									SPreference.REGISTER_HEIGHTINCHES)) % 12;
+					height.setText(feet + "");
+					heightInches.setText(inches + "");
 				}
 
 				else {
 					registrationHeightInputFeetInches.setVisibility(View.GONE);
 					heightUnit.setSelection(1);
-					Double cm = Double.parseDouble(HealthGem.getSharedPreferences()
-							.loadPreferences(SPreference.REGISTER_HEIGHTINCHES)) / 0.39370;
+					Double cm = Double.parseDouble(HealthGem
+							.getSharedPreferences().loadPreferences(
+									SPreference.REGISTER_HEIGHTINCHES)) / 0.39370;
 					height.setText(cm + "");
 				}
 
@@ -262,36 +284,37 @@ public class RegisterUserInformationActivity extends Activity {
 					gender.setSelection(1);
 			}
 		}
-		showDate(year, month+1, day);
+		showDate(year, month + 1, day);
 	}
-	
-    @Override
-    protected Dialog onCreateDialog(int id) {
-    	if (id == 999)
-    	   return new DatePickerDialog(this, myDateListener, year, month, day);
-       
-    	return null;
-    }
-    
-    private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
 
-	    @Override
-	    public void onDateSet(DatePicker arg0, int year, int month, int day) {
-	       showDate(year, month+1, day);
-	    }
-    };
-    
-    private void showDate(int year, int month, int day) {
-    	yyyy = String.valueOf(year);
-    	mm = String.valueOf(month);
-    	dd = String.valueOf(day);
-    	
-    	if(month < 10)
-    		mm = "0" + mm;
-    	if(day < 10)
-    		dd = "0" + dd;
-    	birthdate.setText(new StringBuilder().append(yyyy).append("-").append(mm).append("-").append(dd));
-    }
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		if (id == 999)
+			return new DatePickerDialog(this, myDateListener, year, month, day);
+
+		return null;
+	}
+
+	private final DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
+
+		@Override
+		public void onDateSet(DatePicker arg0, int year, int month, int day) {
+			showDate(year, month + 1, day);
+		}
+	};
+
+	private void showDate(int year, int month, int day) {
+		yyyy = String.valueOf(year);
+		mm = String.valueOf(month);
+		dd = String.valueOf(day);
+
+		if (month < 10)
+			mm = "0" + mm;
+		if (day < 10)
+			dd = "0" + dd;
+		birthdate.setText(new StringBuilder().append(yyyy).append("-")
+				.append(mm).append("-").append(dd));
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -346,10 +369,13 @@ public class RegisterUserInformationActivity extends Activity {
 						birthdate.getText().toString() + " 00:00:00");
 
 				if (heightUnit.getSelectedItemPosition() == 0) {
-					double inches = Double.parseDouble(height.getText().toString()) * 12 + Double.parseDouble(heightInches.getText().toString());
+					double inches = Double.parseDouble(height.getText()
+							.toString())
+							* 12
+							+ Double.parseDouble(heightInches.getText()
+									.toString());
 					HealthGem.getSharedPreferences().savePreferences(
-							SPreference.REGISTER_HEIGHTINCHES,
-							inches+"");
+							SPreference.REGISTER_HEIGHTINCHES, inches + "");
 					settingsDao.setHeightToFeet();
 				} else {
 					Double ft = Double.parseDouble(height.getText().toString()) * 0.39370;
@@ -412,7 +438,11 @@ public class RegisterUserInformationActivity extends Activity {
 				}
 
 				if (heightUnit.getSelectedItemPosition() == 0) {
-					double inches = Double.parseDouble(height.getText().toString()) * 12 + Double.parseDouble(heightInches.getText().toString());
+					double inches = Double.parseDouble(height.getText()
+							.toString())
+							* 12
+							+ Double.parseDouble(heightInches.getText()
+									.toString());
 					editedUser.setHeight(inches);
 					settingsDao.setHeightToFeet();
 				} else {
