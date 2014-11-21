@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,9 +55,9 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 		TextView word;
 		TextView amount;
 		TextView question;
-		Button confirm;
+		ImageButton confirm;
 		Button edit;
-		Button ignore;
+		ImageButton ignore;
 		ImageView statusImg;
 	}
 
@@ -108,11 +109,11 @@ public class UnverifiedStatusAdapter extends BaseAdapter {
 					.findViewById(R.id.verification_extracted_word);
 			viewHolder.amount = (TextView) convertView
 					.findViewById(R.id.verification_extracted_amount);
-			viewHolder.confirm = (Button) convertView
+			viewHolder.confirm = (ImageButton) convertView
 					.findViewById(R.id.verification_confirm);
 			viewHolder.edit = (Button) convertView
 					.findViewById(R.id.verification_edit);
-			viewHolder.ignore = (Button) convertView
+			viewHolder.ignore = (ImageButton) convertView
 					.findViewById(R.id.verification_ignore);
 			viewHolder.statusImg = (ImageView) convertView
 					.findViewById(R.id.verification_statusPhotoHolder);

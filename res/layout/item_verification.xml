@@ -86,14 +86,13 @@
         android:layout_weight="2"
         android:paddingTop="5dp" >
 
-	    <Button
+	    <ImageButton
 		    android:id="@+id/verification_confirm" 
 		    android:layout_width="0dp" 
+		    android:background="@null"
 		    android:layout_height="wrap_content"
-		    android:drawableLeft="@drawable/activityretrievepost_icon_check"
-		    android:text="Confirm"
-           	android:layout_weight="1"
-           	android:textAppearance="?android:attr/textAppearanceSmall"/>
+		    android:src="@drawable/activityretrievepost_icon_check"
+           	android:layout_weight="1"/>
 
 	    <Button
 		    android:id="@+id/verification_edit" 
@@ -105,14 +104,13 @@
            	android:visibility="gone"
            	android:textAppearance="?android:attr/textAppearanceSmall"/>
 
-	    <Button
+	    <ImageButton
 		    android:id="@+id/verification_ignore" 
 		    android:layout_width="0dp" 
+		    android:background="@null"
 		    android:layout_height="wrap_content"
-		    android:drawableLeft="@drawable/activityretrievepost_icon_delete"
-		    android:text="Ignore"
-           	android:layout_weight="1"
-           	android:textAppearance="?android:attr/textAppearanceSmall"/>
+		    android:src="@drawable/activityretrievepost_icon_delete"
+           	android:layout_weight="1"/>
         
     </LinearLayout>
 
