@@ -90,6 +90,17 @@ public class CheckupTrackerActivity extends Activity {
 				startActivity(i);
 			}
 		});
+		
+		mBtnCheckupDoctor = (LinearLayout) findViewById(R.id.btnAddCheckupDoctor);
+		mBtnCheckupDoctor.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getApplicationContext(),
+						NewStatusActivity.class);
+				i.putExtra("tracker", TrackerInputType.CHECKUP);
+				startActivity(i);
+			}
+		});
 
 	}
 

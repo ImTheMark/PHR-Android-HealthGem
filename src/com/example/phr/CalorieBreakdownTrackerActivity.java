@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -32,6 +33,7 @@ public class CalorieBreakdownTrackerActivity extends Activity {
 		StrictMode.setThreadPolicy(policy);
 		setContentView(R.layout.activity_calorie_breakdown_tracker);
 		setTitle("Calorie Breakdown Tracker");
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		mCalorieList = (ListView) findViewById(R.id.breakdown_list);
 
 		Intent in = getIntent();
@@ -43,6 +45,16 @@ public class CalorieBreakdownTrackerActivity extends Activity {
 
 		mCalorieList.setAdapter(calorieAdapter);
 
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			onBackPressed();
+			break;
+		}
+		return true;
 	}
 
 }

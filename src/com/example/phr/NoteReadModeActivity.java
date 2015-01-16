@@ -8,7 +8,9 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,7 @@ public class NoteReadModeActivity extends Activity {
 	TextView time;
 	TextView note;
 	ImageView image;
+	LinearLayout noteImageLayout;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -45,6 +48,7 @@ public class NoteReadModeActivity extends Activity {
 
 		Intent in = getIntent();
 		chosenItem = (Note) in.getExtras().getSerializable("object");
+		noteImageLayout = (LinearLayout) findViewById(R.id.noteImageLayout);
 
 		date = (TextView) findViewById(R.id.textViewNoteReadDate);
 		time = (TextView) findViewById(R.id.textViewNoteReadTime);
@@ -63,6 +67,8 @@ public class NoteReadModeActivity extends Activity {
 			image.setImageBitmap(ImageHandler.loadImage(chosenItem.getImage()
 					.getFileName()));
 		}
+		else
+			noteImageLayout.setVisibility(View.GONE);
 
 	}
 

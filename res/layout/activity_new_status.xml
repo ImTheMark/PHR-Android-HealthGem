@@ -22,7 +22,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:background="#00000000"
-	            android:hint=" How you feel ? " 
+	            android:hint=" How do you feel ? " 
 	            android:padding="10dp"
 	            android:inputType="textMultiLine"
 	            >
