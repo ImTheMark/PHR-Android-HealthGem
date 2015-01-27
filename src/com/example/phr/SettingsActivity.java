@@ -32,6 +32,7 @@ public class SettingsActivity extends Activity {
 	private ToggleButton bloodSugarButton;
 	private MobileSettingsDao settingsDao;
 	private UserService userService;
+	private int position = -1;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -157,6 +158,15 @@ public class SettingsActivity extends Activity {
 				}
 			}
 		});
+		
+
+
+		Intent in = getIntent();
+		Bundle extras = getIntent().getExtras();
+
+		if (extras != null && in.hasExtra("gotoSettings")) {
+			position = in.getExtras().getInt("gotoSettings");
+		}
 	}
 
 	@Override
@@ -178,6 +188,8 @@ public class SettingsActivity extends Activity {
 		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
 				| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		if(position != -1)
+			intent.putExtra("gotoMainfromSettings", position);
 		startActivity(intent);
 
 	}

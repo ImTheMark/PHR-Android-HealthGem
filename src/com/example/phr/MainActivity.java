@@ -225,6 +225,10 @@ public class MainActivity extends FragmentActivity implements
 			int position = in.getExtras().getInt("backToMenu");
 			viewPager.setCurrentItem(position);
 		}
+		else if (extras != null && in.hasExtra("gotoMainfromSettings")) {
+			int position = in.getExtras().getInt("gotoMainfromSettings");
+			viewPager.setCurrentItem(position);
+		}
 
 	}
 
@@ -319,6 +323,7 @@ public class MainActivity extends FragmentActivity implements
 		case R.id.action_settings:
 			Intent intent = new Intent(getApplicationContext(),
 					SettingsActivity.class);
+			intent.putExtra("gotoSettings", viewPager.getCurrentItem());
 			startActivity(intent);
 			return true;
 		case R.id.action_notifications:
