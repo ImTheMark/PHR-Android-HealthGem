@@ -106,8 +106,8 @@ public class DailyFoodAdapter extends BaseAdapter {
 				+ " x"));
 
 		if (mListOfFoodSingle.get(position).getFood().getServing() == null
-				|| mListOfFoodSingle.get(position).getFood().getServing()
-						.equals(""))
+				|| mListOfFoodSingle.get(position).getFood().getServing().equals("")
+				|| mListOfFoodSingle.get(position).getFood().getServing().equals("null"))
 			viewHolder.servingUnit.setText("1 serving");
 		else
 			viewHolder.servingUnit.setText(String.valueOf(mListOfFoodSingle
