@@ -5,18 +5,13 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import org.achartengine.ChartFactory;
-import org.achartengine.chart.PointStyle;
 import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -31,7 +26,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,12 +49,10 @@ import com.example.phr.mobile.models.User;
 import com.example.phr.mobile.models.Weight;
 import com.example.phr.service.BloodPressureTrackerService;
 import com.example.phr.service.BloodSugarTrackerService;
-import com.example.phr.service.CalorieTrackerService;
 import com.example.phr.service.UserService;
 import com.example.phr.service.WeightTrackerService;
 import com.example.phr.serviceimpl.BloodPressureTrackerServiceImpl;
 import com.example.phr.serviceimpl.BloodSugarTrackerServiceImpl;
-import com.example.phr.serviceimpl.CalorieTrackerEntryServiceImpl;
 import com.example.phr.serviceimpl.UserServiceImpl;
 import com.example.phr.serviceimpl.WeightTrackerServiceImpl;
 import com.example.phr.tools.DateTimeParser;
@@ -86,22 +78,30 @@ public class SummaryReportFragment extends Fragment {
 	TextView txtBmi;
 	TextView txtWeightUnit;
 	TextView txtWeightStatus;
+	TextView txtWeightTime;
+	TextView txtWeightDate;
 	ImageView imgWeight;
 	BloodSugar bs;
 	BloodPressure bp;
 	Weight weight;
 	LinearLayout weightHomeRecordHolder;
 	LinearLayout bsHomeRecordHolder;
+	LinearLayout bsHomeRecordHolder2;
 	LinearLayout bsHomeRecordHolderNull;
+	LinearLayout bsHomeStatus;
 	LinearLayout bpHomeRecordHolder;
+	LinearLayout bpHomeRecordHolder2;
 	LinearLayout bpHomeRecordHolderNull;
+	LinearLayout bpHomeStatus;
 	LinearLayout calorieRecordHolder;
 	LinearLayout dailyContainer;
+	LinearLayout weightStatus;
 	TextView txtBigTotalCalRequire;
 	TextView txtSmallTotalCalRequire;
 	TextView txtTotalFoodCal;
 	TextView txtTotalActivityCal;
 	TextView txtTotalCal;
+	TextView txtUserName;
 	GroupedFood groupedFood;
 	GroupedActivity groupedActivity;
 	DateFormat dateFormat;
@@ -131,131 +131,8 @@ public class SummaryReportFragment extends Fragment {
 		userService = new UserServiceImpl();
 		user = userService.getUser();
 
-		// blood sugar
-		txtBsDate = (TextView) rootView.findViewById(R.id.txtHomeBsDate);
-		txtBsTime = (TextView) rootView.findViewById(R.id.txtHomeBsTime);
-		txtBsSugarLvl = (TextView) rootView.findViewById(R.id.txtHomeBsNumber);
-		txtBsType = (TextView) rootView.findViewById(R.id.txtHomeBsType);
-		imgBs = (ImageView) rootView.findViewById(R.id.imgHomeBs);
-		bsHomeRecordHolder = (LinearLayout) rootView
-				.findViewById(R.id.bsHomeRecordHolder);
-		bsHomeRecordHolderNull = (LinearLayout) rootView
-				.findViewById(R.id.bsHomeRecordHolderNull);
-
-		BloodSugarTrackerService bsService = new BloodSugarTrackerServiceImpl();
-		try {
-			bs = bsService.getLatest();
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
-			e.printStackTrace();
-		}
-		if (bs != null) {
-			Log.e("home bs", "not null");
-			bsHomeRecordHolderNull.setVisibility(View.GONE);
-			bsHomeRecordHolder.setVisibility(View.VISIBLE);
-			txtBsDate.setText(String.valueOf(DateTimeParser.getDate(bs
-					.getTimestamp())));
-			txtBsTime.setText(String.valueOf(DateTimeParser.getTime(bs
-					.getTimestamp())));
-			txtBsSugarLvl.setText(String.valueOf(bs.getBloodSugar()));
-			txtBsType.setText(bs.getType());
-			if (bs.getType().equals("Before meal") && bs.getBloodSugar() >= 4.0
-					&& bs.getBloodSugar() <= 5.9)
-				imgBs.setImageResource(R.drawable.bloodsugar_normal);
-			else if (bs.getType().equals("After meal")
-					&& bs.getBloodSugar() < 7.8)
-				imgBs.setImageResource(R.drawable.bloodsugar_normal);
-			else
-				imgBs.setImageResource(R.drawable.bloodsugar_warning);
-		}
-
-		bsHomeRecordHolderNull.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(getActivity(), NewStatusActivity.class);
-				i.putExtra("tracker", TrackerInputType.BLOOD_SUGAR);
-				startActivity(i);
-			}
-		});
-		bsHomeRecordHolder.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(getActivity(), NewStatusActivity.class);
-				i.putExtra("tracker", TrackerInputType.BLOOD_SUGAR);
-				startActivity(i);
-			}
-		});
-		// blood pressure
-		txtBpDate = (TextView) rootView.findViewById(R.id.txtHomeBpDate);
-		txtBpTime = (TextView) rootView.findViewById(R.id.txtHomeBpTime);
-		txtBpDiastolic = (TextView) rootView
-				.findViewById(R.id.txtHomeDiastolic);
-		txtBpSystolic = (TextView) rootView
-				.findViewById(R.id.txtHomeSystolicNum);
-		imgBp = (ImageView) rootView.findViewById(R.id.imgHomeBp);
-		bpHomeRecordHolder = (LinearLayout) rootView
-				.findViewById(R.id.bpHomeRecordHolder);
-		bpHomeRecordHolderNull = (LinearLayout) rootView
-				.findViewById(R.id.bpHomeRecordHolderNull);
-
-		BloodPressureTrackerService bpService = new BloodPressureTrackerServiceImpl();
-		try {
-			bp = bpService.getLatest();
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
-			e.printStackTrace();
-		}
-		if (bp != null) {
-			Log.e("home bp", "not null");
-			bpHomeRecordHolderNull.setVisibility(View.GONE);
-			bpHomeRecordHolder.setVisibility(View.VISIBLE);
-			txtBpDate.setText(String.valueOf(DateTimeParser.getDate(bp
-					.getTimestamp())));
-			txtBpTime.setText(String.valueOf(DateTimeParser.getTime(bp
-					.getTimestamp())));
-			txtBpDiastolic.setText(String.valueOf(bp.getDiastolic()));
-			Log.e("dia", "pass");
-			txtBpSystolic.setText(String.valueOf((bp.getSystolic())));
-			Log.e("sys", "pass");
-
-			if (bp.getSystolic() > 90 && bp.getSystolic() < 120
-					&& bp.getDiastolic() > 60 && bp.getDiastolic() < 80)
-				imgBp.setImageResource(R.drawable.bloodpressure_normal);
-			else
-				imgBp.setImageResource(R.drawable.bloodpressure_warning);
-		}
-
-		bpHomeRecordHolderNull.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(getActivity(), NewStatusActivity.class);
-				i.putExtra("tracker", TrackerInputType.BLOOD_PRESSURE);
-				startActivity(i);
-			}
-		});
-		bpHomeRecordHolder.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(getActivity(), NewStatusActivity.class);
-				i.putExtra("tracker", TrackerInputType.BLOOD_PRESSURE);
-				startActivity(i);
-			}
-		});
-
-		// Weight
-		txtWeight = (TextView) rootView.findViewById(R.id.txtHomeWeight);
-		txtBmi = (TextView) rootView.findViewById(R.id.txtHomeBmi);
-		txtWeightUnit = (TextView) rootView
-				.findViewById(R.id.txtHomeWeightUnit);
-		txtWeightStatus = (TextView) rootView
-				.findViewById(R.id.txtHomeWeightStatus);
-		imgWeight = (ImageView) rootView.findViewById(R.id.imgHomeWeight);
-		weightHomeRecordHolder = (LinearLayout) rootView
-				.findViewById(R.id.weightRecordHolder);
+		txtUserName = (TextView) rootView.findViewById(R.id.txtUserName);
+		txtUserName.setText(user.getName());
 
 		WeightTrackerService weightService = new WeightTrackerServiceImpl();
 		try {
@@ -266,54 +143,6 @@ public class SummaryReportFragment extends Fragment {
 					Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		}
-
-		if (weight != null) {
-			Log.e("home weight", weight.getWeightInPounds() + "");
-			if (setting.isWeightSettingInPounds()) {
-				txtWeight.setText(df.format(weight.getWeightInPounds()));
-				txtWeightUnit.setText("lbs");
-			} else {
-				txtWeight.setText(df.format(weight.getWeightInKilograms()));
-				txtWeightUnit.setText("kgs");
-			}
-
-			double heightInMeter = user.getHeightInMeter();
-
-			double bmi = weight.getWeightInKilograms()
-					/ (heightInMeter * heightInMeter);
-
-			String formattedBmi = df.format(bmi);
-			txtBmi.setText(formattedBmi);
-
-			String weightStatus;
-			if (bmi < 18.5)
-				weightStatus = "Underweight";
-			else if (bmi >= 18.5 && bmi < 24.9)
-				weightStatus = "Normal weight";
-			else if (bmi >= 25 && bmi < 29.9)
-				weightStatus = "Overweight";
-			else
-				weightStatus = "Obesity";
-			txtWeightStatus.setText(weightStatus);
-
-			if (weightStatus.equals("Overweight")
-					|| weightStatus.equals("Obesity"))
-				imgWeight.setImageResource(R.drawable.overweight);
-
-			else if (weightStatus.equals("Normal weight"))
-				imgWeight.setImageResource(R.drawable.normalweight);
-			else if (weightStatus.equals("Underweight"))
-				imgWeight.setImageResource(R.drawable.underweight);
-
-		}
-		weightHomeRecordHolder.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(getActivity(), NewStatusActivity.class);
-				i.putExtra("tracker", TrackerInputType.WEIGHT);
-				startActivity(i);
-			}
-		});
 
 		// calorie
 		cProgress = (ProgressBar) rootView.findViewById(R.id.progressBar2);
@@ -331,8 +160,6 @@ public class SummaryReportFragment extends Fragment {
 		txtTotalActivityCal = (TextView) rootView
 				.findViewById(R.id.txtTotalActivityCal);
 		txtTotalCal = (TextView) rootView.findViewById(R.id.txtHomeTotalCal);
-		calorieRecordHolder = (LinearLayout) rootView
-				.findViewById(R.id.calorieHomeHolder);
 
 		// current date
 		dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
@@ -349,7 +176,7 @@ public class SummaryReportFragment extends Fragment {
 		}
 		timestamp = new Timestamp(date.getTime());
 
-		calorieRecordHolder.setOnClickListener(new OnClickListener() {
+		txtBigTotalCalRequire.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(getActivity(),
@@ -410,27 +237,192 @@ public class SummaryReportFragment extends Fragment {
 		cProgress.setProgress(cProgressStatus);
 		cProgress.setMax(100);
 
-		mBtnRetrieve = (Button) rootView.findViewById(R.id.btnSync);
-		mBtnRetrieve.setOnClickListener(new OnClickListener() {
+		// blood pressure
+		txtBpDate = (TextView) rootView.findViewById(R.id.txtHomeBpDate);
+		txtBpTime = (TextView) rootView.findViewById(R.id.txtHomeBpTime);
+		txtBpDiastolic = (TextView) rootView
+				.findViewById(R.id.txtHomeDiastolic);
+		txtBpSystolic = (TextView) rootView
+				.findViewById(R.id.txtHomeSystolicNum);
+		bpHomeStatus = (LinearLayout) rootView
+				.findViewById(R.id.BpLinearLayoutStatus);
+		bpHomeRecordHolder = (LinearLayout) rootView
+				.findViewById(R.id.bpHomeRecordHolder);
+		bpHomeRecordHolder2 = (LinearLayout) rootView
+				.findViewById(R.id.bpHomeRecordHolder2);
+		bpHomeRecordHolderNull = (LinearLayout) rootView
+				.findViewById(R.id.bpHomeRecordHolderNull);
 
+		BloodPressureTrackerService bpService = new BloodPressureTrackerServiceImpl();
+		try {
+			bp = bpService.getLatest();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+		}
+		if (bp != null) {
+			Log.e("home bp", "not null");
+			bpHomeRecordHolderNull.setVisibility(View.GONE);
+			bpHomeRecordHolder2.setVisibility(View.VISIBLE);
+			txtBpDate.setText(String.valueOf(DateTimeParser.getDate(bp
+					.getTimestamp())));
+			txtBpTime.setText(String.valueOf(DateTimeParser.getTime(bp
+					.getTimestamp())));
+			txtBpDiastolic.setText(String.valueOf(bp.getDiastolic()));
+			Log.e("dia", "pass");
+			txtBpSystolic.setText(String.valueOf((bp.getSystolic())));
+			Log.e("sys", "pass");
+
+			if (bp.getSystolic() > 90 && bp.getSystolic() < 120
+					&& bp.getDiastolic() > 60 && bp.getDiastolic() < 80)
+				bpHomeStatus.setBackgroundColor(Color.GREEN);
+			else
+				bpHomeStatus.setBackgroundColor(Color.RED);
+		}
+
+		bpHomeRecordHolder.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent(getActivity()
-						.getApplicationContext(), RetrieveActivity.class);
-				startActivity(intent);
+			public void onClick(View v) {
+				Intent i = new Intent(getActivity(), NewStatusActivity.class);
+				i.putExtra("tracker", TrackerInputType.BLOOD_PRESSURE);
+				startActivity(i);
+			}
+		});
+		bpHomeRecordHolderNull.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getActivity(), NewStatusActivity.class);
+				i.putExtra("tracker", TrackerInputType.BLOOD_PRESSURE);
+				startActivity(i);
 			}
 		});
 
-		mBtnWrite = (Button) rootView.findViewById(R.id.btnWrite);
-		mBtnWrite.setOnClickListener(new OnClickListener() {
+		// blood sugar
+		txtBsDate = (TextView) rootView.findViewById(R.id.txtHomeBsDate);
+		txtBsTime = (TextView) rootView.findViewById(R.id.txtHomeBsTime);
+		txtBsSugarLvl = (TextView) rootView.findViewById(R.id.txtHomeBsNumber);
+		txtBsType = (TextView) rootView.findViewById(R.id.txtHomeBsType);
+		bsHomeRecordHolder = (LinearLayout) rootView
+				.findViewById(R.id.bsHomeRecordHolder);
+		bsHomeRecordHolder2 = (LinearLayout) rootView
+				.findViewById(R.id.bsHomeRecord2);
+		bsHomeStatus = (LinearLayout) rootView
+				.findViewById(R.id.bsLinearLayoutStatus);
+		bsHomeRecordHolderNull = (LinearLayout) rootView
+				.findViewById(R.id.bsHomeRecordHolderNull);
 
+		BloodSugarTrackerService bsService = new BloodSugarTrackerServiceImpl();
+		try {
+			bs = bsService.getLatest();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+					Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+		}
+		if (bs != null) {
+			Log.e("home bs", "not null");
+			bsHomeRecordHolderNull.setVisibility(View.GONE);
+			bsHomeRecordHolder2.setVisibility(View.VISIBLE);
+			txtBsDate.setText(String.valueOf(DateTimeParser.getDate(bs
+					.getTimestamp())));
+			txtBsTime.setText(String.valueOf(DateTimeParser.getTime(bs
+					.getTimestamp())));
+			txtBsSugarLvl.setText(String.valueOf(bs.getBloodSugar()));
+			txtBsType.setText(bs.getType());
+			if (bs.getType().equals("Before meal") && bs.getBloodSugar() >= 4.0
+					&& bs.getBloodSugar() <= 5.9)
+				bsHomeStatus.setBackgroundColor(Color.GREEN);
+			else if (bs.getType().equals("After meal")
+					&& bs.getBloodSugar() < 7.8)
+				bsHomeStatus.setBackgroundColor(Color.GREEN);
+			else
+				bsHomeStatus.setBackgroundColor(Color.RED);
+		}
+
+		bsHomeRecordHolder.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View arg0) {
-				/*
-				 * Intent intent = new
-				 * Intent(getActivity().getApplicationContext(),
-				 * NewStatusActivity.class); startActivity(intent);
-				 */
+			public void onClick(View v) {
+				Intent i = new Intent(getActivity(), NewStatusActivity.class);
+				i.putExtra("tracker", TrackerInputType.BLOOD_SUGAR);
+				startActivity(i);
+			}
+		});
+
+		bsHomeRecordHolderNull.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getActivity(), NewStatusActivity.class);
+				i.putExtra("tracker", TrackerInputType.BLOOD_SUGAR);
+				startActivity(i);
+			}
+		});
+
+		// weight
+
+		txtWeightTime = (TextView) rootView.findViewById(R.id.txtBMIHomeTime);
+		txtWeightDate = (TextView) rootView.findViewById(R.id.txtBMIHomeDate);
+		txtWeight = (TextView) rootView.findViewById(R.id.txtWeightHome);
+		txtBmi = (TextView) rootView.findViewById(R.id.txtBMIHome);
+		txtWeightUnit = (TextView) rootView
+				.findViewById(R.id.txtWeightHomeUnit);
+		weightStatus = (LinearLayout) rootView
+				.findViewById(R.id.weightLinearLayoutStatus);
+
+		weightHomeRecordHolder = (LinearLayout) rootView
+				.findViewById(R.id.weightRecordHolder);
+
+		if (weight != null) {
+			Log.e("home weight", weight.getWeightInPounds() + "");
+			if (setting.isWeightSettingInPounds()) {
+				txtWeight.setText(df.format(weight.getWeightInPounds()));
+				txtWeightUnit.setText("lbs");
+			} else {
+				txtWeight.setText(df.format(weight.getWeightInKilograms()));
+				txtWeightUnit.setText("kgs");
+			}
+			txtWeightDate.setText(String.valueOf(DateTimeParser.getDate(weight
+					.getTimestamp())));
+			txtWeightTime.setText(String.valueOf(DateTimeParser.getTime(weight
+					.getTimestamp())));
+
+			double heightInMeter = user.getHeightInMeter();
+
+			double bmi = weight.getWeightInKilograms()
+					/ (heightInMeter * heightInMeter);
+
+			String formattedBmi = df.format(bmi);
+			txtBmi.setText(formattedBmi);
+
+			String txtweightStatus;
+			if (bmi < 18.5)
+				txtweightStatus = "Underweight";
+			else if (bmi >= 18.5 && bmi < 24.9)
+				txtweightStatus = "Normal weight";
+			else if (bmi >= 25 && bmi < 29.9)
+				txtweightStatus = "Overweight";
+			else
+				txtweightStatus = "Obesity";
+			// txtWeightStatus.setText(weightStatus);
+
+			if (txtweightStatus.equals("Overweight")
+					|| txtweightStatus.equals("Obesity"))
+				weightStatus.setBackgroundColor(Color.RED);
+
+			else if (txtweightStatus.equals("Normal weight"))
+				weightStatus.setBackgroundColor(Color.GREEN);
+			else if (txtweightStatus.equals("Underweight"))
+				weightStatus.setBackgroundColor(Color.YELLOW);
+
+		}
+		weightHomeRecordHolder.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getActivity(), NewStatusActivity.class);
+				i.putExtra("tracker", TrackerInputType.WEIGHT);
+				startActivity(i);
 			}
 		});
 
@@ -444,282 +436,6 @@ public class SummaryReportFragment extends Fragment {
 				startActivity(intent);
 			}
 		});
-
-		calorieTrackerList = new ArrayList<CalorieTrackerEntry>();
-
-		CalorieTrackerService calService = new CalorieTrackerEntryServiceImpl();
-
-		try {
-			calorieTrackerList = calService.getAll();
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
-			e.printStackTrace();
-		}
-
-		createGraph();
-
-		dailyContainer.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(getActivity(),
-						CalorieTrackerActivity.class);
-				startActivity(i);
-			}
-		});
-
-		calorieChart.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(getActivity(),
-						CalorieTrackerActivity.class);
-				startActivity(i);
-			}
-		});
-
-		/*
-		 * View dailyChart; // 300g carbohydrates, 50g of protein and 65g fat //
-		 * RDI2K(protein) / 2000 = x / BMR double recommendFats =
-		 * Double.parseDouble(df .format((50 / 2000.0) * bmr)); double
-		 * recommendCarbs = Double.parseDouble(df.format((300 / 2000.0) bmr));
-		 * double recommendProtein = Double.parseDouble(df.format((65 / 2000.0)
-		 * bmr));
-		 * 
-		 * int[] x = { 0, 1, 2 }; double[] intake = { groupedFood.getProtein(),
-		 * groupedFood.getFat(), groupedFood.getCarbohydrates() }; double[]
-		 * recommeded = { recommendProtein, recommendFats, recommendCarbs };
-		 * 
-		 * String[] mMonth = new String[] { "Protein", "Fats", "Carbohydrates"
-		 * };
-		 * 
-		 * XYSeries incomeSeries = new XYSeries("Current Intake");
-		 * 
-		 * XYSeries expenseSeries = new XYSeries("Recommended Intake");
-		 * 
-		 * for (int i = 0; i < x.length; i++) { incomeSeries.add(i, intake[i]);
-		 * expenseSeries.add(i, recommeded[i]); }
-		 * 
-		 * // Creating a dataset to hold each series XYMultipleSeriesDataset
-		 * dataset = new XYMultipleSeriesDataset(); // Adding Income Series to
-		 * the dataset dataset.addSeries(incomeSeries); // Adding Expense Series
-		 * to dataset dataset.addSeries(expenseSeries);
-		 * 
-		 * // Creating XYSeriesRenderer to customize incomeSeries
-		 * XYSeriesRenderer incomeRenderer = new XYSeriesRenderer();
-		 * incomeRenderer.setColor(Color.parseColor("#C177C9"));
-		 * incomeRenderer.setFillPoints(true); incomeRenderer.setLineWidth(2);
-		 * incomeRenderer.setDisplayChartValues(true);
-		 * incomeRenderer.setChartValuesTextSize(20);
-		 * 
-		 * // Creating XYSeriesRenderer to customize expenseSeries
-		 * XYSeriesRenderer expenseRenderer = new XYSeriesRenderer();
-		 * expenseRenderer.setColor(Color.parseColor("#5C77D1"));
-		 * expenseRenderer.setFillPoints(true); expenseRenderer.setLineWidth(2);
-		 * 
-		 * expenseRenderer.setDisplayChartValues(true);
-		 * expenseRenderer.setChartValuesTextSize(20);
-		 * 
-		 * // Creating a XYMultipleSeriesRenderer to customize the whole chart
-		 * XYMultipleSeriesRenderer multiRenderer = new
-		 * XYMultipleSeriesRenderer(); multiRenderer.setXLabels(0);
-		 * multiRenderer
-		 * .setChartTitle("My Daily Nutritional Value Chart \n\n\n");
-		 * multiRenderer.setAxisTitleTextSize(20);
-		 * multiRenderer.setXTitle("\n\n\n Year 2014");
-		 * multiRenderer.setYTitle("");
-		 * multiRenderer.setZoomButtonsVisible(false);
-		 * multiRenderer.setZoomEnabled(false); multiRenderer.setMargins(new
-		 * int[] { 60, 30, 15, 0 }); multiRenderer.setXAxisMin(-1);
-		 * multiRenderer.setXAxisMax(3); multiRenderer.setYAxisMin(0); //
-		 * multiRenderer.setAxisTitleTextSize(30);
-		 * multiRenderer.setChartTitleTextSize(25);
-		 * multiRenderer.setLabelsTextSize(15);
-		 * multiRenderer.setAxesColor(Color.BLACK);
-		 * multiRenderer.setLabelsColor(Color.BLACK);
-		 * multiRenderer.setXLabelsColor(Color.BLACK);
-		 * multiRenderer.setYLabelsColor(0, Color.BLACK); //
-		 * multiRenderer.setLegendTextSize(15);
-		 * multiRenderer.setLabelsTextSize(20); //
-		 * multiRenderer.setLegendHeight(20);
-		 * multiRenderer.setLegendTextSize(20);
-		 * multiRenderer.setApplyBackgroundColor(true);
-		 * multiRenderer.setBackgroundColor(Color.argb(0x00, 0x01, 0x01, 0x01));
-		 * multiRenderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
-		 * 
-		 * for (int i = 0; i < x.length; i++) { multiRenderer.addXTextLabel(i,
-		 * mMonth[i]); }
-		 * 
-		 * // Adding incomeRenderer and expenseRenderer to multipleRenderer //
-		 * Note: The order of adding dataseries to dataset and renderers to //
-		 * multipleRenderer // should be same
-		 * multiRenderer.addSeriesRenderer(incomeRenderer);
-		 * multiRenderer.addSeriesRenderer(expenseRenderer);
-		 * 
-		 * // Creating an intent to plot bar chart using dataset and //
-		 * multipleRenderer dailyChart =
-		 * ChartFactory.getBarChartView(getActivity() .getBaseContext(),
-		 * dataset, multiRenderer, Type.DEFAULT);
-		 * 
-		 * dailyContainer = (LinearLayout) rootView.findViewById(R.id.piegraph);
-		 * 
-		 * dailyContainer.setOnClickListener(new OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { Intent i = new
-		 * Intent(getActivity(), FoodTrackerDailyActivity.class);
-		 * SimpleDateFormat fmt = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss",
-		 * Locale.ENGLISH); String txtdate = fmt.format(timestamp);
-		 * Log.e("home", txtdate); i.putExtra("date", txtdate);
-		 * startActivity(i); } });
-		 * 
-		 * dailyContainer.addView(dailyChart);
-		 * 
-		 * 
-		 * dailyChart.setOnClickListener(new OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { Intent i = new
-		 * Intent(getActivity(), FoodTrackerDailyActivity.class);
-		 * SimpleDateFormat fmt = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss",
-		 * Locale.ENGLISH); String txtdate = fmt.format(timestamp);
-		 * Log.e("home", txtdate); i.putExtra("date", txtdate);
-		 * startActivity(i); } });
-		 */
 		return rootView;
 	}
-
-	public void createGraph() {
-
-		ArrayList<String> calorieMonth = getLastSevenDateTime();
-		ArrayList<Integer> caloriex = getGraphElement();
-		ArrayList<Integer> calIntake = getLastSevenIntake();
-		ArrayList<Integer> calBurned = getLastSevenBurned();
-
-		XYSeries intakeSeries = new XYSeries("Intake");
-		XYSeries burnedSeries = new XYSeries("Burned");
-
-		for (int i = 0; i < caloriex.size(); i++) {
-			intakeSeries.add(caloriex.get(i), calIntake.get(i));
-			burnedSeries.add(caloriex.get(i), calBurned.get(i));
-		}
-
-		XYMultipleSeriesDataset calorieDataset = new XYMultipleSeriesDataset();
-
-		calorieDataset.addSeries(intakeSeries);
-		calorieDataset.addSeries(burnedSeries);
-
-		XYSeriesRenderer intakeRenderer = new XYSeriesRenderer();
-		intakeRenderer.setColor(Color.parseColor("#B559BA"));
-		intakeRenderer.setPointStyle(PointStyle.CIRCLE);
-		intakeRenderer.setFillPoints(true);
-		intakeRenderer.setLineWidth(10);
-		intakeRenderer.setDisplayChartValues(true);
-		intakeRenderer.setChartValuesTextSize(25);
-		intakeRenderer.setChartValuesSpacing(20);
-
-		XYSeriesRenderer burnedRenderer = new XYSeriesRenderer();
-		burnedRenderer.setColor(Color.parseColor("#5C77D1"));
-		burnedRenderer.setPointStyle(PointStyle.CIRCLE);
-		burnedRenderer.setFillPoints(true);
-		burnedRenderer.setLineWidth(10);
-		burnedRenderer.setDisplayChartValues(true);
-		burnedRenderer.setChartValuesTextSize(25);
-		burnedRenderer.setChartValuesSpacing(20);
-
-		calorieListMultiRenderer = new
-
-		XYMultipleSeriesRenderer();
-		calorieListMultiRenderer.setXLabels(0);
-		calorieListMultiRenderer.setChartTitle("Calorie Graph");
-		calorieListMultiRenderer.setXTitle("\n\n\n\n\n\n Year 2014");
-		calorieListMultiRenderer.setYTitle("Kcal");
-		calorieListMultiRenderer.setZoomButtonsVisible(false);
-		calorieListMultiRenderer.setAxisTitleTextSize(30);
-		calorieListMultiRenderer.setChartTitleTextSize(30);
-		calorieListMultiRenderer.setLegendTextSize(30);
-		calorieListMultiRenderer.setPointSize(10);
-		calorieListMultiRenderer.setXAxisMin(calorieTrackerList.size() - 6);
-		calorieListMultiRenderer.setXAxisMax(calorieTrackerList.size());
-		calorieListMultiRenderer.setPanEnabled(true, false);
-		calorieListMultiRenderer.setZoomEnabled(false, false);
-		calorieListMultiRenderer.setClickEnabled(false);
-		calorieListMultiRenderer.setInScroll(true);
-
-		// margin --- top, left, bottom, right
-		calorieListMultiRenderer.setMargins(new int[] { 90, 150, 100, 50 });
-		calorieListMultiRenderer.setLegendHeight(60);
-
-		for (int i = 0; i < calorieMonth.size(); i++) {
-			calorieListMultiRenderer.addXTextLabel(i + 1, calorieMonth.get(i));
-		}
-
-		calorieListMultiRenderer.setApplyBackgroundColor(true);
-		calorieListMultiRenderer.setBackgroundColor(Color.argb(0x00, 0x01,
-				0x01, 0x01));
-		calorieListMultiRenderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01,
-				0x01));
-		calorieListMultiRenderer.setAxesColor(Color.BLACK);
-		calorieListMultiRenderer.setLabelsColor(Color.BLACK);
-		calorieListMultiRenderer.setXLabelsColor(Color.BLACK);
-		calorieListMultiRenderer.setYLabelsColor(0, Color.BLACK);
-		calorieListMultiRenderer.setAxisTitleTextSize(30);
-		calorieListMultiRenderer.setLabelsTextSize(30);
-
-		calorieListMultiRenderer.addSeriesRenderer(intakeRenderer);
-		calorieListMultiRenderer.addSeriesRenderer(burnedRenderer);
-
-		dailyContainer = (LinearLayout) rootView.findViewById(R.id.piegraph);
-
-		calorieChart = ChartFactory.getLineChartView(getActivity(),
-				calorieDataset, calorieListMultiRenderer);
-
-		dailyContainer.addView(calorieChart, new LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-
-	}
-
-	public ArrayList<String> getLastSevenDateTime() {
-		ArrayList<String> calorieDate = new ArrayList<String>();
-
-		for (int i = calorieTrackerList.size() - 1; i >= 0; i--)
-			calorieDate.add(DateTimeParser.getMonthDay(calorieTrackerList
-					.get(i).getDate())
-					+ " \n "
-					+ DateTimeParser.getTime(calorieTrackerList.get(i)
-							.getDate()));
-
-		return calorieDate;
-
-	}
-
-	public ArrayList<Integer> getLastSevenIntake() {
-		ArrayList<Integer> intake = new ArrayList<Integer>();
-
-		for (int i = calorieTrackerList.size() - 1; i >= 0; i--)
-			intake.add((int) Math.round(calorieTrackerList.get(i)
-					.getTotalCalIntake()));
-
-		return intake;
-	}
-
-	public ArrayList<Integer> getLastSevenBurned() {
-		ArrayList<Integer> burned = new ArrayList<Integer>();
-
-		for (int i = calorieTrackerList.size() - 1; i >= 0; i--)
-			burned.add((int) Math.round(calorieTrackerList.get(i)
-					.getTotalCalBurned()));
-
-		return burned;
-	}
-
-	public ArrayList<Integer> getGraphElement() {
-		ArrayList<Integer> number = new ArrayList<Integer>();
-
-		for (int i = 0; i < calorieTrackerList.size(); i++)
-			number.add(i + 1);
-
-		return number;
-	}
-
 }

@@ -17,55 +17,25 @@
     android:layout_marginBottom="20dp"
     >
     
-    <RelativeLayout
-        android:id="@+id/btnAchievements"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp" 
-        android:layout_marginLeft="5dp"
-        android:visibility="gone"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="5dp">
-
-        <Button
-            android:id="@+id/btnWrite"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Write Something" />
-
-        <Button
-            android:id="@+id/btnSync"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/btnWrite"
-            android:text="Button" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:weightSum="6"
-        android:layout_marginTop="5dp" >
-
-        <LinearLayout
-            android:id="@+id/calorieHomeHolder"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical" 
-            android:layout_weight="4"
-            android:background="@drawable/container_dropshadow"
-            android:layout_marginLeft="10dp">
-
-            <TextView
+      <TextView
+                android:id="@+id/txtUserName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="Mark"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+    
+    
+     <TextView
                 android:id="@+id/textView8"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:gravity="center"
-                android:text="My Daily Calorie Requirement"
-                android:textSize="20sp"
+                android:text="your daily calorie requirement is ..."
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -74,16 +44,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="1,565" 
-                android:textSize="30sp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="center"
                 android:textColor="#d9581c"
                 android:textStyle="bold"/>
-
-            <RelativeLayout
+         
+               <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
-
-                <ProgressBar
+            <ProgressBar
                     android:id="@+id/progressBar2"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
@@ -92,7 +61,8 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="8dp"
                     android:progressDrawable="@drawable/customprogressbar" />
- 				<LinearLayout
+            
+            <LinearLayout
 			                android:layout_width="wrap_content"
 			                android:layout_height="wrap_content" 
 			                android:layout_alignLeft="@id/progressBar2"
@@ -106,7 +76,7 @@
 		                    android:layout_height="wrap_content"
 		                    android:text="213" 
 		                    android:background="#00000000"
-					        android:textSize="15sp"
+					        android:textAppearance="?android:attr/textAppearanceSmall"
 				            android:textColor="#FCFBFA"/>
 		                <TextView
 		                    android:id="@+id/txtSlash"
@@ -114,7 +84,7 @@
 		                    android:layout_height="wrap_content"
 		                    android:text="/" 
 		                    android:background="#00000000"
-					        android:textSize="15sp"
+					        android:textAppearance="?android:attr/textAppearanceSmall"
 				            android:textColor="#FCFBFA"/>
 		                <TextView
 		                    android:id="@+id/txtHomeTotalReqCal"
@@ -122,265 +92,261 @@
 		                    android:layout_height="wrap_content"
 		                    android:text="1565" 
 		                    android:background="#00000000"
-					        android:textSize="15sp"
+					        android:textAppearance="?android:attr/textAppearanceSmall"
 				            android:textColor="#FCFBFA"/>
 
                   </LinearLayout>
-                
-            </RelativeLayout>
+                    </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" 
-                android:weightSum="6"
-                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp">
+               <LinearLayout
+                   android:layout_width="fill_parent"
+                   android:layout_height="wrap_content"
+                   android:weightSum="4" 
+                    android:layout_marginTop="5dp" >
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" 
-                    android:layout_weight="3"
-                    android:background="@drawable/fragmentsummaryreport_circle"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="5dp">
-
-                    <ImageView
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_height="match_parent" 
+                        android:layout_weight="2">
+		                
+                        <ImageView
                         android:id="@+id/imageView6"
-                        android:layout_width="fill_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/icon_food"
-                        android:gravity="center" 
-                        android:layout_marginTop="10dp"
+                        
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"/>
-
-                    <TextView
+                        
+                            <TextView
                         android:id="@+id/txtTotalFoodCal"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="fill_parent"
                         android:text="459" 
-                        android:textSize="25sp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
 		                android:gravity="center"
-		                android:textColor="#2b47b8"
 		                android:textStyle="bold"
-		                android:layout_marginTop="2dp"
-		                android:layout_marginBottom="15dp"/>
+		                />
+                   </LinearLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" 
-                    android:layout_weight="3"
-                    android:background="@drawable/fragmentsummaryreport_pinkcircle"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="10dp">
-
-                    <ImageView
-                        android:id="@+id/imageView7"
-                        android:layout_width="fill_parent"
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_height="match_parent"
+                        android:layout_weight="2" >
+                        
+                             <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/icon_activity"
-                        android:gravity="center"  
-                        android:layout_marginTop="10dp"
+                      
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"/>
-
-                    <TextView
+                             
+                                <TextView
                         android:id="@+id/txtTotalActivityCal"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="fill_parent"
                         android:text="246" 
-                        android:textSize="25sp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
 		                android:gravity="center"
-		                android:textColor="#f50c20"
 		                android:textStyle="bold"
-		                android:layout_marginTop="2dp"
-		                android:layout_marginBottom="15dp" />
+		             />
+                   </LinearLayout>
 
-                </LinearLayout>
+               </LinearLayout>
 
-            </LinearLayout>
+               <LinearLayout
+                   android:id="@+id/weightRecordHolder"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content" 
+                   android:weightSum="4"
+                   android:layout_marginLeft="5dp"
+                   android:layout_marginTop="8dp"
+      			   android:layout_marginRight="5dp"
+      			   android:background="@drawable/container_dropshadow"
+        		   android:clickable="true">
 
-        </LinearLayout>
+                   <LinearLayout
+                       android:id="@+id/weightLinearLayoutStatus"
+                       android:orientation="horizontal" 
+                       android:layout_width="0dp"
+                       android:layout_height="fill_parent"
+                       android:layout_weight="0.2" 
+                       android:background="#3cb371">
+                   </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/weightRecordHolder"
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_height="match_parent"
+                       android:layout_weight="1.5" >
+                                
+                        <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_weight"
+                        android:layout_marginRight="3dp"/>
+
+                        <TextView
+                            android:id="@+id/textView1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:text="BMI"
+                            android:gravity="center"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                   </LinearLayout>
+
+                   <LinearLayout
+            android:id="@+id/bsHomeRecordHolder2"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="2"   
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/container_dropshadow"
-            android:layout_marginRight="10dp"
-            android:weightSum="4"
-            >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.5"
-                android:gravity="center" >
-
-                <TextView
-                    android:id="@+id/textView14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:text="BMI : "
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:layout_alignParentLeft="true" />
-
-                <TextView
-                    android:id="@+id/txtHomeBmi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:text="26"
-                    android:textSize="15sp"
-                    android:textColor="#E05C5C"
-                    android:textStyle="bold" 
-                    android:layout_toRightOf="@id/textView14"/>
-
-            </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical" 
+             >
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3"
-                android:orientation="horizontal" >
-
-                <ImageView
-                    android:id="@+id/imgHomeWeight"
-                    android:layout_width="fill_parent"
-                    android:layout_height="170dp"
-                    android:src="@drawable/normalweight" 
-                    android:gravity="center"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                 android:layout_weight="0.3"
-                android:orientation="horizontal"
-                android:gravity="center" >
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                >
 
-                <TextView 
-                    android:id="@+id/txtHomeWeight"
+                
+                <TextView
+                    android:id="@+id/txtHomeBsAs"
                     android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:gravity="center"
-                    android:text="180"
-                    android:textColor="#979EA1"
-                    android:textSize="15sp"
-                    android:textStyle="bold" 
-                    android:maxLines="1"/>
-                 <TextView 
-                    android:id="@+id/txtHomeWeightUnit"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3.5"
+                    android:maxLines="1"
+                    android:text="As of"
+                    android:textColor="#9e9898"
+                    android:textSize="12sp"
+                   />
+                
+                <TextView
+                    android:id="@+id/txtBMIHomeDate"
                     android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:gravity="center"
-                    android:text="lbs"
-                    android:textColor="#979EA1"
-                    android:textSize="15sp"
-                    android:textStyle="bold" 
-                    android:maxLines="1"/>
+                    android:layout_height="match_parent"
+                    android:maxLines="1"
+                    android:text="Jul 12, 2014"
+                    android:textColor="#9e9898"
+                    android:textSize="12sp"/>
 
+                <TextView
+                    android:id="@+id/txtBMIHomeTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/txtBMIHomeDate"
+                    
+                    android:maxLines="1"
+                    android:text="2:40 pm"
+                    android:textColor="#9e9898"
+                   android:textSize="12sp" />
             </LinearLayout>
 
             
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.4"
-                android:orientation="vertical" 
-                android:layout_marginBottom="15dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp" >
-                
-            <TextView 
-                android:id="@+id/txtHomeWeightStatus" 
-                android:layout_width="match_parent" 
-                android:layout_height="wrap_content" 
-                android:gravity="center" 
-                android:text="OVERWEIGHT" 
-                android:textColor="#E05C5C" 
-                android:textSize="12sp" 
-                android:textStyle="bold" 
-                android:maxLines="1"/>
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/piegraph"
-        android:layout_width="fill_parent"
-        android:layout_height="230dp"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp" 
-        android:padding="15dp" 
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:clickable="true"
-        android:background="@drawable/container_dropshadow">
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="6dp"
-        android:background="@drawable/container_dropshadow"
-        android:orientation="horizontal"
-        android:weightSum="5" >
-
-        <LinearLayout
-            android:id="@+id/titleHolder"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:id="@+id/imageView8"
-                android:layout_width="wrap_content"
+            
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_blood_pressure" />
+                android:gravity="center" 
+                >
+
+                <TextView
+                    android:id="@+id/txtBMIHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="24.41"  
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/txtBMIHome"
+                    android:text="   "
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtWeightHome"
+                    android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/textView2"
+                    android:text="121"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="15sp" />
+                
+                <TextView
+                    android:id="@+id/txtWeightHomeUnit"
+                    android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/txtWeightHome"
+                    android:text="lbs"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="15sp" />
+            </RelativeLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/lineHolder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="0.1"
-            android:orientation="vertical" >
+          
+                   
+                   
+               </LinearLayout>
+		<LinearLayout
+   				   android:id="@+id/bpHomeRecordHolder"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content" 
+                   android:weightSum="4"
+                   android:layout_marginLeft="5dp"
+                   android:layout_marginTop="8dp"
+      			   android:layout_marginRight="5dp"
+      			   android:background="@drawable/container_dropshadow"
+        		   android:clickable="true">
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="25dp"
-                android:layout_height="60dp"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="7dp"
-                android:src="@drawable/fragmentsummaryreport_line" />
-        </LinearLayout>
+                   <LinearLayout
+                       android:id="@+id/BpLinearLayoutStatus"
+                       android:orientation="horizontal" 
+                       android:layout_width="0dp"
+                       android:layout_height="fill_parent"
+                       android:layout_weight="0.2" 
+                       android:background="#ee2c2c">
+                   </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/bpHomeRecordHolder"
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_height="match_parent"
+                       android:layout_weight="1.5" >
+                                
+                        <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_blood_pressure"
+                        android:layout_marginRight="3dp"/>
+
+                        <TextView
+                            android:id="@+id/textView1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:text="Blood\nPressure"
+                            android:gravity="center"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                   </LinearLayout>
+                   
+  <LinearLayout
+            android:id="@+id/bpHomeRecordHolder2"
             android:layout_width="0dp"
+            android:visibility="gone"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:orientation="vertical"
-            android:visibility="gone" >
+           >
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -432,8 +398,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:text="110"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold" 
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                 <TextView
                     android:id="@+id/textView2"
@@ -441,8 +407,8 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/txtHomeSystolicNum"
                     android:text=" / "
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <TextView
                     android:id="@+id/txtHomeDiastolic"
@@ -452,98 +418,78 @@
                     android:layout_toRightOf="@id/textView2"
                     android:text="80"
                     android:textSize="20sp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textStyle="bold" />
             </RelativeLayout>
         </LinearLayout>
+        
+		   <LinearLayout
+		            android:id="@+id/bpHomeRecordHolderNull"
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="2"
+		            android:orientation="vertical"  >
+		
+		            <TextView
+		                android:id="@+id/textView1"
+		                android:layout_width="match_parent"
+		                android:layout_height="match_parent"
+		                android:text="Hey, input your \n Blood Pressure!" 
+		                android:layout_gravity="center_vertical"/>
+		        </LinearLayout>
+         </LinearLayout>
+               
+		
+               <LinearLayout
+                   android:id="@+id/bsHomeRecordHolder"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content" 
+                   android:weightSum="4"
+                   android:layout_marginLeft="5dp"
+                   android:layout_marginTop="8dp"
+      			   android:layout_marginRight="5dp"
+      			   android:background="@drawable/container_dropshadow"
+        		   android:clickable="true">
 
-          <LinearLayout
-            android:id="@+id/bpHomeRecordHolderNull"
+                   <LinearLayout
+                       android:id="@+id/bsLinearLayoutStatus"
+                       android:orientation="horizontal" 
+                       android:layout_width="0dp"
+                       android:layout_height="fill_parent"
+                       android:layout_weight="0.2" 
+                       android:background="#ffc663">
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_height="match_parent"
+                       android:layout_weight="1.5" >
+                                
+                        <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_blood_sugar"
+                        android:layout_marginRight="3dp"/>
+
+                        <TextView
+                            android:id="@+id/textView1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:text="Blood\nSugar"
+                            android:gravity="center"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                   </LinearLayout>
+                   
+                   <LinearLayout
+            android:id="@+id/bsHomeRecord2"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:orientation="vertical"  >
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Please measure your blood pressure!" 
-                android:layout_gravity="center_vertical"/>
-        </LinearLayout>
-        
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:id="@+id/imgHomeBp"
-                android:layout_width="fill_parent"
-                android:layout_height="60dp"
-                android:layout_marginRight="5dp"
-                android:gravity="center"
-               />
-        </LinearLayout>
-        
-        
-        
-    </LinearLayout>
-    
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="6dp"
-        android:background="@drawable/container_dropshadow"
-        android:orientation="horizontal"
-        android:weightSum="5" 
-        android:layout_marginBottom="60dp">
-
-        <LinearLayout
-            android:id="@+id/titleHolder"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:id="@+id/homeBsImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_blood_sugar" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/lineHolder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="0.1"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="25dp"
-                android:layout_height="60dp"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="7dp"
-                android:src="@drawable/fragmentsummaryreport_line" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/bsHomeRecordHolder"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:orientation="vertical" 
-             android:visibility="gone">
+             >
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -587,6 +533,8 @@
                    android:textSize="12sp" />
             </LinearLayout>
 
+            
+            
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -599,7 +547,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:text="7.5"
-                    android:textSize="18sp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textStyle="bold" />
 
                 <TextView
@@ -608,64 +556,42 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/txtHomeBsNumber"
                     android:text=" "
-                    android:textSize="15sp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txtHomeBsType"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/textView2"
                     android:gravity="center"
                     android:text="Post prandial"
                     android:layout_marginTop="2dp"
-                    android:textSize="15sp" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </RelativeLayout>
         </LinearLayout>
-
-        <LinearLayout
+  <LinearLayout
             android:id="@+id/bsHomeRecordHolderNull"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:orientation="vertical"  >
 
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Please measure your blood sugar!" 
+                android:text="Hey, measure your \n blood sugar!" 
                 android:layout_gravity="center_vertical"/>
         </LinearLayout>
+               </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp"
-            
-            android:layout_weight="1"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:id="@+id/imgHomeBs"
-                android:layout_width="fill_parent"
-                android:layout_height="60dp"
-                android:layout_marginRight="5dp"
-                android:gravity="center"
-                 />
-        </LinearLayout>
-        
-        
-        
-    </LinearLayout>
+   </LinearLayout>
     
-</LinearLayout>
-    
-</ScrollView>
+</ScrollView> 
 
-<LinearLayout
+    
+    <LinearLayout
         android:id="@+id/journalTabsPlaceholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -688,5 +614,4 @@
         android:text="   Status" />
        
     </LinearLayout>
-    
 </RelativeLayout>
