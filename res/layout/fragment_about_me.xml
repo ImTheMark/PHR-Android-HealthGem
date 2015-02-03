@@ -35,6 +35,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/textview_style"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Personal Information" />
 
             <View
@@ -224,6 +225,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/textview_style"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medical Information" />
 
             <View
@@ -368,6 +370,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/textview_style"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Emergency Contact Information" />
 
             <View

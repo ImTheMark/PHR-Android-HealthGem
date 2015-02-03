@@ -61,9 +61,7 @@ public class SummaryReportFragment extends Fragment {
 
 	ProgressBar cProgress;
 
-	Button mBtnRetrieve;
-	Button mBtnWrite;
-	LinearLayout postHolder;
+	//LinearLayout postHolder;
 	TextView txtBsDate;
 	TextView txtBsTime;
 	TextView txtBsSugarLvl;
@@ -74,24 +72,24 @@ public class SummaryReportFragment extends Fragment {
 	TextView txtBpSystolic;
 	TextView txtBpDiastolic;
 	ImageView imgBp;
-	TextView txtWeight;
+	//TextView txtWeight;
 	TextView txtBmi;
-	TextView txtWeightUnit;
-	TextView txtWeightStatus;
-	TextView txtWeightTime;
-	TextView txtWeightDate;
+	//TextView txtWeightUnit;
+	//TextView txtWeightStatus;
+	//TextView txtWeightTime;
+	//TextView txtWeightDate;
 	ImageView imgWeight;
 	BloodSugar bs;
 	BloodPressure bp;
 	Weight weight;
 	LinearLayout weightHomeRecordHolder;
 	LinearLayout bsHomeRecordHolder;
-	LinearLayout bsHomeRecordHolder2;
-	LinearLayout bsHomeRecordHolderNull;
+	//LinearLayout bsHomeRecordHolder2;
+	//LinearLayout bsHomeRecordHolderNull;
 	LinearLayout bsHomeStatus;
 	LinearLayout bpHomeRecordHolder;
-	LinearLayout bpHomeRecordHolder2;
-	LinearLayout bpHomeRecordHolderNull;
+	//LinearLayout bpHomeRecordHolder2;
+	//LinearLayout bpHomeRecordHolderNull;
 	LinearLayout bpHomeStatus;
 	LinearLayout calorieRecordHolder;
 	LinearLayout dailyContainer;
@@ -101,7 +99,7 @@ public class SummaryReportFragment extends Fragment {
 	TextView txtTotalFoodCal;
 	TextView txtTotalActivityCal;
 	TextView txtTotalCal;
-	TextView txtUserName;
+	//TextView txtUserName;
 	GroupedFood groupedFood;
 	GroupedActivity groupedActivity;
 	DateFormat dateFormat;
@@ -123,16 +121,16 @@ public class SummaryReportFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		rootView = inflater.inflate(R.layout.fragment_summary_report,
+		rootView = inflater.inflate(R.layout.fragment_summary_report2,
 				container, false);
 		setting = new MobileSettingsDaoImpl();
 		DecimalFormat df = new DecimalFormat("#.00");
 
 		userService = new UserServiceImpl();
 		user = userService.getUser();
-
+/*
 		txtUserName = (TextView) rootView.findViewById(R.id.txtUserName);
-		txtUserName.setText(user.getName());
+		txtUserName.setText(user.getName());*/
 
 		WeightTrackerService weightService = new WeightTrackerServiceImpl();
 		try {
@@ -248,10 +246,10 @@ public class SummaryReportFragment extends Fragment {
 				.findViewById(R.id.BpLinearLayoutStatus);
 		bpHomeRecordHolder = (LinearLayout) rootView
 				.findViewById(R.id.bpHomeRecordHolder);
-		bpHomeRecordHolder2 = (LinearLayout) rootView
+/*		bpHomeRecordHolder2 = (LinearLayout) rootView
 				.findViewById(R.id.bpHomeRecordHolder2);
 		bpHomeRecordHolderNull = (LinearLayout) rootView
-				.findViewById(R.id.bpHomeRecordHolderNull);
+				.findViewById(R.id.bpHomeRecordHolderNull);*/
 
 		BloodPressureTrackerService bpService = new BloodPressureTrackerServiceImpl();
 		try {
@@ -264,8 +262,8 @@ public class SummaryReportFragment extends Fragment {
 		}
 		if (bp != null) {
 			Log.e("home bp", "not null");
-			bpHomeRecordHolderNull.setVisibility(View.GONE);
-			bpHomeRecordHolder2.setVisibility(View.VISIBLE);
+/*			bpHomeRecordHolderNull.setVisibility(View.GONE);
+			bpHomeRecordHolder2.setVisibility(View.VISIBLE);*/
 			txtBpDate.setText(String.valueOf(DateTimeParser.getDate(bp
 					.getTimestamp())));
 			txtBpTime.setText(String.valueOf(DateTimeParser.getTime(bp
@@ -290,14 +288,14 @@ public class SummaryReportFragment extends Fragment {
 				startActivity(i);
 			}
 		});
-		bpHomeRecordHolderNull.setOnClickListener(new OnClickListener() {
+/*		bpHomeRecordHolderNull.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(getActivity(), NewStatusActivity.class);
 				i.putExtra("tracker", TrackerInputType.BLOOD_PRESSURE);
 				startActivity(i);
 			}
-		});
+		});*/
 
 		// blood sugar
 		txtBsDate = (TextView) rootView.findViewById(R.id.txtHomeBsDate);
@@ -306,12 +304,12 @@ public class SummaryReportFragment extends Fragment {
 		txtBsType = (TextView) rootView.findViewById(R.id.txtHomeBsType);
 		bsHomeRecordHolder = (LinearLayout) rootView
 				.findViewById(R.id.bsHomeRecordHolder);
-		bsHomeRecordHolder2 = (LinearLayout) rootView
-				.findViewById(R.id.bsHomeRecord2);
+/*		bsHomeRecordHolder2 = (LinearLayout) rootView
+				.findViewById(R.id.bsHomeRecord2);*/
 		bsHomeStatus = (LinearLayout) rootView
 				.findViewById(R.id.bsLinearLayoutStatus);
-		bsHomeRecordHolderNull = (LinearLayout) rootView
-				.findViewById(R.id.bsHomeRecordHolderNull);
+/*		bsHomeRecordHolderNull = (LinearLayout) rootView
+				.findViewById(R.id.bsHomeRecordHolderNull);*/
 
 		BloodSugarTrackerService bsService = new BloodSugarTrackerServiceImpl();
 		try {
@@ -324,8 +322,8 @@ public class SummaryReportFragment extends Fragment {
 		}
 		if (bs != null) {
 			Log.e("home bs", "not null");
-			bsHomeRecordHolderNull.setVisibility(View.GONE);
-			bsHomeRecordHolder2.setVisibility(View.VISIBLE);
+/*			bsHomeRecordHolderNull.setVisibility(View.GONE);
+			bsHomeRecordHolder2.setVisibility(View.VISIBLE);*/
 			txtBsDate.setText(String.valueOf(DateTimeParser.getDate(bs
 					.getTimestamp())));
 			txtBsTime.setText(String.valueOf(DateTimeParser.getTime(bs
@@ -351,23 +349,23 @@ public class SummaryReportFragment extends Fragment {
 			}
 		});
 
-		bsHomeRecordHolderNull.setOnClickListener(new OnClickListener() {
+/*		bsHomeRecordHolderNull.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(getActivity(), NewStatusActivity.class);
 				i.putExtra("tracker", TrackerInputType.BLOOD_SUGAR);
 				startActivity(i);
 			}
-		});
+		});*/
 
 		// weight
 
-		txtWeightTime = (TextView) rootView.findViewById(R.id.txtBMIHomeTime);
-		txtWeightDate = (TextView) rootView.findViewById(R.id.txtBMIHomeDate);
-		txtWeight = (TextView) rootView.findViewById(R.id.txtWeightHome);
+		//txtWeightTime = (TextView) rootView.fi/*ndViewById(R.id.txtBMIHomeTime);
+		//txtWeightDate = (TextView) rootView.findViewById(R.id.txtBMIHomeDate);*/
+		//txtWeight = (TextView) rootView.findViewById(R.id.txtWeightHome);
 		txtBmi = (TextView) rootView.findViewById(R.id.txtBMIHome);
-		txtWeightUnit = (TextView) rootView
-				.findViewById(R.id.txtWeightHomeUnit);
+		/*txtWeightUnit = (TextView) rootView
+				.findViewById(R.id.txtWeightHomeUnit);*/
 		weightStatus = (LinearLayout) rootView
 				.findViewById(R.id.weightLinearLayoutStatus);
 
@@ -376,17 +374,17 @@ public class SummaryReportFragment extends Fragment {
 
 		if (weight != null) {
 			Log.e("home weight", weight.getWeightInPounds() + "");
-			if (setting.isWeightSettingInPounds()) {
+/*			if (setting.isWeightSettingInPounds()) {
 				txtWeight.setText(df.format(weight.getWeightInPounds()));
 				txtWeightUnit.setText("lbs");
 			} else {
 				txtWeight.setText(df.format(weight.getWeightInKilograms()));
 				txtWeightUnit.setText("kgs");
-			}
-			txtWeightDate.setText(String.valueOf(DateTimeParser.getDate(weight
+			}*/
+/*			txtWeightDate.setText(String.valueOf(DateTimeParser.getDate(weight
 					.getTimestamp())));
 			txtWeightTime.setText(String.valueOf(DateTimeParser.getTime(weight
-					.getTimestamp())));
+					.getTimestamp())));*/
 
 			double heightInMeter = user.getHeightInMeter();
 
@@ -425,7 +423,7 @@ public class SummaryReportFragment extends Fragment {
 				startActivity(i);
 			}
 		});
-
+/*
 		postHolder = (LinearLayout) rootView
 				.findViewById(R.id.journalTabsPlaceholder);
 		postHolder.setOnClickListener(new OnClickListener() {
@@ -436,6 +434,6 @@ public class SummaryReportFragment extends Fragment {
 				startActivity(intent);
 			}
 		});
-		return rootView;
+*/		return rootView;
 	}
 }

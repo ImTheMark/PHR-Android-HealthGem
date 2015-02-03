@@ -102,14 +102,18 @@ public class FoodSearchListActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+
+		case android.R.id.home:
+			onBackPressed();
+			break;
 		case R.id.menu_item_add_new_activity:
 			Intent i = new Intent(getApplicationContext(),
 					AddNewFoodActivity.class);
 			startActivity(i);
-
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+		return true;
 
 	}
 

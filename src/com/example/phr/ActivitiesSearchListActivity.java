@@ -111,6 +111,11 @@ public class ActivitiesSearchListActivity extends android.app.Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		
+
+		case android.R.id.home:
+			onBackPressed();
+			break;
 		case R.id.menu_item_add_new_activity:
 			Intent i = new Intent(getApplicationContext(),
 					AddNewActivityActivity.class);
@@ -119,6 +124,7 @@ public class ActivitiesSearchListActivity extends android.app.Activity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+		return true;
 
 	}
 

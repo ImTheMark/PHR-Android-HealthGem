@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <color name="healthgem_red">#FF4242</color>
+    <color name="healthgem_white">#F4FAD2</color>
+    <color name="healthgem_green">#D4EE5E</color>
+    <color name="healthgem_light_green">#E1EDB9</color>
+    <color name="healthgem_gray">#F0F2EB</color>
+    
+</resources>
