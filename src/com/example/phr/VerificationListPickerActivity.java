@@ -5,6 +5,8 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -50,6 +52,7 @@ public class VerificationListPickerActivity extends android.app.Activity {
 
 		StrictMode.setThreadPolicy(policy);
 		setContentView(R.layout.activity_add_actions);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 		listView = (ListView) findViewById(R.id.actionList);
 		verificationService = new VerificationServiceImpl();
 

@@ -3,6 +3,8 @@ package com.example.phr;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -45,6 +47,7 @@ public class NoteReadModeActivity extends Activity {
 		setTitle("Notes");
 		setContentView(R.layout.activity_note_read_mode);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 
 		Intent in = getIntent();
 		chosenItem = (Note) in.getExtras().getSerializable("object");

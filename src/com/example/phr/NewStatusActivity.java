@@ -21,6 +21,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -181,6 +183,7 @@ public class NewStatusActivity extends android.app.Activity {
 
 		StrictMode.setThreadPolicy(policy);
 		setContentView(R.layout.activity_new_status);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 		Log.e("in", "ew status");
 
 		dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);

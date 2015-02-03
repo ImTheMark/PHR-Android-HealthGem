@@ -7,6 +7,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -49,6 +51,7 @@ public class NoteTrackerActivity extends Activity {
 		setContentView(R.layout.activity_note_tracker);
 		setTitle("Notes");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 		mNoteList = (ListView) findViewById(R.id.listView_notes);
 
 		list = new ArrayList<Note>();

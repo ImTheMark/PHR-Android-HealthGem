@@ -5,6 +5,8 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.Menu;
@@ -38,6 +40,7 @@ public class RetrieveActivity extends Activity {
 		setContentView(R.layout.activity_retrieve_post);
 		setTitle("Retrieved Posts");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 		mRetrieveFoodList = (ListView) findViewById(R.id.listViewFood);
 
 		// FAKE DATA

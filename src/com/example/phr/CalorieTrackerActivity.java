@@ -7,6 +7,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -46,6 +48,7 @@ public class CalorieTrackerActivity extends Activity {
 		setContentView(R.layout.activity_calorie_tracker);
 		setTitle("Calorie Tracker");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 		mCalorieList = (ListView) findViewById(R.id.listview_calorie);
 
 		calorieTrackerList = new ArrayList<CalorieTrackerEntry>();

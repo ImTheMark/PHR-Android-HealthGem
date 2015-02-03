@@ -5,6 +5,8 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.ListActivity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.MenuItem;
@@ -27,6 +29,7 @@ public class StatusFeedActivity extends ListActivity {
 
 		StrictMode.setThreadPolicy(policy);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 		setContentView(R.layout.activity_status_feed);/*
 													 * statusAdapter = new
 													 * StatusAdapter

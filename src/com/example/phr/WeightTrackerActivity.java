@@ -16,6 +16,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -66,6 +67,7 @@ public class WeightTrackerActivity extends Activity {
 		mWeightList = (ListView) findViewById(R.id.listViewWeightTracker);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 		MobileWeightTrackerDao daoImpl = new MobileWeightTrackerDaoImpl();
 		WeightTrackerService weightService = new WeightTrackerServiceImpl();
 		setting = new MobileSettingsDaoImpl();

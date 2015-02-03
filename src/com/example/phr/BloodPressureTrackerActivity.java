@@ -17,6 +17,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -81,6 +82,7 @@ public class BloodPressureTrackerActivity extends Activity {
 		setContentView(R.layout.activity_bloodpressure_tracker);
 		setTitle("Blood Pressure Tracker");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 		mBloodPressureList = (ListView) findViewById(R.id.listView_bloodpressure);
 
 		// FAKE DATA

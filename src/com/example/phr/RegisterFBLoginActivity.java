@@ -21,6 +21,8 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -84,6 +86,7 @@ public class RegisterFBLoginActivity extends Activity {
 		userService = new UserServiceImpl();
 
 		StrictMode.setThreadPolicy(policy);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 		weightService = new WeightTrackerServiceImpl();
 
 		try {

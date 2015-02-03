@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -47,6 +49,7 @@ public class ActivitiesSearchListActivity extends android.app.Activity {
 		setContentView(R.layout.activity_search_list);
 		setTitle("Activity Search List");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 		searchList = (ListView) findViewById(R.id.searchList);
 		searchWord = (EditText) findViewById(R.id.searchWord);
 		searchButton = (ImageButton) findViewById(R.id.searchButton);

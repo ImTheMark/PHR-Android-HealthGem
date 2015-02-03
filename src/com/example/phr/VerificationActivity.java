@@ -2,6 +2,8 @@ package com.example.phr;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.widget.ListView;
@@ -29,6 +31,7 @@ public class VerificationActivity extends Activity {
 
 		StrictMode.setThreadPolicy(policy);
 		setContentView(R.layout.activity_verification);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 		vList = (ListView) findViewById(R.id.verification_listview);
 		vService = new VerificationServiceImpl();
 

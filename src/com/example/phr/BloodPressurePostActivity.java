@@ -11,6 +11,8 @@ import java.util.Locale;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.Menu;
@@ -50,6 +52,7 @@ public class BloodPressurePostActivity extends Activity {
 		setContentView(R.layout.activity_bloodpressure_post);
 		setTitle("Blood Pressure");
 
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 		mBtnAddPhoto = (ImageButton) findViewById(R.id.btnAddImageBloodPressure);
 		mBtnAddPhoto.setOnClickListener(new OnClickListener() {
 			@Override

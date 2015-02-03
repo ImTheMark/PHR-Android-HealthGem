@@ -6,6 +6,8 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
@@ -32,6 +34,7 @@ public class AddActionActivity extends Activity {
 		StrictMode.setThreadPolicy(policy);
 		setTitle("What are you doing?");
 		setContentView(R.layout.activity_add_actions);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 		ListView actionList = (ListView) findViewById(R.id.actionList);
 		actionAdapter = new ActionAdapter(getApplicationContext(),
 				generateData());

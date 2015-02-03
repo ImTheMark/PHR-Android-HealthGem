@@ -11,6 +11,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.InputType;
@@ -84,6 +86,7 @@ public class RegisterUserInformationActivity extends Activity {
 
 		StrictMode.setThreadPolicy(policy);
 		setContentView(R.layout.activity_registration_user_information);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 
 		registrationHeightInputFeetInches = (LinearLayout) findViewById(R.id.registrationHeightInputFeetInches);
 		heightInches = (EditText) findViewById(R.id.txtRegistrationHeightInches);

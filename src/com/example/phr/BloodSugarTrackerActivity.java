@@ -16,6 +16,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -72,6 +73,7 @@ public class BloodSugarTrackerActivity extends Activity {
 		setContentView(R.layout.activity_bloodsugar_tracker);
 		setTitle("Blood Sugar Tracker");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 		mBloodSugarList = (ListView) findViewById(R.id.listView_bloodsugar);
 		list = new ArrayList<BloodSugar>();
 

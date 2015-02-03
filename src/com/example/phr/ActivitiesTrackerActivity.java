@@ -8,6 +8,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -59,6 +61,7 @@ public class ActivitiesTrackerActivity extends Activity {
 		setTitle("Activity Tracker");
 		mActivityList = (ListView) findViewById(R.id.listViewActivityTracker);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 
 		activityList = new ArrayList<ActivityTrackerEntry>();
 		activityServiceImpl = new ActivityTrackerServiceImpl();

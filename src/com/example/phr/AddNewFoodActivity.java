@@ -3,6 +3,8 @@ package com.example.phr;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.Menu;
@@ -33,6 +35,7 @@ public class AddNewFoodActivity extends Activity {
 		StrictMode.setThreadPolicy(policy);
 		setTitle("Add New Food");
 		setContentView(R.layout.activity_add_new_food);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 
 		newFood = (EditText) findViewById(R.id.txtNewFood);
 		newFoodCal = (EditText) findViewById(R.id.txtFoodCal);

@@ -18,6 +18,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -83,6 +84,7 @@ public class FoodTrackerDailyActivity extends Activity {
 		setContentView(R.layout.activity_food_tracker_daily);
 		setTitle("Daily Food Tracker");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 
 		Intent in = getIntent();
 		txtDate = in.getExtras().getString("date");

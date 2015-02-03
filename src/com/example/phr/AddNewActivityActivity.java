@@ -2,6 +2,8 @@ package com.example.phr;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -33,6 +35,7 @@ public class AddNewActivityActivity extends android.app.Activity {
 		StrictMode.setThreadPolicy(policy);
 		setTitle("Add New Activity");
 		setContentView(R.layout.activity_add_new_activity);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 
 		newActivity = (EditText) findViewById(R.id.txtNewActivity);
 		newActivityCal = (EditText) findViewById(R.id.txtNewCal);
