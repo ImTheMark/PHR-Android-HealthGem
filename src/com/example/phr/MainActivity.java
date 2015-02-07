@@ -57,8 +57,10 @@ public class MainActivity extends FragmentActivity implements
 		// Initilization
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		actionBar = getActionBar();
-		actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
-		actionBar.setStackedBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFCD57")));
+		actionBar.setBackgroundDrawable(new ColorDrawable(Color
+				.parseColor("#4A3A47")));
+		actionBar.setStackedBackgroundDrawable(new ColorDrawable(Color
+				.parseColor("#446CB3")));
 		mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
 
 		viewPager.setAdapter(mAdapter);
@@ -228,8 +230,7 @@ public class MainActivity extends FragmentActivity implements
 		if (extras != null && in.hasExtra("backToMenu")) {
 			int position = in.getExtras().getInt("backToMenu");
 			viewPager.setCurrentItem(position);
-		}
-		else if (extras != null && in.hasExtra("gotoMainfromSettings")) {
+		} else if (extras != null && in.hasExtra("gotoMainfromSettings")) {
 			int position = in.getExtras().getInt("gotoMainfromSettings");
 			viewPager.setCurrentItem(position);
 		}

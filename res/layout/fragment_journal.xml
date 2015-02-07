@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent" 
+    android:background="#F4FAD2">
 
   
 
@@ -12,6 +13,7 @@
         android:listSelector="@android:color/transparent"
         android:clickable="false"
         android:dividerHeight="0dp"
+        android:background="#F4FAD2"
         android:divider="@null" >
     </ListView>
 
