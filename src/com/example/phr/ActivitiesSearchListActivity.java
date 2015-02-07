@@ -3,9 +3,11 @@ package com.example.phr;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -35,6 +37,7 @@ public class ActivitiesSearchListActivity extends android.app.Activity {
 	ArrayAdapter<String> adapter;
 	ArrayList<Activity> result;
 	ArrayList<String> resultName;
+	private android.app.Activity activity;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -53,37 +56,57 @@ public class ActivitiesSearchListActivity extends android.app.Activity {
 		searchList = (ListView) findViewById(R.id.searchList);
 		searchWord = (EditText) findViewById(R.id.searchWord);
 		searchButton = (ImageButton) findViewById(R.id.searchButton);
+		activity = this;
 
 		searchButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
-				ActivityService service = new ActivityServiceImpl();
+				final ActivityService service = new ActivityServiceImpl();
 				Log.e("search word", searchWord.getText().toString());
 				result = new ArrayList<Activity>();
-				try {
-					result = (ArrayList<Activity>) service.search(searchWord
-							.getText().toString());
-				} catch (ServiceException e) {
-					// TODO Auto-generated catch block
-					Toast.makeText(HealthGem.getContext(),
-							"No Internet Connection !", Toast.LENGTH_LONG)
-							.show();
-					e.printStackTrace();
-				} catch (OutdatedAccessTokenException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				resultName = new ArrayList<String>();
-				if (result != null) {
-					for (int i = 0; i < result.size(); i++)
-						resultName.add(result.get(i).getName());
+				
 
-					adapter = new ArrayAdapter<String>(getApplicationContext(),
-							R.layout.item_custom_listview, resultName);
+				final ProgressDialog progressDialog = new ProgressDialog(activity);
+				progressDialog.setCancelable(false);
+				progressDialog.setMessage("Searching activity...");
+				progressDialog.show();
+				
+				new AsyncTask<Void, Void, Void>(){
+			        @Override
+			        protected Void doInBackground(Void... params) {try {
+						result = (ArrayList<Activity>) service.search(searchWord
+								.getText().toString());
+						} catch (ServiceException e) {
+							// TODO Auto-generated catch block
+							Toast.makeText(HealthGem.getContext(),
+									"No Internet Connection!", Toast.LENGTH_LONG)
+									.show();
+							e.printStackTrace();
+						} catch (OutdatedAccessTokenException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			            return null;
+			        }
+			        
+			        @Override
+			        protected void onPostExecute(Void result2) {
+						if (result != null) {
+							for (int i = 0; i < result.size(); i++)
+								resultName.add(result.get(i).getName());
 
-					searchList.setAdapter(adapter);
-				}
+							adapter = new ArrayAdapter<String>(getApplicationContext(),
+									R.layout.item_custom_listview, resultName);
+
+							searchList.setAdapter(adapter);
+						}
+						
+			        	if(progressDialog.isShowing())
+							progressDialog.dismiss();
+			        };
+			    }.execute();
 			}
 		});
 

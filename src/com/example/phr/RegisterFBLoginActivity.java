@@ -14,6 +14,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -35,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.phr.application.HealthGem;
+import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.exceptions.UserAlreadyExistsException;
@@ -77,6 +79,7 @@ public class RegisterFBLoginActivity extends Activity {
 
 	private MobileSettingsDao settingDao;
 	private Boolean isRegister = true;
+	Activity activity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +87,7 @@ public class RegisterFBLoginActivity extends Activity {
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
 		userService = new UserServiceImpl();
+		activity = this;
 
 		StrictMode.setThreadPolicy(policy);
 		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
@@ -240,96 +244,144 @@ public class RegisterFBLoginActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+
+		final ProgressDialog progressDialog = new ProgressDialog(activity);
+		progressDialog.setCancelable(false);
+		progressDialog.setMessage("Loading...");
+		
+		
 		switch (item.getItemId()) {
 		case R.id.menu_item_next:
-			Intent intent = new Intent(getApplicationContext(),
-					MainActivity.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-					| Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			try {
-				User newUser = new User();
-				newUser.setAllergies(HealthGem.getSharedPreferences()
-						.loadPreferences(SPreference.REGISTER_ALLERGIES));
-				newUser.setContactNumber(HealthGem.getSharedPreferences()
-						.loadPreferences(SPreference.REGISTER_CONTACTNUMBER));
-				try {
-					newUser.setDateOfBirth(DateTimeParser
-							.getTimestamp(HealthGem.getSharedPreferences()
-									.loadPreferences(
-											SPreference.REGISTER_BIRTHDATE)));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				newUser.setEmail(HealthGem.getSharedPreferences()
-						.loadPreferences(SPreference.REGISTER_EMAIL));
-				newUser.setEmergencyContactNumber(HealthGem
-						.getSharedPreferences().loadPreferences(
-								SPreference.REGISTER_CONTACTPERSONNUMBER));
-				newUser.setEmergencyPerson(HealthGem.getSharedPreferences()
-						.loadPreferences(SPreference.REGISTER_CONTACTPERSON));
-				newUser.setGender(HealthGem.getSharedPreferences()
-						.loadPreferences(SPreference.REGISTER_GENDER));
-				newUser.setHeight(Double.parseDouble(HealthGem
-						.getSharedPreferences().loadPreferences(
-								SPreference.REGISTER_HEIGHTINCHES)));
-				newUser.setKnownHealthProblems(HealthGem.getSharedPreferences()
-						.loadPreferences(
-								SPreference.REGISTER_KNOWNHEALTHPROBLEMS));
-				newUser.setName(HealthGem.getSharedPreferences()
-						.loadPreferences(SPreference.REGISTER_NAME));
-				newUser.setPassword(HealthGem.getSharedPreferences()
-						.loadPreferences(SPreference.REGISTER_PASSWORD));
-				newUser.setUsername(HealthGem.getSharedPreferences()
-						.loadPreferences(SPreference.REGISTER_USERNAME));
-				newUser.setWeight(Double.parseDouble(HealthGem
-						.getSharedPreferences().loadPreferences(
-								SPreference.REGISTER_WEIGHTPOUNDS)));
+			
+			progressDialog.show();
+			new AsyncTask<Void, Void, Void>(){
+		        @Override
+		        protected Void doInBackground(Void... params) {
 
-				if (user != null)
-					newUser.setFbAccessToken(HealthGem
-							.getSharedPreferences()
-							.loadPreferences(SPreference.REGISTER_FBACCESSTOKEN));
-				userService.registerUser(newUser);
-				Date date = new Date();
-				Timestamp timestamp = new Timestamp(date.getTime());
-				Weight weight = new Weight(timestamp, "", null,
-						newUser.getWeight());
-				try {
-					weightService.add(weight);
-				} catch (OutdatedAccessTokenException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				settingDao = new MobileSettingsDaoImpl();
-				settingDao.initializeSettings();
-				startActivity(intent);
-			} catch (ServiceException e) {
-				Toast.makeText(HealthGem.getContext(),
-						"No Internet Connection !", Toast.LENGTH_LONG).show();
-			} catch (UserAlreadyExistsException e) {
-				e.printStackTrace();
-			}
+					Intent intent = new Intent(getApplicationContext(),
+							MainActivity.class);
+					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+							| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					try {
+						User newUser = new User();
+						newUser.setAllergies(HealthGem.getSharedPreferences()
+								.loadPreferences(SPreference.REGISTER_ALLERGIES));
+						newUser.setContactNumber(HealthGem.getSharedPreferences()
+								.loadPreferences(SPreference.REGISTER_CONTACTNUMBER));
+						try {
+							newUser.setDateOfBirth(DateTimeParser
+									.getTimestamp(HealthGem.getSharedPreferences()
+											.loadPreferences(
+													SPreference.REGISTER_BIRTHDATE)));
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						newUser.setEmail(HealthGem.getSharedPreferences()
+								.loadPreferences(SPreference.REGISTER_EMAIL));
+						newUser.setEmergencyContactNumber(HealthGem
+								.getSharedPreferences().loadPreferences(
+										SPreference.REGISTER_CONTACTPERSONNUMBER));
+						newUser.setEmergencyPerson(HealthGem.getSharedPreferences()
+								.loadPreferences(SPreference.REGISTER_CONTACTPERSON));
+						newUser.setGender(HealthGem.getSharedPreferences()
+								.loadPreferences(SPreference.REGISTER_GENDER));
+						newUser.setHeight(Double.parseDouble(HealthGem
+								.getSharedPreferences().loadPreferences(
+										SPreference.REGISTER_HEIGHTINCHES)));
+						newUser.setKnownHealthProblems(HealthGem.getSharedPreferences()
+								.loadPreferences(
+										SPreference.REGISTER_KNOWNHEALTHPROBLEMS));
+						newUser.setName(HealthGem.getSharedPreferences()
+								.loadPreferences(SPreference.REGISTER_NAME));
+						newUser.setPassword(HealthGem.getSharedPreferences()
+								.loadPreferences(SPreference.REGISTER_PASSWORD));
+						newUser.setUsername(HealthGem.getSharedPreferences()
+								.loadPreferences(SPreference.REGISTER_USERNAME));
+						newUser.setWeight(Double.parseDouble(HealthGem
+								.getSharedPreferences().loadPreferences(
+										SPreference.REGISTER_WEIGHTPOUNDS)));
+
+						if (user != null)
+							newUser.setFbAccessToken(HealthGem
+									.getSharedPreferences()
+									.loadPreferences(SPreference.REGISTER_FBACCESSTOKEN));
+						userService.registerUser(newUser);
+						Date date = new Date();
+						Timestamp timestamp = new Timestamp(date.getTime());
+						Weight weight = new Weight(timestamp, "", null,
+								newUser.getWeight());
+						try {
+							weightService.add(weight);
+						} catch (OutdatedAccessTokenException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						settingDao = new MobileSettingsDaoImpl();
+						settingDao.initializeSettings();
+						startActivity(intent);
+					} catch (ServiceException e) {
+						runOnUiThread(new Runnable(){
+					        public void run() {
+								Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+										Toast.LENGTH_LONG).show();
+					        }
+					    });
+					} catch (UserAlreadyExistsException e) {
+						e.printStackTrace();
+					}
+		            return null;
+		        }
+		        
+		        @Override
+		        protected void onPostExecute(Void result2) {
+					
+		        	if(progressDialog.isShowing())
+						progressDialog.dismiss();
+		        };
+		    }.execute();
 			return true;
 		case R.id.menu_item_save:
-			if (user != null) {
-				User editedUser = userService.getUser();
-				editedUser.setFbAccessToken(HealthGem.getSharedPreferences()
-						.loadPreferences(SPreference.REGISTER_FBACCESSTOKEN));
-				try {
-					userService.edit(editedUser);
-				} catch (ServiceException e) {
-					// TODO Auto-generated catch block
-					Toast.makeText(HealthGem.getContext(),
-							"No Internet Connection !", Toast.LENGTH_LONG)
-							.show();
-					e.printStackTrace();
-				} catch (OutdatedAccessTokenException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			onBackPressed();
+			
+
+			progressDialog.show();
+			new AsyncTask<Void, Void, Void>(){
+		        @Override
+		        protected Void doInBackground(Void... params) {
+
+					if (user != null) {
+						User editedUser = userService.getUser();
+						editedUser.setFbAccessToken(HealthGem.getSharedPreferences()
+								.loadPreferences(SPreference.REGISTER_FBACCESSTOKEN));
+						try {
+							userService.edit(editedUser);
+						} catch (ServiceException e) {
+							// TODO Auto-generated catch block
+							runOnUiThread(new Runnable(){
+						        public void run() {
+									Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+											Toast.LENGTH_LONG).show();
+						        }
+						    });
+							e.printStackTrace();
+						} catch (OutdatedAccessTokenException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+		            return null;
+		        }
+		        
+		        @Override
+		        protected void onPostExecute(Void result2) {
+					
+		        	if(progressDialog.isShowing())
+						progressDialog.dismiss();
+
+					onBackPressed();
+		        };
+		    }.execute();
+		    
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

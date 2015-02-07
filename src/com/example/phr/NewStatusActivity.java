@@ -14,6 +14,7 @@ import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,6 +25,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -172,6 +174,7 @@ public class NewStatusActivity extends android.app.Activity {
 	public static final int CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE = 1777;
 	public static final int SELECT_FILE = 2000;
 	DecimalFormat df = new DecimalFormat("#.00");
+	android.app.Activity activity;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -185,6 +188,7 @@ public class NewStatusActivity extends android.app.Activity {
 		setContentView(R.layout.activity_new_status);
 		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
 		Log.e("in", "ew status");
+		activity = this;
 
 		dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
 		timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
@@ -1298,8 +1302,12 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
+			runOnUiThread(new Runnable(){
+		        public void run() {
+					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+							Toast.LENGTH_LONG).show();
+		        }
+		    });
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -1352,8 +1360,12 @@ public class NewStatusActivity extends android.app.Activity {
 			finish();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
+			runOnUiThread(new Runnable(){
+		        public void run() {
+					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+							Toast.LENGTH_LONG).show();
+		        }
+		    });
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -1418,8 +1430,12 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
+			runOnUiThread(new Runnable(){
+		        public void run() {
+					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+							Toast.LENGTH_LONG).show();
+		        }
+		    });
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -1469,8 +1485,12 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
+			runOnUiThread(new Runnable(){
+		        public void run() {
+					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+							Toast.LENGTH_LONG).show();
+		        }
+		    });
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -1536,8 +1556,12 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
+			runOnUiThread(new Runnable(){
+		        public void run() {
+					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+							Toast.LENGTH_LONG).show();
+		        }
+		    });
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -1593,8 +1617,12 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
+			runOnUiThread(new Runnable(){
+		        public void run() {
+					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+							Toast.LENGTH_LONG).show();
+		        }
+		    });
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -1667,8 +1695,12 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
+			runOnUiThread(new Runnable(){
+		        public void run() {
+					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+							Toast.LENGTH_LONG).show();
+		        }
+		    });
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -1701,75 +1733,115 @@ public class NewStatusActivity extends android.app.Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+
+		final ProgressDialog progressDialog = new ProgressDialog(activity);
+		progressDialog.setCancelable(false);
+		progressDialog.setMessage("Saving post to tracker...");
+		
 		switch (item.getItemId()) {
 		case R.id.menu_item_status_post:
+			
 
-			if (currentTracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
 
-				addBloodPressureToDatabase();
-				Log.e("added", "bp");
+			progressDialog.show();
+			new AsyncTask<Void, Void, Void>(){
+		        @Override
+		        protected Void doInBackground(Void... params) {
+		        	if (currentTracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
 
-			}
+						addBloodPressureToDatabase();
+						Log.e("added", "bp");
 
-			else if (currentTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
+					}
 
-				addBloodSugarToDatabase();
+					else if (currentTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
 
-			} else if (currentTracker.equals(TrackerInputType.WEIGHT)) {
+						addBloodSugarToDatabase();
 
-				addWeightToDatabase();
+					} else if (currentTracker.equals(TrackerInputType.WEIGHT)) {
 
-			} else if (currentTracker.equals(TrackerInputType.CHECKUP)) {
+						addWeightToDatabase();
 
-				addCheckUpToDatabase();
+					} else if (currentTracker.equals(TrackerInputType.CHECKUP)) {
 
-			} else if (currentTracker.equals(TrackerInputType.NOTES)) {
+						addCheckUpToDatabase();
 
-				addNoteToDatabase();
+					} else if (currentTracker.equals(TrackerInputType.NOTES)) {
 
-			} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
+						addNoteToDatabase();
 
-				addActivityToDatabase();
+					} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
 
-			} else if (currentTracker.equals(TrackerInputType.FOOD)) {
+						addActivityToDatabase();
 
-				addFoodToDatabase();
+					} else if (currentTracker.equals(TrackerInputType.FOOD)) {
 
-			}
+						addFoodToDatabase();
+
+					}
+		            return null;
+		        }
+		        
+		        @Override
+		        protected void onPostExecute(Void result2) {
+					
+		        	if(progressDialog.isShowing())
+						progressDialog.dismiss();
+		        };
+		    }.execute();
+
+			
 
 			return true;
 
 		case R.id.menu_item_status_edit:
+			
 
-			if (currentTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
-				Log.e("call", "edit");
-				editBloodSugarToDatabase();
+			progressDialog.show();
+			new AsyncTask<Void, Void, Void>(){
+		        @Override
+		        protected Void doInBackground(Void... params) {
+		        	
+		        	if (currentTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
+						Log.e("call", "edit");
+						editBloodSugarToDatabase();
 
-			} else if (currentTracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
-				editBloodPressureToDatabase();
-				Log.e("call", "bpActivity");
+					} else if (currentTracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
+						editBloodPressureToDatabase();
+						Log.e("call", "bpActivity");
 
-			} else if (currentTracker.equals(TrackerInputType.WEIGHT)) {
-				editWeightToDatabase();
-				Log.e("call", "weightActivity");
+					} else if (currentTracker.equals(TrackerInputType.WEIGHT)) {
+						editWeightToDatabase();
+						Log.e("call", "weightActivity");
 
-			} else if (currentTracker.equals(TrackerInputType.CHECKUP)) {
-				editCheckUpToDatabase();
-				Log.e("call", "checkupActivity");
+					} else if (currentTracker.equals(TrackerInputType.CHECKUP)) {
+						editCheckUpToDatabase();
+						Log.e("call", "checkupActivity");
 
-			} else if (currentTracker.equals(TrackerInputType.NOTES)) {
-				editNoteToDatabase();
-				Log.e("call", "noteActivity");
+					} else if (currentTracker.equals(TrackerInputType.NOTES)) {
+						editNoteToDatabase();
+						Log.e("call", "noteActivity");
 
-			} else if (currentTracker.equals(TrackerInputType.FOOD)) {
-				editFoodToDatabase();
-				Log.e("call", "foodActivity");
+					} else if (currentTracker.equals(TrackerInputType.FOOD)) {
+						editFoodToDatabase();
+						Log.e("call", "foodActivity");
 
-			} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
-				editActivityToDatabase();
-				Log.e("call", "acitivityActivity");
+					} else if (currentTracker.equals(TrackerInputType.ACTIVITY)) {
+						editActivityToDatabase();
+						Log.e("call", "acitivityActivity");
 
-			}
+					}
+					
+		            return null;
+		        }
+		        
+		        @Override
+		        protected void onPostExecute(Void result2) {
+					
+		        	if(progressDialog.isShowing())
+						progressDialog.dismiss();
+		        };
+		    }.execute();
 
 			return true;
 
@@ -1832,8 +1904,13 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
+
+			runOnUiThread(new Runnable(){
+		        public void run() {
+					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+							Toast.LENGTH_LONG).show();
+		        }
+		    });
 			e.printStackTrace();
 		}
 		Log.e("in", "edited");
@@ -1870,8 +1947,12 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
+			runOnUiThread(new Runnable(){
+		        public void run() {
+					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+							Toast.LENGTH_LONG).show();
+		        }
+		    });
 			e.printStackTrace();
 		}
 
@@ -1917,8 +1998,12 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
+			runOnUiThread(new Runnable(){
+		        public void run() {
+					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+							Toast.LENGTH_LONG).show();
+		        }
+		    });
 			e.printStackTrace();
 		}
 
@@ -1954,8 +2039,12 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
+			runOnUiThread(new Runnable(){
+		        public void run() {
+					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+							Toast.LENGTH_LONG).show();
+		        }
+		    });
 			e.printStackTrace();
 		}
 
@@ -1989,8 +2078,12 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
+			runOnUiThread(new Runnable(){
+		        public void run() {
+					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+							Toast.LENGTH_LONG).show();
+		        }
+		    });
 			e.printStackTrace();
 		}
 
@@ -2038,8 +2131,12 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
+			runOnUiThread(new Runnable(){
+		        public void run() {
+					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+							Toast.LENGTH_LONG).show();
+		        }
+		    });
 			e.printStackTrace();
 		}
 
@@ -2091,8 +2188,12 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
+			runOnUiThread(new Runnable(){
+		        public void run() {
+					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+							Toast.LENGTH_LONG).show();
+		        }
+		    });
 			e.printStackTrace();
 		}
 
@@ -2136,8 +2237,12 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
+			runOnUiThread(new Runnable(){
+		        public void run() {
+					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+							Toast.LENGTH_LONG).show();
+		        }
+		    });
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -2186,8 +2291,12 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
+			runOnUiThread(new Runnable(){
+		        public void run() {
+					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+							Toast.LENGTH_LONG).show();
+		        }
+		    });
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -2248,8 +2357,12 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
+			runOnUiThread(new Runnable(){
+		        public void run() {
+					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+							Toast.LENGTH_LONG).show();
+		        }
+		    });
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -2307,8 +2420,12 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-					Toast.LENGTH_LONG).show();
+			runOnUiThread(new Runnable(){
+		        public void run() {
+					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+							Toast.LENGTH_LONG).show();
+		        }
+		    });
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block

@@ -9,10 +9,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.InputType;
@@ -30,6 +32,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.phr.application.HealthGem;
+import com.example.phr.enums.TrackerInputType;
 import com.example.phr.exceptions.OutdatedAccessTokenException;
 import com.example.phr.exceptions.ServiceException;
 import com.example.phr.local_db.SPreference;
@@ -74,6 +77,7 @@ public class RegisterUserInformationActivity extends Activity {
 	String mm = "";
 	String dd = "";
 	Calendar calendar;
+	Activity activity;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -83,7 +87,7 @@ public class RegisterUserInformationActivity extends Activity {
 				.permitAll().build();
 
 		userService = new UserServiceImpl();
-
+		activity = this;
 		StrictMode.setThreadPolicy(policy);
 		setContentView(R.layout.activity_registration_user_information);
 		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
@@ -197,8 +201,12 @@ public class RegisterUserInformationActivity extends Activity {
 				}
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block
-				Toast.makeText(HealthGem.getContext(),
-						"No Internet Connection !", Toast.LENGTH_LONG).show();
+				runOnUiThread(new Runnable(){
+			        public void run() {
+						Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+								Toast.LENGTH_LONG).show();
+			        }
+			    });
 				e.printStackTrace();
 			}
 
@@ -330,177 +338,213 @@ public class RegisterUserInformationActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+
+		final ProgressDialog progressDialog = new ProgressDialog(activity);
+		progressDialog.setCancelable(false);
+		progressDialog.setMessage("Loading...");
+		
 		switch (item.getItemId()) {
 		case R.id.menu_item_next:
-			if (fullName.getText().toString().equals("")
-					|| contactNumber.getText().toString().equals("")
-					|| email.getText().toString().equals("")
-					|| height.getText().toString().equals("")
-					|| weight.getText().toString().equals("")
-					|| contactPerson.getText().toString().equals("")
-					|| contactPersonNumber.getText().toString().equals("")
-					|| birthdate.getText().toString().equals("")) {
-				Toast.makeText(HealthGem.getContext(),
-						"Please complete the missing fields.",
-						Toast.LENGTH_LONG).show();
-			} else {
-				HealthGem.getSharedPreferences().savePreferences(
-						SPreference.REGISTER_NAME,
-						fullName.getText().toString());
-				HealthGem.getSharedPreferences().savePreferences(
-						SPreference.REGISTER_CONTACTNUMBER,
-						contactNumber.getText().toString());
-				HealthGem.getSharedPreferences().savePreferences(
-						SPreference.REGISTER_EMAIL, email.getText().toString());
-				HealthGem.getSharedPreferences().savePreferences(
-						SPreference.REGISTER_CONTACTPERSON,
-						contactPerson.getText().toString());
-				HealthGem.getSharedPreferences().savePreferences(
-						SPreference.REGISTER_CONTACTPERSONNUMBER,
-						contactPersonNumber.getText().toString());
-				HealthGem.getSharedPreferences().savePreferences(
-						SPreference.REGISTER_ALLERGIES,
-						allergies.getText().toString());
-				HealthGem.getSharedPreferences().savePreferences(
-						SPreference.REGISTER_KNOWNHEALTHPROBLEMS,
-						knownHealthProblems.getText().toString());
-				HealthGem.getSharedPreferences().savePreferences(
-						SPreference.REGISTER_GENDER,
-						gender.getSelectedItem() + "");
-				HealthGem.getSharedPreferences().savePreferences(
-						SPreference.REGISTER_BIRTHDATE,
-						birthdate.getText().toString() + " 00:00:00");
+			
+			new AsyncTask<Void, Void, Void>(){
+		        @Override
+		        protected Void doInBackground(Void... params) {
 
-				if (heightUnit.getSelectedItemPosition() == 0) {
-					double inches = Double.parseDouble(height.getText()
-							.toString())
-							* 12
-							+ Double.parseDouble(heightInches.getText()
-									.toString());
-					HealthGem.getSharedPreferences().savePreferences(
-							SPreference.REGISTER_HEIGHTINCHES, inches + "");
-					settingsDao.setHeightToFeet();
-				} else {
-					Double ft = Double.parseDouble(height.getText().toString()) * 0.39370;
-					HealthGem.getSharedPreferences().savePreferences(
-							SPreference.REGISTER_HEIGHTINCHES, ft + "");
-					settingsDao.setHeightToCentimeters();
-				}
+					if (fullName.getText().toString().equals("")
+							|| contactNumber.getText().toString().equals("")
+							|| email.getText().toString().equals("")
+							|| height.getText().toString().equals("")
+							|| weight.getText().toString().equals("")
+							|| contactPerson.getText().toString().equals("")
+							|| contactPersonNumber.getText().toString().equals("")
+							|| birthdate.getText().toString().equals("")) {
+						Toast.makeText(HealthGem.getContext(),
+								"Please complete the missing fields.",
+								Toast.LENGTH_LONG).show();
+					} else {
+						HealthGem.getSharedPreferences().savePreferences(
+								SPreference.REGISTER_NAME,
+								fullName.getText().toString());
+						HealthGem.getSharedPreferences().savePreferences(
+								SPreference.REGISTER_CONTACTNUMBER,
+								contactNumber.getText().toString());
+						HealthGem.getSharedPreferences().savePreferences(
+								SPreference.REGISTER_EMAIL, email.getText().toString());
+						HealthGem.getSharedPreferences().savePreferences(
+								SPreference.REGISTER_CONTACTPERSON,
+								contactPerson.getText().toString());
+						HealthGem.getSharedPreferences().savePreferences(
+								SPreference.REGISTER_CONTACTPERSONNUMBER,
+								contactPersonNumber.getText().toString());
+						HealthGem.getSharedPreferences().savePreferences(
+								SPreference.REGISTER_ALLERGIES,
+								allergies.getText().toString());
+						HealthGem.getSharedPreferences().savePreferences(
+								SPreference.REGISTER_KNOWNHEALTHPROBLEMS,
+								knownHealthProblems.getText().toString());
+						HealthGem.getSharedPreferences().savePreferences(
+								SPreference.REGISTER_GENDER,
+								gender.getSelectedItem() + "");
+						HealthGem.getSharedPreferences().savePreferences(
+								SPreference.REGISTER_BIRTHDATE,
+								birthdate.getText().toString() + " 00:00:00");
 
-				if (weightUnit.getSelectedItemPosition() == 0) {
-					HealthGem.getSharedPreferences().savePreferences(
-							SPreference.REGISTER_WEIGHTPOUNDS,
-							weight.getText().toString());
-					settingsDao.setWeightToPounds();
-				} else {
-					Double pounds = Double.parseDouble(weight.getText()
-							.toString()) * 2.2;
-					HealthGem.getSharedPreferences().savePreferences(
-							SPreference.REGISTER_WEIGHTPOUNDS, pounds + "");
-					settingsDao.setWeightToKilograms();
-				}
+						if (heightUnit.getSelectedItemPosition() == 0) {
+							double inches = Double.parseDouble(height.getText()
+									.toString())
+									* 12
+									+ Double.parseDouble(heightInches.getText()
+											.toString());
+							HealthGem.getSharedPreferences().savePreferences(
+									SPreference.REGISTER_HEIGHTINCHES, inches + "");
+							settingsDao.setHeightToFeet();
+						} else {
+							Double ft = Double.parseDouble(height.getText().toString()) * 0.39370;
+							HealthGem.getSharedPreferences().savePreferences(
+									SPreference.REGISTER_HEIGHTINCHES, ft + "");
+							settingsDao.setHeightToCentimeters();
+						}
 
-				Intent intent = new Intent(getApplicationContext(),
-						RegisterFBLoginActivity.class);
-				startActivity(intent);
-			}
+						if (weightUnit.getSelectedItemPosition() == 0) {
+							HealthGem.getSharedPreferences().savePreferences(
+									SPreference.REGISTER_WEIGHTPOUNDS,
+									weight.getText().toString());
+							settingsDao.setWeightToPounds();
+						} else {
+							Double pounds = Double.parseDouble(weight.getText()
+									.toString()) * 2.2;
+							HealthGem.getSharedPreferences().savePreferences(
+									SPreference.REGISTER_WEIGHTPOUNDS, pounds + "");
+							settingsDao.setWeightToKilograms();
+						}
+					}
+					return null;
+		        }
+		        
+		        @Override
+		        protected void onPostExecute(Void result2) {
+
+					Intent intent = new Intent(getApplicationContext(),
+							RegisterFBLoginActivity.class);
+					startActivity(intent);
+		        };
+		    }.execute();
 			return true;
 		case R.id.menu_item_save:
-			if (fullName.getText().toString().equals("")
-					|| contactNumber.getText().toString().equals("")
-					|| email.getText().toString().equals("")
-					|| height.getText().toString().equals("")
-					|| weight.getText().toString().equals("")
-					|| contactPerson.getText().toString().equals("")
-					|| contactPersonNumber.getText().toString().equals("")
-					|| birthdate.getText().toString().equals("")) {
-				Toast.makeText(HealthGem.getContext(),
-						"Please complete the missing fields.",
-						Toast.LENGTH_LONG).show();
-			} else {
-				User editedUser = userService.getUser();
 
-				editedUser.setName(fullName.getText().toString());
-				editedUser.setContactNumber(contactNumber.getText().toString());
-				editedUser.setEmail(email.getText().toString());
-				editedUser.setEmergencyPerson(contactPerson.getText()
-						.toString());
-				editedUser.setEmergencyContactNumber(contactPersonNumber
-						.getText().toString());
-				editedUser.setAllergies(allergies.getText().toString());
-				editedUser.setKnownHealthProblems(knownHealthProblems.getText()
-						.toString());
-				editedUser.setGender(gender.getSelectedItem() + "");
-				try {
-					editedUser.setDateOfBirth(DateTimeParser
-							.getTimestamp(birthdate.getText().toString()
-									+ " 00:00:00"));
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+			
+			progressDialog.show();
+			new AsyncTask<Void, Void, Void>(){
+		        @Override
+		        protected Void doInBackground(Void... params) {
 
-				if (heightUnit.getSelectedItemPosition() == 0) {
-					double inches = Double.parseDouble(height.getText()
-							.toString())
-							* 12
-							+ Double.parseDouble(heightInches.getText()
-									.toString());
-					editedUser.setHeight(inches);
-					settingsDao.setHeightToFeet();
-				} else {
-					Double ft = Double.parseDouble(height.getText().toString()) * 0.39370;
-					editedUser.setHeight(ft);
-					settingsDao.setHeightToCentimeters();
-				}
+					if (fullName.getText().toString().equals("")
+							|| contactNumber.getText().toString().equals("")
+							|| email.getText().toString().equals("")
+							|| height.getText().toString().equals("")
+							|| weight.getText().toString().equals("")
+							|| contactPerson.getText().toString().equals("")
+							|| contactPersonNumber.getText().toString().equals("")
+							|| birthdate.getText().toString().equals("")) {
+						Toast.makeText(HealthGem.getContext(),
+								"Please complete the missing fields.",
+								Toast.LENGTH_LONG).show();
+					} else {
+						User editedUser = userService.getUser();
 
-				if (weightUnit.getSelectedItemPosition() == 0) {
-					editedUser.setWeight(Double.parseDouble(weight.getText()
-							.toString()));
-					settingsDao.setWeightToPounds();
-				} else {
-					Double pounds = Double.parseDouble(weight.getText()
-							.toString()) * 2.2;
-					editedUser.setWeight(pounds);
-					settingsDao.setWeightToKilograms();
-				}
+						editedUser.setName(fullName.getText().toString());
+						editedUser.setContactNumber(contactNumber.getText().toString());
+						editedUser.setEmail(email.getText().toString());
+						editedUser.setEmergencyPerson(contactPerson.getText()
+								.toString());
+						editedUser.setEmergencyContactNumber(contactPersonNumber
+								.getText().toString());
+						editedUser.setAllergies(allergies.getText().toString());
+						editedUser.setKnownHealthProblems(knownHealthProblems.getText()
+								.toString());
+						editedUser.setGender(gender.getSelectedItem() + "");
+						try {
+							editedUser.setDateOfBirth(DateTimeParser
+									.getTimestamp(birthdate.getText().toString()
+											+ " 00:00:00"));
+						} catch (ParseException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 
-				Date date = new Date();
-				Timestamp timestamp = new Timestamp(date.getTime());
-				Weight weightEntry = new Weight(timestamp, "", null,
-						editedUser.getWeight());
-				try {
-					weightService.add(weightEntry);
-				} catch (ServiceException e) {
-					// TODO Auto-generated catch block
-					Toast.makeText(HealthGem.getContext(),
-							"No Internet Connection !", Toast.LENGTH_LONG)
-							.show();
-					e.printStackTrace();
-				} catch (OutdatedAccessTokenException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+						if (heightUnit.getSelectedItemPosition() == 0) {
+							double inches = Double.parseDouble(height.getText()
+									.toString())
+									* 12
+									+ Double.parseDouble(heightInches.getText()
+											.toString());
+							editedUser.setHeight(inches);
+							settingsDao.setHeightToFeet();
+						} else {
+							Double ft = Double.parseDouble(height.getText().toString()) * 0.39370;
+							editedUser.setHeight(ft);
+							settingsDao.setHeightToCentimeters();
+						}
 
-				/*
-				 * User currUser = userService.getUser(); editedUser
-				 * .setPhoto(new PHRImage(ImageHandler
-				 * .encodeImageToBase64(ImageHandler
-				 * .loadImage(currUser.getPhoto() .getFileName())),
-				 * PHRImageType.IMAGE));
-				 */
-				try {
-					userService.edit(editedUser);
-				} catch (ServiceException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (OutdatedAccessTokenException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+						if (weightUnit.getSelectedItemPosition() == 0) {
+							editedUser.setWeight(Double.parseDouble(weight.getText()
+									.toString()));
+							settingsDao.setWeightToPounds();
+						} else {
+							Double pounds = Double.parseDouble(weight.getText()
+									.toString()) * 2.2;
+							editedUser.setWeight(pounds);
+							settingsDao.setWeightToKilograms();
+						}
 
-			onBackPressed();
+						Date date = new Date();
+						Timestamp timestamp = new Timestamp(date.getTime());
+						Weight weightEntry = new Weight(timestamp, "", null,
+								editedUser.getWeight());
+						try {
+							weightService.add(weightEntry);
+						} catch (ServiceException e) {
+							// TODO Auto-generated catch block
+							runOnUiThread(new Runnable(){
+						        public void run() {
+									Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+											Toast.LENGTH_LONG).show();
+						        }
+						    });
+							e.printStackTrace();
+						} catch (OutdatedAccessTokenException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						/*
+						 * User currUser = userService.getUser(); editedUser
+						 * .setPhoto(new PHRImage(ImageHandler
+						 * .encodeImageToBase64(ImageHandler
+						 * .loadImage(currUser.getPhoto() .getFileName())),
+						 * PHRImageType.IMAGE));
+						 */
+						try {
+							userService.edit(editedUser);
+						} catch (ServiceException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (OutdatedAccessTokenException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					return null;
+		        }
+		        
+		        @Override
+		        protected void onPostExecute(Void result2) {
+					
+		        	if(progressDialog.isShowing())
+						progressDialog.dismiss();
+						onBackPressed();
+		        };
+		    }.execute();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
