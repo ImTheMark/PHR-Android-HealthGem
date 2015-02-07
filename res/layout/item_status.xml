@@ -34,7 +34,6 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:textColor="@android:color/black"
-			        android:textAppearance="?android:attr/textAppearanceMedium"
 			        android:text="eating" />
 
 			    <TextView
@@ -44,7 +43,6 @@
 			        android:textColor="@android:color/black"
 			        android:paddingLeft="5dp"
 			        android:layout_toRightOf="@id/textViewStatusActionHolder"
-			        android:textAppearance="?android:attr/textAppearanceMedium"
 			        android:textStyle="bold"
 			        android:text="sinigang" />
 
@@ -81,7 +79,6 @@
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
         android:layout_below="@+id/statusInformationHolder"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="I am sooooooooooooooooooooo excited!" />
 
     <ImageView
