@@ -1142,8 +1142,13 @@ public class NewStatusActivity extends android.app.Activity {
 					public void onClick(DialogInterface dialog, int id) {
 
 						if (weight.getText().toString().equals(""))
-							Toast.makeText(context, "Please enter your weight",
-									Toast.LENGTH_LONG).show();
+
+							runOnUiThread(new Runnable(){
+						        public void run() {
+									Toast.makeText(context, "Please enter your weight",
+											Toast.LENGTH_LONG).show();
+						        }
+						    });
 						else
 							setWeightTemplate(weight.getText().toString(),
 									String.valueOf(weightUnitSpinner

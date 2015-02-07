@@ -249,7 +249,7 @@ public class RegisterUserInformationActivity extends Activity {
 						.loadPreferences(
 								SPreference.REGISTER_KNOWNHEALTHPROBLEMS));
 
-				if (settingsDao.isWeightSettingInPounds()) {
+				/*if (settingsDao.isWeightSettingInPounds()) {
 					weightUnit.setSelection(0);
 					weight.setText(HealthGem.getSharedPreferences()
 							.loadPreferences(SPreference.REGISTER_WEIGHTPOUNDS));
@@ -282,7 +282,7 @@ public class RegisterUserInformationActivity extends Activity {
 							.getSharedPreferences().loadPreferences(
 									SPreference.REGISTER_HEIGHTINCHES)) / 0.39370;
 					height.setText(cm + "");
-				}
+				}*/
 
 				Resources res = getResources();
 				String[] genderArray = res.getStringArray(R.array.gender);
@@ -358,9 +358,12 @@ public class RegisterUserInformationActivity extends Activity {
 							|| contactPerson.getText().toString().equals("")
 							|| contactPersonNumber.getText().toString().equals("")
 							|| birthdate.getText().toString().equals("")) {
-						Toast.makeText(HealthGem.getContext(),
-								"Please complete the missing fields.",
-								Toast.LENGTH_LONG).show();
+						runOnUiThread(new Runnable(){
+					        public void run() {
+								Toast.makeText(HealthGem.getContext(), "Please complete the fields!",
+										Toast.LENGTH_LONG).show();
+					        }
+					    });
 					} else {
 						HealthGem.getSharedPreferences().savePreferences(
 								SPreference.REGISTER_NAME,
@@ -390,11 +393,19 @@ public class RegisterUserInformationActivity extends Activity {
 								birthdate.getText().toString() + " 00:00:00");
 
 						if (heightUnit.getSelectedItemPosition() == 0) {
-							double inches = Double.parseDouble(height.getText()
-									.toString())
-									* 12
-									+ Double.parseDouble(heightInches.getText()
-											.toString());
+							double inches;
+							if(!heightInches.getText().toString().equals("")){
+
+								inches = Double.parseDouble(height.getText()
+										.toString())
+										* 12
+										+ Double.parseDouble(heightInches.getText()
+												.toString());
+							}
+							else{
+								 inches = Double.parseDouble(height.getText().toString()) * 12;
+							}
+							
 							HealthGem.getSharedPreferences().savePreferences(
 									SPreference.REGISTER_HEIGHTINCHES, inches + "");
 							settingsDao.setHeightToFeet();
@@ -417,16 +428,16 @@ public class RegisterUserInformationActivity extends Activity {
 									SPreference.REGISTER_WEIGHTPOUNDS, pounds + "");
 							settingsDao.setWeightToKilograms();
 						}
+
+						Intent intent = new Intent(getApplicationContext(),
+								RegisterFBLoginActivity.class);
+						startActivity(intent);
 					}
 					return null;
 		        }
 		        
 		        @Override
 		        protected void onPostExecute(Void result2) {
-
-					Intent intent = new Intent(getApplicationContext(),
-							RegisterFBLoginActivity.class);
-					startActivity(intent);
 		        };
 		    }.execute();
 			return true;
@@ -446,9 +457,14 @@ public class RegisterUserInformationActivity extends Activity {
 							|| contactPerson.getText().toString().equals("")
 							|| contactPersonNumber.getText().toString().equals("")
 							|| birthdate.getText().toString().equals("")) {
-						Toast.makeText(HealthGem.getContext(),
-								"Please complete the missing fields.",
-								Toast.LENGTH_LONG).show();
+
+						runOnUiThread(new Runnable(){
+					        public void run() {
+								Toast.makeText(HealthGem.getContext(),
+										"Please complete the missing fields.",
+										Toast.LENGTH_LONG).show();
+					        }
+					    });
 					} else {
 						User editedUser = userService.getUser();
 
@@ -473,11 +489,19 @@ public class RegisterUserInformationActivity extends Activity {
 						}
 
 						if (heightUnit.getSelectedItemPosition() == 0) {
-							double inches = Double.parseDouble(height.getText()
-									.toString())
-									* 12
-									+ Double.parseDouble(heightInches.getText()
-											.toString());
+							double inches;
+							if(!heightInches.getText().toString().equals("")){
+
+								inches = Double.parseDouble(height.getText()
+										.toString())
+										* 12
+										+ Double.parseDouble(heightInches.getText()
+												.toString());
+							}
+							else{
+								 inches = Double.parseDouble(height.getText().toString()) * 12;
+							}
+							
 							editedUser.setHeight(inches);
 							settingsDao.setHeightToFeet();
 						} else {
@@ -533,6 +557,7 @@ public class RegisterUserInformationActivity extends Activity {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+						onBackPressed();
 					}
 					return null;
 		        }
@@ -542,7 +567,6 @@ public class RegisterUserInformationActivity extends Activity {
 					
 		        	if(progressDialog.isShowing())
 						progressDialog.dismiss();
-						onBackPressed();
 		        };
 		    }.execute();
 			return true;
