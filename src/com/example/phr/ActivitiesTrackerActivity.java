@@ -61,7 +61,8 @@ public class ActivitiesTrackerActivity extends Activity {
 		setTitle("Activity Tracker");
 		mActivityList = (ListView) findViewById(R.id.listViewActivityTracker);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#030203")));
 
 		activityList = new ArrayList<ActivityTrackerEntry>();
 		activityServiceImpl = new ActivityTrackerServiceImpl();
@@ -70,12 +71,14 @@ public class ActivitiesTrackerActivity extends Activity {
 
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			runOnUiThread(new Runnable(){
-		        public void run() {
-					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-							Toast.LENGTH_LONG).show();
-		        }
-		    });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
+				}
+			});
 			e.printStackTrace();
 		}
 		Log.e(String.valueOf(activityList.size()), "size");
@@ -136,12 +139,14 @@ public class ActivitiesTrackerActivity extends Activity {
 								startActivity(i);
 							} catch (ServiceException e) {
 								// TODO Auto-generated catch block
-								runOnUiThread(new Runnable(){
-							        public void run() {
-										Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										Toast.makeText(HealthGem.getContext(),
+												"No Internet Connection !",
 												Toast.LENGTH_LONG).show();
-							        }
-							    });
+									}
+								});
 								e.printStackTrace();
 							} catch (OutdatedAccessTokenException e) {
 								// TODO Auto-generated catch block

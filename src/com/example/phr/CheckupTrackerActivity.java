@@ -52,7 +52,8 @@ public class CheckupTrackerActivity extends Activity {
 		StrictMode.setThreadPolicy(policy);
 		setContentView(R.layout.activity_checkup_tracker);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#030203")));
 		setTitle("Checkup Tracker");
 		mCheckupList = (ListView) findViewById(R.id.listView_checkup);
 
@@ -93,7 +94,7 @@ public class CheckupTrackerActivity extends Activity {
 				startActivity(i);
 			}
 		});
-		
+
 		mBtnCheckupDoctor = (LinearLayout) findViewById(R.id.btnAddCheckupDoctor);
 		mBtnCheckupDoctor.setOnClickListener(new OnClickListener() {
 			@Override

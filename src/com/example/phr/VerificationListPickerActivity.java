@@ -52,7 +52,8 @@ public class VerificationListPickerActivity extends android.app.Activity {
 
 		StrictMode.setThreadPolicy(policy);
 		setContentView(R.layout.activity_add_actions);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#030203")));
 		listView = (ListView) findViewById(R.id.actionList);
 		verificationService = new VerificationServiceImpl();
 

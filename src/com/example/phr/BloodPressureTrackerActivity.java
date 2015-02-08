@@ -82,7 +82,8 @@ public class BloodPressureTrackerActivity extends Activity {
 		setContentView(R.layout.activity_bloodpressure_tracker);
 		setTitle("Blood Pressure Tracker");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#030203")));
 		mBloodPressureList = (ListView) findViewById(R.id.listView_bloodpressure);
 
 		// FAKE DATA

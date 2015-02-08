@@ -36,7 +36,8 @@ public class CalorieBreakdownTrackerActivity extends Activity {
 		setContentView(R.layout.activity_calorie_breakdown_tracker);
 		setTitle("Calorie Breakdown Tracker");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#030203")));
 		mCalorieList = (ListView) findViewById(R.id.breakdown_list);
 
 		Intent in = getIntent();

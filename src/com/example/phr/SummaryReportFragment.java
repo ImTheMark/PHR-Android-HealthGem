@@ -15,6 +15,7 @@ import org.achartengine.renderer.XYMultipleSeriesRenderer;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -83,6 +84,7 @@ public class SummaryReportFragment extends Fragment {
 	Weight weight;
 	LinearLayout weightHomeRecordHolder;
 	LinearLayout bsHomeRecordHolder;
+	LinearLayout postHolder;
 	// LinearLayout bsHomeRecordHolder2;
 	// LinearLayout bsHomeRecordHolderNull;
 	LinearLayout bsHomeStatus;
@@ -116,6 +118,7 @@ public class SummaryReportFragment extends Fragment {
 	UserService userService;
 	User user;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -285,9 +288,11 @@ public class SummaryReportFragment extends Fragment {
 
 			if (bp.getSystolic() > 90 && bp.getSystolic() < 120
 					&& bp.getDiastolic() > 60 && bp.getDiastolic() < 80)
-				bpHomeStatus.setBackgroundColor(Color.GREEN);
+				bpHomeStatus.setBackgroundDrawable(new ColorDrawable(Color
+						.parseColor("#27ae60")));
 			else
-				bpHomeStatus.setBackgroundColor(Color.RED);
+				bpHomeStatus.setBackgroundDrawable(new ColorDrawable(Color
+						.parseColor("#c0392b")));
 		}
 
 		bpHomeRecordHolder.setOnClickListener(new OnClickListener() {
@@ -347,12 +352,15 @@ public class SummaryReportFragment extends Fragment {
 			txtBsType.setText(bs.getType());
 			if (bs.getType().equals("Before meal") && bs.getBloodSugar() >= 4.0
 					&& bs.getBloodSugar() <= 5.9)
-				bsHomeStatus.setBackgroundColor(Color.GREEN);
+				bsHomeStatus.setBackgroundDrawable(new ColorDrawable(Color
+						.parseColor("#27ae60")));
 			else if (bs.getType().equals("After meal")
 					&& bs.getBloodSugar() < 7.8)
-				bsHomeStatus.setBackgroundColor(Color.GREEN);
+				bsHomeStatus.setBackgroundDrawable(new ColorDrawable(Color
+						.parseColor("#27ae60")));
 			else
-				bsHomeStatus.setBackgroundColor(Color.RED);
+				bsHomeStatus.setBackgroundDrawable(new ColorDrawable(Color
+						.parseColor("#c0392b")));
 		}
 
 		bsHomeRecordHolder.setOnClickListener(new OnClickListener() {
@@ -427,12 +435,15 @@ public class SummaryReportFragment extends Fragment {
 
 			if (txtweightStatus.equals("Overweight")
 					|| txtweightStatus.equals("Obesity"))
-				weightStatus.setBackgroundColor(Color.RED);
+				weightStatus.setBackgroundDrawable(new ColorDrawable(Color
+						.parseColor("#c0392b")));
 
 			else if (txtweightStatus.equals("Normal weight"))
-				weightStatus.setBackgroundColor(Color.GREEN);
+				weightStatus.setBackgroundDrawable(new ColorDrawable(Color
+						.parseColor("#27ae60")));
 			else if (txtweightStatus.equals("Underweight"))
-				weightStatus.setBackgroundColor(Color.YELLOW);
+				weightStatus.setBackgroundDrawable(new ColorDrawable(Color
+						.parseColor("#f1c40f")));
 
 		}
 		weightHomeRecordHolder.setOnClickListener(new OnClickListener() {
@@ -443,14 +454,18 @@ public class SummaryReportFragment extends Fragment {
 				startActivity(i);
 			}
 		});
-		/*
-		 * postHolder = (LinearLayout) rootView
-		 * .findViewById(R.id.journalTabsPlaceholder);
-		 * postHolder.setOnClickListener(new OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { Intent intent = new
-		 * Intent(getActivity(), NewStatusActivity.class);
-		 * startActivity(intent); } });
-		 */return rootView;
+
+		postHolder = (LinearLayout) rootView
+				.findViewById(R.id.journalTabsPlaceholder);
+		postHolder.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(),
+						NewStatusActivity.class);
+				startActivity(intent);
+			}
+		});
+		return rootView;
 	}
 }

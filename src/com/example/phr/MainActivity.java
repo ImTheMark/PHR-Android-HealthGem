@@ -58,7 +58,7 @@ public class MainActivity extends FragmentActivity implements
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		actionBar = getActionBar();
 		actionBar.setBackgroundDrawable(new ColorDrawable(Color
-				.parseColor("#4A3A47")));
+				.parseColor("#030203")));
 		actionBar.setStackedBackgroundDrawable(new ColorDrawable(Color
 				.parseColor("#446CB3")));
 		mAdapter = new TabsPagerAdapter(getSupportFragmentManager());

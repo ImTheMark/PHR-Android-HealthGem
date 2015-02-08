@@ -47,7 +47,8 @@ public class NoteReadModeActivity extends Activity {
 		setTitle("Notes");
 		setContentView(R.layout.activity_note_read_mode);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#030203")));
 
 		Intent in = getIntent();
 		chosenItem = (Note) in.getExtras().getSerializable("object");
@@ -69,8 +70,7 @@ public class NoteReadModeActivity extends Activity {
 			Log.e("img", chosenItem.getImage().getFileName());
 			image.setImageBitmap(ImageHandler.loadImage(chosenItem.getImage()
 					.getFileName()));
-		}
-		else
+		} else
 			noteImageLayout.setVisibility(View.GONE);
 
 	}

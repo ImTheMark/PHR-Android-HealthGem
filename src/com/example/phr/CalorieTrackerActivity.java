@@ -48,7 +48,8 @@ public class CalorieTrackerActivity extends Activity {
 		setContentView(R.layout.activity_calorie_tracker);
 		setTitle("Calorie Tracker");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#030203")));
 		mCalorieList = (ListView) findViewById(R.id.listview_calorie);
 
 		calorieTrackerList = new ArrayList<CalorieTrackerEntry>();

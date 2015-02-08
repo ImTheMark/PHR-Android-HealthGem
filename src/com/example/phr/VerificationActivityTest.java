@@ -48,7 +48,8 @@ public class VerificationActivityTest extends Activity {
 		setContentView(R.layout.activity_verification_test);
 		setTitle("Verification");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#030203")));
 		swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
 		swipeLayout.setOnRefreshListener(new OnRefreshListener() {
 
@@ -74,11 +75,11 @@ public class VerificationActivityTest extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case android.R.id.home:
-				onBackPressed();
-				break;
-			default:
-				return super.onOptionsItemSelected(item);
+		case android.R.id.home:
+			onBackPressed();
+			break;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
 		return true;
 	}
@@ -130,9 +131,10 @@ public class VerificationActivityTest extends Activity {
 						unverifiedList.size() + "");
 				adapter.notifyDataSetChanged();
 
-				/*((UnverifiedStatusAdapter) listView.getAdapter())
-						.notifyDataSetChanged();
-*/
+				/*
+				 * ((UnverifiedStatusAdapter) listView.getAdapter())
+				 * .notifyDataSetChanged();
+				 */
 				// Intent intent = getIntent();
 				// finish();
 				// startActivity(intent);

@@ -51,7 +51,8 @@ public class GroupedFoodTrackerActivity extends Activity {
 		StrictMode.setThreadPolicy(policy);
 		setContentView(R.layout.activity_groupedfood_tracker);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#030203")));
 		setTitle("Food Tracker");
 		mGroupedFoodList = (ListView) findViewById(R.id.listView_groupedfood);
 		List<GroupedFood> list = new ArrayList<GroupedFood>();

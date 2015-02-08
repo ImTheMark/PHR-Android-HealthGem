@@ -67,7 +67,8 @@ public class WeightTrackerActivity extends Activity {
 		mWeightList = (ListView) findViewById(R.id.listViewWeightTracker);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#030203")));
 		MobileWeightTrackerDao daoImpl = new MobileWeightTrackerDaoImpl();
 		WeightTrackerService weightService = new WeightTrackerServiceImpl();
 		setting = new MobileSettingsDaoImpl();

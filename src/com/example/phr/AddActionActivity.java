@@ -34,7 +34,8 @@ public class AddActionActivity extends Activity {
 		StrictMode.setThreadPolicy(policy);
 		setTitle("What are you doing?");
 		setContentView(R.layout.activity_add_actions);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#030203")));
 		ListView actionList = (ListView) findViewById(R.id.actionList);
 		actionAdapter = new ActionAdapter(getApplicationContext(),
 				generateData());

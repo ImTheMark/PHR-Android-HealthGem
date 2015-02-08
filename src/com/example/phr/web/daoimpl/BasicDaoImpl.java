@@ -24,12 +24,12 @@ public abstract class BasicDaoImpl {
 
 	protected String performHttpRequest_String(String command,
 			String jsonStringParams) throws WebServerException {
-		String address = "http://healthgemserver.cloudapp.net/PHR-WebServer/" + command;
+		// String address = "http://healthgemserver.cloudapp.net/PHR-WebServer/"
+		// + command;
 		// String address = "http://10.100.197.128:8080/PHR-WebServer/" +
 		// command;
 		// String address = "http://10.0.2.2:8080/PHR-WebServer/" + command;
-		// String address = "http://192.168.56.101:8080/PHR-WebServer/" +
-		// command;
+		String address = "http://192.168.1.6:8080/PHR-WebServer/" + command;
 		// String address = "http://10.0.3.2/PHR-WebServer/" + command;
 		try {
 			HttpClient client = new DefaultHttpClient();

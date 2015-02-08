@@ -32,7 +32,6 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.provider.MediaStore.MediaColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -186,7 +185,8 @@ public class NewStatusActivity extends android.app.Activity {
 
 		StrictMode.setThreadPolicy(policy);
 		setContentView(R.layout.activity_new_status);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#030203")));
 		Log.e("in", "ew status");
 		activity = this;
 
@@ -910,9 +910,9 @@ public class NewStatusActivity extends android.app.Activity {
 		} else if (requestCode == SELECT_FILE) {
 			Uri selectedImageUri = data.getData();
 
-			String tempPath = getPath(context,selectedImageUri);
+			String tempPath = getPath(context, selectedImageUri);
 			BitmapFactory.Options btmapOptions = new BitmapFactory.Options();
-			//photo = BitmapFactory.decodeFile(tempPath, btmapOptions);
+			// photo = BitmapFactory.decodeFile(tempPath, btmapOptions);
 			photo = DecodeImage.decodeFile(tempPath);
 			statusImage.setImageBitmap(photo);
 			setImage = true;
@@ -920,9 +920,6 @@ public class NewStatusActivity extends android.app.Activity {
 		}
 
 	}
-	
-	
-	
 
 	private void callFoodServingInput(final Food food, final double serving) {
 		// TODO Auto-generated method stub
@@ -1143,12 +1140,14 @@ public class NewStatusActivity extends android.app.Activity {
 
 						if (weight.getText().toString().equals(""))
 
-							runOnUiThread(new Runnable(){
-						        public void run() {
-									Toast.makeText(context, "Please enter your weight",
+							runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									Toast.makeText(context,
+											"Please enter your weight",
 											Toast.LENGTH_LONG).show();
-						        }
-						    });
+								}
+							});
 						else
 							setWeightTemplate(weight.getText().toString(),
 									String.valueOf(weightUnitSpinner
@@ -1307,12 +1306,14 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			runOnUiThread(new Runnable(){
-		        public void run() {
-					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-							Toast.LENGTH_LONG).show();
-		        }
-		    });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
+				}
+			});
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -1365,12 +1366,14 @@ public class NewStatusActivity extends android.app.Activity {
 			finish();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			runOnUiThread(new Runnable(){
-		        public void run() {
-					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-							Toast.LENGTH_LONG).show();
-		        }
-		    });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
+				}
+			});
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -1435,12 +1438,14 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			runOnUiThread(new Runnable(){
-		        public void run() {
-					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-							Toast.LENGTH_LONG).show();
-		        }
-		    });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
+				}
+			});
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -1490,12 +1495,14 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			runOnUiThread(new Runnable(){
-		        public void run() {
-					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-							Toast.LENGTH_LONG).show();
-		        }
-		    });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
+				}
+			});
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -1561,12 +1568,14 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			runOnUiThread(new Runnable(){
-		        public void run() {
-					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-							Toast.LENGTH_LONG).show();
-		        }
-		    });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
+				}
+			});
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -1622,12 +1631,14 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			runOnUiThread(new Runnable(){
-		        public void run() {
-					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-							Toast.LENGTH_LONG).show();
-		        }
-		    });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
+				}
+			});
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -1700,12 +1711,14 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			runOnUiThread(new Runnable(){
-		        public void run() {
-					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-							Toast.LENGTH_LONG).show();
-		        }
-		    });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
+				}
+			});
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -1742,24 +1755,23 @@ public class NewStatusActivity extends android.app.Activity {
 		final ProgressDialog progressDialog = new ProgressDialog(activity);
 		progressDialog.setCancelable(false);
 		progressDialog.setMessage("Saving post to tracker...");
-		
+
 		switch (item.getItemId()) {
 		case R.id.menu_item_status_post:
-			
-
 
 			progressDialog.show();
-			new AsyncTask<Void, Void, Void>(){
-		        @Override
-		        protected Void doInBackground(Void... params) {
-		        	if (currentTracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
+			new AsyncTask<Void, Void, Void>() {
+				@Override
+				protected Void doInBackground(Void... params) {
+					if (currentTracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
 
 						addBloodPressureToDatabase();
 						Log.e("added", "bp");
 
 					}
 
-					else if (currentTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
+					else if (currentTracker
+							.equals(TrackerInputType.BLOOD_SUGAR)) {
 
 						addBloodSugarToDatabase();
 
@@ -1784,34 +1796,32 @@ public class NewStatusActivity extends android.app.Activity {
 						addFoodToDatabase();
 
 					}
-		            return null;
-		        }
-		        
-		        @Override
-		        protected void onPostExecute(Void result2) {
-					
-		        	if(progressDialog.isShowing())
-						progressDialog.dismiss();
-		        };
-		    }.execute();
+					return null;
+				}
 
-			
+				@Override
+				protected void onPostExecute(Void result2) {
+
+					if (progressDialog.isShowing())
+						progressDialog.dismiss();
+				};
+			}.execute();
 
 			return true;
 
 		case R.id.menu_item_status_edit:
-			
 
 			progressDialog.show();
-			new AsyncTask<Void, Void, Void>(){
-		        @Override
-		        protected Void doInBackground(Void... params) {
-		        	
-		        	if (currentTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
+			new AsyncTask<Void, Void, Void>() {
+				@Override
+				protected Void doInBackground(Void... params) {
+
+					if (currentTracker.equals(TrackerInputType.BLOOD_SUGAR)) {
 						Log.e("call", "edit");
 						editBloodSugarToDatabase();
 
-					} else if (currentTracker.equals(TrackerInputType.BLOOD_PRESSURE)) {
+					} else if (currentTracker
+							.equals(TrackerInputType.BLOOD_PRESSURE)) {
 						editBloodPressureToDatabase();
 						Log.e("call", "bpActivity");
 
@@ -1836,17 +1846,17 @@ public class NewStatusActivity extends android.app.Activity {
 						Log.e("call", "acitivityActivity");
 
 					}
-					
-		            return null;
-		        }
-		        
-		        @Override
-		        protected void onPostExecute(Void result2) {
-					
-		        	if(progressDialog.isShowing())
+
+					return null;
+				}
+
+				@Override
+				protected void onPostExecute(Void result2) {
+
+					if (progressDialog.isShowing())
 						progressDialog.dismiss();
-		        };
-		    }.execute();
+				};
+			}.execute();
 
 			return true;
 
@@ -1910,12 +1920,14 @@ public class NewStatusActivity extends android.app.Activity {
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 
-			runOnUiThread(new Runnable(){
-		        public void run() {
-					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-							Toast.LENGTH_LONG).show();
-		        }
-		    });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
+				}
+			});
 			e.printStackTrace();
 		}
 		Log.e("in", "edited");
@@ -1952,12 +1964,14 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			runOnUiThread(new Runnable(){
-		        public void run() {
-					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-							Toast.LENGTH_LONG).show();
-		        }
-		    });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
+				}
+			});
 			e.printStackTrace();
 		}
 
@@ -2003,12 +2017,14 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			runOnUiThread(new Runnable(){
-		        public void run() {
-					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-							Toast.LENGTH_LONG).show();
-		        }
-		    });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
+				}
+			});
 			e.printStackTrace();
 		}
 
@@ -2044,12 +2060,14 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			runOnUiThread(new Runnable(){
-		        public void run() {
-					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-							Toast.LENGTH_LONG).show();
-		        }
-		    });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
+				}
+			});
 			e.printStackTrace();
 		}
 
@@ -2083,12 +2101,14 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			runOnUiThread(new Runnable(){
-		        public void run() {
-					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-							Toast.LENGTH_LONG).show();
-		        }
-		    });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
+				}
+			});
 			e.printStackTrace();
 		}
 
@@ -2136,12 +2156,14 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			runOnUiThread(new Runnable(){
-		        public void run() {
-					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-							Toast.LENGTH_LONG).show();
-		        }
-		    });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
+				}
+			});
 			e.printStackTrace();
 		}
 
@@ -2193,12 +2215,14 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			runOnUiThread(new Runnable(){
-		        public void run() {
-					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-							Toast.LENGTH_LONG).show();
-		        }
-		    });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
+				}
+			});
 			e.printStackTrace();
 		}
 
@@ -2242,12 +2266,14 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			runOnUiThread(new Runnable(){
-		        public void run() {
-					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-							Toast.LENGTH_LONG).show();
-		        }
-		    });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
+				}
+			});
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -2296,12 +2322,14 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			runOnUiThread(new Runnable(){
-		        public void run() {
-					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-							Toast.LENGTH_LONG).show();
-		        }
-		    });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
+				}
+			});
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -2362,12 +2390,14 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			runOnUiThread(new Runnable(){
-		        public void run() {
-					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-							Toast.LENGTH_LONG).show();
-		        }
-		    });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
+				}
+			});
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -2425,12 +2455,14 @@ public class NewStatusActivity extends android.app.Activity {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			runOnUiThread(new Runnable(){
-		        public void run() {
-					Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
-							Toast.LENGTH_LONG).show();
-		        }
-		    });
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(HealthGem.getContext(),
+							"No Internet Connection !", Toast.LENGTH_LONG)
+							.show();
+				}
+			});
 			e.printStackTrace();
 		} catch (OutdatedAccessTokenException e) {
 			// TODO Auto-generated catch block
@@ -2491,156 +2523,168 @@ public class NewStatusActivity extends android.app.Activity {
 		builder.show();
 	}
 
-/*	public String getPath(Uri uri) {
-		String[] projection = { MediaColumns.DATA };
-		Cursor cursor = HealthGem.getContext().getContentResolver()
-				.query(uri, projection, null, null, null);
-		int column_index = cursor.getColumnIndexOrThrow(MediaColumns.DATA);
-		cursor.moveToFirst();
-		return cursor.getString(column_index);
-	}*/
-	
+	/*
+	 * public String getPath(Uri uri) { String[] projection = {
+	 * MediaColumns.DATA }; Cursor cursor =
+	 * HealthGem.getContext().getContentResolver() .query(uri, projection, null,
+	 * null, null); int column_index =
+	 * cursor.getColumnIndexOrThrow(MediaColumns.DATA); cursor.moveToFirst();
+	 * return cursor.getString(column_index); }
+	 */
+
 	/**
 	 * Get a file path from a Uri. This will get the the path for Storage Access
 	 * Framework Documents, as well as the _data field for the MediaStore and
 	 * other file-based ContentProviders.
-	 *
-	 * @param context The context.
-	 * @param uri The Uri to query.
+	 * 
+	 * @param context
+	 *            The context.
+	 * @param uri
+	 *            The Uri to query.
 	 * @author paulburke
 	 */
 	@SuppressLint("NewApi")
 	public static String getPath(final Context context, final Uri uri) {
 
-	    final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+		final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
-	    // DocumentProvider
-	    if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
-	        // ExternalStorageProvider
-	        if (isExternalStorageDocument(uri)) {
-	            final String docId = DocumentsContract.getDocumentId(uri);
-	            final String[] split = docId.split(":");
-	            final String type = split[0];
+		// DocumentProvider
+		if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+			// ExternalStorageProvider
+			if (isExternalStorageDocument(uri)) {
+				final String docId = DocumentsContract.getDocumentId(uri);
+				final String[] split = docId.split(":");
+				final String type = split[0];
 
-	            if ("primary".equalsIgnoreCase(type)) {
-	                return Environment.getExternalStorageDirectory() + "/" + split[1];
-	            }
+				if ("primary".equalsIgnoreCase(type)) {
+					return Environment.getExternalStorageDirectory() + "/"
+							+ split[1];
+				}
 
-	            // TODO handle non-primary volumes
-	        }
-	        // DownloadsProvider
-	        else if (isDownloadsDocument(uri)) {
+				// TODO handle non-primary volumes
+			}
+			// DownloadsProvider
+			else if (isDownloadsDocument(uri)) {
 
-	            final String id = DocumentsContract.getDocumentId(uri);
-	            final Uri contentUri = ContentUris.withAppendedId(
-	                    Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+				final String id = DocumentsContract.getDocumentId(uri);
+				final Uri contentUri = ContentUris.withAppendedId(
+						Uri.parse("content://downloads/public_downloads"),
+						Long.valueOf(id));
 
-	            return getDataColumn(context, contentUri, null, null);
-	        }
-	        // MediaProvider
-	        else if (isMediaDocument(uri)) {
-	            final String docId = DocumentsContract.getDocumentId(uri);
-	            final String[] split = docId.split(":");
-	            final String type = split[0];
+				return getDataColumn(context, contentUri, null, null);
+			}
+			// MediaProvider
+			else if (isMediaDocument(uri)) {
+				final String docId = DocumentsContract.getDocumentId(uri);
+				final String[] split = docId.split(":");
+				final String type = split[0];
 
-	            Uri contentUri = null;
-	            if ("image".equals(type)) {
-	                contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-	            } else if ("video".equals(type)) {
-	                contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-	            } else if ("audio".equals(type)) {
-	                contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-	            }
+				Uri contentUri = null;
+				if ("image".equals(type)) {
+					contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+				} else if ("video".equals(type)) {
+					contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+				} else if ("audio".equals(type)) {
+					contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+				}
 
-	            final String selection = "_id=?";
-	            final String[] selectionArgs = new String[] {
-	                    split[1]
-	            };
+				final String selection = "_id=?";
+				final String[] selectionArgs = new String[] { split[1] };
 
-	            return getDataColumn(context, contentUri, selection, selectionArgs);
-	        }
-	    }
-	    // MediaStore (and general)
-	    else if ("content".equalsIgnoreCase(uri.getScheme())) {
+				return getDataColumn(context, contentUri, selection,
+						selectionArgs);
+			}
+		}
+		// MediaStore (and general)
+		else if ("content".equalsIgnoreCase(uri.getScheme())) {
 
-	        // Return the remote address
-	        if (isGooglePhotosUri(uri))
-	            return uri.getLastPathSegment();
+			// Return the remote address
+			if (isGooglePhotosUri(uri))
+				return uri.getLastPathSegment();
 
-	        return getDataColumn(context, uri, null, null);
-	    }
-	    // File
-	    else if ("file".equalsIgnoreCase(uri.getScheme())) {
-	        return uri.getPath();
-	    }
+			return getDataColumn(context, uri, null, null);
+		}
+		// File
+		else if ("file".equalsIgnoreCase(uri.getScheme())) {
+			return uri.getPath();
+		}
 
-	    return null;
+		return null;
 	}
 
 	/**
 	 * Get the value of the data column for this Uri. This is useful for
 	 * MediaStore Uris, and other file-based ContentProviders.
-	 *
-	 * @param context The context.
-	 * @param uri The Uri to query.
-	 * @param selection (Optional) Filter used in the query.
-	 * @param selectionArgs (Optional) Selection arguments used in the query.
+	 * 
+	 * @param context
+	 *            The context.
+	 * @param uri
+	 *            The Uri to query.
+	 * @param selection
+	 *            (Optional) Filter used in the query.
+	 * @param selectionArgs
+	 *            (Optional) Selection arguments used in the query.
 	 * @return The value of the _data column, which is typically a file path.
 	 */
-	public static String getDataColumn(Context context, Uri uri, String selection,
-	        String[] selectionArgs) {
+	public static String getDataColumn(Context context, Uri uri,
+			String selection, String[] selectionArgs) {
 
-	    Cursor cursor = null;
-	    final String column = "_data";
-	    final String[] projection = {
-	            column
-	    };
+		Cursor cursor = null;
+		final String column = "_data";
+		final String[] projection = { column };
 
-	    try {
-	        cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
-	                null);
-	        if (cursor != null && cursor.moveToFirst()) {
-	            final int index = cursor.getColumnIndexOrThrow(column);
-	            return cursor.getString(index);
-	        }
-	    } finally {
-	        if (cursor != null)
-	            cursor.close();
-	    }
-	    return null;
+		try {
+			cursor = context.getContentResolver().query(uri, projection,
+					selection, selectionArgs, null);
+			if (cursor != null && cursor.moveToFirst()) {
+				final int index = cursor.getColumnIndexOrThrow(column);
+				return cursor.getString(index);
+			}
+		} finally {
+			if (cursor != null)
+				cursor.close();
+		}
+		return null;
 	}
 
-
 	/**
-	 * @param uri The Uri to check.
+	 * @param uri
+	 *            The Uri to check.
 	 * @return Whether the Uri authority is ExternalStorageProvider.
 	 */
 	public static boolean isExternalStorageDocument(Uri uri) {
-	    return "com.android.externalstorage.documents".equals(uri.getAuthority());
+		return "com.android.externalstorage.documents".equals(uri
+				.getAuthority());
 	}
 
 	/**
-	 * @param uri The Uri to check.
+	 * @param uri
+	 *            The Uri to check.
 	 * @return Whether the Uri authority is DownloadsProvider.
 	 */
 	public static boolean isDownloadsDocument(Uri uri) {
-	    return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+		return "com.android.providers.downloads.documents".equals(uri
+				.getAuthority());
 	}
 
 	/**
-	 * @param uri The Uri to check.
+	 * @param uri
+	 *            The Uri to check.
 	 * @return Whether the Uri authority is MediaProvider.
 	 */
 	public static boolean isMediaDocument(Uri uri) {
-	    return "com.android.providers.media.documents".equals(uri.getAuthority());
+		return "com.android.providers.media.documents".equals(uri
+				.getAuthority());
 	}
 
 	/**
-	 * @param uri The Uri to check.
+	 * @param uri
+	 *            The Uri to check.
 	 * @return Whether the Uri authority is Google Photos.
 	 */
 	public static boolean isGooglePhotosUri(Uri uri) {
-	    return "com.google.android.apps.photos.content".equals(uri.getAuthority());
+		return "com.google.android.apps.photos.content".equals(uri
+				.getAuthority());
 	}
 
 }

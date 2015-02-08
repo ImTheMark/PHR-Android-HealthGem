@@ -40,7 +40,8 @@ public class RetrieveActivity extends Activity {
 		setContentView(R.layout.activity_retrieve_post);
 		setTitle("Retrieved Posts");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#030203")));
 		mRetrieveFoodList = (ListView) findViewById(R.id.listViewFood);
 
 		// FAKE DATA

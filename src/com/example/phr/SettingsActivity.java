@@ -16,7 +16,6 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.ToggleButton;
 
-import com.example.phr.local_db.DatabaseHandler;
 import com.example.phr.mobile.dao.MobileSettingsDao;
 import com.example.phr.mobile.daoimpl.MobileSettingsDaoImpl;
 import com.example.phr.service.UserService;
@@ -47,7 +46,8 @@ public class SettingsActivity extends Activity {
 		setContentView(R.layout.activity_settings);
 		setTitle("Settings");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#030203")));
 		radioGroupHeight = (RadioGroup) findViewById(R.id.radioGroupSettingHeight);
 		radioGroupWeight = (RadioGroup) findViewById(R.id.radioGroupSettingWeight);
 		logoutButton = (Button) findViewById(R.id.btnLogout);
@@ -161,8 +161,6 @@ public class SettingsActivity extends Activity {
 				}
 			}
 		});
-		
-
 
 		Intent in = getIntent();
 		Bundle extras = getIntent().getExtras();
@@ -175,11 +173,11 @@ public class SettingsActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case android.R.id.home:
-				onBackPressed();
-				break;
-			default:
-				return super.onOptionsItemSelected(item);
+		case android.R.id.home:
+			onBackPressed();
+			break;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
 		return true;
 	}
@@ -191,7 +189,7 @@ public class SettingsActivity extends Activity {
 		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
 				| Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		if(position != -1)
+		if (position != -1)
 			intent.putExtra("gotoMainfromSettings", position);
 		startActivity(intent);
 

@@ -52,7 +52,8 @@ public class ActivitiesSearchListActivity extends android.app.Activity {
 		setContentView(R.layout.activity_search_list);
 		setTitle("Activity Search List");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#030203")));
 		searchList = (ListView) findViewById(R.id.searchList);
 		searchWord = (EditText) findViewById(R.id.searchWord);
 		searchButton = (ImageButton) findViewById(R.id.searchButton);
@@ -66,52 +67,55 @@ public class ActivitiesSearchListActivity extends android.app.Activity {
 				Log.e("search word", searchWord.getText().toString());
 				result = new ArrayList<Activity>();
 				resultName = new ArrayList<String>();
-				
 
-				final ProgressDialog progressDialog = new ProgressDialog(activity);
+				final ProgressDialog progressDialog = new ProgressDialog(
+						activity);
 				progressDialog.setCancelable(false);
 				progressDialog.setMessage("Searching activity...");
 				progressDialog.show();
-				
-				new AsyncTask<Void, Void, Void>(){
-			        @Override
-			        protected Void doInBackground(Void... params) {try {
-						result = (ArrayList<Activity>) service.search(searchWord
-								.getText().toString());
+
+				new AsyncTask<Void, Void, Void>() {
+					@Override
+					protected Void doInBackground(Void... params) {
+						try {
+							result = (ArrayList<Activity>) service
+									.search(searchWord.getText().toString());
 						} catch (ServiceException e) {
 							// TODO Auto-generated catch block
 
-							runOnUiThread(new Runnable(){
-						        public void run() {
+							runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
 									Toast.makeText(HealthGem.getContext(),
-											"No Internet Connection!", Toast.LENGTH_LONG)
-											.show();
-						        }
-						    });
+											"No Internet Connection!",
+											Toast.LENGTH_LONG).show();
+								}
+							});
 							e.printStackTrace();
 						} catch (OutdatedAccessTokenException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-			            return null;
-			        }
-			        
-			        @Override
-			        protected void onPostExecute(Void result2) {
+						return null;
+					}
+
+					@Override
+					protected void onPostExecute(Void result2) {
 						if (result != null) {
 							for (int i = 0; i < result.size(); i++)
 								resultName.add(result.get(i).getName());
 
-							adapter = new ArrayAdapter<String>(getApplicationContext(),
+							adapter = new ArrayAdapter<String>(
+									getApplicationContext(),
 									R.layout.item_custom_listview, resultName);
 
 							searchList.setAdapter(adapter);
 						}
-						
-			        	if(progressDialog.isShowing())
+
+						if (progressDialog.isShowing())
 							progressDialog.dismiss();
-			        };
-			    }.execute();
+					};
+				}.execute();
 			}
 		});
 
@@ -142,7 +146,6 @@ public class ActivitiesSearchListActivity extends android.app.Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		
 
 		case android.R.id.home:
 			onBackPressed();

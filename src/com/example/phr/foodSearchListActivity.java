@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -53,12 +52,13 @@ public class FoodSearchListActivity extends Activity {
 		setContentView(R.layout.activity_search_list);
 		setTitle("Food Search List");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#030203")));
 		searchList = (ListView) findViewById(R.id.searchList);
 		searchWord = (EditText) findViewById(R.id.searchWord);
 		searchButton = (ImageButton) findViewById(R.id.searchButton);
 		activity = this;
-		
+
 		searchButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -66,47 +66,50 @@ public class FoodSearchListActivity extends Activity {
 				final FoodService service = new FoodServiceImpl();
 				Log.e("search word", searchWord.getText().toString());
 				list = new ArrayList<Food>();
-				
-				final ProgressDialog progressDialog = new ProgressDialog(activity);
+
+				final ProgressDialog progressDialog = new ProgressDialog(
+						activity);
 				progressDialog.setCancelable(false);
 				progressDialog.setMessage("Searching food...");
 				progressDialog.show();
-				
-				new AsyncTask<Void, Void, Void>(){
-			        @Override
-			        protected Void doInBackground(Void... params) {
+
+				new AsyncTask<Void, Void, Void>() {
+					@Override
+					protected Void doInBackground(Void... params) {
 						try {
-							list = service.search(searchWord.getText().toString());
+							list = service.search(searchWord.getText()
+									.toString());
 						} catch (ServiceException e) {
 							// TODO Auto-generated catch block
-							runOnUiThread(new Runnable(){
-						        public void run() {
-									Toast.makeText(HealthGem.getContext(), "No Internet Connection !",
+							runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									Toast.makeText(HealthGem.getContext(),
+											"No Internet Connection !",
 											Toast.LENGTH_LONG).show();
-						        }
-						    });
+								}
+							});
 							e.printStackTrace();
 						} catch (OutdatedAccessTokenException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						
-						
-			            return null;
-			        }
-			        
-			        @Override
-			        protected void onPostExecute(Void result2) {
+
+						return null;
+					}
+
+					@Override
+					protected void onPostExecute(Void result2) {
 						if (list != null) {
 							foodsingleAdapter = new SingleFoodAdapter(
 									getApplicationContext(), list);
 							searchList.setAdapter(foodsingleAdapter);
 						}
-						
-			        	if(progressDialog.isShowing())
+
+						if (progressDialog.isShowing())
 							progressDialog.dismiss();
-			        };
-			    }.execute();
+					};
+				}.execute();
 			}
 		});
 

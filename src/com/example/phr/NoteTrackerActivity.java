@@ -51,7 +51,8 @@ public class NoteTrackerActivity extends Activity {
 		setContentView(R.layout.activity_note_tracker);
 		setTitle("Notes");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4A3A47")));
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#030203")));
 		mNoteList = (ListView) findViewById(R.id.listView_notes);
 
 		list = new ArrayList<Note>();
