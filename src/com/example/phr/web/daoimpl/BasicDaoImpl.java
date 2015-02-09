@@ -29,7 +29,7 @@ public abstract class BasicDaoImpl {
 		// String address = "http://10.100.197.128:8080/PHR-WebServer/" +
 		// command;
 		// String address = "http://10.0.2.2:8080/PHR-WebServer/" + command;
-		String address = "http://192.168.1.6:8080/PHR-WebServer/" + command;
+		String address = "http://healthgem2.cloudapp.net/PHR-WebServer/" + command;
 		// String address = "http://10.0.3.2/PHR-WebServer/" + command;
 		try {
 			HttpClient client = new DefaultHttpClient();

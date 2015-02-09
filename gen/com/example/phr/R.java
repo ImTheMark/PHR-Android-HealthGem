@@ -17,34 +17,14 @@ public final class R {
         public static final int weightUnit=0x7f090002;
     }
     public static final class attr {
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int confirm_logout=0x7f01000c;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int done_button_background=0x7f010006;
-        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
+        public static final int PagerIndicatorStyle=0x7f01001b;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int done_button_text=0x7f010004;
-        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int extra_fields=0x7f010001;
+        public static final int SliderStyle=0x7f01001a;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -52,7 +32,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int fetch_user_info=0x7f01000d;
+        public static final int auto_cycle=0x7f010001;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -60,7 +40,11 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int is_cropped=0x7f010011;
+        public static final int confirm_logout=0x7f010028;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int done_button_background=0x7f010022;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -68,7 +52,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int login_text=0x7f01000e;
+        public static final int done_button_text=0x7f010020;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -76,7 +60,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int logout_text=0x7f01000f;
+        public static final int extra_fields=0x7f01001d;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -84,7 +68,126 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int multi_select=0x7f010007;
+        public static final int fetch_user_info=0x7f010029;
+        /**  indicator visibility 
+         <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>visible</code></td><td>0</td><td></td></tr>
+<tr><td><code>invisible</code></td><td>1</td><td></td></tr>
+</table>
+         */
+        public static final int indicator_visibility=0x7f010000;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int is_cropped=0x7f01002d;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int login_text=0x7f01002a;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int logout_text=0x7f01002b;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int multi_select=0x7f010023;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int padding_bottom=0x7f010011;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int padding_left=0x7f01000e;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int padding_right=0x7f01000f;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int padding_top=0x7f010010;
+        /**  page animation 
+         <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>Default</code></td><td>0</td><td></td></tr>
+<tr><td><code>Accordion</code></td><td>1</td><td></td></tr>
+<tr><td><code>Background2Foreground</code></td><td>2</td><td></td></tr>
+<tr><td><code>CubeIn</code></td><td>3</td><td></td></tr>
+<tr><td><code>DepthPage</code></td><td>4</td><td></td></tr>
+<tr><td><code>Fade</code></td><td>5</td><td></td></tr>
+<tr><td><code>FlipHorizontal</code></td><td>6</td><td></td></tr>
+<tr><td><code>FlipPage</code></td><td>7</td><td></td></tr>
+<tr><td><code>Foreground2Background</code></td><td>8</td><td></td></tr>
+<tr><td><code>RotateDown</code></td><td>9</td><td></td></tr>
+<tr><td><code>RotateUp</code></td><td>10</td><td></td></tr>
+<tr><td><code>Stack</code></td><td>11</td><td></td></tr>
+<tr><td><code>Tablet</code></td><td>12</td><td></td></tr>
+<tr><td><code>ZoomIn</code></td><td>13</td><td></td></tr>
+<tr><td><code>ZoomOutSlide</code></td><td>14</td><td></td></tr>
+<tr><td><code>ZoomOut</code></td><td>15</td><td></td></tr>
+</table>
+         */
+        public static final int pager_animation=0x7f010002;
+        /**  page animation time span 
+         <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int pager_animation_span=0x7f010003;
         /** <p>Must be one of the following constant values.</p>
 <table>
 <colgroup align="left" />
@@ -96,7 +199,7 @@ containing a value of this type.
 <tr><td><code>large</code></td><td>-4</td><td></td></tr>
 </table>
          */
-        public static final int preset_size=0x7f010010;
+        public static final int preset_size=0x7f01002c;
         /** <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -104,7 +207,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int radius_in_meters=0x7f010008;
+        public static final int radius_in_meters=0x7f010024;
         /** <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -112,7 +215,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int results_limit=0x7f010009;
+        public static final int results_limit=0x7f010025;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -120,7 +223,92 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int search_text=0x7f01000a;
+        public static final int search_text=0x7f010026;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int selected_color=0x7f010006;
+        /**  indicator style 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int selected_drawable=0x7f010008;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int selected_height=0x7f01000b;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int selected_padding_bottom=0x7f010015;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int selected_padding_left=0x7f010012;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int selected_padding_right=0x7f010013;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int selected_padding_top=0x7f010014;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int selected_width=0x7f01000a;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>oval</code></td><td>0</td><td></td></tr>
+<tr><td><code>rect</code></td><td>1</td><td></td></tr>
+</table>
+         */
+        public static final int shape=0x7f010005;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -128,7 +316,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int show_pictures=0x7f010000;
+        public static final int show_pictures=0x7f01001c;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -136,7 +324,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int show_search_box=0x7f01000b;
+        public static final int show_search_box=0x7f010027;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -144,11 +332,11 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int show_title_bar=0x7f010002;
+        public static final int show_title_bar=0x7f01001e;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int title_bar_background=0x7f010005;
+        public static final int title_bar_background=0x7f010021;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -156,21 +344,106 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int title_text=0x7f010003;
+        public static final int title_text=0x7f01001f;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int unselected_color=0x7f010007;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int unselected_drawable=0x7f010009;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int unselected_height=0x7f01000d;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int unselected_padding_bottom=0x7f010019;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int unselected_padding_left=0x7f010016;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int unselected_padding_right=0x7f010017;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int unselected_padding_top=0x7f010018;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int unselected_width=0x7f01000c;
+        /**  indicator visibility 
+         <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>visible</code></td><td>0</td><td></td></tr>
+<tr><td><code>invisible</code></td><td>1</td><td></td></tr>
+</table>
+         */
+        public static final int visibility=0x7f010004;
     }
     public static final class color {
-        public static final int com_facebook_blue=0x7f060002;
-        public static final int com_facebook_loginview_text_color=0x7f060006;
-        public static final int com_facebook_picker_search_bar_background=0x7f060000;
-        public static final int com_facebook_picker_search_bar_text=0x7f060001;
-        public static final int com_facebook_usersettingsfragment_connected_shadow_color=0x7f060004;
-        public static final int com_facebook_usersettingsfragment_connected_text_color=0x7f060003;
-        public static final int com_facebook_usersettingsfragment_not_connected_text_color=0x7f060005;
-        public static final int healthgem_gray=0x7f06000b;
-        public static final int healthgem_green=0x7f060009;
-        public static final int healthgem_light_green=0x7f06000a;
-        public static final int healthgem_red=0x7f060007;
-        public static final int healthgem_white=0x7f060008;
+        public static final int com_facebook_blue=0x7f080002;
+        public static final int com_facebook_loginview_text_color=0x7f080006;
+        public static final int com_facebook_picker_search_bar_background=0x7f080000;
+        public static final int com_facebook_picker_search_bar_text=0x7f080001;
+        public static final int com_facebook_usersettingsfragment_connected_shadow_color=0x7f080004;
+        public static final int com_facebook_usersettingsfragment_connected_text_color=0x7f080003;
+        public static final int com_facebook_usersettingsfragment_not_connected_text_color=0x7f080005;
+        public static final int healthgem_gray=0x7f08000b;
+        public static final int healthgem_green=0x7f080009;
+        public static final int healthgem_light_green=0x7f08000a;
+        public static final int healthgem_red=0x7f080007;
+        public static final int healthgem_white=0x7f080008;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -180,22 +453,22 @@ containing a value of this type.
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
          */
-        public static final int activity_horizontal_margin=0x7f05000e;
-        public static final int activity_vertical_margin=0x7f05000f;
-        public static final int com_facebook_loginview_compound_drawable_padding=0x7f050008;
-        public static final int com_facebook_loginview_padding_bottom=0x7f050007;
-        public static final int com_facebook_loginview_padding_left=0x7f050004;
-        public static final int com_facebook_loginview_padding_right=0x7f050005;
-        public static final int com_facebook_loginview_padding_top=0x7f050006;
-        public static final int com_facebook_loginview_text_size=0x7f050009;
-        public static final int com_facebook_picker_divider_width=0x7f050001;
-        public static final int com_facebook_picker_place_image_size=0x7f050000;
-        public static final int com_facebook_profilepictureview_preset_size_large=0x7f05000c;
-        public static final int com_facebook_profilepictureview_preset_size_normal=0x7f05000b;
-        public static final int com_facebook_profilepictureview_preset_size_small=0x7f05000a;
-        public static final int com_facebook_tooltip_horizontal_padding=0x7f05000d;
-        public static final int com_facebook_usersettingsfragment_profile_picture_height=0x7f050003;
-        public static final int com_facebook_usersettingsfragment_profile_picture_width=0x7f050002;
+        public static final int activity_horizontal_margin=0x7f07000e;
+        public static final int activity_vertical_margin=0x7f07000f;
+        public static final int com_facebook_loginview_compound_drawable_padding=0x7f070008;
+        public static final int com_facebook_loginview_padding_bottom=0x7f070007;
+        public static final int com_facebook_loginview_padding_left=0x7f070004;
+        public static final int com_facebook_loginview_padding_right=0x7f070005;
+        public static final int com_facebook_loginview_padding_top=0x7f070006;
+        public static final int com_facebook_loginview_text_size=0x7f070009;
+        public static final int com_facebook_picker_divider_width=0x7f070001;
+        public static final int com_facebook_picker_place_image_size=0x7f070000;
+        public static final int com_facebook_profilepictureview_preset_size_large=0x7f07000c;
+        public static final int com_facebook_profilepictureview_preset_size_normal=0x7f07000b;
+        public static final int com_facebook_profilepictureview_preset_size_small=0x7f07000a;
+        public static final int com_facebook_tooltip_horizontal_padding=0x7f07000d;
+        public static final int com_facebook_usersettingsfragment_profile_picture_height=0x7f070003;
+        public static final int com_facebook_usersettingsfragment_profile_picture_width=0x7f070002;
     }
     public static final class drawable {
         public static final int action_activitymain_icon_about_me=0x7f020000;
@@ -260,7 +533,7 @@ containing a value of this type.
         public static final int com_facebook_list_section_header_background=0x7f02003b;
         public static final int com_facebook_loginbutton_silver=0x7f02003c;
         public static final int com_facebook_logo=0x7f02003d;
-        public static final int com_facebook_picker_default_separator_color=0x7f0200ac;
+        public static final int com_facebook_picker_default_separator_color=0x7f0200b7;
         public static final int com_facebook_picker_item_background=0x7f02003e;
         public static final int com_facebook_picker_list_focused=0x7f02003f;
         public static final int com_facebook_picker_list_longpressed=0x7f020040;
@@ -328,571 +601,616 @@ containing a value of this type.
         public static final int icon_small_facebook=0x7f02007e;
         public static final int icon_small_food=0x7f02007f;
         public static final int icon_weight=0x7f020080;
-        public static final int menuicon_activity=0x7f020081;
-        public static final int menuicon_blood_pressure=0x7f020082;
-        public static final int menuicon_blood_sugar=0x7f020083;
-        public static final int menuicon_calorie=0x7f020084;
-        public static final int menuicon_checkup=0x7f020085;
-        public static final int menuicon_food=0x7f020086;
-        public static final int menuicon_note=0x7f020087;
-        public static final int menuicon_weight=0x7f020088;
-        public static final int normalweight=0x7f020089;
-        public static final int note_banner=0x7f02008a;
-        public static final int notetracker_help=0x7f02008b;
-        public static final int notification_facebook=0x7f02008c;
-        public static final int overweight=0x7f02008d;
-        public static final int picture_placeholder=0x7f02008e;
-        public static final int post_help=0x7f02008f;
-        public static final int post_status=0x7f020090;
-        public static final int register=0x7f020091;
-        public static final int registerbutton=0x7f020092;
-        public static final int sample_image=0x7f020093;
-        public static final int sample_image_pills=0x7f020094;
-        public static final int textview_style=0x7f020095;
-        public static final int timepicker_down_btn=0x7f020096;
-        public static final int timepicker_down_disabled=0x7f020097;
-        public static final int timepicker_down_disabled_focused=0x7f020098;
-        public static final int timepicker_down_normal=0x7f020099;
-        public static final int timepicker_down_pressed=0x7f02009a;
-        public static final int timepicker_down_selected=0x7f02009b;
-        public static final int timepicker_input=0x7f02009c;
-        public static final int timepicker_input_disabled=0x7f02009d;
-        public static final int timepicker_input_normal=0x7f02009e;
-        public static final int timepicker_input_pressed=0x7f02009f;
-        public static final int timepicker_input_selected=0x7f0200a0;
-        public static final int timepicker_up_btn=0x7f0200a1;
-        public static final int timepicker_up_disabled=0x7f0200a2;
-        public static final int timepicker_up_disabled_focused=0x7f0200a3;
-        public static final int timepicker_up_normal=0x7f0200a4;
-        public static final int timepicker_up_pressed=0x7f0200a5;
-        public static final int timepicker_up_selected=0x7f0200a6;
-        public static final int underline_background=0x7f0200a7;
-        public static final int underweight=0x7f0200a8;
-        public static final int username_text_background=0x7f0200a9;
-        public static final int weight_banner=0x7f0200aa;
-        public static final int weighttracker_help=0x7f0200ab;
+        public static final int indicator_corner_bg=0x7f020081;
+        public static final int instruction1=0x7f020082;
+        public static final int instruction10=0x7f020083;
+        public static final int instruction2=0x7f020084;
+        public static final int instruction3=0x7f020085;
+        public static final int instruction4=0x7f020086;
+        public static final int instruction5=0x7f020087;
+        public static final int instruction6=0x7f020088;
+        public static final int instruction7=0x7f020089;
+        public static final int instruction8=0x7f02008a;
+        public static final int instruction9=0x7f02008b;
+        public static final int menuicon_activity=0x7f02008c;
+        public static final int menuicon_blood_pressure=0x7f02008d;
+        public static final int menuicon_blood_sugar=0x7f02008e;
+        public static final int menuicon_calorie=0x7f02008f;
+        public static final int menuicon_checkup=0x7f020090;
+        public static final int menuicon_food=0x7f020091;
+        public static final int menuicon_note=0x7f020092;
+        public static final int menuicon_weight=0x7f020093;
+        public static final int normalweight=0x7f020094;
+        public static final int note_banner=0x7f020095;
+        public static final int notetracker_help=0x7f020096;
+        public static final int notification_facebook=0x7f020097;
+        public static final int overweight=0x7f020098;
+        public static final int picture_placeholder=0x7f020099;
+        public static final int post_help=0x7f02009a;
+        public static final int post_status=0x7f02009b;
+        public static final int register=0x7f02009c;
+        public static final int registerbutton=0x7f02009d;
+        public static final int sample_image=0x7f02009e;
+        public static final int sample_image_pills=0x7f02009f;
+        public static final int textview_style=0x7f0200a0;
+        public static final int timepicker_down_btn=0x7f0200a1;
+        public static final int timepicker_down_disabled=0x7f0200a2;
+        public static final int timepicker_down_disabled_focused=0x7f0200a3;
+        public static final int timepicker_down_normal=0x7f0200a4;
+        public static final int timepicker_down_pressed=0x7f0200a5;
+        public static final int timepicker_down_selected=0x7f0200a6;
+        public static final int timepicker_input=0x7f0200a7;
+        public static final int timepicker_input_disabled=0x7f0200a8;
+        public static final int timepicker_input_normal=0x7f0200a9;
+        public static final int timepicker_input_pressed=0x7f0200aa;
+        public static final int timepicker_input_selected=0x7f0200ab;
+        public static final int timepicker_up_btn=0x7f0200ac;
+        public static final int timepicker_up_disabled=0x7f0200ad;
+        public static final int timepicker_up_disabled_focused=0x7f0200ae;
+        public static final int timepicker_up_normal=0x7f0200af;
+        public static final int timepicker_up_pressed=0x7f0200b0;
+        public static final int timepicker_up_selected=0x7f0200b1;
+        public static final int underline_background=0x7f0200b2;
+        public static final int underweight=0x7f0200b3;
+        public static final int username_text_background=0x7f0200b4;
+        public static final int weight_banner=0x7f0200b5;
+        public static final int weighttracker_help=0x7f0200b6;
     }
     public static final class id {
-        public static final int AboutMePersonalInformationDivider=0x7f040119;
-        public static final int AboutMePersonalInformationHolder=0x7f040117;
-        public static final int BloodPressurePhotoDivider=0x7f04002c;
-        public static final int BloodPressurePhotoHolder=0x7f04002a;
-        public static final int BloodPressureSharingDivider=0x7f040030;
-        public static final int BloodPressureSharingHolder=0x7f04002e;
-        public static final int BloodPressureTimeDateHolder=0x7f040016;
-        public static final int BpLinearLayoutStatus=0x7f040167;
-        public static final int EditText02=0x7f0400c5;
-        public static final int EditText03=0x7f0400bf;
-        public static final int EditText04=0x7f0400be;
-        public static final int EditText05=0x7f0400d6;
-        public static final int EditText06=0x7f0400d5;
-        public static final int EditTextRegistrationAllergies=0x7f0400b6;
-        public static final int EditTextRegistrationEmergencyContactNumber=0x7f0400b3;
-        public static final int EditTextRegistrationEmergencyContactPerson=0x7f0400b2;
-        public static final int EditTextRegistrationHealthProblems=0x7f0400b9;
-        public static final int HeightPhotoHolder=0x7f0400e2;
-        public static final int ImageView01=0x7f0400c6;
-        public static final int ImageView02=0x7f0400c0;
-        public static final int ImageView03=0x7f0400d7;
-        public static final int ImageViewActivitiesTracker=0x7f040136;
-        public static final int ImageViewBloodSugar=0x7f040139;
-        public static final int ImageViewCalorieTracker=0x7f04013d;
-        public static final int ImageViewCheckupTracker=0x7f040140;
-        public static final int ImageViewNotesTracker=0x7f040147;
-        public static final int ImageViewWeightTracker=0x7f040144;
-        public static final int NoteDivider=0x7f040088;
-        public static final int NoteImageDivider=0x7f04004b;
-        public static final int NoteTitleDivider=0x7f040048;
-        public static final int PurposePlaceholder=0x7f0401b3;
-        public static final int RegistrationAllergiesDivider=0x7f0400b5;
-        public static final int RegistrationBirthDateDivider=0x7f04009e;
-        public static final int RegistrationBirthDateHolder=0x7f04009c;
-        public static final int RegistrationEmergencyContactDivider=0x7f0400b1;
-        public static final int RegistrationGenderDivider=0x7f0400a2;
-        public static final int RegistrationGenderHolder=0x7f0400a0;
-        public static final int RegistrationHealthProblemsDivider=0x7f0400b8;
-        public static final int RegistrationHeightDivider=0x7f0400a6;
-        public static final int RegistrationHeightHolder=0x7f0400a4;
-        public static final int RegistrationNameDivider=0x7f040098;
-        public static final int RegistrationWeightDivider=0x7f0400ad;
-        public static final int RegistrationWeightHolder=0x7f0400ab;
-        public static final int RelativeLayout01=0x7f0400e8;
-        public static final int RelativeLayout02=0x7f0400eb;
-        public static final int ScrollView1=0x7f040040;
-        public static final int SettingHeightDivider=0x7f0400e4;
-        public static final int SettingWeightDivider=0x7f0400de;
-        public static final int TextView01=0x7f0400c2;
-        public static final int TextView02=0x7f0400c3;
-        public static final int TextView03=0x7f040042;
-        public static final int TextView04=0x7f0400c7;
-        public static final int TextView05=0x7f0400c4;
-        public static final int TextView06=0x7f0400ba;
-        public static final int TextView07=0x7f0400bb;
-        public static final int TextView08=0x7f0400bd;
-        public static final int TextView09=0x7f0400c1;
-        public static final int TextView10=0x7f0400bc;
-        public static final int TextView11=0x7f0400d1;
-        public static final int TextView12=0x7f0400d2;
-        public static final int TextView13=0x7f0400d4;
-        public static final int TextView14=0x7f0400d8;
-        public static final int TextView15=0x7f0400d3;
-        public static final int TextView16=0x7f04012b;
-        public static final int TextViewActivitiesTracker=0x7f040137;
-        public static final int TextViewBloodSugar=0x7f04013a;
-        public static final int TextViewCalorieTracker=0x7f04013e;
-        public static final int TextViewCheckupTracker=0x7f040141;
-        public static final int TextViewNotesTracker=0x7f040148;
-        public static final int TextViewRegistrationAllergies=0x7f0400b4;
-        public static final int TextViewRegistrationEmergencyContactTitle=0x7f0400b0;
-        public static final int TextViewRegistrationHealthProblems=0x7f0400b7;
-        public static final int TextViewWeightTracker=0x7f040145;
-        public static final int View01=0x7f0400e9;
-        public static final int View02=0x7f0400ec;
-        public static final int WeightPhotoHolder=0x7f0400dc;
-        public static final int actPlaceholder=0x7f0401a7;
-        public static final int actionImage=0x7f0401ab;
-        public static final int actionList=0x7f040006;
-        public static final int actionName=0x7f0401ad;
-        public static final int action_help=0x7f0401fc;
-        public static final int action_notifications=0x7f0401fd;
-        public static final int action_settings=0x7f0401fe;
-        public static final int actionbar_notifcation_textview=0x7f040003;
-        public static final int activitiesPlaceholder=0x7f0401d3;
-        public static final int activity=0x7f04006d;
-        public static final int activityCal=0x7f040081;
-        public static final int activityDuration=0x7f04006e;
-        public static final int activityDurationUnit=0x7f04006f;
-        public static final int activityName=0x7f040185;
-        public static final int activityUnitSpinner=0x7f040184;
-        public static final int activity_template=0x7f04006c;
-        public static final int bloodpressureBanner=0x7f040034;
-        public static final int bloodpressureLocationDivider=0x7f040028;
-        public static final int bloodpressureLocationHolder=0x7f040026;
-        public static final int bloodpressurePost=0x7f040033;
-        public static final int bloodpressureQuantityDivider=0x7f04001e;
-        public static final int bloodpressureStatusDivider=0x7f040024;
-        public static final int bloodpressureStatusHolder=0x7f040022;
-        public static final int bloodpressure_template=0x7f040063;
-        public static final int bloodsugarBanner=0x7f040037;
-        public static final int bloodsugarGraph=0x7f040038;
-        public static final int bloodsugarNumberPicker=0x7f04019c;
-        public static final int bloodsugarQuantityDivider=0x7f04019b;
-        public static final int bloodsugar_template=0x7f040066;
-        public static final int bloopressureGraph=0x7f040035;
-        public static final int bpHomeRecordHolder=0x7f040166;
-        public static final int bpHomeRecordHolder2=0x7f040168;
-        public static final int bpHomeRecordHolderNull=0x7f04016e;
-        public static final int breakdown_list=0x7f04003a;
-        public static final int bsHomeRecord2=0x7f040171;
-        public static final int bsHomeRecordHolder=0x7f04016f;
-        public static final int bsHomeRecordHolder2=0x7f04015f;
-        public static final int bsHomeRecordHolderNull=0x7f040176;
-        public static final int bsLinearLayoutStatus=0x7f040170;
-        public static final int btnActivitiesTracker=0x7f040135;
-        public static final int btnAddActions=0x7f040078;
-        public static final int btnAddActivity=0x7f040004;
-        public static final int btnAddCheckupDate=0x7f04003d;
-        public static final int btnAddCheckupDoctor=0x7f04003e;
-        public static final int btnAddImageBloodPressure=0x7f04002d;
-        public static final int btnAddPhoto=0x7f040079;
-        public static final int btnAddWeight=0x7f0400f8;
-        public static final int btnBloodPressureDate=0x7f040017;
-        public static final int btnBloodPressureTime=0x7f04001a;
-        public static final int btnBloodPressureTracker=0x7f040131;
-        public static final int btnBloodSugarTracker=0x7f040138;
-        public static final int btnCalorieTracker=0x7f04013c;
-        public static final int btnCheckupTracker=0x7f04013f;
-        public static final int btnDate=0x7f04007a;
-        public static final int btnFb=0x7f04007b;
-        public static final int btnFoodTracker=0x7f04012e;
-        public static final int btnLogin=0x7f040056;
-        public static final int btnLogout=0x7f0400f1;
-        public static final int btnNotesTracker=0x7f040146;
-        public static final int btnRegister=0x7f040057;
-        public static final int btnUpdate=0x7f0400f0;
-        public static final int btnWeightTracker=0x7f040143;
-        public static final int cal=0x7f0401b0;
-        public static final int calBreakdownQuantity=0x7f0401ae;
-        public static final int calBreakdownUnit=0x7f0401af;
-        public static final int caloriesPlaceholder=0x7f0401d0;
-        public static final int checkLogin=0x7f040058;
-        public static final int checkUpDoctor=0x7f040046;
-        public static final int checkUpNote=0x7f040049;
-        public static final int checkUpdate=0x7f040043;
-        public static final int checkupBanner=0x7f04003c;
-        public static final int checkupPurpose=0x7f0401ba;
-        public static final int checkupQuantityDivider=0x7f0401b9;
-        public static final int checkupTime=0x7f040044;
-        public static final int checkup_template=0x7f040070;
-        public static final int com_facebook_body_frame=0x7f04010d;
-        public static final int com_facebook_button_xout=0x7f04010f;
-        public static final int com_facebook_login_activity_progress_bar=0x7f0400fd;
-        public static final int com_facebook_picker_activity_circle=0x7f0400fc;
-        public static final int com_facebook_picker_checkbox=0x7f0400ff;
-        public static final int com_facebook_picker_checkbox_stub=0x7f040103;
-        public static final int com_facebook_picker_divider=0x7f040107;
-        public static final int com_facebook_picker_done_button=0x7f040106;
-        public static final int com_facebook_picker_image=0x7f040100;
-        public static final int com_facebook_picker_list_section_header=0x7f040104;
-        public static final int com_facebook_picker_list_view=0x7f0400fb;
-        public static final int com_facebook_picker_profile_pic_stub=0x7f040101;
-        public static final int com_facebook_picker_row_activity_circle=0x7f0400fe;
-        public static final int com_facebook_picker_search_text=0x7f04010c;
-        public static final int com_facebook_picker_title=0x7f040102;
-        public static final int com_facebook_picker_title_bar=0x7f040109;
-        public static final int com_facebook_picker_title_bar_stub=0x7f040108;
-        public static final int com_facebook_picker_top_bar=0x7f040105;
-        public static final int com_facebook_search_bar_view=0x7f04010b;
-        public static final int com_facebook_tooltip_bubble_view_bottom_pointer=0x7f040111;
-        public static final int com_facebook_tooltip_bubble_view_text_body=0x7f040110;
-        public static final int com_facebook_tooltip_bubble_view_top_pointer=0x7f04010e;
-        public static final int com_facebook_usersettingsfragment_login_button=0x7f040114;
-        public static final int com_facebook_usersettingsfragment_logo_image=0x7f040112;
-        public static final int com_facebook_usersettingsfragment_profile_name=0x7f040113;
-        public static final int confirmPasswordReg=0x7f040091;
-        public static final int container=0x7f040052;
-        public static final int dateholder=0x7f040187;
-        public static final int decrement=0x7f0401fa;
-        public static final int diaPlaceholder=0x7f04018d;
-        public static final int dialogList=0x7f0401bb;
-        public static final int diastolic=0x7f040065;
-        public static final int diastolicPicker=0x7f040021;
-        public static final int doctor=0x7f040071;
-        public static final int doctorPlaceholder=0x7f0401b6;
-        public static final int dropdownRegistrationHeight=0x7f0400aa;
-        public static final int dropdownRegistrationWeight=0x7f0400af;
-        public static final int editTextRegistrationBirthDate=0x7f04009f;
-        public static final int editTextRegistrationContactNumber=0x7f04009a;
-        public static final int editTextRegistrationEmailAddress=0x7f04009b;
-        public static final int editTextRegistrationFullName=0x7f040099;
-        public static final int fbOtherStatus=0x7f0401db;
-        public static final int fbStatus=0x7f0400ca;
-        public static final int fb_login_button=0x7f040095;
-        public static final int firstRowHolder=0x7f04012d;
-        public static final int food=0x7f04005f;
-        public static final int foodBanner=0x7f04004d;
-        public static final int foodBanner_post=0x7f040050;
-        public static final int foodCal=0x7f04007c;
-        public static final int foodCarbs=0x7f0401c5;
-        public static final int foodFat=0x7f0401c4;
-        public static final int foodGraph=0x7f04004e;
-        public static final int foodPlaceholder=0x7f0401a4;
-        public static final int foodProtein=0x7f0401c3;
-        public static final int foodQuantityDivider=0x7f0401c0;
-        public static final int foodQuantitySize=0x7f040060;
-        public static final int foodQuantityUnit=0x7f040062;
-        public static final int foodUnit=0x7f0401c2;
-        public static final int food_template=0x7f04005e;
-        public static final int fourthRowHolder=0x7f040142;
-        public static final int generalTemplate=0x7f04005c;
-        public static final int glucosedateholder=0x7f040191;
-        public static final int glucoseholder=0x7f040194;
-        public static final int guess=0x7f0400cb;
-        public static final int help_imageview=0x7f0401c9;
-        public static final int imageBp=0x7f040186;
-        public static final int imageBs=0x7f040190;
-        public static final int imageButton1=0x7f040096;
-        public static final int imageDelete=0x7f040075;
-        public static final int imageHolder=0x7f040073;
-        public static final int imageView1=0x7f0400ce;
-        public static final int imageView2=0x7f040179;
-        public static final int imageView6=0x7f04015a;
-        public static final int imageViewAction=0x7f0401ca;
-        public static final int imageViewBloodPressureCalendar=0x7f040018;
-        public static final int imageViewBloodPressureClock=0x7f04001b;
-        public static final int imageViewBloodPressureTracker=0x7f040132;
-        public static final int imageViewCheckupReadHolder=0x7f04004c;
-        public static final int imageViewFoodTracker=0x7f04012f;
-        public static final int imageViewNoteReadHolder=0x7f04008b;
-        public static final int imageViewStatusAction=0x7f0401dd;
-        public static final int imageViewViaPosted=0x7f0401e1;
-        public static final int imgSplash=0x7f0400f2;
-        public static final int img_post=0x7f040178;
-        public static final int increment=0x7f0401f8;
-        public static final int journalTabsPlaceholder=0x7f040177;
-        public static final int large=0x7f040002;
-        public static final int lblAct=0x7f0401a8;
-        public static final int lblActivities=0x7f0401d4;
-        public static final int lblCalories=0x7f0401d1;
-        public static final int lblDia=0x7f04018e;
-        public static final int lblDoctor=0x7f0401b7;
-        public static final int lblFood=0x7f0401a5;
-        public static final int lblGlucose=0x7f040195;
-        public static final int lblPurpose=0x7f0401b4;
-        public static final int lblSys=0x7f04018b;
-        public static final int lblTrackerAverage=0x7f0401e7;
-        public static final int lblType=0x7f040199;
-        public static final int lblWeight=0x7f0401cd;
-        public static final int lblWeightMetric=0x7f0401cf;
-        public static final int listViewActivity=0x7f0400d0;
-        public static final int listViewActivityTracker=0x7f040005;
-        public static final int listViewFood=0x7f0400cf;
-        public static final int listViewWeightTracker=0x7f0400fa;
-        public static final int listView_bloodpressure=0x7f040036;
-        public static final int listView_bloodsugar=0x7f040039;
-        public static final int listView_checkup=0x7f04003f;
-        public static final int listView_daily_journal=0x7f040151;
-        public static final int listView_food_single=0x7f04004f;
-        public static final int listView_groupedfood=0x7f040051;
-        public static final int listView_notes=0x7f04008d;
-        public static final int listview_calorie=0x7f04003b;
-        public static final int loadingLayout=0x7f040059;
-        public static final int loginLayout=0x7f040053;
-        public static final int menu_activity=0x7f04014a;
-        public static final int menu_add_activity=0x7f040200;
-        public static final int menu_bp=0x7f04014d;
-        public static final int menu_bs=0x7f04014e;
-        public static final int menu_calorie=0x7f04014b;
-        public static final int menu_checkup=0x7f04014f;
-        public static final int menu_delete=0x7f040203;
-        public static final int menu_edit=0x7f040202;
-        public static final int menu_food=0x7f040149;
-        public static final int menu_item_add_new_activity=0x7f040201;
-        public static final int menu_item_next=0x7f040205;
-        public static final int menu_item_save=0x7f040206;
-        public static final int menu_item_status_edit=0x7f040204;
-        public static final int menu_item_status_post=0x7f0401ff;
-        public static final int menu_item_status_verify=0x7f040207;
-        public static final int menu_note=0x7f040150;
-        public static final int menu_weight=0x7f04014c;
-        public static final int normal=0x7f040001;
-        public static final int noteBanner=0x7f04008c;
-        public static final int noteImageLayout=0x7f04008a;
-        public static final int pager=0x7f04005b;
-        public static final int picker_subtitle=0x7f04010a;
-        public static final int pref_num_picker=0x7f0401fb;
-        public static final int profAllergies=0x7f040129;
-        public static final int profBday=0x7f04011a;
-        public static final int profBlank=0x7f040123;
-        public static final int profContact=0x7f04011f;
-        public static final int profContactNum=0x7f04012c;
-        public static final int profContactPerson=0x7f04012a;
-        public static final int profDiastolic=0x7f040124;
-        public static final int profEmail=0x7f040120;
-        public static final int profFb=0x7f040121;
-        public static final int profHealthProblem=0x7f040128;
-        public static final int profHeight=0x7f04011c;
-        public static final int profHeightUnit=0x7f04011d;
-        public static final int profImg=0x7f040115;
-        public static final int profLastCheckup=0x7f040127;
-        public static final int profName=0x7f040116;
-        public static final int profSex=0x7f04011b;
-        public static final int profSugarLvl=0x7f040125;
-        public static final int profSugarLvlUnit=0x7f040126;
-        public static final int profSystolic=0x7f040122;
-        public static final int profWeight=0x7f04011e;
-        public static final int progressBar2=0x7f040156;
-        public static final int purpose=0x7f040072;
-        public static final int quantity=0x7f0400cd;
-        public static final int radioGroupSettingHeight=0x7f0400e5;
-        public static final int radioGroupSettingHeightButtonFT=0x7f0400e6;
-        public static final int radioGroupSettingHeightButtonM=0x7f0400e7;
-        public static final int radioGroupSettingWeight=0x7f0400df;
-        public static final int radioGroupSettingWeightButtonKGS=0x7f0400e1;
-        public static final int radioGroupSettingWeightButtonLBS=0x7f0400e0;
-        public static final int registerFBLogin_picture=0x7f040093;
-        public static final int registrationHeightInputFeetInches=0x7f0400a8;
-        public static final int searchButton=0x7f0400da;
-        public static final int searchList=0x7f0400db;
-        public static final int searchWord=0x7f0400d9;
-        public static final int secondRowHolder=0x7f040134;
-        public static final int serving=0x7f0401c7;
-        public static final int servingUnit=0x7f0401c8;
-        public static final int settingsFBLogin=0x7f0400ea;
-        public static final int settingsToggleButtonBloodPressure=0x7f0400ed;
-        public static final int settingsToggleButtonBloodSugar=0x7f0400ef;
-        public static final int small=0x7f040000;
-        public static final int spinnerFoodUnit=0x7f040015;
-        public static final int spinnerNewDurationUnit=0x7f04000e;
-        public static final int statusFeedList=0x7f0400f3;
-        public static final int statusImage=0x7f040074;
-        public static final int statusInformationHolder=0x7f0401dc;
-        public static final int statusPhotoHolder=0x7f0401e3;
-        public static final int statusTabsPlaceholder=0x7f040077;
-        public static final int sugar=0x7f040067;
-        public static final int sugarPicker=0x7f04019d;
-        public static final int sugarTypeSpinner=0x7f04019e;
-        public static final int swipe_container=0x7f0400f5;
-        public static final int sysholder=0x7f04018a;
-        public static final int systolic=0x7f040064;
-        public static final int systolicPicker=0x7f040020;
-        public static final int textView1=0x7f040007;
-        public static final int textView2=0x7f040009;
-        public static final int textView3=0x7f04000c;
-        public static final int textView4=0x7f04000b;
-        public static final int textView8=0x7f040154;
-        public static final int textViewAboutMePersonalInformationTitle=0x7f040118;
-        public static final int textViewActivitySharing=0x7f0400ee;
-        public static final int textViewBloodPressureCalendar=0x7f040019;
-        public static final int textViewBloodPressureClock=0x7f04001c;
-        public static final int textViewBloodPressurePhotoTitle=0x7f04002b;
-        public static final int textViewBloodPressureSharing=0x7f040031;
-        public static final int textViewBloodPressureSharingTitle=0x7f04002f;
-        public static final int textViewBloodPressureTracker=0x7f040133;
-        public static final int textViewCheckupReadFullNotes=0x7f040047;
-        public static final int textViewCheckupReadLabel=0x7f040045;
-        public static final int textViewCheckupReadTitle=0x7f040041;
-        public static final int textViewDateTime=0x7f0401e0;
-        public static final int textViewFoodTracker=0x7f040130;
-        public static final int textViewLocationTitle=0x7f040027;
-        public static final int textViewNoteReadDate=0x7f040085;
-        public static final int textViewNoteReadFullNotes=0x7f040087;
-        public static final int textViewNoteReadImages=0x7f04004a;
-        public static final int textViewNoteReadLabel=0x7f040084;
-        public static final int textViewNoteReadTime=0x7f040086;
-        public static final int textViewPasswordStrength=0x7f040090;
-        public static final int textViewQuantityTitle=0x7f04001d;
-        public static final int textViewRegistrationBirthDateTitle=0x7f04009d;
-        public static final int textViewRegistrationFBTitle=0x7f040094;
-        public static final int textViewRegistrationGender=0x7f0400a3;
-        public static final int textViewRegistrationGenderTitle=0x7f0400a1;
-        public static final int textViewRegistrationHeightTitle=0x7f0400a5;
-        public static final int textViewRegistrationNameTitle=0x7f040097;
-        public static final int textViewRegistrationWeightTitle=0x7f0400ac;
-        public static final int textViewSettingHeightTitle=0x7f0400e3;
-        public static final int textViewSettingWeightTitle=0x7f0400dd;
-        public static final int textViewStatus=0x7f0401e2;
-        public static final int textViewStatusAction=0x7f0401df;
-        public static final int textViewStatusActionHolder=0x7f0401de;
-        public static final int textViewStatusTitle=0x7f040023;
-        public static final int textViewbloodpressureLocation=0x7f040029;
-        public static final int textViewbloodpressureStatus=0x7f040025;
-        public static final int thirdRowHolder=0x7f04013b;
-        public static final int time=0x7f0401c6;
-        public static final int timepicker_input=0x7f0401f9;
-        public static final int togglebuttonBloodPressureSharing=0x7f040032;
-        public static final int trackerAveragePlaceholder=0x7f0401e6;
-        public static final int trackerListForDay=0x7f0401eb;
-        public static final int txt=0x7f04001f;
-        public static final int txtActCal=0x7f0401aa;
-        public static final int txtActivities=0x7f0401d5;
-        public static final int txtActivityCal=0x7f040082;
-        public static final int txtActivityCalBurned=0x7f040180;
-        public static final int txtActivityCalBurnedMetric=0x7f040181;
-        public static final int txtActivityDate=0x7f04017a;
-        public static final int txtActivityDone=0x7f04017c;
-        public static final int txtActivityDuration=0x7f04017e;
-        public static final int txtActivityDurationLabel=0x7f04017d;
-        public static final int txtActivityDurationTime=0x7f040183;
-        public static final int txtActivityDurationUnit=0x7f04017f;
-        public static final int txtActivityTime=0x7f04017b;
-        public static final int txtAs=0x7f040169;
-        public static final int txtBMIHome=0x7f040163;
-        public static final int txtBMIHomeDate=0x7f040161;
-        public static final int txtBMIHomeTime=0x7f040162;
-        public static final int txtBlank=0x7f040061;
-        public static final int txtBlankLa=0x7f0401e9;
-        public static final int txtBpdate=0x7f040188;
-        public static final int txtBptime=0x7f040189;
-        public static final int txtCalUnit=0x7f040083;
-        public static final int txtCalories=0x7f0401d2;
-        public static final int txtCheckupdate=0x7f0401b1;
-        public static final int txtCheckuptime=0x7f0401b2;
-        public static final int txtCurrentTracker=0x7f040076;
-        public static final int txtDay=0x7f0401a0;
-        public static final int txtDia=0x7f04018f;
-        public static final int txtDoctor=0x7f0401b8;
-        public static final int txtEditFoodCal=0x7f0401bc;
-        public static final int txtEditFoodCarbs=0x7f0401bf;
-        public static final int txtEditFoodFat=0x7f0401be;
-        public static final int txtEditFoodProtein=0x7f0401bd;
-        public static final int txtFBDate=0x7f0400c8;
-        public static final int txtFBOtherDate=0x7f0401d9;
-        public static final int txtFBOtherTime=0x7f0401da;
-        public static final int txtFBTime=0x7f0400c9;
-        public static final int txtFoodCal=0x7f040010;
-        public static final int txtFoodCarbs=0x7f040013;
-        public static final int txtFoodFat=0x7f040012;
-        public static final int txtFoodProtein=0x7f040011;
-        public static final int txtFoodServingSize=0x7f0401c1;
-        public static final int txtFullNotes=0x7f040089;
-        public static final int txtGlucose=0x7f040196;
-        public static final int txtGlucoseUnit=0x7f040197;
-        public static final int txtHomeBpDate=0x7f04016a;
-        public static final int txtHomeBpTime=0x7f04016b;
-        public static final int txtHomeBsAs=0x7f040160;
-        public static final int txtHomeBsDate=0x7f040172;
-        public static final int txtHomeBsNumber=0x7f040174;
-        public static final int txtHomeBsTime=0x7f040173;
-        public static final int txtHomeBsType=0x7f040175;
-        public static final int txtHomeCalRequire=0x7f040155;
-        public static final int txtHomeDiastolic=0x7f04016d;
-        public static final int txtHomeSystolicNum=0x7f04016c;
-        public static final int txtHomeTotalCal=0x7f040157;
-        public static final int txtHomeTotalReqCal=0x7f040159;
-        public static final int txtLoadingInformation=0x7f04005a;
-        public static final int txtMonth=0x7f04019f;
-        public static final int txtNewActivity=0x7f040008;
-        public static final int txtNewCal=0x7f04000a;
-        public static final int txtNewDuration=0x7f04000d;
-        public static final int txtNewFood=0x7f04000f;
-        public static final int txtNewServing=0x7f040014;
-        public static final int txtNoteDate=0x7f0401d6;
-        public static final int txtNoteTime=0x7f0401d7;
-        public static final int txtNoteTitle=0x7f0401d8;
-        public static final int txtPassword=0x7f040055;
-        public static final int txtPasswordReg=0x7f04008f;
-        public static final int txtPosSign=0x7f0401a6;
-        public static final int txtProgress=0x7f0401a2;
-        public static final int txtProgressRequire=0x7f0401a3;
-        public static final int txtProgressTotalCal=0x7f0401a1;
-        public static final int txtPurpose=0x7f0401b5;
-        public static final int txtRegistrationHeightInches=0x7f0400a9;
-        public static final int txtRegistrationHeightInput=0x7f0400a7;
-        public static final int txtRegistrationWeightInput=0x7f0400ae;
-        public static final int txtSign=0x7f0401a9;
-        public static final int txtSlash=0x7f040158;
-        public static final int txtStatus=0x7f04005d;
-        public static final int txtStatusAction=0x7f0401cb;
-        public static final int txtSugarType=0x7f040068;
-        public static final int txtSys=0x7f04018c;
-        public static final int txtTotalActivityCal=0x7f04015c;
-        public static final int txtTotalFoodCal=0x7f04015b;
-        public static final int txtTrackerAverage=0x7f0401e8;
-        public static final int txtTrackerAverageUnit=0x7f0401ea;
-        public static final int txtTrackerDay=0x7f0401e5;
-        public static final int txtTrackerMonth=0x7f0401e4;
-        public static final int txtType=0x7f04019a;
-        public static final int txtUserName=0x7f040153;
-        public static final int txtUsername=0x7f040054;
-        public static final int txtUsernameReg=0x7f04008e;
-        public static final int txtWeight=0x7f0401ce;
-        public static final int txtWeightFeedback=0x7f0401f6;
-        public static final int txtWeightHome=0x7f040164;
-        public static final int txtWeightHomeUnit=0x7f040165;
-        public static final int txtWeightUnit=0x7f04006b;
-        public static final int txtfoodCal=0x7f04007d;
-        public static final int txtfoodCarbs=0x7f040080;
-        public static final int txtfoodFat=0x7f04007f;
-        public static final int txtfoodProtein=0x7f04007e;
-        public static final int txtglucosedate=0x7f040192;
-        public static final int txtglucosetime=0x7f040193;
-        public static final int txttime=0x7f0401ac;
-        public static final int typePlaceholder=0x7f040198;
-        public static final int valid=0x7f040092;
-        public static final int verification_confirm=0x7f0401f3;
-        public static final int verification_date=0x7f0401ec;
-        public static final int verification_edit=0x7f0401f4;
-        public static final int verification_extracted_amount=0x7f0401f2;
-        public static final int verification_extracted_word=0x7f0401f1;
-        public static final int verification_ignore=0x7f0401f5;
-        public static final int verification_listview=0x7f0400f4;
-        public static final int verification_listview_test=0x7f0400f6;
-        public static final int verification_question=0x7f0401f0;
-        public static final int verification_status=0x7f0401ee;
-        public static final int verification_statusPhotoHolder=0x7f0401ef;
-        public static final int verification_time=0x7f0401ed;
-        public static final int viewDisplay=0x7f040152;
-        public static final int weight=0x7f04006a;
-        public static final int weightGraph=0x7f0400f9;
-        public static final int weightLinearLayoutStatus=0x7f04015e;
-        public static final int weightPlaceholder=0x7f0401cc;
-        public static final int weightPost=0x7f0400f7;
-        public static final int weightQuantityDivider=0x7f040182;
-        public static final int weightRecordHolder=0x7f04015d;
-        public static final int weightUnitSpinner=0x7f0401f7;
-        public static final int weight_template=0x7f040069;
-        public static final int what=0x7f0400cc;
+        public static final int AboutMePersonalInformationDivider=0x7f04012e;
+        public static final int AboutMePersonalInformationHolder=0x7f04012c;
+        public static final int Accordion=0x7f040003;
+        public static final int Background2Foreground=0x7f040004;
+        public static final int BloodPressurePhotoDivider=0x7f040040;
+        public static final int BloodPressurePhotoHolder=0x7f04003e;
+        public static final int BloodPressureSharingDivider=0x7f040044;
+        public static final int BloodPressureSharingHolder=0x7f040042;
+        public static final int BloodPressureTimeDateHolder=0x7f04002a;
+        public static final int BpLinearLayoutStatus=0x7f04017c;
+        public static final int CubeIn=0x7f040005;
+        public static final int Default=0x7f040002;
+        public static final int DepthPage=0x7f040006;
+        public static final int EditText02=0x7f0400da;
+        public static final int EditText03=0x7f0400d4;
+        public static final int EditText04=0x7f0400d3;
+        public static final int EditText05=0x7f0400eb;
+        public static final int EditText06=0x7f0400ea;
+        public static final int EditTextRegistrationAllergies=0x7f0400cb;
+        public static final int EditTextRegistrationEmergencyContactNumber=0x7f0400c8;
+        public static final int EditTextRegistrationEmergencyContactPerson=0x7f0400c7;
+        public static final int EditTextRegistrationHealthProblems=0x7f0400ce;
+        public static final int Fade=0x7f040007;
+        public static final int FlipHorizontal=0x7f040008;
+        public static final int FlipPage=0x7f040009;
+        public static final int Foreground2Background=0x7f04000a;
+        public static final int HeightPhotoHolder=0x7f0400f7;
+        public static final int ImageView01=0x7f0400db;
+        public static final int ImageView02=0x7f0400d5;
+        public static final int ImageView03=0x7f0400ec;
+        public static final int ImageViewActivitiesTracker=0x7f04014b;
+        public static final int ImageViewBloodSugar=0x7f04014e;
+        public static final int ImageViewCalorieTracker=0x7f040152;
+        public static final int ImageViewCheckupTracker=0x7f040155;
+        public static final int ImageViewNotesTracker=0x7f04015c;
+        public static final int ImageViewWeightTracker=0x7f040159;
+        public static final int NoteDivider=0x7f04009d;
+        public static final int NoteImageDivider=0x7f04005f;
+        public static final int NoteTitleDivider=0x7f04005c;
+        public static final int PurposePlaceholder=0x7f0401c9;
+        public static final int RegistrationAllergiesDivider=0x7f0400ca;
+        public static final int RegistrationBirthDateDivider=0x7f0400b3;
+        public static final int RegistrationBirthDateHolder=0x7f0400b1;
+        public static final int RegistrationEmergencyContactDivider=0x7f0400c6;
+        public static final int RegistrationGenderDivider=0x7f0400b7;
+        public static final int RegistrationGenderHolder=0x7f0400b5;
+        public static final int RegistrationHealthProblemsDivider=0x7f0400cd;
+        public static final int RegistrationHeightDivider=0x7f0400bb;
+        public static final int RegistrationHeightHolder=0x7f0400b9;
+        public static final int RegistrationNameDivider=0x7f0400ad;
+        public static final int RegistrationWeightDivider=0x7f0400c2;
+        public static final int RegistrationWeightHolder=0x7f0400c0;
+        public static final int RelativeLayout01=0x7f0400fd;
+        public static final int RelativeLayout02=0x7f040100;
+        public static final int RotateDown=0x7f04000b;
+        public static final int RotateUp=0x7f04000c;
+        public static final int ScrollView1=0x7f040054;
+        public static final int SettingHeightDivider=0x7f0400f9;
+        public static final int SettingWeightDivider=0x7f0400f3;
+        public static final int Stack=0x7f04000d;
+        public static final int Tablet=0x7f04000e;
+        public static final int TextView01=0x7f0400d7;
+        public static final int TextView02=0x7f0400d8;
+        public static final int TextView03=0x7f040056;
+        public static final int TextView04=0x7f0400dc;
+        public static final int TextView05=0x7f0400d9;
+        public static final int TextView06=0x7f0400cf;
+        public static final int TextView07=0x7f0400d0;
+        public static final int TextView08=0x7f0400d2;
+        public static final int TextView09=0x7f0400d6;
+        public static final int TextView10=0x7f0400d1;
+        public static final int TextView11=0x7f0400e6;
+        public static final int TextView12=0x7f0400e7;
+        public static final int TextView13=0x7f0400e9;
+        public static final int TextView14=0x7f0400ed;
+        public static final int TextView15=0x7f0400e8;
+        public static final int TextView16=0x7f040140;
+        public static final int TextViewActivitiesTracker=0x7f04014c;
+        public static final int TextViewBloodSugar=0x7f04014f;
+        public static final int TextViewCalorieTracker=0x7f040153;
+        public static final int TextViewCheckupTracker=0x7f040156;
+        public static final int TextViewNotesTracker=0x7f04015d;
+        public static final int TextViewRegistrationAllergies=0x7f0400c9;
+        public static final int TextViewRegistrationEmergencyContactTitle=0x7f0400c5;
+        public static final int TextViewRegistrationHealthProblems=0x7f0400cc;
+        public static final int TextViewWeightTracker=0x7f04015a;
+        public static final int View01=0x7f0400fe;
+        public static final int View02=0x7f040101;
+        public static final int WeightPhotoHolder=0x7f0400f1;
+        public static final int ZoomIn=0x7f04000f;
+        public static final int ZoomOut=0x7f040011;
+        public static final int ZoomOutSlide=0x7f040010;
+        public static final int actPlaceholder=0x7f0401bd;
+        public static final int actionImage=0x7f0401c1;
+        public static final int actionList=0x7f04001a;
+        public static final int actionName=0x7f0401c3;
+        public static final int action_help=0x7f04021e;
+        public static final int action_notifications=0x7f04021f;
+        public static final int action_settings=0x7f040220;
+        public static final int actionbar_notifcation_textview=0x7f040017;
+        public static final int activitiesPlaceholder=0x7f0401e9;
+        public static final int activity=0x7f040082;
+        public static final int activityCal=0x7f040096;
+        public static final int activityDuration=0x7f040083;
+        public static final int activityDurationUnit=0x7f040084;
+        public static final int activityName=0x7f04019b;
+        public static final int activityUnitSpinner=0x7f04019a;
+        public static final int activity_template=0x7f040081;
+        public static final int bloodpressureBanner=0x7f040048;
+        public static final int bloodpressureLocationDivider=0x7f04003c;
+        public static final int bloodpressureLocationHolder=0x7f04003a;
+        public static final int bloodpressurePost=0x7f040047;
+        public static final int bloodpressureQuantityDivider=0x7f040032;
+        public static final int bloodpressureStatusDivider=0x7f040038;
+        public static final int bloodpressureStatusHolder=0x7f040036;
+        public static final int bloodpressure_template=0x7f040078;
+        public static final int bloodsugarBanner=0x7f04004b;
+        public static final int bloodsugarGraph=0x7f04004c;
+        public static final int bloodsugarNumberPicker=0x7f0401b2;
+        public static final int bloodsugarQuantityDivider=0x7f0401b1;
+        public static final int bloodsugar_template=0x7f04007b;
+        public static final int bloopressureGraph=0x7f040049;
+        public static final int bpHomeRecordHolder=0x7f04017b;
+        public static final int bpHomeRecordHolder2=0x7f04017d;
+        public static final int bpHomeRecordHolderNull=0x7f040183;
+        public static final int breakdown_list=0x7f04004e;
+        public static final int bsHomeRecord2=0x7f040186;
+        public static final int bsHomeRecordHolder=0x7f040184;
+        public static final int bsHomeRecordHolder2=0x7f040174;
+        public static final int bsHomeRecordHolderNull=0x7f04018b;
+        public static final int bsLinearLayoutStatus=0x7f040185;
+        public static final int btnActivitiesTracker=0x7f04014a;
+        public static final int btnAddActions=0x7f04008d;
+        public static final int btnAddActivity=0x7f040018;
+        public static final int btnAddCheckupDate=0x7f040051;
+        public static final int btnAddCheckupDoctor=0x7f040052;
+        public static final int btnAddImageBloodPressure=0x7f040041;
+        public static final int btnAddPhoto=0x7f04008e;
+        public static final int btnAddWeight=0x7f04010d;
+        public static final int btnBloodPressureDate=0x7f04002b;
+        public static final int btnBloodPressureTime=0x7f04002e;
+        public static final int btnBloodPressureTracker=0x7f040146;
+        public static final int btnBloodSugarTracker=0x7f04014d;
+        public static final int btnCalorieTracker=0x7f040151;
+        public static final int btnCheckupTracker=0x7f040154;
+        public static final int btnDate=0x7f04008f;
+        public static final int btnFb=0x7f040090;
+        public static final int btnFoodTracker=0x7f040143;
+        public static final int btnLogin=0x7f04006b;
+        public static final int btnLogout=0x7f040106;
+        public static final int btnNotesTracker=0x7f04015b;
+        public static final int btnRegister=0x7f04006c;
+        public static final int btnUpdate=0x7f040105;
+        public static final int btnWeightTracker=0x7f040158;
+        public static final int cal=0x7f0401c6;
+        public static final int calBreakdownQuantity=0x7f0401c4;
+        public static final int calBreakdownUnit=0x7f0401c5;
+        public static final int caloriesPlaceholder=0x7f0401e6;
+        public static final int checkLogin=0x7f04006d;
+        public static final int checkUpDoctor=0x7f04005a;
+        public static final int checkUpNote=0x7f04005d;
+        public static final int checkUpdate=0x7f040057;
+        public static final int checkupBanner=0x7f040050;
+        public static final int checkupPurpose=0x7f0401d0;
+        public static final int checkupQuantityDivider=0x7f0401cf;
+        public static final int checkupTime=0x7f040058;
+        public static final int checkup_template=0x7f040085;
+        public static final int com_facebook_body_frame=0x7f040122;
+        public static final int com_facebook_button_xout=0x7f040124;
+        public static final int com_facebook_login_activity_progress_bar=0x7f040112;
+        public static final int com_facebook_picker_activity_circle=0x7f040111;
+        public static final int com_facebook_picker_checkbox=0x7f040114;
+        public static final int com_facebook_picker_checkbox_stub=0x7f040118;
+        public static final int com_facebook_picker_divider=0x7f04011c;
+        public static final int com_facebook_picker_done_button=0x7f04011b;
+        public static final int com_facebook_picker_image=0x7f040115;
+        public static final int com_facebook_picker_list_section_header=0x7f040119;
+        public static final int com_facebook_picker_list_view=0x7f040110;
+        public static final int com_facebook_picker_profile_pic_stub=0x7f040116;
+        public static final int com_facebook_picker_row_activity_circle=0x7f040113;
+        public static final int com_facebook_picker_search_text=0x7f040121;
+        public static final int com_facebook_picker_title=0x7f040117;
+        public static final int com_facebook_picker_title_bar=0x7f04011e;
+        public static final int com_facebook_picker_title_bar_stub=0x7f04011d;
+        public static final int com_facebook_picker_top_bar=0x7f04011a;
+        public static final int com_facebook_search_bar_view=0x7f040120;
+        public static final int com_facebook_tooltip_bubble_view_bottom_pointer=0x7f040126;
+        public static final int com_facebook_tooltip_bubble_view_text_body=0x7f040125;
+        public static final int com_facebook_tooltip_bubble_view_top_pointer=0x7f040123;
+        public static final int com_facebook_usersettingsfragment_login_button=0x7f040129;
+        public static final int com_facebook_usersettingsfragment_logo_image=0x7f040127;
+        public static final int com_facebook_usersettingsfragment_profile_name=0x7f040128;
+        public static final int confirmPasswordReg=0x7f0400a6;
+        public static final int container=0x7f040067;
+        public static final int daimajia_indicator_wrapper=0x7f04018f;
+        public static final int daimajia_slider_image=0x7f040212;
+        public static final int daimajia_slider_viewpager=0x7f040216;
+        public static final int dateholder=0x7f04019d;
+        public static final int decrement=0x7f040210;
+        public static final int default_bottom_left_indicator=0x7f040219;
+        public static final int default_bottom_right_indicator=0x7f040218;
+        public static final int default_center_bottom_indicator=0x7f040217;
+        public static final int default_center_top_indicator=0x7f04021a;
+        public static final int default_center_top_left_indicator=0x7f04021c;
+        public static final int default_center_top_right_indicator=0x7f04021b;
+        public static final int description=0x7f040215;
+        public static final int description_layout=0x7f040214;
+        public static final int diaPlaceholder=0x7f0401a3;
+        public static final int dialogList=0x7f0401d1;
+        public static final int diastolic=0x7f04007a;
+        public static final int diastolicPicker=0x7f040035;
+        public static final int doctor=0x7f040086;
+        public static final int doctorPlaceholder=0x7f0401cc;
+        public static final int dropdownRegistrationHeight=0x7f0400bf;
+        public static final int dropdownRegistrationWeight=0x7f0400c4;
+        public static final int editTextRegistrationBirthDate=0x7f0400b4;
+        public static final int editTextRegistrationContactNumber=0x7f0400af;
+        public static final int editTextRegistrationEmailAddress=0x7f0400b0;
+        public static final int editTextRegistrationFullName=0x7f0400ae;
+        public static final int fbOtherStatus=0x7f0401f1;
+        public static final int fbStatus=0x7f0400df;
+        public static final int fb_login_button=0x7f0400aa;
+        public static final int firstRowHolder=0x7f040142;
+        public static final int food=0x7f040074;
+        public static final int foodBanner=0x7f040061;
+        public static final int foodBanner_post=0x7f040064;
+        public static final int foodCal=0x7f040091;
+        public static final int foodCarbs=0x7f0401db;
+        public static final int foodFat=0x7f0401da;
+        public static final int foodGraph=0x7f040062;
+        public static final int foodPlaceholder=0x7f0401ba;
+        public static final int foodProtein=0x7f0401d9;
+        public static final int foodQuantityDivider=0x7f0401d6;
+        public static final int foodQuantitySize=0x7f040075;
+        public static final int foodQuantityUnit=0x7f040077;
+        public static final int foodUnit=0x7f0401d8;
+        public static final int food_template=0x7f040073;
+        public static final int fourthRowHolder=0x7f040157;
+        public static final int generalTemplate=0x7f040071;
+        public static final int glucosedateholder=0x7f0401a7;
+        public static final int glucoseholder=0x7f0401aa;
+        public static final int guess=0x7f0400e0;
+        public static final int help_imageview=0x7f0401df;
+        public static final int help_slide=0x7f040066;
+        public static final int imageBp=0x7f04019c;
+        public static final int imageBs=0x7f0401a6;
+        public static final int imageButton1=0x7f0400ab;
+        public static final int imageDelete=0x7f04008a;
+        public static final int imageHolder=0x7f040088;
+        public static final int imageView1=0x7f0400e3;
+        public static final int imageView2=0x7f04018e;
+        public static final int imageView6=0x7f04016f;
+        public static final int imageViewAction=0x7f0401e0;
+        public static final int imageViewBloodPressureCalendar=0x7f04002c;
+        public static final int imageViewBloodPressureClock=0x7f04002f;
+        public static final int imageViewBloodPressureTracker=0x7f040147;
+        public static final int imageViewCheckupReadHolder=0x7f040060;
+        public static final int imageViewFoodTracker=0x7f040144;
+        public static final int imageViewNoteReadHolder=0x7f0400a0;
+        public static final int imageViewStatusAction=0x7f0401f3;
+        public static final int imageViewViaPosted=0x7f0401f7;
+        public static final int imgSplash=0x7f040107;
+        public static final int img_post=0x7f04018d;
+        public static final int increment=0x7f04020e;
+        public static final int invisible=0x7f040001;
+        public static final int journalTabsPlaceholder=0x7f04018c;
+        public static final int large=0x7f040016;
+        public static final int lblAct=0x7f0401be;
+        public static final int lblActivities=0x7f0401ea;
+        public static final int lblCalories=0x7f0401e7;
+        public static final int lblDia=0x7f0401a4;
+        public static final int lblDoctor=0x7f0401cd;
+        public static final int lblFood=0x7f0401bb;
+        public static final int lblGlucose=0x7f0401ab;
+        public static final int lblPurpose=0x7f0401ca;
+        public static final int lblSys=0x7f0401a1;
+        public static final int lblTrackerAverage=0x7f0401fd;
+        public static final int lblType=0x7f0401af;
+        public static final int lblWeight=0x7f0401e3;
+        public static final int lblWeightMetric=0x7f0401e5;
+        public static final int listViewActivity=0x7f0400e5;
+        public static final int listViewActivityTracker=0x7f040019;
+        public static final int listViewFood=0x7f0400e4;
+        public static final int listViewWeightTracker=0x7f04010f;
+        public static final int listView_bloodpressure=0x7f04004a;
+        public static final int listView_bloodsugar=0x7f04004d;
+        public static final int listView_checkup=0x7f040053;
+        public static final int listView_daily_journal=0x7f040166;
+        public static final int listView_food_single=0x7f040063;
+        public static final int listView_groupedfood=0x7f040065;
+        public static final int listView_notes=0x7f0400a2;
+        public static final int listview_calorie=0x7f04004f;
+        public static final int loadingLayout=0x7f04006e;
+        public static final int loading_bar=0x7f040213;
+        public static final int loginLayout=0x7f040068;
+        public static final int menu_activity=0x7f04015f;
+        public static final int menu_add_activity=0x7f040222;
+        public static final int menu_bp=0x7f040162;
+        public static final int menu_bs=0x7f040163;
+        public static final int menu_calorie=0x7f040160;
+        public static final int menu_checkup=0x7f040164;
+        public static final int menu_delete=0x7f040225;
+        public static final int menu_done=0x7f04021d;
+        public static final int menu_edit=0x7f040224;
+        public static final int menu_food=0x7f04015e;
+        public static final int menu_item_add_new_activity=0x7f040223;
+        public static final int menu_item_next=0x7f040227;
+        public static final int menu_item_save=0x7f040228;
+        public static final int menu_item_status_edit=0x7f040226;
+        public static final int menu_item_status_post=0x7f040221;
+        public static final int menu_item_status_verify=0x7f040229;
+        public static final int menu_note=0x7f040165;
+        public static final int menu_weight=0x7f040161;
+        public static final int normal=0x7f040015;
+        public static final int noteBanner=0x7f0400a1;
+        public static final int noteImageLayout=0x7f04009f;
+        public static final int oval=0x7f040012;
+        public static final int pager=0x7f040070;
+        public static final int picker_subtitle=0x7f04011f;
+        public static final int pref_num_picker=0x7f040211;
+        public static final int profAllergies=0x7f04013e;
+        public static final int profBday=0x7f04012f;
+        public static final int profBlank=0x7f040138;
+        public static final int profContact=0x7f040134;
+        public static final int profContactNum=0x7f040141;
+        public static final int profContactPerson=0x7f04013f;
+        public static final int profDiastolic=0x7f040139;
+        public static final int profEmail=0x7f040135;
+        public static final int profFb=0x7f040136;
+        public static final int profHealthProblem=0x7f04013d;
+        public static final int profHeight=0x7f040131;
+        public static final int profHeightUnit=0x7f040132;
+        public static final int profImg=0x7f04012a;
+        public static final int profLastCheckup=0x7f04013c;
+        public static final int profName=0x7f04012b;
+        public static final int profSex=0x7f040130;
+        public static final int profSugarLvl=0x7f04013a;
+        public static final int profSugarLvlUnit=0x7f04013b;
+        public static final int profSystolic=0x7f040137;
+        public static final int profWeight=0x7f040133;
+        public static final int progressBar2=0x7f04016b;
+        public static final int purpose=0x7f040087;
+        public static final int quantity=0x7f0400e2;
+        public static final int radioGroupSettingHeight=0x7f0400fa;
+        public static final int radioGroupSettingHeightButtonFT=0x7f0400fb;
+        public static final int radioGroupSettingHeightButtonM=0x7f0400fc;
+        public static final int radioGroupSettingWeight=0x7f0400f4;
+        public static final int radioGroupSettingWeightButtonKGS=0x7f0400f6;
+        public static final int radioGroupSettingWeightButtonLBS=0x7f0400f5;
+        public static final int rect=0x7f040013;
+        public static final int registerFBLogin_picture=0x7f0400a8;
+        public static final int registrationHeightInputFeetInches=0x7f0400bd;
+        public static final int searchButton=0x7f0400ef;
+        public static final int searchList=0x7f0400f0;
+        public static final int searchWord=0x7f0400ee;
+        public static final int secondRowHolder=0x7f040149;
+        public static final int serving=0x7f0401dd;
+        public static final int servingUnit=0x7f0401de;
+        public static final int settingsFBLogin=0x7f0400ff;
+        public static final int settingsToggleButtonBloodPressure=0x7f040102;
+        public static final int settingsToggleButtonBloodSugar=0x7f040104;
+        public static final int small=0x7f040014;
+        public static final int spinnerFoodUnit=0x7f040029;
+        public static final int spinnerNewDurationUnit=0x7f040022;
+        public static final int statusFeedList=0x7f040108;
+        public static final int statusImage=0x7f040089;
+        public static final int statusInformationHolder=0x7f0401f2;
+        public static final int statusPhotoHolder=0x7f0401f9;
+        public static final int statusTabsPlaceholder=0x7f04008c;
+        public static final int sugar=0x7f04007c;
+        public static final int sugarPicker=0x7f0401b3;
+        public static final int sugarTypeSpinner=0x7f0401b4;
+        public static final int swipe_container=0x7f04010a;
+        public static final int sysholder=0x7f0401a0;
+        public static final int systolic=0x7f040079;
+        public static final int systolicPicker=0x7f040034;
+        public static final int textView1=0x7f04001b;
+        public static final int textView2=0x7f04001d;
+        public static final int textView3=0x7f040020;
+        public static final int textView4=0x7f04001f;
+        public static final int textView8=0x7f040169;
+        public static final int textViewAboutMePersonalInformationTitle=0x7f04012d;
+        public static final int textViewActivitySharing=0x7f040103;
+        public static final int textViewBloodPressureCalendar=0x7f04002d;
+        public static final int textViewBloodPressureClock=0x7f040030;
+        public static final int textViewBloodPressurePhotoTitle=0x7f04003f;
+        public static final int textViewBloodPressureSharing=0x7f040045;
+        public static final int textViewBloodPressureSharingTitle=0x7f040043;
+        public static final int textViewBloodPressureTracker=0x7f040148;
+        public static final int textViewCheckupReadFullNotes=0x7f04005b;
+        public static final int textViewCheckupReadLabel=0x7f040059;
+        public static final int textViewCheckupReadTitle=0x7f040055;
+        public static final int textViewDateTime=0x7f0401f6;
+        public static final int textViewFoodTracker=0x7f040145;
+        public static final int textViewLocationTitle=0x7f04003b;
+        public static final int textViewNoteReadDate=0x7f04009a;
+        public static final int textViewNoteReadFullNotes=0x7f04009c;
+        public static final int textViewNoteReadImages=0x7f04005e;
+        public static final int textViewNoteReadLabel=0x7f040099;
+        public static final int textViewNoteReadTime=0x7f04009b;
+        public static final int textViewPasswordStrength=0x7f0400a5;
+        public static final int textViewQuantityTitle=0x7f040031;
+        public static final int textViewRegistrationBirthDateTitle=0x7f0400b2;
+        public static final int textViewRegistrationFBTitle=0x7f0400a9;
+        public static final int textViewRegistrationGender=0x7f0400b8;
+        public static final int textViewRegistrationGenderTitle=0x7f0400b6;
+        public static final int textViewRegistrationHeightTitle=0x7f0400ba;
+        public static final int textViewRegistrationNameTitle=0x7f0400ac;
+        public static final int textViewRegistrationWeightTitle=0x7f0400c1;
+        public static final int textViewSettingHeightTitle=0x7f0400f8;
+        public static final int textViewSettingWeightTitle=0x7f0400f2;
+        public static final int textViewStatus=0x7f0401f8;
+        public static final int textViewStatusAction=0x7f0401f5;
+        public static final int textViewStatusActionHolder=0x7f0401f4;
+        public static final int textViewStatusTitle=0x7f040037;
+        public static final int textViewbloodpressureLocation=0x7f04003d;
+        public static final int textViewbloodpressureStatus=0x7f040039;
+        public static final int thirdRowHolder=0x7f040150;
+        public static final int time=0x7f0401dc;
+        public static final int timepicker_input=0x7f04020f;
+        public static final int togglebuttonBloodPressureSharing=0x7f040046;
+        public static final int trackerAveragePlaceholder=0x7f0401fc;
+        public static final int trackerListForDay=0x7f040201;
+        public static final int txt=0x7f040033;
+        public static final int txtActCal=0x7f0401c0;
+        public static final int txtActivities=0x7f0401eb;
+        public static final int txtActivityCal=0x7f040097;
+        public static final int txtActivityCalBurned=0x7f040196;
+        public static final int txtActivityCalBurnedMetric=0x7f040197;
+        public static final int txtActivityDate=0x7f040190;
+        public static final int txtActivityDone=0x7f040192;
+        public static final int txtActivityDuration=0x7f040194;
+        public static final int txtActivityDurationLabel=0x7f040193;
+        public static final int txtActivityDurationTime=0x7f040199;
+        public static final int txtActivityDurationUnit=0x7f040195;
+        public static final int txtActivityTime=0x7f040191;
+        public static final int txtAs=0x7f04017e;
+        public static final int txtBMIHome=0x7f040178;
+        public static final int txtBMIHomeDate=0x7f040176;
+        public static final int txtBMIHomeTime=0x7f040177;
+        public static final int txtBlank=0x7f040076;
+        public static final int txtBlankLa=0x7f0401ff;
+        public static final int txtBpdate=0x7f04019e;
+        public static final int txtBptime=0x7f04019f;
+        public static final int txtCalUnit=0x7f040098;
+        public static final int txtCalories=0x7f0401e8;
+        public static final int txtCheckupdate=0x7f0401c7;
+        public static final int txtCheckuptime=0x7f0401c8;
+        public static final int txtCurrentTracker=0x7f04008b;
+        public static final int txtDay=0x7f0401b6;
+        public static final int txtDia=0x7f0401a5;
+        public static final int txtDoctor=0x7f0401ce;
+        public static final int txtEditFoodCal=0x7f0401d2;
+        public static final int txtEditFoodCarbs=0x7f0401d5;
+        public static final int txtEditFoodFat=0x7f0401d4;
+        public static final int txtEditFoodProtein=0x7f0401d3;
+        public static final int txtFBDate=0x7f0400dd;
+        public static final int txtFBOtherDate=0x7f0401ef;
+        public static final int txtFBOtherTime=0x7f0401f0;
+        public static final int txtFBTime=0x7f0400de;
+        public static final int txtFoodCal=0x7f040024;
+        public static final int txtFoodCarbs=0x7f040027;
+        public static final int txtFoodFat=0x7f040026;
+        public static final int txtFoodProtein=0x7f040025;
+        public static final int txtFoodServingSize=0x7f0401d7;
+        public static final int txtFullNotes=0x7f04009e;
+        public static final int txtGlucose=0x7f0401ac;
+        public static final int txtGlucoseUnit=0x7f0401ad;
+        public static final int txtHomeBpDate=0x7f04017f;
+        public static final int txtHomeBpTime=0x7f040180;
+        public static final int txtHomeBsAs=0x7f040175;
+        public static final int txtHomeBsDate=0x7f040187;
+        public static final int txtHomeBsNumber=0x7f040189;
+        public static final int txtHomeBsTime=0x7f040188;
+        public static final int txtHomeBsType=0x7f04018a;
+        public static final int txtHomeCalRequire=0x7f04016a;
+        public static final int txtHomeDiastolic=0x7f040182;
+        public static final int txtHomeSystolicNum=0x7f040181;
+        public static final int txtHomeTotalCal=0x7f04016c;
+        public static final int txtHomeTotalReqCal=0x7f04016e;
+        public static final int txtLoadingInformation=0x7f04006f;
+        public static final int txtMonth=0x7f0401b5;
+        public static final int txtNewActivity=0x7f04001c;
+        public static final int txtNewCal=0x7f04001e;
+        public static final int txtNewDuration=0x7f040021;
+        public static final int txtNewFood=0x7f040023;
+        public static final int txtNewServing=0x7f040028;
+        public static final int txtNoteDate=0x7f0401ec;
+        public static final int txtNoteTime=0x7f0401ed;
+        public static final int txtNoteTitle=0x7f0401ee;
+        public static final int txtPassword=0x7f04006a;
+        public static final int txtPasswordReg=0x7f0400a4;
+        public static final int txtPosSign=0x7f0401bc;
+        public static final int txtProgress=0x7f0401b8;
+        public static final int txtProgressRequire=0x7f0401b9;
+        public static final int txtProgressTotalCal=0x7f0401b7;
+        public static final int txtPurpose=0x7f0401cb;
+        public static final int txtRegistrationHeightInches=0x7f0400be;
+        public static final int txtRegistrationHeightInput=0x7f0400bc;
+        public static final int txtRegistrationWeightInput=0x7f0400c3;
+        public static final int txtSign=0x7f0401bf;
+        public static final int txtSlash=0x7f04016d;
+        public static final int txtStatus=0x7f040072;
+        public static final int txtStatusAction=0x7f0401e1;
+        public static final int txtSugarType=0x7f04007d;
+        public static final int txtSys=0x7f0401a2;
+        public static final int txtTotalActivityCal=0x7f040171;
+        public static final int txtTotalFoodCal=0x7f040170;
+        public static final int txtTrackerAverage=0x7f0401fe;
+        public static final int txtTrackerAverageUnit=0x7f040200;
+        public static final int txtTrackerDay=0x7f0401fb;
+        public static final int txtTrackerMonth=0x7f0401fa;
+        public static final int txtType=0x7f0401b0;
+        public static final int txtUserName=0x7f040168;
+        public static final int txtUsername=0x7f040069;
+        public static final int txtUsernameReg=0x7f0400a3;
+        public static final int txtWeight=0x7f0401e4;
+        public static final int txtWeightFeedback=0x7f04020c;
+        public static final int txtWeightHome=0x7f040179;
+        public static final int txtWeightHomeUnit=0x7f04017a;
+        public static final int txtWeightUnit=0x7f040080;
+        public static final int txtfoodCal=0x7f040092;
+        public static final int txtfoodCarbs=0x7f040095;
+        public static final int txtfoodFat=0x7f040094;
+        public static final int txtfoodProtein=0x7f040093;
+        public static final int txtglucosedate=0x7f0401a8;
+        public static final int txtglucosetime=0x7f0401a9;
+        public static final int txttime=0x7f0401c2;
+        public static final int typePlaceholder=0x7f0401ae;
+        public static final int valid=0x7f0400a7;
+        public static final int verification_confirm=0x7f040209;
+        public static final int verification_date=0x7f040202;
+        public static final int verification_edit=0x7f04020a;
+        public static final int verification_extracted_amount=0x7f040208;
+        public static final int verification_extracted_word=0x7f040207;
+        public static final int verification_ignore=0x7f04020b;
+        public static final int verification_listview=0x7f040109;
+        public static final int verification_listview_test=0x7f04010b;
+        public static final int verification_question=0x7f040206;
+        public static final int verification_status=0x7f040204;
+        public static final int verification_statusPhotoHolder=0x7f040205;
+        public static final int verification_time=0x7f040203;
+        public static final int viewDisplay=0x7f040167;
+        public static final int visible=0x7f040000;
+        public static final int weight=0x7f04007f;
+        public static final int weightGraph=0x7f04010e;
+        public static final int weightLinearLayoutStatus=0x7f040173;
+        public static final int weightPlaceholder=0x7f0401e2;
+        public static final int weightPost=0x7f04010c;
+        public static final int weightQuantityDivider=0x7f040198;
+        public static final int weightRecordHolder=0x7f040172;
+        public static final int weightUnitSpinner=0x7f04020d;
+        public static final int weight_template=0x7f04007e;
+        public static final int what=0x7f0400e1;
     }
     public static final class layout {
         public static final int actionbar_badge_layout=0x7f030000;
@@ -909,129 +1227,138 @@ containing a value of this type.
         public static final int activity_checkup_tracker_read_mode=0x7f03000b;
         public static final int activity_food_tracker_daily=0x7f03000c;
         public static final int activity_groupedfood_tracker=0x7f03000d;
-        public static final int activity_login=0x7f03000e;
-        public static final int activity_main=0x7f03000f;
-        public static final int activity_new_status=0x7f030010;
-        public static final int activity_note_read_mode=0x7f030011;
-        public static final int activity_note_tracker=0x7f030012;
-        public static final int activity_register=0x7f030013;
-        public static final int activity_registration_fblogin=0x7f030014;
-        public static final int activity_registration_user_information=0x7f030015;
-        public static final int activity_retrieve_post=0x7f030016;
-        public static final int activity_search_list=0x7f030017;
-        public static final int activity_settings=0x7f030018;
-        public static final int activity_splash=0x7f030019;
-        public static final int activity_status_feed=0x7f03001a;
-        public static final int activity_verification=0x7f03001b;
-        public static final int activity_verification_test=0x7f03001c;
-        public static final int activity_weight_tracker=0x7f03001d;
-        public static final int com_facebook_friendpickerfragment=0x7f03001e;
-        public static final int com_facebook_login_activity_layout=0x7f03001f;
-        public static final int com_facebook_picker_activity_circle_row=0x7f030020;
-        public static final int com_facebook_picker_checkbox=0x7f030021;
-        public static final int com_facebook_picker_image=0x7f030022;
-        public static final int com_facebook_picker_list_row=0x7f030023;
-        public static final int com_facebook_picker_list_section_header=0x7f030024;
-        public static final int com_facebook_picker_search_box=0x7f030025;
-        public static final int com_facebook_picker_title_bar=0x7f030026;
-        public static final int com_facebook_picker_title_bar_stub=0x7f030027;
-        public static final int com_facebook_placepickerfragment=0x7f030028;
-        public static final int com_facebook_placepickerfragment_list_row=0x7f030029;
-        public static final int com_facebook_search_bar_layout=0x7f03002a;
-        public static final int com_facebook_tooltip_bubble=0x7f03002b;
-        public static final int com_facebook_usersettingsfragment=0x7f03002c;
-        public static final int fragment_about_me=0x7f03002d;
-        public static final int fragment_health_tracker=0x7f03002e;
-        public static final int fragment_health_tracker_menu=0x7f03002f;
-        public static final int fragment_journal=0x7f030030;
-        public static final int fragment_summary_report=0x7f030031;
-        public static final int fragment_summary_report2=0x7f030032;
-        public static final int item_activity=0x7f030033;
-        public static final int item_activity_duration_input=0x7f030034;
-        public static final int item_activity_result=0x7f030035;
-        public static final int item_bloodpressure=0x7f030036;
-        public static final int item_bloodpressure_input=0x7f030037;
-        public static final int item_bloodsugar=0x7f030038;
-        public static final int item_bloodsugar_input=0x7f030039;
-        public static final int item_calorie=0x7f03003a;
-        public static final int item_calorie_breakdown=0x7f03003b;
-        public static final int item_checkup=0x7f03003c;
-        public static final int item_checkup_input=0x7f03003d;
-        public static final int item_custom_listview=0x7f03003e;
-        public static final int item_dialogbox=0x7f03003f;
-        public static final int item_food_info_edit=0x7f030040;
-        public static final int item_food_serving_input=0x7f030041;
-        public static final int item_food_single=0x7f030042;
-        public static final int item_groupedfood=0x7f030043;
-        public static final int item_help=0x7f030044;
-        public static final int item_image_text=0x7f030045;
-        public static final int item_journal_by_date=0x7f030046;
-        public static final int item_note=0x7f030047;
-        public static final int item_retrieve_food=0x7f030048;
-        public static final int item_retrieve_other=0x7f030049;
-        public static final int item_status=0x7f03004a;
-        public static final int item_status_grouped=0x7f03004b;
-        public static final int item_verification=0x7f03004c;
-        public static final int item_weight_feedback=0x7f03004d;
-        public static final int item_weight_input=0x7f03004e;
-        public static final int number_picker=0x7f03004f;
-        public static final int number_picker_pref=0x7f030050;
+        public static final int activity_help=0x7f03000e;
+        public static final int activity_login=0x7f03000f;
+        public static final int activity_main=0x7f030010;
+        public static final int activity_new_status=0x7f030011;
+        public static final int activity_note_read_mode=0x7f030012;
+        public static final int activity_note_tracker=0x7f030013;
+        public static final int activity_register=0x7f030014;
+        public static final int activity_registration_fblogin=0x7f030015;
+        public static final int activity_registration_user_information=0x7f030016;
+        public static final int activity_retrieve_post=0x7f030017;
+        public static final int activity_search_list=0x7f030018;
+        public static final int activity_settings=0x7f030019;
+        public static final int activity_splash=0x7f03001a;
+        public static final int activity_status_feed=0x7f03001b;
+        public static final int activity_verification=0x7f03001c;
+        public static final int activity_verification_test=0x7f03001d;
+        public static final int activity_weight_tracker=0x7f03001e;
+        public static final int com_facebook_friendpickerfragment=0x7f03001f;
+        public static final int com_facebook_login_activity_layout=0x7f030020;
+        public static final int com_facebook_picker_activity_circle_row=0x7f030021;
+        public static final int com_facebook_picker_checkbox=0x7f030022;
+        public static final int com_facebook_picker_image=0x7f030023;
+        public static final int com_facebook_picker_list_row=0x7f030024;
+        public static final int com_facebook_picker_list_section_header=0x7f030025;
+        public static final int com_facebook_picker_search_box=0x7f030026;
+        public static final int com_facebook_picker_title_bar=0x7f030027;
+        public static final int com_facebook_picker_title_bar_stub=0x7f030028;
+        public static final int com_facebook_placepickerfragment=0x7f030029;
+        public static final int com_facebook_placepickerfragment_list_row=0x7f03002a;
+        public static final int com_facebook_search_bar_layout=0x7f03002b;
+        public static final int com_facebook_tooltip_bubble=0x7f03002c;
+        public static final int com_facebook_usersettingsfragment=0x7f03002d;
+        public static final int fragment_about_me=0x7f03002e;
+        public static final int fragment_health_tracker=0x7f03002f;
+        public static final int fragment_health_tracker_menu=0x7f030030;
+        public static final int fragment_journal=0x7f030031;
+        public static final int fragment_summary_report=0x7f030032;
+        public static final int fragment_summary_report2=0x7f030033;
+        public static final int indicator_layout=0x7f030034;
+        public static final int item_activity=0x7f030035;
+        public static final int item_activity_duration_input=0x7f030036;
+        public static final int item_activity_result=0x7f030037;
+        public static final int item_bloodpressure=0x7f030038;
+        public static final int item_bloodpressure_input=0x7f030039;
+        public static final int item_bloodsugar=0x7f03003a;
+        public static final int item_bloodsugar_input=0x7f03003b;
+        public static final int item_calorie=0x7f03003c;
+        public static final int item_calorie_breakdown=0x7f03003d;
+        public static final int item_checkup=0x7f03003e;
+        public static final int item_checkup_input=0x7f03003f;
+        public static final int item_custom_listview=0x7f030040;
+        public static final int item_dialogbox=0x7f030041;
+        public static final int item_food_info_edit=0x7f030042;
+        public static final int item_food_serving_input=0x7f030043;
+        public static final int item_food_single=0x7f030044;
+        public static final int item_groupedfood=0x7f030045;
+        public static final int item_help=0x7f030046;
+        public static final int item_image_text=0x7f030047;
+        public static final int item_journal_by_date=0x7f030048;
+        public static final int item_note=0x7f030049;
+        public static final int item_retrieve_food=0x7f03004a;
+        public static final int item_retrieve_other=0x7f03004b;
+        public static final int item_status=0x7f03004c;
+        public static final int item_status_grouped=0x7f03004d;
+        public static final int item_verification=0x7f03004e;
+        public static final int item_weight_feedback=0x7f03004f;
+        public static final int item_weight_input=0x7f030050;
+        public static final int number_picker=0x7f030051;
+        public static final int number_picker_pref=0x7f030052;
+        public static final int render_type_default=0x7f030053;
+        public static final int render_type_text=0x7f030054;
+        public static final int slider_layout=0x7f030055;
     }
     public static final class menu {
-        public static final int activitycheckup_menu_tracker_help=0x7f0a0000;
-        public static final int activitymain_menu_settings=0x7f0a0001;
-        public static final int activitynewstatus_menu_status_post=0x7f0a0002;
-        public static final int menu_add_activity=0x7f0a0003;
-        public static final int menu_add_new_activity=0x7f0a0004;
-        public static final int menu_edit_delete=0x7f0a0005;
-        public static final int menu_edit_status=0x7f0a0006;
-        public static final int menu_registration_next=0x7f0a0007;
-        public static final int menu_registration_save=0x7f0a0008;
-        public static final int menu_status_post=0x7f0a0009;
-        public static final int menu_tracker_help=0x7f0a000a;
-        public static final int menu_verify_status=0x7f0a000b;
+        public static final int activity_tutorial=0x7f0a0000;
+        public static final int activitycheckup_menu_tracker_help=0x7f0a0001;
+        public static final int activitymain_menu_settings=0x7f0a0002;
+        public static final int activitynewstatus_menu_status_post=0x7f0a0003;
+        public static final int menu_add_activity=0x7f0a0004;
+        public static final int menu_add_new_activity=0x7f0a0005;
+        public static final int menu_edit_delete=0x7f0a0006;
+        public static final int menu_edit_status=0x7f0a0007;
+        public static final int menu_registration_next=0x7f0a0008;
+        public static final int menu_registration_save=0x7f0a0009;
+        public static final int menu_status_post=0x7f0a000a;
+        public static final int menu_tracker_help=0x7f0a000b;
+        public static final int menu_verify_status=0x7f0a000c;
     }
     public static final class string {
-        public static final int action_settings=0x7f07001d;
-        public static final int app_id=0x7f07001a;
-        public static final int app_name=0x7f07001b;
-        public static final int com_facebook_choose_friends=0x7f07000f;
-        public static final int com_facebook_dialogloginactivity_ok_button=0x7f070000;
-        public static final int com_facebook_internet_permission_error_message=0x7f070013;
-        public static final int com_facebook_internet_permission_error_title=0x7f070012;
-        public static final int com_facebook_loading=0x7f070011;
-        public static final int com_facebook_loginview_cancel_action=0x7f070006;
-        public static final int com_facebook_loginview_log_in_button=0x7f070002;
-        public static final int com_facebook_loginview_log_out_action=0x7f070005;
-        public static final int com_facebook_loginview_log_out_button=0x7f070001;
-        public static final int com_facebook_loginview_logged_in_as=0x7f070003;
-        public static final int com_facebook_loginview_logged_in_using_facebook=0x7f070004;
-        public static final int com_facebook_logo_content_description=0x7f070007;
-        public static final int com_facebook_nearby=0x7f070010;
-        public static final int com_facebook_picker_done_button_text=0x7f07000e;
-        public static final int com_facebook_placepicker_subtitle_catetory_only_format=0x7f07000c;
-        public static final int com_facebook_placepicker_subtitle_format=0x7f07000b;
-        public static final int com_facebook_placepicker_subtitle_were_here_only_format=0x7f07000d;
-        public static final int com_facebook_requesterror_password_changed=0x7f070016;
-        public static final int com_facebook_requesterror_permissions=0x7f070018;
-        public static final int com_facebook_requesterror_reconnect=0x7f070017;
-        public static final int com_facebook_requesterror_relogin=0x7f070015;
-        public static final int com_facebook_requesterror_web_login=0x7f070014;
-        public static final int com_facebook_tooltip_default=0x7f070019;
-        public static final int com_facebook_usersettingsfragment_log_in_button=0x7f070008;
-        public static final int com_facebook_usersettingsfragment_logged_in=0x7f070009;
-        public static final int com_facebook_usersettingsfragment_not_logged_in=0x7f07000a;
-        public static final int hello_world=0x7f07001c;
-        public static final int journal_activities=0x7f070022;
-        public static final int journal_calories=0x7f070021;
+        public static final int action_settings=0x7f05001d;
+        public static final int app_id=0x7f05001b;
+        public static final int app_name=0x7f050000;
+        public static final int com_facebook_choose_friends=0x7f050010;
+        public static final int com_facebook_dialogloginactivity_ok_button=0x7f050001;
+        public static final int com_facebook_internet_permission_error_message=0x7f050014;
+        public static final int com_facebook_internet_permission_error_title=0x7f050013;
+        public static final int com_facebook_loading=0x7f050012;
+        public static final int com_facebook_loginview_cancel_action=0x7f050007;
+        public static final int com_facebook_loginview_log_in_button=0x7f050003;
+        public static final int com_facebook_loginview_log_out_action=0x7f050006;
+        public static final int com_facebook_loginview_log_out_button=0x7f050002;
+        public static final int com_facebook_loginview_logged_in_as=0x7f050004;
+        public static final int com_facebook_loginview_logged_in_using_facebook=0x7f050005;
+        public static final int com_facebook_logo_content_description=0x7f050008;
+        public static final int com_facebook_nearby=0x7f050011;
+        public static final int com_facebook_picker_done_button_text=0x7f05000f;
+        public static final int com_facebook_placepicker_subtitle_catetory_only_format=0x7f05000d;
+        public static final int com_facebook_placepicker_subtitle_format=0x7f05000c;
+        public static final int com_facebook_placepicker_subtitle_were_here_only_format=0x7f05000e;
+        public static final int com_facebook_requesterror_password_changed=0x7f050017;
+        public static final int com_facebook_requesterror_permissions=0x7f050019;
+        public static final int com_facebook_requesterror_reconnect=0x7f050018;
+        public static final int com_facebook_requesterror_relogin=0x7f050016;
+        public static final int com_facebook_requesterror_web_login=0x7f050015;
+        public static final int com_facebook_tooltip_default=0x7f05001a;
+        public static final int com_facebook_usersettingsfragment_log_in_button=0x7f050009;
+        public static final int com_facebook_usersettingsfragment_logged_in=0x7f05000a;
+        public static final int com_facebook_usersettingsfragment_not_logged_in=0x7f05000b;
+        public static final int hello_world=0x7f05001c;
+        public static final int journal_activities=0x7f050022;
+        public static final int journal_calories=0x7f050021;
         /**  Daily Journal Feed 
          */
-        public static final int journal_weight=0x7f07001f;
-        public static final int journal_weight_metric=0x7f070020;
-        public static final int lorem_ipsum=0x7f070023;
-        public static final int status_post_button=0x7f07001e;
+        public static final int journal_weight=0x7f05001f;
+        public static final int journal_weight_metric=0x7f050020;
+        public static final int lorem_ipsum=0x7f050023;
+        public static final int status_post_button=0x7f05001e;
     }
     public static final class style {
+        public static final int AndroidImageSlider_Attractive_Rect_Blue=0x7f060001;
+        public static final int AndroidImageSlider_Corner_Oval_Orange=0x7f060000;
+        public static final int AndroidImageSlider_Magnifier_Oval_Black=0x7f060002;
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
@@ -1053,16 +1380,556 @@ containing a value of this type.
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f080003;
+        public static final int AppBaseTheme=0x7f060006;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f080004;
-        public static final int com_facebook_loginview_default_style=0x7f080000;
-        public static final int com_facebook_loginview_silver_style=0x7f080001;
-        public static final int tooltip_bubble_text=0x7f080002;
+        public static final int AppTheme=0x7f060007;
+        public static final int com_facebook_loginview_default_style=0x7f060003;
+        public static final int com_facebook_loginview_silver_style=0x7f060004;
+        public static final int tooltip_bubble_text=0x7f060005;
     }
     public static final class styleable {
+        /** Attributes that can be used with a PagerIndicator.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #PagerIndicator_padding_bottom com.example.phr:padding_bottom}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_padding_left com.example.phr:padding_left}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_padding_right com.example.phr:padding_right}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_padding_top com.example.phr:padding_top}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_selected_color com.example.phr:selected_color}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_selected_drawable com.example.phr:selected_drawable}</code></td><td> indicator style </td></tr>
+           <tr><td><code>{@link #PagerIndicator_selected_height com.example.phr:selected_height}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_selected_padding_bottom com.example.phr:selected_padding_bottom}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_selected_padding_left com.example.phr:selected_padding_left}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_selected_padding_right com.example.phr:selected_padding_right}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_selected_padding_top com.example.phr:selected_padding_top}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_selected_width com.example.phr:selected_width}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_shape com.example.phr:shape}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_unselected_color com.example.phr:unselected_color}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_unselected_drawable com.example.phr:unselected_drawable}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_unselected_height com.example.phr:unselected_height}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_unselected_padding_bottom com.example.phr:unselected_padding_bottom}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_unselected_padding_left com.example.phr:unselected_padding_left}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_unselected_padding_right com.example.phr:unselected_padding_right}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_unselected_padding_top com.example.phr:unselected_padding_top}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_unselected_width com.example.phr:unselected_width}</code></td><td></td></tr>
+           <tr><td><code>{@link #PagerIndicator_visibility com.example.phr:visibility}</code></td><td> indicator visibility </td></tr>
+           </table>
+           @see #PagerIndicator_padding_bottom
+           @see #PagerIndicator_padding_left
+           @see #PagerIndicator_padding_right
+           @see #PagerIndicator_padding_top
+           @see #PagerIndicator_selected_color
+           @see #PagerIndicator_selected_drawable
+           @see #PagerIndicator_selected_height
+           @see #PagerIndicator_selected_padding_bottom
+           @see #PagerIndicator_selected_padding_left
+           @see #PagerIndicator_selected_padding_right
+           @see #PagerIndicator_selected_padding_top
+           @see #PagerIndicator_selected_width
+           @see #PagerIndicator_shape
+           @see #PagerIndicator_unselected_color
+           @see #PagerIndicator_unselected_drawable
+           @see #PagerIndicator_unselected_height
+           @see #PagerIndicator_unselected_padding_bottom
+           @see #PagerIndicator_unselected_padding_left
+           @see #PagerIndicator_unselected_padding_right
+           @see #PagerIndicator_unselected_padding_top
+           @see #PagerIndicator_unselected_width
+           @see #PagerIndicator_visibility
+         */
+        public static final int[] PagerIndicator = {
+            0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007,
+            0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b,
+            0x7f01000c, 0x7f01000d, 0x7f01000e, 0x7f01000f,
+            0x7f010010, 0x7f010011, 0x7f010012, 0x7f010013,
+            0x7f010014, 0x7f010015, 0x7f010016, 0x7f010017,
+            0x7f010018, 0x7f010019
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#padding_bottom}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.phr:padding_bottom
+        */
+        public static final int PagerIndicator_padding_bottom = 13;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#padding_left}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.phr:padding_left
+        */
+        public static final int PagerIndicator_padding_left = 10;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#padding_right}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.phr:padding_right
+        */
+        public static final int PagerIndicator_padding_right = 11;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#padding_top}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.phr:padding_top
+        */
+        public static final int PagerIndicator_padding_top = 12;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#selected_color}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.phr:selected_color
+        */
+        public static final int PagerIndicator_selected_color = 2;
+        /**
+          <p>
+          @attr description
+           indicator style 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.example.phr:selected_drawable
+        */
+        public static final int PagerIndicator_selected_drawable = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#selected_height}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.phr:selected_height
+        */
+        public static final int PagerIndicator_selected_height = 7;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#selected_padding_bottom}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.phr:selected_padding_bottom
+        */
+        public static final int PagerIndicator_selected_padding_bottom = 17;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#selected_padding_left}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.phr:selected_padding_left
+        */
+        public static final int PagerIndicator_selected_padding_left = 14;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#selected_padding_right}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.phr:selected_padding_right
+        */
+        public static final int PagerIndicator_selected_padding_right = 15;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#selected_padding_top}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.phr:selected_padding_top
+        */
+        public static final int PagerIndicator_selected_padding_top = 16;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#selected_width}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.phr:selected_width
+        */
+        public static final int PagerIndicator_selected_width = 6;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#shape}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>oval</code></td><td>0</td><td></td></tr>
+<tr><td><code>rect</code></td><td>1</td><td></td></tr>
+</table>
+          @attr name com.example.phr:shape
+        */
+        public static final int PagerIndicator_shape = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#unselected_color}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.phr:unselected_color
+        */
+        public static final int PagerIndicator_unselected_color = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#unselected_drawable}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.example.phr:unselected_drawable
+        */
+        public static final int PagerIndicator_unselected_drawable = 5;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#unselected_height}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.phr:unselected_height
+        */
+        public static final int PagerIndicator_unselected_height = 9;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#unselected_padding_bottom}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.phr:unselected_padding_bottom
+        */
+        public static final int PagerIndicator_unselected_padding_bottom = 21;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#unselected_padding_left}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.phr:unselected_padding_left
+        */
+        public static final int PagerIndicator_unselected_padding_left = 18;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#unselected_padding_right}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.phr:unselected_padding_right
+        */
+        public static final int PagerIndicator_unselected_padding_right = 19;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#unselected_padding_top}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.phr:unselected_padding_top
+        */
+        public static final int PagerIndicator_unselected_padding_top = 20;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#unselected_width}
+          attribute's value can be found in the {@link #PagerIndicator} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.phr:unselected_width
+        */
+        public static final int PagerIndicator_unselected_width = 8;
+        /**
+          <p>
+          @attr description
+           indicator visibility 
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>visible</code></td><td>0</td><td></td></tr>
+<tr><td><code>invisible</code></td><td>1</td><td></td></tr>
+</table>
+          <p>This is a private symbol.
+          @attr name com.example.phr:visibility
+        */
+        public static final int PagerIndicator_visibility = 0;
+        /** Attributes that can be used with a SliderLayout.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SliderLayout_auto_cycle com.example.phr:auto_cycle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SliderLayout_indicator_visibility com.example.phr:indicator_visibility}</code></td><td> indicator visibility </td></tr>
+           <tr><td><code>{@link #SliderLayout_pager_animation com.example.phr:pager_animation}</code></td><td> page animation </td></tr>
+           <tr><td><code>{@link #SliderLayout_pager_animation_span com.example.phr:pager_animation_span}</code></td><td> page animation time span </td></tr>
+           </table>
+           @see #SliderLayout_auto_cycle
+           @see #SliderLayout_indicator_visibility
+           @see #SliderLayout_pager_animation
+           @see #SliderLayout_pager_animation_span
+         */
+        public static final int[] SliderLayout = {
+            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#auto_cycle}
+          attribute's value can be found in the {@link #SliderLayout} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.phr:auto_cycle
+        */
+        public static final int SliderLayout_auto_cycle = 1;
+        /**
+          <p>
+          @attr description
+           indicator visibility 
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>visible</code></td><td>0</td><td></td></tr>
+<tr><td><code>invisible</code></td><td>1</td><td></td></tr>
+</table>
+          <p>This is a private symbol.
+          @attr name com.example.phr:indicator_visibility
+        */
+        public static final int SliderLayout_indicator_visibility = 0;
+        /**
+          <p>
+          @attr description
+           page animation 
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>Default</code></td><td>0</td><td></td></tr>
+<tr><td><code>Accordion</code></td><td>1</td><td></td></tr>
+<tr><td><code>Background2Foreground</code></td><td>2</td><td></td></tr>
+<tr><td><code>CubeIn</code></td><td>3</td><td></td></tr>
+<tr><td><code>DepthPage</code></td><td>4</td><td></td></tr>
+<tr><td><code>Fade</code></td><td>5</td><td></td></tr>
+<tr><td><code>FlipHorizontal</code></td><td>6</td><td></td></tr>
+<tr><td><code>FlipPage</code></td><td>7</td><td></td></tr>
+<tr><td><code>Foreground2Background</code></td><td>8</td><td></td></tr>
+<tr><td><code>RotateDown</code></td><td>9</td><td></td></tr>
+<tr><td><code>RotateUp</code></td><td>10</td><td></td></tr>
+<tr><td><code>Stack</code></td><td>11</td><td></td></tr>
+<tr><td><code>Tablet</code></td><td>12</td><td></td></tr>
+<tr><td><code>ZoomIn</code></td><td>13</td><td></td></tr>
+<tr><td><code>ZoomOutSlide</code></td><td>14</td><td></td></tr>
+<tr><td><code>ZoomOut</code></td><td>15</td><td></td></tr>
+</table>
+          <p>This is a private symbol.
+          @attr name com.example.phr:pager_animation
+        */
+        public static final int SliderLayout_pager_animation = 2;
+        /**
+          <p>
+          @attr description
+           page animation time span 
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name com.example.phr:pager_animation_span
+        */
+        public static final int SliderLayout_pager_animation_span = 3;
+        /** Attributes that can be used with a Themes.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #Themes_PagerIndicatorStyle com.example.phr:PagerIndicatorStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Themes_SliderStyle com.example.phr:SliderStyle}</code></td><td></td></tr>
+           </table>
+           @see #Themes_PagerIndicatorStyle
+           @see #Themes_SliderStyle
+         */
+        public static final int[] Themes = {
+            0x7f01001a, 0x7f01001b
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#PagerIndicatorStyle}
+          attribute's value can be found in the {@link #Themes} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.example.phr:PagerIndicatorStyle
+        */
+        public static final int Themes_PagerIndicatorStyle = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.example.phr.R.attr#SliderStyle}
+          attribute's value can be found in the {@link #Themes} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.example.phr:SliderStyle
+        */
+        public static final int Themes_SliderStyle = 0;
         /** Attributes that can be used with a com_facebook_friend_picker_fragment.
            <p>Includes the following attributes:</p>
            <table>
@@ -1074,7 +1941,7 @@ containing a value of this type.
            @see #com_facebook_friend_picker_fragment_multi_select
          */
         public static final int[] com_facebook_friend_picker_fragment = {
-            0x7f010007
+            0x7f010023
         };
         /**
           <p>This symbol is the offset where the {@link com.example.phr.R.attr#multi_select}
@@ -1107,7 +1974,7 @@ containing a value of this type.
            @see #com_facebook_login_view_logout_text
          */
         public static final int[] com_facebook_login_view = {
-            0x7f01000c, 0x7f01000d, 0x7f01000e, 0x7f01000f
+            0x7f010028, 0x7f010029, 0x7f01002a, 0x7f01002b
         };
         /**
           <p>This symbol is the offset where the {@link com.example.phr.R.attr#confirm_logout}
@@ -1188,8 +2055,8 @@ containing a value of this type.
            @see #com_facebook_picker_fragment_title_text
          */
         public static final int[] com_facebook_picker_fragment = {
-            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
-            0x7f010004, 0x7f010005, 0x7f010006
+            0x7f01001c, 0x7f01001d, 0x7f01001e, 0x7f01001f,
+            0x7f010020, 0x7f010021, 0x7f010022
         };
         /**
           <p>This symbol is the offset where the {@link com.example.phr.R.attr#done_button_background}
@@ -1298,7 +2165,7 @@ containing a value of this type.
            @see #com_facebook_place_picker_fragment_show_search_box
          */
         public static final int[] com_facebook_place_picker_fragment = {
-            0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b
+            0x7f010024, 0x7f010025, 0x7f010026, 0x7f010027
         };
         /**
           <p>This symbol is the offset where the {@link com.example.phr.R.attr#radius_in_meters}
@@ -1369,7 +2236,7 @@ containing a value of this type.
            @see #com_facebook_profile_picture_view_preset_size
          */
         public static final int[] com_facebook_profile_picture_view = {
-            0x7f010010, 0x7f010011
+            0x7f01002c, 0x7f01002d
         };
         /**
           <p>This symbol is the offset where the {@link com.example.phr.R.attr#is_cropped}

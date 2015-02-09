@@ -324,7 +324,11 @@ public class RegisterFBLoginActivity extends Activity {
 						}
 						settingDao = new MobileSettingsDaoImpl();
 						settingDao.initializeSettings();
-						startActivity(intent);
+						Intent intent2 = new Intent(getApplicationContext(),
+								HelpActivity.class);
+						intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+								| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						startActivity(intent2);
 					} catch (ServiceException e) {
 						runOnUiThread(new Runnable() {
 							@Override
