@@ -66,50 +66,52 @@ public class FoodSearchListActivity extends Activity {
 				final FoodService service = new FoodServiceImpl();
 				Log.e("search word", searchWord.getText().toString());
 				list = new ArrayList<Food>();
+				if(!searchWord.getText().toString().equals("") || !searchWord.getText().toString().equals(" ")){
 
-				final ProgressDialog progressDialog = new ProgressDialog(
-						activity);
-				progressDialog.setCancelable(false);
-				progressDialog.setMessage("Searching food...");
-				progressDialog.show();
+					final ProgressDialog progressDialog = new ProgressDialog(
+							activity);
+					progressDialog.setCancelable(false);
+					progressDialog.setMessage("Searching food...");
+					progressDialog.show();
 
-				new AsyncTask<Void, Void, Void>() {
-					@Override
-					protected Void doInBackground(Void... params) {
-						try {
-							list = service.search(searchWord.getText()
-									.toString());
-						} catch (ServiceException e) {
-							// TODO Auto-generated catch block
-							runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									Toast.makeText(HealthGem.getContext(),
-											"No Internet Connection !",
-											Toast.LENGTH_LONG).show();
-								}
-							});
-							e.printStackTrace();
-						} catch (OutdatedAccessTokenException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+					new AsyncTask<Void, Void, Void>() {
+						@Override
+						protected Void doInBackground(Void... params) {
+							try {
+								list = service.search(searchWord.getText()
+										.toString());
+							} catch (ServiceException e) {
+								// TODO Auto-generated catch block
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										Toast.makeText(HealthGem.getContext(),
+												"No Internet Connection !",
+												Toast.LENGTH_LONG).show();
+									}
+								});
+								e.printStackTrace();
+							} catch (OutdatedAccessTokenException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
+							return null;
 						}
 
-						return null;
-					}
+						@Override
+						protected void onPostExecute(Void result2) {
+							if (list != null) {
+								foodsingleAdapter = new SingleFoodAdapter(
+										getApplicationContext(), list);
+								searchList.setAdapter(foodsingleAdapter);
+							}
 
-					@Override
-					protected void onPostExecute(Void result2) {
-						if (list != null) {
-							foodsingleAdapter = new SingleFoodAdapter(
-									getApplicationContext(), list);
-							searchList.setAdapter(foodsingleAdapter);
-						}
-
-						if (progressDialog.isShowing())
-							progressDialog.dismiss();
-					};
-				}.execute();
+							if (progressDialog.isShowing())
+								progressDialog.dismiss();
+						};
+					}.execute();
+				}
 			}
 		});
 
