@@ -66,7 +66,7 @@ public class FoodSearchListActivity extends Activity {
 				final FoodService service = new FoodServiceImpl();
 				Log.e("search word", searchWord.getText().toString());
 				list = new ArrayList<Food>();
-				if(!searchWord.getText().toString().equals("") || !searchWord.getText().toString().equals(" ")){
+				if(!searchWord.getText().toString().equals("") && !searchWord.getText().toString().equals(" ")){
 
 					final ProgressDialog progressDialog = new ProgressDialog(
 							activity);
