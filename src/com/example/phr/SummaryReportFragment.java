@@ -286,10 +286,17 @@ public class SummaryReportFragment extends Fragment {
 			txtBpSystolic.setText(String.valueOf((bp.getSystolic())));
 			Log.e("sys", "pass");
 
+			// normal
 			if (bp.getSystolic() > 90 && bp.getSystolic() < 120
 					&& bp.getDiastolic() > 60 && bp.getDiastolic() < 80)
 				bpHomeStatus.setBackgroundDrawable(new ColorDrawable(Color
 						.parseColor("#27ae60")));
+			// warning
+			else if (bp.getSystolic() >= 120 && bp.getSystolic() <= 139
+					&& bp.getDiastolic() >= 80 && bp.getDiastolic() <= 89)
+				bpHomeStatus.setBackgroundDrawable(new ColorDrawable(Color
+						.parseColor("#f1c40f")));
+			// alert
 			else
 				bpHomeStatus.setBackgroundDrawable(new ColorDrawable(Color
 						.parseColor("#c0392b")));
@@ -423,25 +430,28 @@ public class SummaryReportFragment extends Fragment {
 			txtBmi.setText(formattedBmi);
 
 			String txtweightStatus;
-			if (bmi < 18.5)
+			if (bmi < 18)
 				txtweightStatus = "Underweight";
+			else if ((bmi >= 18 && bmi <= 19) || (bmi >= 24 && bmi <= 26))
+				txtweightStatus = "Warning";
 			else if (bmi >= 18.5 && bmi < 24.9)
 				txtweightStatus = "Normal weight";
 			else if (bmi >= 25 && bmi < 29.9)
 				txtweightStatus = "Overweight";
 			else
 				txtweightStatus = "Obesity";
-			// txtWeightStatus.setText(weightStatus);
+			// txtWeightStatus.setText(weightStatus); h
 
 			if (txtweightStatus.equals("Overweight")
-					|| txtweightStatus.equals("Obesity"))
+					|| txtweightStatus.equals("Obesity")
+					|| txtweightStatus.equals("Underweight"))
 				weightStatus.setBackgroundDrawable(new ColorDrawable(Color
 						.parseColor("#c0392b")));
 
 			else if (txtweightStatus.equals("Normal weight"))
 				weightStatus.setBackgroundDrawable(new ColorDrawable(Color
 						.parseColor("#27ae60")));
-			else if (txtweightStatus.equals("Underweight"))
+			else if (txtweightStatus.equals("Warning"))
 				weightStatus.setBackgroundDrawable(new ColorDrawable(Color
 						.parseColor("#f1c40f")));
 

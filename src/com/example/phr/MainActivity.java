@@ -186,17 +186,16 @@ public class MainActivity extends FragmentActivity implements
 		setAlarm(_alarm, TrackerInputType.WEIGHT, 4);
 
 		// check if there's entry for verify
-		Calendar verifyAlarmTime = Calendar.getInstance();
-		verifyAlarmTime.set(Calendar.HOUR_OF_DAY, 18);
-		verifyAlarmTime.set(Calendar.MINUTE, 0);
-		verifyAlarmTime.set(Calendar.SECOND, 0);
-		if (verifyAlarmTime.getTimeInMillis() <= now.getTimeInMillis()) {
-			_alarm = verifyAlarmTime.getTimeInMillis()
-					+ (AlarmManager.INTERVAL_DAY + 1);
-		} else {
-			_alarm = verifyAlarmTime.getTimeInMillis();
-		}
-		setAlarm(_alarm, TrackerInputType.VERIFY, 5);
+		/*
+		 * Calendar verifyAlarmTime = Calendar.getInstance();
+		 * verifyAlarmTime.set(Calendar.HOUR_OF_DAY, 18);
+		 * verifyAlarmTime.set(Calendar.MINUTE, 0);
+		 * verifyAlarmTime.set(Calendar.SECOND, 0); if
+		 * (verifyAlarmTime.getTimeInMillis() <= now.getTimeInMillis()) { _alarm
+		 * = verifyAlarmTime.getTimeInMillis() + (AlarmManager.INTERVAL_DAY +
+		 * 1); } else { _alarm = verifyAlarmTime.getTimeInMillis(); }
+		 * setAlarm(_alarm, TrackerInputType.VERIFY, 5);
+		 */
 
 		// check if user post activty this week at this time
 		Calendar activityAlarmTime = Calendar.getInstance();
